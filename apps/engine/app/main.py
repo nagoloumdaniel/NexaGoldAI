@@ -38,8 +38,17 @@ async def health() -> dict:
     }
 
 
+def ensure_oanda_configured() -> None:
+    if not (settings.oanda_api_key and settings.oanda_account_id):
+        raise HTTPException(
+            status_code=503,
+            detail="OANDA non configuré : renseignez OANDA_API_KEY et OANDA_ACCOUNT_ID",
+        )
+
+
 @app.get("/market/price")
 async def market_price() -> dict:
+    ensure_oanda_configured()
     try:
         return await oanda.get_price()
     except OandaError as exc:
@@ -48,6 +57,7 @@ async def market_price() -> dict:
 
 @app.get("/market/candles")
 async def market_candles(granularity: str = "M1", count: int = 200) -> list[dict]:
+    ensure_oanda_configured()
     try:
         return await oanda.get_candles(granularity=granularity, count=min(count, 5000))
     except OandaError as exc:
@@ -56,6 +66,7 @@ async def market_candles(granularity: str = "M1", count: int = 200) -> list[dict
 
 @app.get("/account")
 async def account() -> dict:
+    ensure_oanda_configured()
     try:
         summary = await oanda.get_account_summary()
     except OandaError as exc:

@@ -32,7 +32,10 @@ class OandaClient:
         await self._client.aclose()
 
     async def _request(self, method: str, path: str, **kwargs: Any) -> dict:
-        response = await self._client.request(method, path, **kwargs)
+        try:
+            response = await self._client.request(method, path, **kwargs)
+        except httpx.HTTPError as exc:
+            raise OandaError(f"{method} {path} -> transport error: {exc}") from exc
         if response.status_code >= 400:
             raise OandaError(f"{method} {path} -> {response.status_code}: {response.text}")
         return response.json()

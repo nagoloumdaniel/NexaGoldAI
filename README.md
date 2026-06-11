@@ -4,7 +4,7 @@ Plateforme de trading algorithmique sur l'or (XAU/USD) pilotée par IA.
 
 ## Architecture
 
-```
+```text
                     ┌─────────────────────┐
                     │  apps/web (Next.js) │  ← Vercel
                     │  Tableau de bord    │
@@ -29,7 +29,7 @@ Plateforme de trading algorithmique sur l'or (XAU/USD) pilotée par IA.
 ```
 
 | Application | Rôle | Déploiement |
-|---|---|---|
+| --- | --- | --- |
 | `apps/web` | Dashboard Next.js 16 + Tailwind | Vercel |
 | `apps/api` | Backend NestJS + Prisma (utilisateurs, JWT, notifications, WebSockets) | Railway (Dockerfile) |
 | `apps/engine` | Moteur de trading Python/FastAPI (OANDA, stratégies, gestion du risque) | Railway (Dockerfile) |
@@ -87,13 +87,16 @@ est visible dans la liste des comptes (format `101-004-XXXXXXX-001`).
 ## Déploiement
 
 ### Neon (PostgreSQL)
+
 1. Créer un projet sur [neon.tech](https://neon.tech), copier la connection string.
 2. Appliquer le schéma : `DATABASE_URL=<neon-url> npx prisma migrate deploy` depuis `apps/api`.
 
 ### Upstash (Redis)
+
 1. Créer une base sur [upstash.com](https://upstash.com), copier l'URL `rediss://`.
 
 ### Railway (api + engine)
+
 1. Créer un projet Railway relié à ce repo GitHub.
 2. Service **api** : Root Directory = `apps/api` (le Dockerfile est détecté).
    Variables : `DATABASE_URL` (Neon), `REDIS_URL` (Upstash), `FRONTEND_URL`
@@ -105,8 +108,37 @@ est visible dans la liste des comptes (format `101-004-XXXXXXX-001`).
    endort les services) : une position ouverte doit toujours être surveillée.
 
 ### Vercel (web)
+
 1. Importer le repo sur [vercel.com](https://vercel.com), Root Directory = `apps/web`.
 2. Variable : `NEXT_PUBLIC_API_URL` (URL Railway de l'api).
+
+## Notifications Telegram (rapport quotidien)
+
+L'api envoie chaque jour de semaine à 21h00 UTC (configurable via
+`REPORT_CRON`) un rapport sur Telegram : P&L du jour, solde, équité,
+drawdown, trades clôturés. Un `EquitySnapshot` est enregistré à chaque
+rapport — c'est aussi lui qui alimente la courbe d'équité du dashboard.
+
+Configuration (5 minutes) :
+
+1. Sur Telegram, parler à **@BotFather** → `/newbot` → choisir un nom et un
+   identifiant. BotFather donne le **token** → `TELEGRAM_BOT_TOKEN`.
+2. Envoyer n'importe quel message à votre nouveau bot (obligatoire : un bot
+   ne peut pas écrire en premier).
+3. Récupérer votre chat id : ouvrir
+   `https://api.telegram.org/bot<TOKEN>/getUpdates` dans un navigateur et
+   lire `result[0].message.chat.id` → `TELEGRAM_CHAT_ID`.
+4. Renseigner les deux variables dans `apps/api/.env` (local) et sur le
+   service Railway **api** (production).
+
+Test sans attendre le cron :
+
+```bash
+curl -X POST http://localhost:3001/reports/daily/run
+```
+
+Le rapport nécessite que le moteur (`ENGINE_URL`) soit démarré avec des
+identifiants OANDA valides — c'est lui qui fournit solde et équité.
 
 ## Feuille de route
 
