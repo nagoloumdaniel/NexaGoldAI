@@ -1,0 +1,94 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+enum TradeSide {
+  BUY
+  SELL
+}
+
+enum TradeStatus {
+  OPEN
+  CLOSED
+  CANCELLED
+}
+
+// Un trade exécuté (ou en cours) par le moteur. `reason` et `features`
+// conservent l'explication de la décision IA exigée par le cahier des charges.
+model Trade {
+  id            String      @id @default(cuid())
+  instrument    String      @default("XAU_USD")
+  side          TradeSide
+  units         Decimal     @db.Decimal(12, 2)
+  entryPrice    Decimal     @db.Decimal(12, 3)
+  exitPrice     Decimal?    @db.Decimal(12, 3)
+  stopLoss      Decimal?    @db.Decimal(12, 3)
+  takeProfit    Decimal?    @db.Decimal(12, 3)
+  pnl           Decimal?    @db.Decimal(12, 2)
+  status        TradeStatus @default(OPEN)
+  strategy      String
+  reason        String
+  features      Json?
+  brokerTradeId String?
+  openedAt      DateTime    @default(now())
+  closedAt      DateTime?
+
+  @@index([status])
+  @@index([openedAt])
+}
+
+// Bougies OHLCV historisées (source: OANDA en continu, Dukascopy pour le
+// backfill). Clé composite = pas de doublon possible à l'ingestion.
+model Candle {
+  instrument  String
+  granularity String
+  time        DateTime
+  open        Decimal  @db.Decimal(12, 3)
+  high        Decimal  @db.Decimal(12, 3)
+  low         Decimal  @db.Decimal(12, 3)
+  close       Decimal  @db.Decimal(12, 3)
+  volume      Int
+
+  @@id([instrument, granularity, time])
+}
+
+// Photo périodique du compte pour les courbes d'équité et le calcul de drawdown.
+model EquitySnapshot {
+  id          String   @id @default(cuid())
+  time        DateTime @default(now())
+  balance     Decimal  @db.Decimal(14, 2)
+  nav         Decimal  @db.Decimal(14, 2)
+  drawdownPct Decimal? @db.Decimal(6, 3)
+
+  @@index([time])
+}
+
+// Chaque signal émis par une stratégie, même non exécuté — c'est le jeu de
+// données du réentraînement et de la comparaison de stratégies.
+model StrategyDecision {
+  id         String   @id @default(cuid())
+  time       DateTime @default(now())
+  strategy   String
+  action     String
+  confidence Decimal  @db.Decimal(4, 3)
+  reason     String
+  features   Json?
+  executed   Boolean  @default(false)
+  tradeId    String?
+
+  @@index([strategy, time])
+}

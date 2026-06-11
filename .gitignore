@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Builds
+.next/
+dist/
+build/
+
+# Client Prisma généré (recréé par `npx prisma generate`)
+apps/api/src/generated/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Env — jamais de secrets dans le repo
+.env
+.env.*
+!.env.example
+
+# Divers
+.DS_Store
+*.log

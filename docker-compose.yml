@@ -1,0 +1,23 @@
+# Développement local uniquement : PostgreSQL + Redis.
+# En production : Neon (PostgreSQL) et Upstash (Redis), rien à déployer ici.
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: nexagold
+      POSTGRES_PASSWORD: nexagold
+      POSTGRES_DB: nexagold
+    ports:
+      # 5433 côté hôte : 5432 est déjà pris par un autre projet local
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      # 6380 côté hôte : 6379 est déjà pris par un autre projet local
+      - "6380:6379"
+
+volumes:
+  pgdata:
