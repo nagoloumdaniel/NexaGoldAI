@@ -14,7 +14,7 @@ from app.data.ingestion import IngestionService
 from app.db import Database
 
 
-async def run(granularity: str, days: int, concurrency: int) -> None:
+async def run(args: argparse.Namespace) -> None:
     settings = get_settings()
     db = Database(settings)
     await db.connect()
@@ -24,7 +24,14 @@ async def run(granularity: str, days: int, concurrency: int) -> None:
     broker = CapitalClient(settings)  # unused by the Dukascopy path, closed below
     service = IngestionService(settings, broker, CandleRepository(db.pool))
     try:
-        result = await service.backfill_dukascopy(granularity, days, concurrency)
+        result = await service.backfill_dukascopy(
+            args.granularity,
+            args.days,
+            args.concurrency,
+            symbol=args.symbol,
+            divisor=args.divisor,
+            instrument=args.instrument,
+        )
         print(result)
     finally:
         await broker.close()
@@ -36,8 +43,12 @@ def main() -> None:
     parser.add_argument("--granularity", default="M5")
     parser.add_argument("--days", type=int, default=365)
     parser.add_argument("--concurrency", type=int, default=16)
+    # Overrides to backfill a secondary instrument (e.g. a macro proxy).
+    parser.add_argument("--symbol", default=None, help="Symbole Dukascopy (ex. EURUSD)")
+    parser.add_argument("--divisor", type=float, default=None, help="Diviseur de prix")
+    parser.add_argument("--instrument", default=None, help="Clé instrument en base")
     args = parser.parse_args()
-    asyncio.run(run(args.granularity, args.days, args.concurrency))
+    asyncio.run(run(args))
 
 
 if __name__ == "__main__":

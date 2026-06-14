@@ -32,6 +32,7 @@ def main() -> None:
     parser.add_argument("--threshold", type=float, default=0.001)
     parser.add_argument("--vol-mult", type=float, default=1.0)
     parser.add_argument("--vol-window", type=int, default=20)
+    parser.add_argument("--macro", action="store_true", help="Inclure les features macro")
     parser.add_argument("--folds", type=int, default=5)
     parser.add_argument("--cost-bps", type=float, default=2.0)
     args = parser.parse_args()
@@ -42,6 +43,7 @@ def main() -> None:
         "threshold": args.threshold,
         "vol_mult": args.vol_mult,
         "vol_window": args.vol_window,
+        "macro": args.macro,
     }
 
     settings = get_settings()
@@ -50,10 +52,21 @@ def main() -> None:
         print(json.dumps({"error": f"Données insuffisantes ({len(df)} bougies)"}))
         return
 
-    data = bt.build_dataset(df, config)
+    macro_df = None
+    if args.macro:
+        macro_df = asyncio.run(
+            load_candles(settings, args.granularity, instrument=settings.macro_instrument)
+        )
+
+    data = bt.build_dataset(df, config, macro_df)
     feature_cols = feature_columns(data)
     report = bt.run(
-        data, feature_cols, args.folds, args.granularity, cost_bps=args.cost_bps
+        data,
+        feature_cols,
+        args.folds,
+        args.granularity,
+        cost_bps=args.cost_bps,
+        embargo=args.horizon,
     )
     report["params"] = {
         "granularity": args.granularity,

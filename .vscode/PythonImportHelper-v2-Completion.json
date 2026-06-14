@@ -1020,6 +1020,14 @@
         "documentation": {}
     },
     {
+        "label": "build_macro_features",
+        "importPath": "app.research.macro",
+        "description": "app.research.macro",
+        "isExtraImport": true,
+        "detail": "app.research.macro",
+        "documentation": {}
+    },
+    {
         "label": "dataclass",
         "importPath": "dataclasses",
         "description": "dataclasses",
@@ -1224,7 +1232,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.data.backfill_cli",
         "description": "apps.engine.app.data.backfill_cli",
-        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(description=\"Backfill Dukascopy\")\n    parser.add_argument(\"--granularity\", default=\"M5\")\n    parser.add_argument(\"--days\", type=int, default=365)\n    parser.add_argument(\"--concurrency\", type=int, default=16)\n    args = parser.parse_args()\n    asyncio.run(run(args.granularity, args.days, args.concurrency))\nif __name__ == \"__main__\":\n    main()",
+        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(description=\"Backfill Dukascopy\")\n    parser.add_argument(\"--granularity\", default=\"M5\")\n    parser.add_argument(\"--days\", type=int, default=365)\n    parser.add_argument(\"--concurrency\", type=int, default=16)\n    # Overrides to backfill a secondary instrument (e.g. a macro proxy).\n    parser.add_argument(\"--symbol\", default=None, help=\"Symbole Dukascopy (ex. EURUSD)\")\n    parser.add_argument(\"--divisor\", type=float, default=None, help=\"Diviseur de prix\")\n    parser.add_argument(\"--instrument\", default=None, help=\"Clé instrument en base\")\n    args = parser.parse_args()",
         "detail": "apps.engine.app.data.backfill_cli",
         "documentation": {}
     },
@@ -1422,7 +1430,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.learning.trainer",
         "description": "apps.engine.app.learning.trainer",
-        "peekOfCode": "logger = logging.getLogger(\"nexagold.learning\")\nMODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\n# Search space — each entry is a different \"approach\" (labelling method +\n# horizon/volatility). Triple-barrier and fixed compete head to head.\nCANDIDATE_CONFIGS = [\n    {\"labeling\": \"triple_barrier\", \"horizon\": 12, \"vol_mult\": 1.0, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 24, \"vol_mult\": 1.5, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 48, \"vol_mult\": 2.0, \"vol_window\": 50},\n    {\"labeling\": \"fixed\", \"horizon\": 12, \"threshold\": 0.0010},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020},",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.learning\")\nMODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\n# Search space — each entry is a different \"approach\" (labelling, horizon,\n# volatility, with/without macro). They compete head to head every round.\nCANDIDATE_CONFIGS = [\n    {\"labeling\": \"triple_barrier\", \"horizon\": 12, \"vol_mult\": 1.0, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 24, \"vol_mult\": 1.5, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 48, \"vol_mult\": 2.0, \"vol_window\": 50},\n    {\"labeling\": \"fixed\", \"horizon\": 12, \"threshold\": 0.0010},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020},",
         "detail": "apps.engine.app.learning.trainer",
         "documentation": {}
     },
@@ -1431,7 +1439,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.learning.trainer",
         "description": "apps.engine.app.learning.trainer",
-        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\n# Search space — each entry is a different \"approach\" (labelling method +\n# horizon/volatility). Triple-barrier and fixed compete head to head.\nCANDIDATE_CONFIGS = [\n    {\"labeling\": \"triple_barrier\", \"horizon\": 12, \"vol_mult\": 1.0, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 24, \"vol_mult\": 1.5, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 48, \"vol_mult\": 2.0, \"vol_window\": 50},\n    {\"labeling\": \"fixed\", \"horizon\": 12, \"threshold\": 0.0010},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020},\n]",
+        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\n# Search space — each entry is a different \"approach\" (labelling, horizon,\n# volatility, with/without macro). They compete head to head every round.\nCANDIDATE_CONFIGS = [\n    {\"labeling\": \"triple_barrier\", \"horizon\": 12, \"vol_mult\": 1.0, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 24, \"vol_mult\": 1.5, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 48, \"vol_mult\": 2.0, \"vol_window\": 50},\n    {\"labeling\": \"fixed\", \"horizon\": 12, \"threshold\": 0.0010},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020, \"macro\": True},",
         "detail": "apps.engine.app.learning.trainer",
         "documentation": {}
     },
@@ -1440,7 +1448,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.learning.trainer",
         "description": "apps.engine.app.learning.trainer",
-        "peekOfCode": "CANDIDATE_CONFIGS = [\n    {\"labeling\": \"triple_barrier\", \"horizon\": 12, \"vol_mult\": 1.0, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 24, \"vol_mult\": 1.5, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 48, \"vol_mult\": 2.0, \"vol_window\": 50},\n    {\"labeling\": \"fixed\", \"horizon\": 12, \"threshold\": 0.0010},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020},\n]\ndef _selection_metric(report: dict) -> float:\n    # Out-of-sample annualised Sharpe of the PnL backtest. Higher is better;\n    # may be negative (then we pick the least-bad, honestly).",
+        "peekOfCode": "CANDIDATE_CONFIGS = [\n    {\"labeling\": \"triple_barrier\", \"horizon\": 12, \"vol_mult\": 1.0, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 24, \"vol_mult\": 1.5, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 48, \"vol_mult\": 2.0, \"vol_window\": 50},\n    {\"labeling\": \"fixed\", \"horizon\": 12, \"threshold\": 0.0010},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020, \"macro\": True},\n    {\n        \"labeling\": \"triple_barrier\",\n        \"horizon\": 24,",
         "detail": "apps.engine.app.learning.trainer",
         "documentation": {}
     },
@@ -1449,7 +1457,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.backtest",
         "description": "apps.engine.app.research.backtest",
-        "peekOfCode": "def build_dataset(df: pd.DataFrame, config: dict) -> pd.DataFrame:\n    \"\"\"Features + label (labelling method chosen by `config`) + next-bar return.\"\"\"\n    feats = build_features(df)\n    feats[\"label\"] = make_labels(df, config)\n    feats[\"next_ret\"] = df[\"close\"].pct_change().shift(-1)\n    return feats.dropna()\ndef make_model(params: dict | None = None) -> LGBMClassifier:\n    return LGBMClassifier(**(params or DEFAULT_PARAMS))\ndef walk_forward(data: pd.DataFrame, feature_cols: list[str], n_splits: int):\n    \"\"\"Out-of-sample predictions/probabilities via expanding-window CV.\"\"\"",
+        "peekOfCode": "def build_dataset(\n    df: pd.DataFrame, config: dict, macro_df: pd.DataFrame | None = None\n) -> pd.DataFrame:\n    \"\"\"Features + label (labelling method chosen by `config`) + next-bar return.\n    `macro_df` is included as features only when `config[\"macro\"]` is set.\n    \"\"\"\n    use_macro = macro_df if config.get(\"macro\") else None\n    feats = build_features(df, use_macro)\n    feats[\"label\"] = make_labels(df, config)\n    feats[\"next_ret\"] = df[\"close\"].pct_change().shift(-1)",
         "detail": "apps.engine.app.research.backtest",
         "documentation": {}
     },
@@ -1458,7 +1466,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.backtest",
         "description": "apps.engine.app.research.backtest",
-        "peekOfCode": "def make_model(params: dict | None = None) -> LGBMClassifier:\n    return LGBMClassifier(**(params or DEFAULT_PARAMS))\ndef walk_forward(data: pd.DataFrame, feature_cols: list[str], n_splits: int):\n    \"\"\"Out-of-sample predictions/probabilities via expanding-window CV.\"\"\"\n    X = data[feature_cols]  # keep column names so fit/predict stay consistent\n    y = data[\"label\"].astype(int).values\n    oos_pred = np.full(len(data), -1, dtype=int)\n    oos_proba = np.zeros((len(data), 3))\n    for train_idx, test_idx in TimeSeriesSplit(n_splits=n_splits).split(X):\n        model = make_model()",
+        "peekOfCode": "def make_model(params: dict | None = None) -> LGBMClassifier:\n    return LGBMClassifier(**(params or DEFAULT_PARAMS))\ndef walk_forward(\n    data: pd.DataFrame, feature_cols: list[str], n_splits: int, embargo: int = 0\n):\n    \"\"\"Out-of-sample predictions/probabilities via expanding-window CV.\n    `embargo` (purge) drops that many bars between each train block and its\n    test block, so labels that look `horizon` bars ahead can't leak training\n    information into the test set.\n    \"\"\"",
         "detail": "apps.engine.app.research.backtest",
         "documentation": {}
     },
@@ -1467,7 +1475,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.backtest",
         "description": "apps.engine.app.research.backtest",
-        "peekOfCode": "def walk_forward(data: pd.DataFrame, feature_cols: list[str], n_splits: int):\n    \"\"\"Out-of-sample predictions/probabilities via expanding-window CV.\"\"\"\n    X = data[feature_cols]  # keep column names so fit/predict stay consistent\n    y = data[\"label\"].astype(int).values\n    oos_pred = np.full(len(data), -1, dtype=int)\n    oos_proba = np.zeros((len(data), 3))\n    for train_idx, test_idx in TimeSeriesSplit(n_splits=n_splits).split(X):\n        model = make_model()\n        model.fit(X.iloc[train_idx], y[train_idx])\n        proba = model.predict_proba(X.iloc[test_idx])",
+        "peekOfCode": "def walk_forward(\n    data: pd.DataFrame, feature_cols: list[str], n_splits: int, embargo: int = 0\n):\n    \"\"\"Out-of-sample predictions/probabilities via expanding-window CV.\n    `embargo` (purge) drops that many bars between each train block and its\n    test block, so labels that look `horizon` bars ahead can't leak training\n    information into the test set.\n    \"\"\"\n    X = data[feature_cols]  # keep column names so fit/predict stay consistent\n    y = data[\"label\"].astype(int).values",
         "detail": "apps.engine.app.research.backtest",
         "documentation": {}
     },
@@ -1485,7 +1493,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.backtest",
         "description": "apps.engine.app.research.backtest",
-        "peekOfCode": "def run(\n    data: pd.DataFrame,\n    feature_cols: list[str],\n    n_splits: int,\n    granularity: str,\n    cost_bps: float = 2.0,\n) -> dict:\n    oos_pred, oos_proba, mask = walk_forward(data, feature_cols, n_splits)\n    y_true = data[\"label\"].astype(int).values[mask]\n    y_pred = oos_pred[mask]",
+        "peekOfCode": "def run(\n    data: pd.DataFrame,\n    feature_cols: list[str],\n    n_splits: int,\n    granularity: str,\n    cost_bps: float = 2.0,\n    embargo: int = 0,\n) -> dict:\n    oos_pred, oos_proba, mask = walk_forward(data, feature_cols, n_splits, embargo)\n    y_true = data[\"label\"].astype(int).values[mask]",
         "detail": "apps.engine.app.research.backtest",
         "documentation": {}
     },
@@ -1512,7 +1520,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.research.backtest",
         "description": "apps.engine.app.research.backtest",
-        "peekOfCode": "CONFIDENCE_THRESHOLDS = (0.0, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)\ndef run(\n    data: pd.DataFrame,\n    feature_cols: list[str],\n    n_splits: int,\n    granularity: str,\n    cost_bps: float = 2.0,\n) -> dict:\n    oos_pred, oos_proba, mask = walk_forward(data, feature_cols, n_splits)\n    y_true = data[\"label\"].astype(int).values[mask]",
+        "peekOfCode": "CONFIDENCE_THRESHOLDS = (0.0, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)\ndef _submask(mask: np.ndarray, start_frac: float, end_frac: float) -> np.ndarray:\n    \"\"\"A contiguous (time-ordered) slice of the evaluated rows.\"\"\"\n    idx = np.flatnonzero(mask)\n    lo = int(len(idx) * start_frac)\n    hi = int(len(idx) * end_frac)\n    out = np.zeros(len(mask), dtype=bool)\n    out[idx[lo:hi]] = True\n    return out\ndef run(",
         "detail": "apps.engine.app.research.backtest",
         "documentation": {}
     },
@@ -1539,7 +1547,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.features",
         "description": "apps.engine.app.research.features",
-        "peekOfCode": "def build_features(df: pd.DataFrame) -> pd.DataFrame:\n    close = df[\"close\"]\n    out = pd.DataFrame(index=df.index)\n    # Momentum / returns over several horizons\n    out[\"ret_1\"] = close.pct_change()\n    out[\"ret_3\"] = close.pct_change(3)\n    out[\"ret_6\"] = close.pct_change(6)\n    out[\"ret_12\"] = close.pct_change(12)\n    # Distance to moving averages\n    for n in (5, 10, 20, 50):",
+        "peekOfCode": "def build_features(\n    df: pd.DataFrame, macro_df: pd.DataFrame | None = None\n) -> pd.DataFrame:\n    close = df[\"close\"]\n    out = pd.DataFrame(index=df.index)\n    # Momentum / returns over several horizons\n    out[\"ret_1\"] = close.pct_change()\n    out[\"ret_3\"] = close.pct_change(3)\n    out[\"ret_6\"] = close.pct_change(6)\n    out[\"ret_12\"] = close.pct_change(12)",
         "detail": "apps.engine.app.research.features",
         "documentation": {}
     },
@@ -1577,6 +1585,15 @@
         "description": "apps.engine.app.research.labeling",
         "peekOfCode": "CLASS_NAMES = {DOWN: \"DOWN\", FLAT: \"FLAT\", UP: \"UP\"}\ndef _fixed(close: pd.Series, horizon: int, threshold: float) -> pd.Series:\n    fwd_ret = close.shift(-horizon) / close - 1\n    label = pd.Series(FLAT, index=close.index, dtype=\"float64\")\n    label[fwd_ret > threshold] = UP\n    label[fwd_ret < -threshold] = DOWN\n    label.iloc[-horizon:] = pd.NA\n    return label\ndef _triple_barrier(\n    df: pd.DataFrame, horizon: int, vol_mult: float, vol_window: int",
         "detail": "apps.engine.app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "build_macro_features",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.macro",
+        "description": "apps.engine.app.research.macro",
+        "peekOfCode": "def build_macro_features(\n    index: pd.DatetimeIndex, macro_df: pd.DataFrame, gold_close: pd.Series\n) -> pd.DataFrame:\n    macro_close = macro_df[\"close\"].reindex(index, method=\"ffill\")\n    macro_ret = macro_close.pct_change()\n    gold_ret = gold_close.pct_change()\n    out = pd.DataFrame(index=index)\n    out[\"macro_ret_1\"] = macro_ret\n    out[\"macro_ret_6\"] = macro_close.pct_change(6)\n    out[\"macro_ret_12\"] = macro_close.pct_change(12)",
+        "detail": "apps.engine.app.research.macro",
         "documentation": {}
     },
     {
@@ -1638,7 +1655,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.strategy.base",
         "description": "apps.engine.app.strategy.base",
-        "peekOfCode": "class Strategy(ABC):\n    \"\"\"A strategy turns recent candles into a trading signal. It never talks\n    to the broker directly — execution and risk are the engine's job.\"\"\"\n    name: str = \"base\"\n    @abstractmethod\n    def evaluate(self, candles: list[dict]) -> Signal:\n        \"\"\"candles: chronological OHLCV dicts (see OandaClient.get_candles).\"\"\"\n        raise NotImplementedError\nclass AlwaysHold(Strategy):\n    \"\"\"Placeholder strategy used until the first real model is trained.",
+        "peekOfCode": "class Strategy(ABC):\n    \"\"\"A strategy turns recent candles into a trading signal. It never talks\n    to the broker directly — execution and risk are the engine's job.\"\"\"\n    name: str = \"base\"\n    # Whether evaluate() needs the macro candles (the Trader fetches them on demand).\n    needs_macro: bool = False\n    @abstractmethod\n    def evaluate(\n        self, candles: list[dict], macro_candles: list[dict] | None = None\n    ) -> Signal:",
         "detail": "apps.engine.app.strategy.base",
         "documentation": {}
     },
@@ -1647,7 +1664,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.strategy.base",
         "description": "apps.engine.app.strategy.base",
-        "peekOfCode": "class AlwaysHold(Strategy):\n    \"\"\"Placeholder strategy used until the first real model is trained.\n    Keeps the whole pipeline runnable end to end without taking positions.\"\"\"\n    name = \"always-hold\"\n    def evaluate(self, candles: list[dict]) -> Signal:\n        return Signal(\n            action=Action.HOLD,\n            confidence=1.0,\n            reason=\"Placeholder strategy: no model trained yet.\",\n        )",
+        "peekOfCode": "class AlwaysHold(Strategy):\n    \"\"\"Placeholder strategy used until the first real model is trained.\n    Keeps the whole pipeline runnable end to end without taking positions.\"\"\"\n    name = \"always-hold\"\n    def evaluate(\n        self, candles: list[dict], macro_candles: list[dict] | None = None\n    ) -> Signal:\n        return Signal(\n            action=Action.HOLD,\n            confidence=1.0,",
         "detail": "apps.engine.app.strategy.base",
         "documentation": {}
     },
@@ -1683,7 +1700,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.strategy.lightgbm_strategy",
         "description": "apps.engine.app.strategy.lightgbm_strategy",
-        "peekOfCode": "class LightGBMStrategy(Strategy):\n    name = \"lightgbm\"\n    def __init__(self, model_dir: str | Path):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        meta = json.loads((model_dir / \"meta.json\").read_text(encoding=\"utf-8\"))\n        self._feature_cols = meta[\"feature_cols\"]\n        # Confidence filter learned at training time: below it, stay flat.\n        self._confidence_threshold = float(meta.get(\"confidence_threshold\", 0.0))\n    def evaluate(self, candles: list[dict]) -> Signal:",
+        "peekOfCode": "class LightGBMStrategy(Strategy):\n    name = \"lightgbm\"\n    def __init__(self, model_dir: str | Path):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        meta = json.loads((model_dir / \"meta.json\").read_text(encoding=\"utf-8\"))\n        self._feature_cols = meta[\"feature_cols\"]\n        # Confidence filter learned at training time: below it, stay flat.\n        self._confidence_threshold = float(meta.get(\"confidence_threshold\", 0.0))\n        # Does this model use macro features?",
         "detail": "apps.engine.app.strategy.lightgbm_strategy",
         "documentation": {}
     },

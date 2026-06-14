@@ -50,6 +50,11 @@ class Settings(BaseSettings):
     dukascopy_symbol: str = "XAUUSD"
     dukascopy_price_divisor: float = 1000.0
 
+    # Données macro : instrument corrélé (EUR/USD = proxy inverse du dollar).
+    # macro_instrument = clé en base ; capital_macro_epic = epic Capital.com live.
+    macro_instrument: str = "EURUSD"
+    capital_macro_epic: str = "EURUSD"
+
     # Infra
     database_url: str = ""
     redis_url: str = ""

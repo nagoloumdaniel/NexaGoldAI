@@ -33,10 +33,15 @@ class Strategy(ABC):
     to the broker directly — execution and risk are the engine's job."""
 
     name: str = "base"
+    # Whether evaluate() needs the macro candles (the Trader fetches them on demand).
+    needs_macro: bool = False
 
     @abstractmethod
-    def evaluate(self, candles: list[dict]) -> Signal:
-        """candles: chronological OHLCV dicts (see OandaClient.get_candles)."""
+    def evaluate(
+        self, candles: list[dict], macro_candles: list[dict] | None = None
+    ) -> Signal:
+        """candles: chronological OHLCV dicts. macro_candles: same shape for the
+        correlated macro instrument, supplied only when needs_macro is True."""
         raise NotImplementedError
 
 
@@ -46,7 +51,9 @@ class AlwaysHold(Strategy):
 
     name = "always-hold"
 
-    def evaluate(self, candles: list[dict]) -> Signal:
+    def evaluate(
+        self, candles: list[dict], macro_candles: list[dict] | None = None
+    ) -> Signal:
         return Signal(
             action=Action.HOLD,
             confidence=1.0,

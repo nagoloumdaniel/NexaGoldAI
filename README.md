@@ -87,6 +87,33 @@ passe personnalisé pour la clé (distinct du mot de passe du compte). Vous
 obtenez trois éléments : `CAPITAL_API_KEY` (la clé), `CAPITAL_IDENTIFIER`
 (l'e-mail de connexion) et `CAPITAL_PASSWORD` (le mot de passe de la clé).
 
+### Amorcer les données et le modèle (une fois, après le 1er démarrage)
+
+Le moteur tourne « à vide » tant qu'il n'a pas de données ni de modèle. Avec le
+moteur démarré (port 8000) :
+
+```bash
+cd apps/engine
+# 1. Historique profond de l'or (≈ 30-40 min pour 1 an ; ajuster --days)
+.venv\Scripts\python.exe -m app.data.backfill_cli --granularity M5 --days 365
+# 2. (optionnel) proxy macro EUR/USD, même période
+.venv\Scripts\python.exe -m app.data.backfill_cli --granularity M5 --days 365 \
+    --symbol EURUSD --divisor 100000 --instrument EURUSD
+# 3. Bougies H1 dérivées des M5 (le modèle live tourne en H1)
+curl -X POST "http://localhost:8000/candles/resample?source=M5&target=H1&instrument=GOLD"
+# 4. Entraîner / promouvoir le champion (compare plusieurs approches)
+curl -X POST http://localhost:8000/learning/retrain
+```
+
+Ensuite, tout est automatique : le moteur ingère le temps réel, décide à
+chaque barre (journalisé, **sans ordre** tant que `TRADING_ENABLED=false`), et
+peut se réentraîner périodiquement (`LEARNING_ENABLED=true`). Le dashboard
+(`localhost:3000`) et les récaps Telegram reflètent le tout.
+
+> **Granularité du modèle** : `MODEL_GRANULARITY=H1` par défaut (meilleur
+> résultat mesuré). Changez-la dans `apps/engine/.env`. Le champion est par
+> granularité (`models/<granularité>/`).
+
 ## Déploiement
 
 ### Neon (PostgreSQL)
@@ -116,12 +143,19 @@ obtenez trois éléments : `CAPITAL_API_KEY` (la clé), `CAPITAL_IDENTIFIER`
 1. Importer le repo sur [vercel.com](https://vercel.com), Root Directory = `apps/web`.
 2. Variable : `NEXT_PUBLIC_API_URL` (URL Railway de l'api).
 
-## Notifications Telegram (rapport quotidien)
+## Notifications Telegram (récaps automatiques)
 
-L'api envoie chaque jour de semaine à 21h00 UTC (configurable via
-`REPORT_CRON`) un rapport sur Telegram : P&L du jour, solde, équité,
-drawdown, trades clôturés. Un `EquitySnapshot` est enregistré à chaque
-rapport — c'est aussi lui qui alimente la courbe d'équité du dashboard.
+L'api envoie sur Telegram, sans intervention :
+
+- **Récap quotidien** — chaque soir à 21h00 UTC (configurable via `REPORT_CRON`) :
+  P&L du jour, solde, équité, drawdown, trades clôturés. Un `EquitySnapshot` est
+  enregistré à chaque récap (il alimente aussi la courbe d'équité du dashboard).
+- **Récap hebdomadaire** — chaque vendredi à 21h00 UTC (en plus du quotidien) :
+  performance de la semaine, drawdown max, taux de réussite, P&L réalisé.
+- **Récap mensuel** — le dernier jour du mois à 21h00 UTC : même synthèse sur le mois.
+
+Déclenchement manuel pour tester : `POST /reports/daily/run`,
+`/reports/weekly/run`, `/reports/monthly/run`.
 
 Configuration (5 minutes) :
 
@@ -135,13 +169,7 @@ Configuration (5 minutes) :
 4. Renseigner les deux variables dans `apps/api/.env` (local) et sur le
    service Railway **api** (production).
 
-Test sans attendre le cron :
-
-```bash
-curl -X POST http://localhost:3001/reports/daily/run
-```
-
-Le rapport nécessite que le moteur (`ENGINE_URL`) soit démarré avec des
+Les récaps nécessitent que le moteur (`ENGINE_URL`) soit démarré avec des
 identifiants Capital.com valides — c'est lui qui fournit solde et équité.
 
 ## Pipeline de données (phase 1)
@@ -226,31 +254,36 @@ drawdown, profit factor, win rate, exposition.
 modèle et implémente l'interface `Strategy` — c'est le pont vers le paper
 trading (phase 3).
 
-### Filtre de confiance
+### Filtre de confiance, validation séparée, macro
 
-`backtest.run` balaie un ensemble de seuils de confiance et garde celui qui
-maximise le Sharpe : on ne prend position que si la probabilité du modèle
-dépasse ce seuil, sinon on reste flat. Le seuil retenu est sauvegardé dans
-`meta.json` et **appliqué en live** par `LightGBMStrategy` (en dessous, signal
-→ HOLD).
+- **Filtre de confiance** : `backtest.run` balaie des seuils et ne prend
+  position que si la probabilité du modèle dépasse le seuil. Choisi sur une
+  **slice de validation** puis évalué sur une **slice de test held-out** (pas de
+  fuite). Un **embargo** (purge) sépare train et test pour empêcher les labels
+  futurs de fuiter. Le seuil retenu est sauvegardé en `meta.json` et appliqué en
+  live par `LightGBMStrategy` (en dessous → HOLD).
+- **Features macro** : EUR/USD (proxy inverse du dollar) aligné sur l'or —
+  rendements, volatilité, corrélation glissante. Activées par config ; le Trader
+  récupère la macro en direct (sinon HOLD par sécurité). *Mesuré : EUR/USD seul
+  n'apporte pas d'edge clair — un vrai signal macro demanderait taux réels/DXY/
+  sentiment.*
+- **Granularité** : le système entraîne par granularité ; H1 donne le meilleur
+  ratio signal/coût.
 
-> **Évolution du modèle (toujours à ne PAS trader).** Sharpe OOS sur l'année :
+> **Évolution du modèle.** Sharpe OOS (held-out test) :
 >
-> | Étape | Sharpe | Note |
-> | --- | --- | --- |
-> | Baseline phase 2 (30 j, 20 features, fixe) | ≈ −34 | hasard |
-> | + 1 an de données + ~30 features | ≈ −17 | net mieux |
-> | + filtre de confiance (seuil ≈ 0,7-0,8) | ≈ −3 | quasi breakeven |
+> | Étape | Sharpe |
+> | --- | --- |
+> | Baseline phase 2 (M5, 30 j, 20 features, fixe) | ≈ −34 |
+> | + 1 an de données + ~30 features | ≈ −17 |
+> | + filtre de confiance | ≈ −3 |
+> | **+ granularité H1** | **≈ +3 (positif)** |
 >
-> Le triple-barrier monte l'accuracy à ≈ 50 % (3 classes), et le filtre de
-> confiance, en ne gardant que les paris à forte conviction (exposition ~3-7 %),
-> fait remonter le Sharpe à ≈ −3 et le profit factor à ≈ 0,95. **Le modèle est
-> proche du breakeven mais pas profitable.** Deux réserves d'honnêteté : choisir
-> le seuil sur le jeu de test est un léger sur-apprentissage (le balayage est
-> non monotone au-delà de 0,7, donc dans le bruit) ; et un seuil élevé = peu de
-> trades = estimation plus bruitée. Le vrai edge demandera probablement des
-> features externes (macro, taux, DXY) et une sélection de seuil sur une
-> validation séparée. L'infrastructure, elle, est solide.
+> Le passage en **H1** (moins de bruit, moins de coûts) combiné au filtre de
+> confiance fait **basculer le Sharpe en positif** sur la slice de test honnête —
+> premier résultat encourageant du projet. Réserve : l'échantillon H1 est plus
+> petit (~5 300 bougies), donc l'estimation est plus bruitée — à confirmer en
+> paper trading réel avant toute conclusion. Le kill switch reste actif.
 
 ## Paper trading (phase 3)
 

@@ -22,14 +22,22 @@ logger = logging.getLogger("nexagold.learning")
 
 MODELS_DIR = Path(__file__).resolve().parents[2] / "models"
 
-# Search space — each entry is a different "approach" (labelling method +
-# horizon/volatility). Triple-barrier and fixed compete head to head.
+# Search space — each entry is a different "approach" (labelling, horizon,
+# volatility, with/without macro). They compete head to head every round.
 CANDIDATE_CONFIGS = [
     {"labeling": "triple_barrier", "horizon": 12, "vol_mult": 1.0, "vol_window": 20},
     {"labeling": "triple_barrier", "horizon": 24, "vol_mult": 1.5, "vol_window": 20},
     {"labeling": "triple_barrier", "horizon": 48, "vol_mult": 2.0, "vol_window": 50},
     {"labeling": "fixed", "horizon": 12, "threshold": 0.0010},
     {"labeling": "fixed", "horizon": 24, "threshold": 0.0020},
+    {"labeling": "fixed", "horizon": 24, "threshold": 0.0020, "macro": True},
+    {
+        "labeling": "triple_barrier",
+        "horizon": 24,
+        "vol_mult": 1.5,
+        "vol_window": 20,
+        "macro": True,
+    },
 ]
 
 
@@ -46,11 +54,22 @@ async def retrain(settings: Settings, granularity: str, folds: int = 5) -> dict:
 
     registry = ModelRegistry(MODELS_DIR, granularity)
 
+    # Load the macro series once if any candidate needs it; drop macro configs
+    # if no macro data is available yet.
+    configs = list(CANDIDATE_CONFIGS)
+    macro_df = None
+    if any(c.get("macro") for c in configs):
+        macro_df = await load_candles(
+            settings, granularity, instrument=settings.macro_instrument
+        )
+        if macro_df is None or macro_df.empty:
+            configs = [c for c in configs if not c.get("macro")]
+
     leaderboard = []
-    for config in CANDIDATE_CONFIGS:
-        data = bt.build_dataset(df, config)
+    for config in configs:
+        data = bt.build_dataset(df, config, macro_df)
         cols = feature_columns(data)
-        report = bt.run(data, cols, folds, granularity)
+        report = bt.run(data, cols, folds, granularity, embargo=config["horizon"])
         leaderboard.append(
             {
                 "config": config,

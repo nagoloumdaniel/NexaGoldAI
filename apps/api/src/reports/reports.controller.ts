@@ -11,4 +11,14 @@ export class ReportsController {
   runDaily() {
     return this.dailyReport.sendDailyReport();
   }
+
+  @Post('weekly/run')
+  runWeekly() {
+    return this.dailyReport.sendWeeklyReport();
+  }
+
+  @Post('monthly/run')
+  runMonthly() {
+    return this.dailyReport.sendMonthlyReport();
+  }
 }

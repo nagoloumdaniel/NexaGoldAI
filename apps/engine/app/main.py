@@ -224,10 +224,27 @@ async def ingest_dukascopy(
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
-@app.get("/candles/stats")
-async def candles_stats() -> dict:
+@app.post("/candles/resample")
+async def candles_resample(
+    source: str = Query("M5"),
+    target: str = Query("H1"),
+    instrument: str | None = Query(None),
+) -> dict:
+    """Derive coarser candles (e.g. H1) from finer ones already stored."""
     service = ensure_ingestion_ready()
-    return {"instrument": settings.epic, "granularities": await service.stats()}
+    try:
+        return await service.resample(source, target, instrument)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.get("/candles/stats")
+async def candles_stats(instrument: str | None = Query(None)) -> dict:
+    service = ensure_ingestion_ready()
+    return {
+        "instrument": instrument or settings.epic,
+        "granularities": await service.stats(instrument or settings.epic),
+    }
 
 
 # -- Paper trading ----------------------------------------------------------
@@ -268,10 +285,18 @@ async def decisions_recent(limit: int = Query(20, ge=1, le=200)) -> list[dict]:
 
 
 @app.post("/learning/retrain")
-async def learning_retrain() -> dict:
-    """Run one retraining round: candidate configs compete, best is promoted."""
+async def learning_retrain(granularity: str | None = Query(None)) -> dict:
+    """Run one retraining round: candidate configs compete, best is promoted.
+
+    With ?granularity=H1, retrain on another granularity for measurement only
+    (no live strategy swap).
+    """
     if learning is None:
         raise HTTPException(status_code=503, detail="Base de données indisponible")
+    if granularity and granularity != settings.model_granularity:
+        from app.learning.trainer import retrain
+
+        return await retrain(settings, granularity)
     return await learning.retrain_once()
 
 

@@ -58,7 +58,20 @@ class Trader:
         candles = await self._broker.get_candles(
             granularity=s.model_granularity, count=s.decision_candles
         )
-        signal = self._strategy.evaluate(candles)
+
+        macro_candles = None
+        if getattr(self._strategy, "needs_macro", False):
+            try:
+                macro_candles = await self._broker.get_candles(
+                    epic=s.capital_macro_epic,
+                    granularity=s.model_granularity,
+                    count=s.decision_candles,
+                )
+            except CapitalError as exc:
+                logger.warning("Macro (%s) indisponible: %s", s.capital_macro_epic, exc)
+                macro_candles = []
+
+        signal = self._strategy.evaluate(candles, macro_candles)
         decision_id = await self._decisions.insert(self._strategy.name, signal)
 
         out = {

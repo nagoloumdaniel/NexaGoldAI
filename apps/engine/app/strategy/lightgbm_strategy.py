@@ -26,13 +26,25 @@ class LightGBMStrategy(Strategy):
         self._feature_cols = meta["feature_cols"]
         # Confidence filter learned at training time: below it, stay flat.
         self._confidence_threshold = float(meta.get("confidence_threshold", 0.0))
+        # Does this model use macro features?
+        self.needs_macro = bool(meta.get("config", {}).get("macro"))
 
-    def evaluate(self, candles: list[dict]) -> Signal:
+    def evaluate(
+        self, candles: list[dict], macro_candles: list[dict] | None = None
+    ) -> Signal:
         df = candles_to_frame(candles)
         if df.empty:
             return Signal(Action.HOLD, 0.0, "Aucune bougie fournie")
 
-        features = build_features(df)
+        macro_df = None
+        if self.needs_macro:
+            macro_df = candles_to_frame(macro_candles or [])
+            if macro_df.empty:
+                return Signal(
+                    Action.HOLD, 0.0, "Macro indisponible — pas de trade (sécurité)"
+                )
+
+        features = build_features(df, macro_df)
         latest = features.iloc[[-1]][self._feature_cols]
         if latest.isna().any(axis=1).iloc[0]:
             return Signal(

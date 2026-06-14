@@ -49,8 +49,8 @@ class IngestionService:
     def granularities(self) -> list[str]:
         return self._granularities
 
-    async def stats(self) -> list[dict]:
-        return await self._repository.stats(self._settings.epic)
+    async def stats(self, instrument: str | None = None) -> list[dict]:
+        return await self._repository.stats(instrument or self._settings.epic)
 
     async def ingest_recent(self) -> dict[str, int]:
         """Upsert the latest candles for every configured granularity."""
@@ -90,21 +90,30 @@ class IngestionService:
         return total
 
     async def backfill_dukascopy(
-        self, granularity: str, days: int, concurrency: int = 12
+        self,
+        granularity: str,
+        days: int,
+        concurrency: int = 12,
+        symbol: str | None = None,
+        divisor: float | None = None,
+        instrument: str | None = None,
     ) -> dict:
         """Seed deep history from Dukascopy tick files.
 
         Hours are downloaded concurrently in batches, then aggregated and
         upserted batch by batch so memory stays bounded regardless of range.
+        `symbol`/`divisor`/`instrument` override the defaults to backfill a
+        secondary instrument (e.g. a macro proxy).
         """
         if not supported_granularity(granularity):
             raise ValueError(
                 f"Granularité {granularity} non supportée par Dukascopy "
                 "(utiliser M1, M5, M15, M30 ou H1)"
             )
-        client = DukascopyClient(
-            self._settings.dukascopy_symbol, self._settings.dukascopy_price_divisor
-        )
+        symbol = symbol or self._settings.dukascopy_symbol
+        divisor = divisor if divisor is not None else self._settings.dukascopy_price_divisor
+        instrument = instrument or self._settings.epic
+        client = DukascopyClient(symbol, divisor)
         end = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
         start = end - timedelta(days=days)
         hours = [
@@ -130,12 +139,13 @@ class IngestionService:
                     ticks_total += len(ticks)
                     candles = aggregate_ticks(ticks, granularity)
                     candles_total += await self._repository.upsert_many(
-                        self._settings.epic, granularity, candles
+                        instrument, granularity, candles
                     )
         finally:
             await client.close()
 
         summary = {
+            "instrument": instrument,
             "granularity": granularity,
             "days": days,
             "hours_scanned": scanned,
@@ -149,6 +159,62 @@ class IngestionService:
     @staticmethod
     async def _fetch_hour(client: DukascopyClient, hour_dt: datetime) -> tuple:
         return hour_dt, await client.fetch_hour(hour_dt)
+
+    async def resample(
+        self, source: str, target: str, instrument: str | None = None
+    ) -> dict:
+        """Build coarser candles (e.g. H1) from finer ones (e.g. M5) already in
+        the DB — no re-download needed."""
+        import pandas as pd  # local import: keeps engine startup light
+
+        rule = {"M15": "15min", "M30": "30min", "H1": "1h", "H4": "4h", "D": "1D"}.get(
+            target
+        )
+        if rule is None:
+            raise ValueError(f"Cible {target} non supportée pour le resampling")
+
+        instrument = instrument or self._settings.epic
+        rows = await self._repository.fetch(instrument, source)
+        if not rows:
+            return {"error": f"Aucune bougie source {source} pour {instrument}"}
+
+        df = pd.DataFrame([dict(r) for r in rows])
+        for col in ("open", "high", "low", "close"):
+            df[col] = df[col].astype(float)
+        df["volume"] = df["volume"].astype(int)
+        df = df.set_index(pd.to_datetime(df["time"])).sort_index()
+
+        agg = (
+            df.resample(rule)
+            .agg(
+                {
+                    "open": "first",
+                    "high": "max",
+                    "low": "min",
+                    "close": "last",
+                    "volume": "sum",
+                }
+            )
+            .dropna()
+        )
+        candles = [
+            {
+                "time": idx.isoformat(),
+                "open": row.open,
+                "high": row.high,
+                "low": row.low,
+                "close": row.close,
+                "volume": int(row.volume),
+            }
+            for idx, row in agg.iterrows()
+        ]
+        upserted = await self._repository.upsert_many(instrument, target, candles)
+        return {
+            "instrument": instrument,
+            "source": source,
+            "target": target,
+            "candles": upserted,
+        }
 
     async def run_loop(self) -> None:
         """Background task: ingest_recent() on a fixed interval until cancelled."""

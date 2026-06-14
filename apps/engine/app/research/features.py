@@ -7,6 +7,8 @@ including the current bar, so there is no lookahead leaking future prices.
 import numpy as np
 import pandas as pd
 
+from app.research.macro import build_macro_features
+
 # Columns produced here that are NOT model inputs (kept for labels/PnL).
 NON_FEATURE = {"label", "fwd_ret", "next_ret"}
 
@@ -32,7 +34,9 @@ def _atr(df: pd.DataFrame, period: int = 14) -> pd.Series:
     return true_range.rolling(period).mean()
 
 
-def build_features(df: pd.DataFrame) -> pd.DataFrame:
+def build_features(
+    df: pd.DataFrame, macro_df: pd.DataFrame | None = None
+) -> pd.DataFrame:
     close = df["close"]
     out = pd.DataFrame(index=df.index)
 
@@ -97,6 +101,11 @@ def build_features(df: pd.DataFrame) -> pd.DataFrame:
     out["hour_sin"] = np.sin(2 * np.pi * hour / 24)
     out["hour_cos"] = np.cos(2 * np.pi * hour / 24)
     out["dow"] = df.index.dayofweek.astype(float)
+
+    # Macro features (optional) — only added when a macro series is supplied.
+    if macro_df is not None and not macro_df.empty:
+        macro = build_macro_features(df.index, macro_df, close)
+        out = pd.concat([out, macro], axis=1)
 
     return out
 

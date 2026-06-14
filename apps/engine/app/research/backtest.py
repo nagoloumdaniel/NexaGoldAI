@@ -41,9 +41,15 @@ DEFAULT_PARAMS = dict(
 )
 
 
-def build_dataset(df: pd.DataFrame, config: dict) -> pd.DataFrame:
-    """Features + label (labelling method chosen by `config`) + next-bar return."""
-    feats = build_features(df)
+def build_dataset(
+    df: pd.DataFrame, config: dict, macro_df: pd.DataFrame | None = None
+) -> pd.DataFrame:
+    """Features + label (labelling method chosen by `config`) + next-bar return.
+
+    `macro_df` is included as features only when `config["macro"]` is set.
+    """
+    use_macro = macro_df if config.get("macro") else None
+    feats = build_features(df, use_macro)
     feats["label"] = make_labels(df, config)
     feats["next_ret"] = df["close"].pct_change().shift(-1)
     return feats.dropna()
@@ -53,14 +59,23 @@ def make_model(params: dict | None = None) -> LGBMClassifier:
     return LGBMClassifier(**(params or DEFAULT_PARAMS))
 
 
-def walk_forward(data: pd.DataFrame, feature_cols: list[str], n_splits: int):
-    """Out-of-sample predictions/probabilities via expanding-window CV."""
+def walk_forward(
+    data: pd.DataFrame, feature_cols: list[str], n_splits: int, embargo: int = 0
+):
+    """Out-of-sample predictions/probabilities via expanding-window CV.
+
+    `embargo` (purge) drops that many bars between each train block and its
+    test block, so labels that look `horizon` bars ahead can't leak training
+    information into the test set.
+    """
     X = data[feature_cols]  # keep column names so fit/predict stay consistent
     y = data["label"].astype(int).values
     oos_pred = np.full(len(data), -1, dtype=int)
     oos_proba = np.zeros((len(data), 3))
 
-    for train_idx, test_idx in TimeSeriesSplit(n_splits=n_splits).split(X):
+    for train_idx, test_idx in TimeSeriesSplit(
+        n_splits=n_splits, gap=embargo
+    ).split(X):
         model = make_model()
         model.fit(X.iloc[train_idx], y[train_idx])
         proba = model.predict_proba(X.iloc[test_idx])
@@ -130,32 +145,52 @@ def backtest_pnl(
 CONFIDENCE_THRESHOLDS = (0.0, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)
 
 
+def _submask(mask: np.ndarray, start_frac: float, end_frac: float) -> np.ndarray:
+    """A contiguous (time-ordered) slice of the evaluated rows."""
+    idx = np.flatnonzero(mask)
+    lo = int(len(idx) * start_frac)
+    hi = int(len(idx) * end_frac)
+    out = np.zeros(len(mask), dtype=bool)
+    out[idx[lo:hi]] = True
+    return out
+
+
 def run(
     data: pd.DataFrame,
     feature_cols: list[str],
     n_splits: int,
     granularity: str,
     cost_bps: float = 2.0,
+    embargo: int = 0,
 ) -> dict:
-    oos_pred, oos_proba, mask = walk_forward(data, feature_cols, n_splits)
+    oos_pred, oos_proba, mask = walk_forward(data, feature_cols, n_splits, embargo)
     y_true = data["label"].astype(int).values[mask]
     y_pred = oos_pred[mask]
 
     dist = data["label"].astype(int).value_counts().sort_index()
     cm = confusion_matrix(y_true, y_pred, labels=[DOWN, FLAT, UP])
 
-    # Sweep the confidence filter and keep the threshold with the best Sharpe.
+    # Pick the confidence threshold on an earlier VALIDATION slice, then report
+    # PnL on a held-out later TEST slice — so the headline metric never sees the
+    # data used to choose the threshold.
+    val_mask = _submask(mask, 0.0, 0.6)
+    test_mask = _submask(mask, 0.6, 1.0)
+
     sweep: dict[str, float] = {}
-    best_pnl = None
     best_threshold = 0.0
+    best_val_sharpe = None
     for threshold in CONFIDENCE_THRESHOLDS:
-        pnl = backtest_pnl(
-            data, oos_pred, oos_proba, mask, granularity, cost_bps, threshold
+        val_pnl = backtest_pnl(
+            data, oos_pred, oos_proba, val_mask, granularity, cost_bps, threshold
         )
-        sweep[str(threshold)] = pnl["sharpe_annualised"]
-        if best_pnl is None or pnl["sharpe_annualised"] > best_pnl["sharpe_annualised"]:
-            best_pnl = pnl
+        sweep[str(threshold)] = val_pnl["sharpe_annualised"]
+        if best_val_sharpe is None or val_pnl["sharpe_annualised"] > best_val_sharpe:
+            best_val_sharpe = val_pnl["sharpe_annualised"]
             best_threshold = threshold
+
+    test_pnl = backtest_pnl(
+        data, oos_pred, oos_proba, test_mask, granularity, cost_bps, best_threshold
+    )
 
     return {
         "samples": int(len(data)),
@@ -168,6 +203,8 @@ def run(
             "rows_true_cols_pred": cm.tolist(),
         },
         "best_confidence_threshold": best_threshold,
-        "confidence_sweep": sweep,
-        "pnl": best_pnl,
+        "validation_sweep": sweep,
+        "embargo": embargo,
+        # Headline PnL = held-out test slice at the validation-chosen threshold.
+        "pnl": test_pnl,
     }

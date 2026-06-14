@@ -57,6 +57,16 @@ class CandleRepository:
             await conn.executemany(_UPSERT_SQL, records)
         return len(records)
 
+    async def fetch(self, instrument: str, granularity: str) -> list:
+        async with self._pool.acquire() as conn:
+            return await conn.fetch(
+                'SELECT "time", "open", "high", "low", "close", "volume" '
+                'FROM "Candle" WHERE "instrument" = $1 AND "granularity" = $2 '
+                'ORDER BY "time"',
+                instrument,
+                granularity,
+            )
+
     async def stats(self, instrument: str) -> list[dict]:
         """Per-granularity coverage: row count and time range."""
         async with self._pool.acquire() as conn:
