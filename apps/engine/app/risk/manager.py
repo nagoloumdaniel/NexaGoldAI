@@ -14,7 +14,8 @@ from app.strategy.base import Action, Signal
 class RiskDecision:
     approved: bool
     reason: str
-    # Position size in units (OANDA: 1 unit of XAU_USD = 1 ounce). 0 if rejected.
+    # Signed position size: positive = buy, negative = sell. The broker client
+    # converts this to its own size/direction convention. 0 if rejected.
     units: float = 0.0
 
 

@@ -1,0 +1,378 @@
+[
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "httpx",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "httpx",
+        "description": "httpx",
+        "detail": "httpx",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "field",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "Enum",
+        "importPath": "enum",
+        "description": "enum",
+        "isExtraImport": true,
+        "detail": "enum",
+        "documentation": {}
+    },
+    {
+        "label": "lru_cache",
+        "importPath": "functools",
+        "description": "functools",
+        "isExtraImport": true,
+        "detail": "functools",
+        "documentation": {}
+    },
+    {
+        "label": "BaseSettings",
+        "importPath": "pydantic_settings",
+        "description": "pydantic_settings",
+        "isExtraImport": true,
+        "detail": "pydantic_settings",
+        "documentation": {}
+    },
+    {
+        "label": "SettingsConfigDict",
+        "importPath": "pydantic_settings",
+        "description": "pydantic_settings",
+        "isExtraImport": true,
+        "detail": "pydantic_settings",
+        "documentation": {}
+    },
+    {
+        "label": "asynccontextmanager",
+        "importPath": "contextlib",
+        "description": "contextlib",
+        "isExtraImport": true,
+        "detail": "contextlib",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalClient",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalError",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "_Known",
+        "kind": 6,
+        "importPath": "apps.api.node_modules.flatted.python.flatted",
+        "description": "apps.api.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    for i in range(len(value)):\n        yield i",
+        "detail": "apps.api.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "_String",
+        "kind": 6,
+        "importPath": "apps.api.node_modules.flatted.python.flatted",
+        "description": "apps.api.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    for i in range(len(value)):\n        yield i\ndef _object_keys(value):\n    for key in value:\n        yield key\ndef _is_array(value):",
+        "detail": "apps.api.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "parse",
+        "kind": 2,
+        "importPath": "apps.api.node_modules.flatted.python.flatted",
+        "description": "apps.api.node_modules.flatted.python.flatted",
+        "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+        "detail": "apps.api.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "kind": 2,
+        "importPath": "apps.api.node_modules.flatted.python.flatted",
+        "description": "apps.api.node_modules.flatted.python.flatted",
+        "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+        "detail": "apps.api.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalError",
+        "kind": 6,
+        "importPath": "apps.engine.app.broker.capital",
+        "description": "apps.engine.app.broker.capital",
+        "peekOfCode": "class CapitalError(Exception):\n    \"\"\"Raised when the Capital.com API returns an error response.\"\"\"\ndef _mid(price: dict) -> float:\n    \"\"\"Mid value of a Capital.com {bid, ask} price object.\"\"\"\n    bid = price.get(\"bid\")\n    ask = price.get(\"ask\")\n    if bid is not None and ask is not None:\n        return (float(bid) + float(ask)) / 2\n    return float(bid if bid is not None else ask)\nclass CapitalClient:",
+        "detail": "apps.engine.app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalClient",
+        "kind": 6,
+        "importPath": "apps.engine.app.broker.capital",
+        "description": "apps.engine.app.broker.capital",
+        "peekOfCode": "class CapitalClient:\n    def __init__(self, settings: Settings):\n        self._settings = settings\n        self._client = httpx.AsyncClient(base_url=settings.capital_base_url, timeout=15.0)\n        self._cst: str | None = None\n        self._security_token: str | None = None\n    async def close(self) -> None:\n        await self._client.aclose()\n    # -- Auth -----------------------------------------------------------------\n    async def _login(self) -> None:",
+        "detail": "apps.engine.app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "_RESOLUTION_MAP",
+        "kind": 5,
+        "importPath": "apps.engine.app.broker.capital",
+        "description": "apps.engine.app.broker.capital",
+        "peekOfCode": "_RESOLUTION_MAP = {\n    \"M1\": \"MINUTE\",\n    \"M5\": \"MINUTE_5\",\n    \"M15\": \"MINUTE_15\",\n    \"M30\": \"MINUTE_30\",\n    \"H1\": \"HOUR\",\n    \"H4\": \"HOUR_4\",\n    \"D\": \"DAY\",\n    \"W\": \"WEEK\",\n}",
+        "detail": "apps.engine.app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "RiskDecision",
+        "kind": 6,
+        "importPath": "apps.engine.app.risk.manager",
+        "description": "apps.engine.app.risk.manager",
+        "peekOfCode": "class RiskDecision:\n    approved: bool\n    reason: str\n    # Signed position size: positive = buy, negative = sell. The broker client\n    # converts this to its own size/direction convention. 0 if rejected.\n    units: float = 0.0\nclass RiskManager:\n    def __init__(self, settings: Settings):\n        self._settings = settings\n    def review(",
+        "detail": "apps.engine.app.risk.manager",
+        "documentation": {}
+    },
+    {
+        "label": "RiskManager",
+        "kind": 6,
+        "importPath": "apps.engine.app.risk.manager",
+        "description": "apps.engine.app.risk.manager",
+        "peekOfCode": "class RiskManager:\n    def __init__(self, settings: Settings):\n        self._settings = settings\n    def review(\n        self,\n        signal: Signal,\n        account: dict,\n        open_positions: list[dict],\n        price: float,\n        stop_loss_price: float,",
+        "detail": "apps.engine.app.risk.manager",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
+        "kind": 6,
+        "importPath": "apps.engine.app.strategy.base",
+        "description": "apps.engine.app.strategy.base",
+        "peekOfCode": "class Action(str, Enum):\n    BUY = \"BUY\"\n    SELL = \"SELL\"\n    HOLD = \"HOLD\"\n@dataclass\nclass Signal:\n    action: Action\n    # 0.0 to 1.0 — strategies must be honest about uncertainty; the risk\n    # manager can ignore low-confidence signals.\n    confidence: float",
+        "detail": "apps.engine.app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "kind": 6,
+        "importPath": "apps.engine.app.strategy.base",
+        "description": "apps.engine.app.strategy.base",
+        "peekOfCode": "class Signal:\n    action: Action\n    # 0.0 to 1.0 — strategies must be honest about uncertainty; the risk\n    # manager can ignore low-confidence signals.\n    confidence: float\n    # Human-readable explanation, stored with every trade for the dashboard\n    # (\"Raisons de la décision IA\" in the spec).\n    reason: str\n    # Feature values used for the decision, kept for retraining datasets.\n    features: dict = field(default_factory=dict)",
+        "detail": "apps.engine.app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Strategy",
+        "kind": 6,
+        "importPath": "apps.engine.app.strategy.base",
+        "description": "apps.engine.app.strategy.base",
+        "peekOfCode": "class Strategy(ABC):\n    \"\"\"A strategy turns recent candles into a trading signal. It never talks\n    to the broker directly — execution and risk are the engine's job.\"\"\"\n    name: str = \"base\"\n    @abstractmethod\n    def evaluate(self, candles: list[dict]) -> Signal:\n        \"\"\"candles: chronological OHLCV dicts (see OandaClient.get_candles).\"\"\"\n        raise NotImplementedError\nclass AlwaysHold(Strategy):\n    \"\"\"Placeholder strategy used until the first real model is trained.",
+        "detail": "apps.engine.app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "AlwaysHold",
+        "kind": 6,
+        "importPath": "apps.engine.app.strategy.base",
+        "description": "apps.engine.app.strategy.base",
+        "peekOfCode": "class AlwaysHold(Strategy):\n    \"\"\"Placeholder strategy used until the first real model is trained.\n    Keeps the whole pipeline runnable end to end without taking positions.\"\"\"\n    name = \"always-hold\"\n    def evaluate(self, candles: list[dict]) -> Signal:\n        return Signal(\n            action=Action.HOLD,\n            confidence=1.0,\n            reason=\"Placeholder strategy: no model trained yet.\",\n        )",
+        "detail": "apps.engine.app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "kind": 6,
+        "importPath": "apps.engine.app.config",
+        "description": "apps.engine.app.config",
+        "peekOfCode": "class Settings(BaseSettings):\n    \"\"\"Engine configuration, loaded from environment variables (or .env locally).\"\"\"\n    model_config = SettingsConfigDict(env_file=\".env\", env_file_encoding=\"utf-8\", extra=\"ignore\")\n    # Capital.com\n    capital_api_key: str = \"\"\n    capital_identifier: str = \"\"\n    capital_password: str = \"\"\n    # \"demo\" (paper trading) or \"live\"\n    capital_env: str = \"demo\"\n    # Trading — \"GOLD\" est le code (epic) Capital.com pour l'or (XAU/USD)",
+        "detail": "apps.engine.app.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_settings",
+        "kind": 2,
+        "importPath": "apps.engine.app.config",
+        "description": "apps.engine.app.config",
+        "peekOfCode": "def get_settings() -> Settings:\n    return Settings()",
+        "detail": "apps.engine.app.config",
+        "documentation": {}
+    },
+    {
+        "label": "ensure_broker_configured",
+        "kind": 2,
+        "importPath": "apps.engine.app.main",
+        "description": "apps.engine.app.main",
+        "peekOfCode": "def ensure_broker_configured() -> None:\n    if not (\n        settings.capital_api_key\n        and settings.capital_identifier\n        and settings.capital_password\n    ):\n        raise HTTPException(\n            status_code=503,\n            detail=(\n                \"Capital.com non configuré : renseignez CAPITAL_API_KEY, \"",
+        "detail": "apps.engine.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "kind": 5,
+        "importPath": "apps.engine.app.main",
+        "description": "apps.engine.app.main",
+        "peekOfCode": "settings = get_settings()\nbroker: CapitalClient | None = None\n@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    global broker\n    broker = CapitalClient(settings)\n    yield\n    await broker.close()\napp = FastAPI(title=\"NexaGold Engine\", version=\"0.1.0\", lifespan=lifespan)\ndef ensure_broker_configured() -> None:",
+        "detail": "apps.engine.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "apps.engine.app.main",
+        "description": "apps.engine.app.main",
+        "peekOfCode": "app = FastAPI(title=\"NexaGold Engine\", version=\"0.1.0\", lifespan=lifespan)\ndef ensure_broker_configured() -> None:\n    if not (\n        settings.capital_api_key\n        and settings.capital_identifier\n        and settings.capital_password\n    ):\n        raise HTTPException(\n            status_code=503,\n            detail=(",
+        "detail": "apps.engine.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "_Known",
+        "kind": 6,
+        "importPath": "apps.web.node_modules.flatted.python.flatted",
+        "description": "apps.web.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    for i in range(len(value)):\n        yield i",
+        "detail": "apps.web.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "_String",
+        "kind": 6,
+        "importPath": "apps.web.node_modules.flatted.python.flatted",
+        "description": "apps.web.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    for i in range(len(value)):\n        yield i\ndef _object_keys(value):\n    for key in value:\n        yield key\ndef _is_array(value):",
+        "detail": "apps.web.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "parse",
+        "kind": 2,
+        "importPath": "apps.web.node_modules.flatted.python.flatted",
+        "description": "apps.web.node_modules.flatted.python.flatted",
+        "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+        "detail": "apps.web.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "kind": 2,
+        "importPath": "apps.web.node_modules.flatted.python.flatted",
+        "description": "apps.web.node_modules.flatted.python.flatted",
+        "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+        "detail": "apps.web.node_modules.flatted.python.flatted",
+        "documentation": {}
+    }
+]

@@ -23,7 +23,7 @@ Plateforme de trading algorithmique sur l'or (XAU/USD) pilotée par IA.
                                 └────────────┬────────────┘
                                              │ REST
                                       ┌──────▼──────┐
-                                      │ OANDA v20   │
+                                      │ Capital.com │
                                       │ (démo/réel) │
                                       └─────────────┘
 ```
@@ -32,17 +32,17 @@ Plateforme de trading algorithmique sur l'or (XAU/USD) pilotée par IA.
 | --- | --- | --- |
 | `apps/web` | Dashboard Next.js 16 + Tailwind | Vercel |
 | `apps/api` | Backend NestJS + Prisma (utilisateurs, JWT, notifications, WebSockets) | Railway (Dockerfile) |
-| `apps/engine` | Moteur de trading Python/FastAPI (OANDA, stratégies, gestion du risque) | Railway (Dockerfile) |
+| `apps/engine` | Moteur de trading Python/FastAPI (Capital.com, stratégies, gestion du risque) | Railway (Dockerfile) |
 | PostgreSQL | Trades, bougies, décisions IA, équité | Neon |
 | Redis | Cache, temps réel | Upstash |
 
 ## Décisions techniques (et pourquoi)
 
-- **OANDA** comme broker v1 : API REST pure (aucun terminal à faire tourner,
-  contrairement à IBKR/MT5), données temps réel et historiques incluses,
-  compte démo identique au compte réel. IBKR envisagé en v2.
+- **Capital.com** comme broker v1 : API REST pure (aucun terminal à faire
+  tourner, contrairement à IBKR/MT5), authentification par clé API, prix en
+  streaming, compte démo identique au compte réel. IBKR envisagé en v2.
 - **Dukascopy** pour l'historique profond (backtesting/entraînement) ;
-  le flux OANDA pour la décision temps réel.
+  le flux Capital.com pour la décision temps réel.
 - **PostgreSQL standard** (pas TimescaleDB) : Neon ne supporte pas
   l'extension, et le volume M1 (~370 000 bougies/an) reste trivial pour
   Postgres avec la clé composite de `Candle`.
@@ -69,7 +69,7 @@ npm run start:dev                    # http://localhost:3001/health
 
 # 3. Moteur Python
 cd apps/engine
-cp .env.example .env                 # renseigner OANDA_API_KEY / OANDA_ACCOUNT_ID
+cp .env.example .env                 # renseigner les identifiants Capital.com
 python -m venv .venv && .venv\Scripts\activate   # Windows
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000        # http://localhost:8000/health
@@ -80,9 +80,12 @@ npm install
 npm run dev                          # http://localhost:3000
 ```
 
-Pour obtenir les identifiants OANDA : créer un compte démo (fxTrade Practice)
-sur oanda.com, puis « Manage API Access » → générer un token. L'ID de compte
-est visible dans la liste des comptes (format `101-004-XXXXXXX-001`).
+Pour obtenir les identifiants Capital.com : sur votre compte, **activez la
+2FA** (obligatoire pour l'API), basculez en mode **Démo**, puis Paramètres →
+**API integrations** → **Generate API Key**. Capital.com demande un mot de
+passe personnalisé pour la clé (distinct du mot de passe du compte). Vous
+obtenez trois éléments : `CAPITAL_API_KEY` (la clé), `CAPITAL_IDENTIFIER`
+(l'e-mail de connexion) et `CAPITAL_PASSWORD` (le mot de passe de la clé).
 
 ## Déploiement
 
@@ -102,8 +105,9 @@ est visible dans la liste des comptes (format `101-004-XXXXXXX-001`).
    Variables : `DATABASE_URL` (Neon), `REDIS_URL` (Upstash), `FRONTEND_URL`
    (URL Vercel), `JWT_SECRET`.
 3. Service **engine** : Root Directory = `apps/engine`.
-   Variables : `OANDA_API_KEY`, `OANDA_ACCOUNT_ID`, `OANDA_ENV=practice`,
-   `DATABASE_URL`, `REDIS_URL`, `TRADING_ENABLED=false`.
+   Variables : `CAPITAL_API_KEY`, `CAPITAL_IDENTIFIER`, `CAPITAL_PASSWORD`,
+   `CAPITAL_ENV=demo`, `EPIC=GOLD`, `DATABASE_URL`, `REDIS_URL`,
+   `TRADING_ENABLED=false`.
 4. ⚠️ Le moteur doit rester sur une offre **always-on** (jamais de plan qui
    endort les services) : une position ouverte doit toujours être surveillée.
 
@@ -138,11 +142,11 @@ curl -X POST http://localhost:3001/reports/daily/run
 ```
 
 Le rapport nécessite que le moteur (`ENGINE_URL`) soit démarré avec des
-identifiants OANDA valides — c'est lui qui fournit solde et équité.
+identifiants Capital.com valides — c'est lui qui fournit solde et équité.
 
 ## Feuille de route
 
-1. **Pipeline de données** : ingestion continue OANDA → table `Candle`,
+1. **Pipeline de données** : ingestion continue Capital.com → table `Candle`,
    backfill historique Dukascopy.
 2. **Backtesting + premier modèle** : features techniques, LightGBM,
    validation walk-forward (Sharpe, drawdown, profit factor).
@@ -152,5 +156,5 @@ identifiants OANDA valides — c'est lui qui fournit solde et équité.
 5. **Boucle d'apprentissage** : réentraînement périodique, comparaison de
    stratégies, puis exploration RL (PPO) une fois le pipeline validé.
 
-Le passage en réel (`OANDA_ENV=live`, `TRADING_ENABLED=true`) n'est envisagé
+Le passage en réel (`CAPITAL_ENV=live`, `TRADING_ENABLED=true`) n'est envisagé
 qu'après plusieurs semaines de paper trading aux métriques stables.

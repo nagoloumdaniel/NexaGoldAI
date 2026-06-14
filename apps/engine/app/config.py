@@ -8,14 +8,15 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
-    # OANDA
-    oanda_api_key: str = ""
-    oanda_account_id: str = ""
-    # "practice" (demo) or "live"
-    oanda_env: str = "practice"
+    # Capital.com
+    capital_api_key: str = ""
+    capital_identifier: str = ""
+    capital_password: str = ""
+    # "demo" (paper trading) or "live"
+    capital_env: str = "demo"
 
-    # Trading
-    instrument: str = "XAU_USD"
+    # Trading — "GOLD" est le code (epic) Capital.com pour l'or (XAU/USD)
+    epic: str = "GOLD"
     # Hard kill switch: when False the engine never sends orders, whatever the signal.
     trading_enabled: bool = False
 
@@ -29,10 +30,10 @@ class Settings(BaseSettings):
     redis_url: str = ""
 
     @property
-    def oanda_base_url(self) -> str:
-        if self.oanda_env == "live":
-            return "https://api-fxtrade.oanda.com"
-        return "https://api-fxpractice.oanda.com"
+    def capital_base_url(self) -> str:
+        if self.capital_env == "live":
+            return "https://api-capital.backend-capital.com"
+        return "https://demo-api-capital.backend-capital.com"
 
 
 @lru_cache
