@@ -9,6 +9,54 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "Any",
         "importPath": "typing",
         "description": "typing",
@@ -42,11 +90,110 @@
         "documentation": {}
     },
     {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
         "label": "get_settings",
         "importPath": "app.config",
         "description": "app.config",
         "isExtraImport": true,
         "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Decimal",
+        "importPath": "decimal",
+        "description": "decimal",
+        "isExtraImport": true,
+        "detail": "decimal",
+        "documentation": {}
+    },
+    {
+        "label": "asyncpg",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "asyncpg",
+        "description": "asyncpg",
+        "detail": "asyncpg",
+        "documentation": {}
+    },
+    {
+        "label": "asyncio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "asyncio",
+        "description": "asyncio",
+        "detail": "asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalClient",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalError",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalClient",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalError",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CandleRepository",
+        "importPath": "app.data.candles",
+        "description": "app.data.candles",
+        "isExtraImport": true,
+        "detail": "app.data.candles",
+        "documentation": {}
+    },
+    {
+        "label": "CandleRepository",
+        "importPath": "app.data.candles",
+        "description": "app.data.candles",
+        "isExtraImport": true,
+        "detail": "app.data.candles",
         "documentation": {}
     },
     {
@@ -162,19 +309,27 @@
         "documentation": {}
     },
     {
-        "label": "CapitalClient",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
+        "label": "Query",
+        "importPath": "fastapi",
+        "description": "fastapi",
         "isExtraImport": true,
-        "detail": "app.broker.capital",
+        "detail": "fastapi",
         "documentation": {}
     },
     {
-        "label": "CapitalError",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
+        "label": "IngestionService",
+        "importPath": "app.data.ingestion",
+        "description": "app.data.ingestion",
         "isExtraImport": true,
-        "detail": "app.broker.capital",
+        "detail": "app.data.ingestion",
+        "documentation": {}
+    },
+    {
+        "label": "Database",
+        "importPath": "app.db",
+        "description": "app.db",
+        "isExtraImport": true,
+        "detail": "app.db",
         "documentation": {}
     },
     {
@@ -238,6 +393,51 @@
         "description": "apps.engine.app.broker.capital",
         "peekOfCode": "_RESOLUTION_MAP = {\n    \"M1\": \"MINUTE\",\n    \"M5\": \"MINUTE_5\",\n    \"M15\": \"MINUTE_15\",\n    \"M30\": \"MINUTE_30\",\n    \"H1\": \"HOUR\",\n    \"H4\": \"HOUR_4\",\n    \"D\": \"DAY\",\n    \"W\": \"WEEK\",\n}",
         "detail": "apps.engine.app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CandleRepository",
+        "kind": 6,
+        "importPath": "apps.engine.app.data.candles",
+        "description": "apps.engine.app.data.candles",
+        "peekOfCode": "class CandleRepository:\n    def __init__(self, pool: asyncpg.Pool):\n        self._pool = pool\n    async def upsert_many(\n        self, instrument: str, granularity: str, candles: list[dict]\n    ) -> int:\n        if not candles:\n            return 0\n        records = [\n            (",
+        "detail": "apps.engine.app.data.candles",
+        "documentation": {}
+    },
+    {
+        "label": "_UPSERT_SQL",
+        "kind": 5,
+        "importPath": "apps.engine.app.data.candles",
+        "description": "apps.engine.app.data.candles",
+        "peekOfCode": "_UPSERT_SQL = \"\"\"\nINSERT INTO \"Candle\" (\"instrument\", \"granularity\", \"time\", \"open\", \"high\", \"low\", \"close\", \"volume\")\nVALUES ($1, $2, $3, $4, $5, $6, $7, $8)\nON CONFLICT (\"instrument\", \"granularity\", \"time\") DO UPDATE\nSET \"open\" = EXCLUDED.\"open\",\n    \"high\" = EXCLUDED.\"high\",\n    \"low\" = EXCLUDED.\"low\",\n    \"close\" = EXCLUDED.\"close\",\n    \"volume\" = EXCLUDED.\"volume\"\n\"\"\"",
+        "detail": "apps.engine.app.data.candles",
+        "documentation": {}
+    },
+    {
+        "label": "IngestionService",
+        "kind": 6,
+        "importPath": "apps.engine.app.data.ingestion",
+        "description": "apps.engine.app.data.ingestion",
+        "peekOfCode": "class IngestionService:\n    def __init__(\n        self,\n        settings: Settings,\n        broker: CapitalClient,\n        repository: CandleRepository,\n    ):\n        self._settings = settings\n        self._broker = broker\n        self._repository = repository",
+        "detail": "apps.engine.app.data.ingestion",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "apps.engine.app.data.ingestion",
+        "description": "apps.engine.app.data.ingestion",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.ingestion\")\n# Minutes covered by one candle of each granularity — used to size backfill windows.\n_GRAN_MINUTES = {\n    \"M1\": 1,\n    \"M5\": 5,\n    \"M15\": 15,\n    \"M30\": 30,\n    \"H1\": 60,\n    \"H4\": 240,\n    \"D\": 1440,",
+        "detail": "apps.engine.app.data.ingestion",
+        "documentation": {}
+    },
+    {
+        "label": "_GRAN_MINUTES",
+        "kind": 5,
+        "importPath": "apps.engine.app.data.ingestion",
+        "description": "apps.engine.app.data.ingestion",
+        "peekOfCode": "_GRAN_MINUTES = {\n    \"M1\": 1,\n    \"M5\": 5,\n    \"M15\": 15,\n    \"M30\": 30,\n    \"H1\": 60,\n    \"H4\": 240,\n    \"D\": 1440,\n    \"W\": 10080,\n}",
+        "detail": "apps.engine.app.data.ingestion",
         "documentation": {}
     },
     {
@@ -313,6 +513,15 @@
         "documentation": {}
     },
     {
+        "label": "Database",
+        "kind": 6,
+        "importPath": "apps.engine.app.db",
+        "description": "apps.engine.app.db",
+        "peekOfCode": "class Database:\n    def __init__(self, settings: Settings):\n        self._dsn = settings.database_url\n        self._pool: asyncpg.Pool | None = None\n    async def connect(self) -> None:\n        if not self._dsn:\n            return\n        self._pool = await asyncpg.create_pool(self._dsn, min_size=1, max_size=5)\n    async def close(self) -> None:\n        if self._pool is not None:",
+        "detail": "apps.engine.app.db",
+        "documentation": {}
+    },
+    {
         "label": "ensure_broker_configured",
         "kind": 2,
         "importPath": "apps.engine.app.main",
@@ -322,11 +531,20 @@
         "documentation": {}
     },
     {
+        "label": "ensure_ingestion_ready",
+        "kind": 2,
+        "importPath": "apps.engine.app.main",
+        "description": "apps.engine.app.main",
+        "peekOfCode": "def ensure_ingestion_ready() -> IngestionService:\n    if ingestion is None:\n        raise HTTPException(\n            status_code=503,\n            detail=\"Base de données indisponible : DATABASE_URL non configuré ou injoignable\",\n        )\n    return ingestion\n@app.get(\"/health\")\nasync def health() -> dict:\n    return {",
+        "detail": "apps.engine.app.main",
+        "documentation": {}
+    },
+    {
         "label": "settings",
         "kind": 5,
         "importPath": "apps.engine.app.main",
         "description": "apps.engine.app.main",
-        "peekOfCode": "settings = get_settings()\nbroker: CapitalClient | None = None\n@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    global broker\n    broker = CapitalClient(settings)\n    yield\n    await broker.close()\napp = FastAPI(title=\"NexaGold Engine\", version=\"0.1.0\", lifespan=lifespan)\ndef ensure_broker_configured() -> None:",
+        "peekOfCode": "settings = get_settings()\nbroker: CapitalClient | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\n_ingestion_task: asyncio.Task | None = None\n@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    global broker, database, ingestion, _ingestion_task\n    broker = CapitalClient(settings)\n    database = Database(settings)",
         "detail": "apps.engine.app.main",
         "documentation": {}
     },

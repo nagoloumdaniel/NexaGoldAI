@@ -25,6 +25,12 @@ class Settings(BaseSettings):
     max_daily_loss_pct: float = 3.0
     max_open_positions: int = 1
 
+    # Data ingestion
+    ingest_enabled: bool = True
+    ingest_granularities: str = "M1,M5,M15"
+    ingest_interval_seconds: int = 60
+    ingest_recent_count: int = 50
+
     # Infra
     database_url: str = ""
     redis_url: str = ""

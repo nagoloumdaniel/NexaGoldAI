@@ -10,6 +10,7 @@ the same shapes the rest of the engine already expects, so swapping brokers
 never touches the strategy or risk code.
 """
 
+from datetime import datetime
 from typing import Any
 
 import httpx
@@ -111,20 +112,8 @@ class CapitalClient:
             "tradeable": snap.get("marketStatus") == "TRADEABLE",
         }
 
-    async def get_candles(
-        self,
-        epic: str | None = None,
-        granularity: str = "M1",
-        count: int = 200,
-    ) -> list[dict]:
-        """Recent mid-price OHLCV candles (Capital.com caps at 1000 per call)."""
-        epic = epic or self._settings.epic
-        resolution = _RESOLUTION_MAP.get(granularity, granularity)
-        data = await self._request(
-            "GET",
-            f"/api/v1/prices/{epic}",
-            params={"resolution": resolution, "max": min(count, 1000)},
-        )
+    @staticmethod
+    def _candles_from_response(data: dict) -> list[dict]:
         return [
             {
                 "time": c["snapshotTime"],
@@ -137,6 +126,44 @@ class CapitalClient:
             }
             for c in data.get("prices", [])
         ]
+
+    async def get_candles(
+        self,
+        epic: str | None = None,
+        granularity: str = "M1",
+        count: int = 200,
+    ) -> list[dict]:
+        """Most recent mid-price OHLCV candles (Capital.com caps at 1000 per call)."""
+        epic = epic or self._settings.epic
+        resolution = _RESOLUTION_MAP.get(granularity, granularity)
+        data = await self._request(
+            "GET",
+            f"/api/v1/prices/{epic}",
+            params={"resolution": resolution, "max": min(count, 1000)},
+        )
+        return self._candles_from_response(data)
+
+    async def get_candles_range(
+        self,
+        granularity: str,
+        start: datetime,
+        end: datetime,
+        epic: str | None = None,
+    ) -> list[dict]:
+        """Mid-price OHLCV candles between two timestamps (for historical backfill)."""
+        epic = epic or self._settings.epic
+        resolution = _RESOLUTION_MAP.get(granularity, granularity)
+        data = await self._request(
+            "GET",
+            f"/api/v1/prices/{epic}",
+            params={
+                "resolution": resolution,
+                "from": start.strftime("%Y-%m-%dT%H:%M:%S"),
+                "to": end.strftime("%Y-%m-%dT%H:%M:%S"),
+                "max": 1000,
+            },
+        )
+        return self._candles_from_response(data)
 
     # -- Account --------------------------------------------------------------
 

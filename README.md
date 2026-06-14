@@ -144,6 +144,44 @@ curl -X POST http://localhost:3001/reports/daily/run
 Le rapport nécessite que le moteur (`ENGINE_URL`) soit démarré avec des
 identifiants Capital.com valides — c'est lui qui fournit solde et équité.
 
+## Pipeline de données (phase 1)
+
+Le moteur ingère les bougies de l'or de Capital.com dans la table `Candle`
+(écriture directe via asyncpg, en partageant `DATABASE_URL` avec l'api). La
+clé composite `(instrument, granularity, time)` rend l'ingestion idempotente.
+
+- **Ingestion continue** : une boucle de fond rafraîchit les dernières bougies
+  de chaque granularité toutes les `INGEST_INTERVAL_SECONDS`. Démarre
+  automatiquement si la base est joignable et Capital.com configuré.
+- **Backfill historique** : remonte le temps par fenêtres de 900 bougies pour
+  amorcer le backtesting.
+
+Variables (toutes optionnelles, valeurs par défaut indiquées) :
+
+| Variable | Défaut | Rôle |
+| --- | --- | --- |
+| `INGEST_ENABLED` | `true` | active la boucle de fond |
+| `INGEST_GRANULARITIES` | `M1,M5,M15` | granularités ingérées |
+| `INGEST_INTERVAL_SECONDS` | `60` | période du rafraîchissement |
+| `INGEST_RECENT_COUNT` | `50` | bougies rafraîchies à chaque tick |
+
+Endpoints (moteur, port 8000) :
+
+```bash
+# état du pipeline (base connectée, boucle active)
+curl http://localhost:8000/health
+# refresh immédiat des dernières bougies
+curl -X POST http://localhost:8000/ingest/run
+# backfill (granularité + nb de jours, max 60)
+curl -X POST "http://localhost:8000/ingest/backfill?granularity=M5&days=2"
+# couverture par granularité (count + plage temporelle)
+curl http://localhost:8000/candles/stats
+```
+
+> La profondeur d'historique de Capital.com est limitée. Pour un historique
+> profond (mois/années) destiné à l'entraînement, le backfill **Dukascopy**
+> reste à ajouter — c'est la prochaine sous-étape.
+
 ## Feuille de route
 
 1. **Pipeline de données** : ingestion continue Capital.com → table `Candle`,
