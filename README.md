@@ -195,12 +195,45 @@ Dukascopy = nombre de ticks). Sans impact pour un backtesting basé sur le prix.
 Usage recommandé : Dukascopy pour amorcer l'historique, puis la boucle
 Capital.com pour entretenir le présent.
 
+## Backtesting & modèle (phase 2)
+
+Module de recherche dans [apps/engine/app/research/](apps/engine/app/research/) :
+`features.py` (indicateurs techniques causaux), `labeling.py` (cible 3 classes
+hausse/baisse/consolidation sur le rendement futur), `backtest.py` (validation
+walk-forward LightGBM + backtest PnL), `run.py` (CLI).
+
+```bash
+cd apps/engine
+.venv\Scripts\python.exe -m app.research.run --granularity M5 --horizon 12 --threshold 0.001 --folds 5
+```
+
+Le CLI charge les bougies depuis la base, évalue le modèle en **walk-forward**
+(chaque barre de test n'est prédite que par un modèle entraîné sur des barres
+strictement antérieures — pas de fuite de données), puis simule un backtest
+long/short avec coûts de transaction. Il écrit `models/<granularité>/` :
+`model.joblib` (modèle final), `meta.json`, `report.json`. Métriques produites :
+accuracy, F1 macro, matrice de confusion, et côté PnL Sharpe annualisé, max
+drawdown, profit factor, win rate, exposition.
+
+[lightgbm_strategy.py](apps/engine/app/strategy/lightgbm_strategy.py) charge ce
+modèle et implémente l'interface `Strategy` — c'est le pont vers le paper
+trading (phase 3).
+
+> **Résultat du premier modèle (baseline, à ne PAS trader).** Sur 30 jours de
+> M5, accuracy ≈ 34 % (≈ hasard sur 3 classes) et, après coûts, la stratégie
+> perd. C'est le résultat attendu d'un modèle naïf sur peu de données — et
+> précisément ce que le backtesting sert à révéler **avant** de risquer du
+> capital. L'infrastructure (évaluation sans fuite, métriques, sauvegarde,
+> pont stratégie) est en place ; trouver un edge réel = itérer sur features,
+> labelling et volume de données.
+
 ## Feuille de route
 
 1. ✅ **Pipeline de données** : ingestion continue Capital.com → table `Candle`,
    backfill historique Dukascopy. *(fait)*
-2. **Backtesting + premier modèle** : features techniques, LightGBM,
-   validation walk-forward (Sharpe, drawdown, profit factor).
+2. ✅ **Backtesting + premier modèle** : features techniques, LightGBM,
+   validation walk-forward (Sharpe, drawdown, profit factor). *(infrastructure
+   faite ; le baseline n'a pas d'edge, à itérer)*
 3. **Paper trading** : boucle complète données → signal → risque → ordre sur
    compte démo, journalisation de chaque décision (`StrategyDecision`).
 4. **Dashboard** : positions, historique, analytics, raisons des décisions IA.

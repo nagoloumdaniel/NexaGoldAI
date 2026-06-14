@@ -46,12 +46,11 @@ def parse_ticks(raw: bytes, hour_dt: datetime, divisor: float) -> list[tuple]:
     if not raw:
         return []
     data = _decompress(raw)
-    ticks = []
-    for offset in range(0, len(data) - (len(data) % _TICK.size), _TICK.size):
-        ms, ask, bid, _ask_vol, _bid_vol = _TICK.unpack_from(data, offset)
-        ts = hour_dt + timedelta(milliseconds=ms)
-        ticks.append((ts, bid / divisor, ask / divisor))
-    return ticks
+    usable = len(data) - (len(data) % _TICK.size)
+    return [
+        (hour_dt + timedelta(milliseconds=ms), bid / divisor, ask / divisor)
+        for ms, ask, bid, _ask_vol, _bid_vol in _TICK.iter_unpack(data[:usable])
+    ]
 
 
 def aggregate_ticks(ticks: list[tuple], granularity: str) -> list[dict]:

@@ -130,7 +130,31 @@
         "documentation": {}
     },
     {
+        "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
         "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_settings",
         "importPath": "app.config",
         "description": "app.config",
         "isExtraImport": true,
@@ -287,6 +311,234 @@
         "documentation": {}
     },
     {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "LGBMClassifier",
+        "importPath": "lightgbm",
+        "description": "lightgbm",
+        "isExtraImport": true,
+        "detail": "lightgbm",
+        "documentation": {}
+    },
+    {
+        "label": "accuracy_score",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "confusion_matrix",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "f1_score",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "TimeSeriesSplit",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "build_features",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "feature_columns",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "feature_columns",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "build_features",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "CLASS_NAMES",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "DOWN",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "FLAT",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "UP",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "make_labels",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "DOWN",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "FLAT",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "UP",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "joblib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "joblib",
+        "description": "joblib",
+        "detail": "joblib",
+        "documentation": {}
+    },
+    {
+        "label": "backtest",
+        "importPath": "app.research",
+        "description": "app.research",
+        "isExtraImport": true,
+        "detail": "app.research",
+        "documentation": {}
+    },
+    {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "candles_to_frame",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
         "label": "dataclass",
         "importPath": "dataclasses",
         "description": "dataclasses",
@@ -320,6 +572,38 @@
     },
     {
         "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Strategy",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
         "importPath": "app.strategy.base",
         "description": "app.strategy.base",
         "isExtraImport": true,
@@ -423,6 +707,14 @@
         "documentation": {}
     },
     {
+        "label": "LightGBMStrategy",
+        "importPath": "app.strategy.lightgbm_strategy",
+        "description": "app.strategy.lightgbm_strategy",
+        "isExtraImport": true,
+        "detail": "app.strategy.lightgbm_strategy",
+        "documentation": {}
+    },
+    {
         "label": "_Known",
         "kind": 6,
         "importPath": "apps.api.node_modules.flatted.python.flatted",
@@ -517,7 +809,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.data.dukascopy",
         "description": "apps.engine.app.data.dukascopy",
-        "peekOfCode": "def parse_ticks(raw: bytes, hour_dt: datetime, divisor: float) -> list[tuple]:\n    \"\"\"Decode one bi5 payload into (timestamp, bid, ask) tuples.\"\"\"\n    if not raw:\n        return []\n    data = _decompress(raw)\n    ticks = []\n    for offset in range(0, len(data) - (len(data) % _TICK.size), _TICK.size):\n        ms, ask, bid, _ask_vol, _bid_vol = _TICK.unpack_from(data, offset)\n        ts = hour_dt + timedelta(milliseconds=ms)\n        ticks.append((ts, bid / divisor, ask / divisor))",
+        "peekOfCode": "def parse_ticks(raw: bytes, hour_dt: datetime, divisor: float) -> list[tuple]:\n    \"\"\"Decode one bi5 payload into (timestamp, bid, ask) tuples.\"\"\"\n    if not raw:\n        return []\n    data = _decompress(raw)\n    usable = len(data) - (len(data) % _TICK.size)\n    return [\n        (hour_dt + timedelta(milliseconds=ms), bid / divisor, ask / divisor)\n        for ms, ask, bid, _ask_vol, _bid_vol in _TICK.iter_unpack(data[:usable])\n    ]",
         "detail": "apps.engine.app.data.dukascopy",
         "documentation": {}
     },
@@ -603,6 +895,150 @@
         "documentation": {}
     },
     {
+        "label": "build_dataset",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.backtest",
+        "description": "apps.engine.app.research.backtest",
+        "peekOfCode": "def build_dataset(df: pd.DataFrame, horizon: int, threshold: float) -> pd.DataFrame:\n    feats = build_features(df)\n    label, fwd_ret = make_labels(df[\"close\"], horizon, threshold)\n    feats[\"label\"] = label\n    feats[\"fwd_ret\"] = fwd_ret\n    feats[\"next_ret\"] = df[\"close\"].pct_change().shift(-1)\n    return feats.dropna()\ndef make_model(params: dict | None = None) -> LGBMClassifier:\n    return LGBMClassifier(**(params or DEFAULT_PARAMS))\ndef walk_forward(data: pd.DataFrame, feature_cols: list[str], n_splits: int):",
+        "detail": "apps.engine.app.research.backtest",
+        "documentation": {}
+    },
+    {
+        "label": "make_model",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.backtest",
+        "description": "apps.engine.app.research.backtest",
+        "peekOfCode": "def make_model(params: dict | None = None) -> LGBMClassifier:\n    return LGBMClassifier(**(params or DEFAULT_PARAMS))\ndef walk_forward(data: pd.DataFrame, feature_cols: list[str], n_splits: int):\n    \"\"\"Out-of-sample predictions/probabilities via expanding-window CV.\"\"\"\n    X = data[feature_cols]  # keep column names so fit/predict stay consistent\n    y = data[\"label\"].astype(int).values\n    oos_pred = np.full(len(data), -1, dtype=int)\n    oos_proba = np.zeros((len(data), 3))\n    for train_idx, test_idx in TimeSeriesSplit(n_splits=n_splits).split(X):\n        model = make_model()",
+        "detail": "apps.engine.app.research.backtest",
+        "documentation": {}
+    },
+    {
+        "label": "walk_forward",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.backtest",
+        "description": "apps.engine.app.research.backtest",
+        "peekOfCode": "def walk_forward(data: pd.DataFrame, feature_cols: list[str], n_splits: int):\n    \"\"\"Out-of-sample predictions/probabilities via expanding-window CV.\"\"\"\n    X = data[feature_cols]  # keep column names so fit/predict stay consistent\n    y = data[\"label\"].astype(int).values\n    oos_pred = np.full(len(data), -1, dtype=int)\n    oos_proba = np.zeros((len(data), 3))\n    for train_idx, test_idx in TimeSeriesSplit(n_splits=n_splits).split(X):\n        model = make_model()\n        model.fit(X.iloc[train_idx], y[train_idx])\n        proba = model.predict_proba(X.iloc[test_idx])",
+        "detail": "apps.engine.app.research.backtest",
+        "documentation": {}
+    },
+    {
+        "label": "backtest_pnl",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.backtest",
+        "description": "apps.engine.app.research.backtest",
+        "peekOfCode": "def backtest_pnl(\n    data: pd.DataFrame,\n    oos_pred: np.ndarray,\n    mask: np.ndarray,\n    granularity: str,\n    cost_bps: float,\n) -> dict:\n    sub = data[mask]\n    pred = oos_pred[mask]\n    position = np.where(pred == UP, 1, np.where(pred == DOWN, -1, 0))",
+        "detail": "apps.engine.app.research.backtest",
+        "documentation": {}
+    },
+    {
+        "label": "run",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.backtest",
+        "description": "apps.engine.app.research.backtest",
+        "peekOfCode": "def run(\n    data: pd.DataFrame,\n    feature_cols: list[str],\n    n_splits: int,\n    granularity: str,\n    cost_bps: float = 2.0,\n) -> dict:\n    oos_pred, oos_proba, mask = walk_forward(data, feature_cols, n_splits)\n    y_true = data[\"label\"].astype(int).values[mask]\n    y_pred = oos_pred[mask]",
+        "detail": "apps.engine.app.research.backtest",
+        "documentation": {}
+    },
+    {
+        "label": "_BARS_PER_YEAR",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.backtest",
+        "description": "apps.engine.app.research.backtest",
+        "peekOfCode": "_BARS_PER_YEAR = {\n    \"M1\": 365 * 24 * 60,\n    \"M5\": 365 * 24 * 12,\n    \"M15\": 365 * 24 * 4,\n    \"M30\": 365 * 24 * 2,\n    \"H1\": 365 * 24,\n}\nDEFAULT_PARAMS = dict(\n    n_estimators=400,\n    learning_rate=0.05,",
+        "detail": "apps.engine.app.research.backtest",
+        "documentation": {}
+    },
+    {
+        "label": "DEFAULT_PARAMS",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.backtest",
+        "description": "apps.engine.app.research.backtest",
+        "peekOfCode": "DEFAULT_PARAMS = dict(\n    n_estimators=400,\n    learning_rate=0.05,\n    num_leaves=31,\n    min_child_samples=40,\n    subsample=0.8,\n    colsample_bytree=0.8,\n    reg_lambda=1.0,\n    class_weight=\"balanced\",\n    random_state=42,",
+        "detail": "apps.engine.app.research.backtest",
+        "documentation": {}
+    },
+    {
+        "label": "candles_to_frame",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.dataset",
+        "description": "apps.engine.app.research.dataset",
+        "peekOfCode": "def candles_to_frame(candles: list[dict]) -> pd.DataFrame:\n    \"\"\"Convert engine candle dicts (broker/repository shape) to the same frame.\"\"\"\n    if not candles:\n        return pd.DataFrame()\n    df = pd.DataFrame(candles)\n    for col in _NUMERIC:\n        df[col] = df[col].astype(float)\n    df[\"time\"] = pd.to_datetime(df[\"time\"])\n    return df.set_index(\"time\").sort_index()",
+        "detail": "apps.engine.app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "_NUMERIC",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.dataset",
+        "description": "apps.engine.app.research.dataset",
+        "peekOfCode": "_NUMERIC = [\"open\", \"high\", \"low\", \"close\", \"volume\"]\ndef _to_frame(rows: list) -> pd.DataFrame:\n    df = pd.DataFrame([dict(r) for r in rows])\n    if df.empty:\n        return df\n    for col in _NUMERIC:\n        df[col] = df[col].astype(float)\n    df[\"time\"] = pd.to_datetime(df[\"time\"])\n    return df.set_index(\"time\").sort_index()\nasync def load_candles(",
+        "detail": "apps.engine.app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "build_features",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.features",
+        "description": "apps.engine.app.research.features",
+        "peekOfCode": "def build_features(df: pd.DataFrame) -> pd.DataFrame:\n    close = df[\"close\"]\n    out = pd.DataFrame(index=df.index)\n    # Momentum / returns over several horizons\n    out[\"ret_1\"] = close.pct_change()\n    out[\"ret_3\"] = close.pct_change(3)\n    out[\"ret_6\"] = close.pct_change(6)\n    out[\"ret_12\"] = close.pct_change(12)\n    # Distance to moving averages\n    for n in (5, 10, 20, 50):",
+        "detail": "apps.engine.app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "feature_columns",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.features",
+        "description": "apps.engine.app.research.features",
+        "peekOfCode": "def feature_columns(frame: pd.DataFrame) -> list[str]:\n    return [c for c in frame.columns if c not in NON_FEATURE]",
+        "detail": "apps.engine.app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "NON_FEATURE",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.features",
+        "description": "apps.engine.app.research.features",
+        "peekOfCode": "NON_FEATURE = {\"label\", \"fwd_ret\", \"next_ret\"}\ndef _rsi(close: pd.Series, period: int = 14) -> pd.Series:\n    delta = close.diff()\n    gain = delta.clip(lower=0).rolling(period).mean()\n    loss = (-delta.clip(upper=0)).rolling(period).mean()\n    rs = gain / loss.replace(0, np.nan)\n    return 100 - 100 / (1 + rs)\ndef build_features(df: pd.DataFrame) -> pd.DataFrame:\n    close = df[\"close\"]\n    out = pd.DataFrame(index=df.index)",
+        "detail": "apps.engine.app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "make_labels",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.labeling",
+        "description": "apps.engine.app.research.labeling",
+        "peekOfCode": "def make_labels(\n    close: pd.Series, horizon: int = 12, threshold: float = 0.001\n) -> tuple[pd.Series, pd.Series]:\n    fwd_ret = close.shift(-horizon) / close - 1\n    label = pd.Series(FLAT, index=close.index, dtype=\"float64\")\n    label[fwd_ret > threshold] = UP\n    label[fwd_ret < -threshold] = DOWN\n    # No future available for the final `horizon` bars.\n    label.iloc[-horizon:] = pd.NA\n    return label, fwd_ret",
+        "detail": "apps.engine.app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "CLASS_NAMES",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.labeling",
+        "description": "apps.engine.app.research.labeling",
+        "peekOfCode": "CLASS_NAMES = {DOWN: \"DOWN\", FLAT: \"FLAT\", UP: \"UP\"}\ndef make_labels(\n    close: pd.Series, horizon: int = 12, threshold: float = 0.001\n) -> tuple[pd.Series, pd.Series]:\n    fwd_ret = close.shift(-horizon) / close - 1\n    label = pd.Series(FLAT, index=close.index, dtype=\"float64\")\n    label[fwd_ret > threshold] = UP\n    label[fwd_ret < -threshold] = DOWN\n    # No future available for the final `horizon` bars.\n    label.iloc[-horizon:] = pd.NA",
+        "detail": "apps.engine.app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.run",
+        "description": "apps.engine.app.research.run",
+        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(description=\"NexaGold walk-forward backtest\")\n    parser.add_argument(\"--granularity\", default=\"M5\")\n    parser.add_argument(\"--horizon\", type=int, default=12)\n    parser.add_argument(\"--threshold\", type=float, default=0.001)\n    parser.add_argument(\"--folds\", type=int, default=5)\n    parser.add_argument(\"--cost-bps\", type=float, default=2.0)\n    args = parser.parse_args()\n    settings = get_settings()\n    df = asyncio.run(load_candles(settings, args.granularity))",
+        "detail": "apps.engine.app.research.run",
+        "documentation": {}
+    },
+    {
+        "label": "MODELS_DIR",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.run",
+        "description": "apps.engine.app.research.run",
+        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef main() -> None:\n    parser = argparse.ArgumentParser(description=\"NexaGold walk-forward backtest\")\n    parser.add_argument(\"--granularity\", default=\"M5\")\n    parser.add_argument(\"--horizon\", type=int, default=12)\n    parser.add_argument(\"--threshold\", type=float, default=0.001)\n    parser.add_argument(\"--folds\", type=int, default=5)\n    parser.add_argument(\"--cost-bps\", type=float, default=2.0)\n    args = parser.parse_args()\n    settings = get_settings()",
+        "detail": "apps.engine.app.research.run",
+        "documentation": {}
+    },
+    {
         "label": "RiskDecision",
         "kind": 6,
         "importPath": "apps.engine.app.risk.manager",
@@ -654,6 +1090,24 @@
         "description": "apps.engine.app.strategy.base",
         "peekOfCode": "class AlwaysHold(Strategy):\n    \"\"\"Placeholder strategy used until the first real model is trained.\n    Keeps the whole pipeline runnable end to end without taking positions.\"\"\"\n    name = \"always-hold\"\n    def evaluate(self, candles: list[dict]) -> Signal:\n        return Signal(\n            action=Action.HOLD,\n            confidence=1.0,\n            reason=\"Placeholder strategy: no model trained yet.\",\n        )",
         "detail": "apps.engine.app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "LightGBMStrategy",
+        "kind": 6,
+        "importPath": "apps.engine.app.strategy.lightgbm_strategy",
+        "description": "apps.engine.app.strategy.lightgbm_strategy",
+        "peekOfCode": "class LightGBMStrategy(Strategy):\n    name = \"lightgbm\"\n    def __init__(self, model_dir: str | Path):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        meta = json.loads((model_dir / \"meta.json\").read_text(encoding=\"utf-8\"))\n        self._feature_cols = meta[\"feature_cols\"]\n    def evaluate(self, candles: list[dict]) -> Signal:\n        df = candles_to_frame(candles)\n        if df.empty:",
+        "detail": "apps.engine.app.strategy.lightgbm_strategy",
+        "documentation": {}
+    },
+    {
+        "label": "_ACTION",
+        "kind": 5,
+        "importPath": "apps.engine.app.strategy.lightgbm_strategy",
+        "description": "apps.engine.app.strategy.lightgbm_strategy",
+        "peekOfCode": "_ACTION = {UP: Action.BUY, DOWN: Action.SELL, FLAT: Action.HOLD}\nclass LightGBMStrategy(Strategy):\n    name = \"lightgbm\"\n    def __init__(self, model_dir: str | Path):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        meta = json.loads((model_dir / \"meta.json\").read_text(encoding=\"utf-8\"))\n        self._feature_cols = meta[\"feature_cols\"]\n    def evaluate(self, candles: list[dict]) -> Signal:\n        df = candles_to_frame(candles)",
+        "detail": "apps.engine.app.strategy.lightgbm_strategy",
         "documentation": {}
     },
     {
@@ -807,6 +1261,24 @@
         "description": "apps.engine.tests_manual.test_dukascopy_parse",
         "peekOfCode": "m1 = aggregate_ticks(ticks, \"M1\")\nassert len(m1) == 3, f\"attendu 3 bougies M1, obtenu {len(m1)}\"\nassert all(c[\"volume\"] == 1 for c in m1), m1\nprint(\"OK: parse_ticks + aggregate_ticks valides\")",
         "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_strategy_bridge",
+        "description": "apps.engine.tests_manual.test_strategy_bridge",
+        "peekOfCode": "def main() -> None:\n    settings = get_settings()\n    df = asyncio.run(load_candles(settings, \"M5\"))\n    # Feed the last 120 candles as the engine would at decision time.\n    candles = [\n        {\n            \"time\": ts.isoformat(),\n            \"open\": row.open,\n            \"high\": row.high,\n            \"low\": row.low,",
+        "detail": "apps.engine.tests_manual.test_strategy_bridge",
+        "documentation": {}
+    },
+    {
+        "label": "MODEL_DIR",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_strategy_bridge",
+        "description": "apps.engine.tests_manual.test_strategy_bridge",
+        "peekOfCode": "MODEL_DIR = Path(__file__).resolve().parents[1] / \"models\" / \"M5\"\ndef main() -> None:\n    settings = get_settings()\n    df = asyncio.run(load_candles(settings, \"M5\"))\n    # Feed the last 120 candles as the engine would at decision time.\n    candles = [\n        {\n            \"time\": ts.isoformat(),\n            \"open\": row.open,\n            \"high\": row.high,",
+        "detail": "apps.engine.tests_manual.test_strategy_bridge",
         "documentation": {}
     },
     {

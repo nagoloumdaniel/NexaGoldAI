@@ -9,6 +9,9 @@ build/
 # Client Prisma généré (recréé par `npx prisma generate`)
 apps/api/src/generated/
 
+# Modèles entraînés (régénérés par `python -m app.research.run`)
+apps/engine/models/
+
 # Python
 __pycache__/
 *.pyc
