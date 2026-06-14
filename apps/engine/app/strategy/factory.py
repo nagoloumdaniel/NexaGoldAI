@@ -8,6 +8,7 @@ import logging
 from pathlib import Path
 
 from app.config import Settings
+from app.learning.registry import ModelRegistry
 from app.strategy.base import AlwaysHold, Strategy
 from app.strategy.lightgbm_strategy import LightGBMStrategy
 
@@ -18,11 +19,15 @@ _MODELS_DIR = Path(__file__).resolve().parents[2] / "models"
 
 def build_strategy(settings: Settings) -> Strategy:
     if settings.strategy_name == "lightgbm":
-        model_dir = _MODELS_DIR / settings.model_granularity
-        if (model_dir / "model.joblib").exists():
-            logger.info("Stratégie LightGBM chargée depuis %s", model_dir)
-            return LightGBMStrategy(model_dir)
-        logger.warning(
-            "Modèle LightGBM introuvable (%s) — repli sur AlwaysHold", model_dir
-        )
+        # Prefer the registry champion (phase 5); fall back to a flat model
+        # dir (phase 2 CLI output) for backward compatibility.
+        champion = ModelRegistry(_MODELS_DIR, settings.model_granularity).champion_dir()
+        if champion is not None:
+            logger.info("Stratégie LightGBM (champion) chargée depuis %s", champion)
+            return LightGBMStrategy(champion)
+        legacy = _MODELS_DIR / settings.model_granularity
+        if (legacy / "model.joblib").exists():
+            logger.info("Stratégie LightGBM (modèle simple) chargée depuis %s", legacy)
+            return LightGBMStrategy(legacy)
+        logger.warning("Aucun modèle LightGBM trouvé — repli sur AlwaysHold")
     return AlwaysHold()

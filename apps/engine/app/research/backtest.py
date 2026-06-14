@@ -113,9 +113,10 @@ def backtest_pnl(
         if std > 0
         else 0.0,
         "max_drawdown": _max_drawdown(equity) if len(equity) else 0.0,
+        # None (not inf) when there are no losing bars — keeps the JSON valid.
         "profit_factor": float(wins.sum() / abs(losses.sum()))
         if losses.sum() != 0
-        else float("inf"),
+        else None,
         "win_rate": float((net[active] > 0).mean()) if active.any() else 0.0,
     }
 

@@ -287,6 +287,39 @@ cd apps/web
 npm run dev   # http://localhost:3000 (API sur 3001 + moteur sur 8000 requis)
 ```
 
+## Boucle d'apprentissage (phase 5)
+
+Le moteur sait se réentraîner et choisir le meilleur modèle tout seul
+([apps/engine/app/learning/](apps/engine/app/learning/)). À chaque round,
+plusieurs **configurations candidates** (horizons / seuils de labelling
+différents) sont évaluées en walk-forward sur les **données les plus récentes** ;
+la meilleure (par Sharpe out-of-sample) est entraînée sur tout l'historique,
+enregistrée comme nouvelle **version** et promue **champion**. Les configs
+moins bonnes sont laissées de côté — « comparer, renforcer la meilleure,
+abandonner les moins efficaces ».
+
+- **Registre versionné** ([registry.py](apps/engine/app/learning/registry.py)) :
+  `models/<granularité>/registry.json` + un dossier par version
+  (`model.joblib`, `meta.json`, `report.json`).
+- **Hot-swap** : quand un nouveau champion est promu, la stratégie de la boucle
+  de trading est rechargée à chaud, sans redémarrage.
+- **Réentraînement périodique** : boucle de fond optionnelle
+  (`LEARNING_ENABLED`, défaut **false** car l'entraînement est lourd ;
+  `LEARNING_INTERVAL_SECONDS`, défaut quotidien).
+
+```bash
+curl -X POST http://localhost:8000/learning/retrain   # un round, renvoie le classement
+curl http://localhost:8000/learning/registry          # champion + versions
+```
+
+Le dashboard affiche le panneau **« Modèles & apprentissage »** (champion +
+historique des versions avec Sharpe et accuracy), via `/dashboard/models`.
+
+> Exemple réel : sur les données M5, le système a comparé trois approches et
+> promu `horizon=24, seuil=0.002` (Sharpe −25,8) plutôt que le défaut de la
+> phase 2 (−34,5). La sélection fonctionne — même si, sans edge, le « meilleur »
+> reste perdant tant que le modèle n'est pas amélioré.
+
 ## Feuille de route
 
 1. ✅ **Pipeline de données** : ingestion continue Capital.com → table `Candle`,
@@ -299,8 +332,9 @@ npm run dev   # http://localhost:3000 (API sur 3001 + moteur sur 8000 requis)
    kill switch actif)*
 4. ✅ **Dashboard** : positions, historique, analytics, raisons des décisions
    IA, graphique chandelier. *(fait)*
-5. **Boucle d'apprentissage** : réentraînement périodique, comparaison de
-   stratégies, puis exploration RL (PPO) une fois le pipeline validé.
+5. ✅ **Boucle d'apprentissage** : réentraînement périodique, comparaison de
+   configurations (champion/challenger), promotion automatique. *(fait ;
+   exploration RL/PPO en option future)*
 
 Le passage en réel (`CAPITAL_ENV=live`, `TRADING_ENABLED=true`) n'est envisagé
 qu'après plusieurs semaines de paper trading aux métriques stables.

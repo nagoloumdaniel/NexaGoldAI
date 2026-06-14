@@ -89,6 +89,14 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "Any",
         "importPath": "typing",
         "description": "typing",
@@ -103,6 +111,22 @@
         "importPath": "httpx",
         "description": "httpx",
         "detail": "httpx",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
         "documentation": {}
     },
     {
@@ -544,6 +568,247 @@
         "documentation": {}
     },
     {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Trader",
+        "importPath": "app.execution.trader",
+        "description": "app.execution.trader",
+        "isExtraImport": true,
+        "detail": "app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "Trader",
+        "importPath": "app.execution.trader",
+        "description": "app.execution.trader",
+        "isExtraImport": true,
+        "detail": "app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "compute_bracket",
+        "importPath": "app.execution.trader",
+        "description": "app.execution.trader",
+        "isExtraImport": true,
+        "detail": "app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "retrain",
+        "importPath": "app.learning.trainer",
+        "description": "app.learning.trainer",
+        "isExtraImport": true,
+        "detail": "app.learning.trainer",
+        "documentation": {}
+    },
+    {
+        "label": "build_strategy",
+        "importPath": "app.strategy.factory",
+        "description": "app.strategy.factory",
+        "isExtraImport": true,
+        "detail": "app.strategy.factory",
+        "documentation": {}
+    },
+    {
+        "label": "build_strategy",
+        "importPath": "app.strategy.factory",
+        "description": "app.strategy.factory",
+        "isExtraImport": true,
+        "detail": "app.strategy.factory",
+        "documentation": {}
+    },
+    {
+        "label": "joblib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "joblib",
+        "description": "joblib",
+        "detail": "joblib",
+        "documentation": {}
+    },
+    {
+        "label": "ModelRegistry",
+        "importPath": "app.learning.registry",
+        "description": "app.learning.registry",
+        "isExtraImport": true,
+        "detail": "app.learning.registry",
+        "documentation": {}
+    },
+    {
+        "label": "ModelRegistry",
+        "importPath": "app.learning.registry",
+        "description": "app.learning.registry",
+        "isExtraImport": true,
+        "detail": "app.learning.registry",
+        "documentation": {}
+    },
+    {
+        "label": "ModelRegistry",
+        "importPath": "app.learning.registry",
+        "description": "app.learning.registry",
+        "isExtraImport": true,
+        "detail": "app.learning.registry",
+        "documentation": {}
+    },
+    {
+        "label": "ModelRegistry",
+        "importPath": "app.learning.registry",
+        "description": "app.learning.registry",
+        "isExtraImport": true,
+        "detail": "app.learning.registry",
+        "documentation": {}
+    },
+    {
+        "label": "backtest",
+        "importPath": "app.research",
+        "description": "app.research",
+        "isExtraImport": true,
+        "detail": "app.research",
+        "documentation": {}
+    },
+    {
+        "label": "backtest",
+        "importPath": "app.research",
+        "description": "app.research",
+        "isExtraImport": true,
+        "detail": "app.research",
+        "documentation": {}
+    },
+    {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "candles_to_frame",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "feature_columns",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "build_features",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "feature_columns",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "feature_columns",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "build_features",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
         "label": "numpy",
         "kind": 6,
         "isExtraImport": true,
@@ -599,38 +864,6 @@
         "description": "sklearn.model_selection",
         "isExtraImport": true,
         "detail": "sklearn.model_selection",
-        "documentation": {}
-    },
-    {
-        "label": "build_features",
-        "importPath": "app.research.features",
-        "description": "app.research.features",
-        "isExtraImport": true,
-        "detail": "app.research.features",
-        "documentation": {}
-    },
-    {
-        "label": "feature_columns",
-        "importPath": "app.research.features",
-        "description": "app.research.features",
-        "isExtraImport": true,
-        "detail": "app.research.features",
-        "documentation": {}
-    },
-    {
-        "label": "feature_columns",
-        "importPath": "app.research.features",
-        "description": "app.research.features",
-        "isExtraImport": true,
-        "detail": "app.research.features",
-        "documentation": {}
-    },
-    {
-        "label": "build_features",
-        "importPath": "app.research.features",
-        "description": "app.research.features",
-        "isExtraImport": true,
-        "detail": "app.research.features",
         "documentation": {}
     },
     {
@@ -704,79 +937,6 @@
         "importPath": "argparse",
         "description": "argparse",
         "detail": "argparse",
-        "documentation": {}
-    },
-    {
-        "label": "Path",
-        "importPath": "pathlib",
-        "description": "pathlib",
-        "isExtraImport": true,
-        "detail": "pathlib",
-        "documentation": {}
-    },
-    {
-        "label": "Path",
-        "importPath": "pathlib",
-        "description": "pathlib",
-        "isExtraImport": true,
-        "detail": "pathlib",
-        "documentation": {}
-    },
-    {
-        "label": "Path",
-        "importPath": "pathlib",
-        "description": "pathlib",
-        "isExtraImport": true,
-        "detail": "pathlib",
-        "documentation": {}
-    },
-    {
-        "label": "Path",
-        "importPath": "pathlib",
-        "description": "pathlib",
-        "isExtraImport": true,
-        "detail": "pathlib",
-        "documentation": {}
-    },
-    {
-        "label": "joblib",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "joblib",
-        "description": "joblib",
-        "detail": "joblib",
-        "documentation": {}
-    },
-    {
-        "label": "backtest",
-        "importPath": "app.research",
-        "description": "app.research",
-        "isExtraImport": true,
-        "detail": "app.research",
-        "documentation": {}
-    },
-    {
-        "label": "load_candles",
-        "importPath": "app.research.dataset",
-        "description": "app.research.dataset",
-        "isExtraImport": true,
-        "detail": "app.research.dataset",
-        "documentation": {}
-    },
-    {
-        "label": "candles_to_frame",
-        "importPath": "app.research.dataset",
-        "description": "app.research.dataset",
-        "isExtraImport": true,
-        "detail": "app.research.dataset",
-        "documentation": {}
-    },
-    {
-        "label": "load_candles",
-        "importPath": "app.research.dataset",
-        "description": "app.research.dataset",
-        "isExtraImport": true,
-        "detail": "app.research.dataset",
         "documentation": {}
     },
     {
@@ -916,27 +1076,20 @@
         "documentation": {}
     },
     {
-        "label": "Trader",
-        "importPath": "app.execution.trader",
-        "description": "app.execution.trader",
+        "label": "LearningService",
+        "importPath": "app.learning.service",
+        "description": "app.learning.service",
         "isExtraImport": true,
-        "detail": "app.execution.trader",
+        "detail": "app.learning.service",
         "documentation": {}
     },
     {
-        "label": "compute_bracket",
-        "importPath": "app.execution.trader",
-        "description": "app.execution.trader",
+        "label": "tempfile",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "app.execution.trader",
-        "documentation": {}
-    },
-    {
-        "label": "build_strategy",
-        "importPath": "app.strategy.factory",
-        "description": "app.strategy.factory",
-        "isExtraImport": true,
-        "detail": "app.strategy.factory",
+        "importPath": "tempfile",
+        "description": "tempfile",
+        "detail": "tempfile",
         "documentation": {}
     },
     {
@@ -1165,6 +1318,60 @@
         "documentation": {}
     },
     {
+        "label": "ModelRegistry",
+        "kind": 6,
+        "importPath": "apps.engine.app.learning.registry",
+        "description": "apps.engine.app.learning.registry",
+        "peekOfCode": "class ModelRegistry:\n    def __init__(self, base_dir: Path, granularity: str):\n        self._dir = Path(base_dir) / granularity\n        self._dir.mkdir(parents=True, exist_ok=True)\n        self._path = self._dir / \"registry.json\"\n    def _load(self) -> dict:\n        if self._path.exists():\n            return json.loads(self._path.read_text(encoding=\"utf-8\"))\n        return {\"granularity\": self._dir.name, \"champion\": None, \"versions\": []}\n    def _save(self, data: dict) -> None:",
+        "detail": "apps.engine.app.learning.registry",
+        "documentation": {}
+    },
+    {
+        "label": "LearningService",
+        "kind": 6,
+        "importPath": "apps.engine.app.learning.service",
+        "description": "apps.engine.app.learning.service",
+        "peekOfCode": "class LearningService:\n    def __init__(self, settings: Settings, trader: Trader):\n        self._settings = settings\n        self._trader = trader\n    async def retrain_once(self) -> dict:\n        result = await retrain(self._settings, self._settings.model_granularity)\n        if \"error\" not in result:\n            self._trader.set_strategy(build_strategy(self._settings))\n            logger.info(\"Stratégie rechargée sur le champion %s\", result[\"champion\"])\n        return result",
+        "detail": "apps.engine.app.learning.service",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "apps.engine.app.learning.service",
+        "description": "apps.engine.app.learning.service",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.learning\")\nclass LearningService:\n    def __init__(self, settings: Settings, trader: Trader):\n        self._settings = settings\n        self._trader = trader\n    async def retrain_once(self) -> dict:\n        result = await retrain(self._settings, self._settings.model_granularity)\n        if \"error\" not in result:\n            self._trader.set_strategy(build_strategy(self._settings))\n            logger.info(\"Stratégie rechargée sur le champion %s\", result[\"champion\"])",
+        "detail": "apps.engine.app.learning.service",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "apps.engine.app.learning.trainer",
+        "description": "apps.engine.app.learning.trainer",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.learning\")\nMODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\n# Search space — different labelling horizons/thresholds = different \"approaches\".\nCANDIDATE_CONFIGS = [\n    {\"horizon\": 12, \"threshold\": 0.0010},\n    {\"horizon\": 12, \"threshold\": 0.0015},\n    {\"horizon\": 24, \"threshold\": 0.0020},\n]\ndef _selection_metric(report: dict) -> float:\n    # Out-of-sample annualised Sharpe of the PnL backtest. Higher is better;",
+        "detail": "apps.engine.app.learning.trainer",
+        "documentation": {}
+    },
+    {
+        "label": "MODELS_DIR",
+        "kind": 5,
+        "importPath": "apps.engine.app.learning.trainer",
+        "description": "apps.engine.app.learning.trainer",
+        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\n# Search space — different labelling horizons/thresholds = different \"approaches\".\nCANDIDATE_CONFIGS = [\n    {\"horizon\": 12, \"threshold\": 0.0010},\n    {\"horizon\": 12, \"threshold\": 0.0015},\n    {\"horizon\": 24, \"threshold\": 0.0020},\n]\ndef _selection_metric(report: dict) -> float:\n    # Out-of-sample annualised Sharpe of the PnL backtest. Higher is better;\n    # may be negative (then we pick the least-bad, honestly).",
+        "detail": "apps.engine.app.learning.trainer",
+        "documentation": {}
+    },
+    {
+        "label": "CANDIDATE_CONFIGS",
+        "kind": 5,
+        "importPath": "apps.engine.app.learning.trainer",
+        "description": "apps.engine.app.learning.trainer",
+        "peekOfCode": "CANDIDATE_CONFIGS = [\n    {\"horizon\": 12, \"threshold\": 0.0010},\n    {\"horizon\": 12, \"threshold\": 0.0015},\n    {\"horizon\": 24, \"threshold\": 0.0020},\n]\ndef _selection_metric(report: dict) -> float:\n    # Out-of-sample annualised Sharpe of the PnL backtest. Higher is better;\n    # may be negative (then we pick the least-bad, honestly).\n    return report[\"pnl\"][\"sharpe_annualised\"]\nasync def retrain(settings: Settings, granularity: str, folds: int = 5) -> dict:",
+        "detail": "apps.engine.app.learning.trainer",
+        "documentation": {}
+    },
+    {
         "label": "build_dataset",
         "kind": 2,
         "importPath": "apps.engine.app.research.backtest",
@@ -1367,7 +1574,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.strategy.factory",
         "description": "apps.engine.app.strategy.factory",
-        "peekOfCode": "def build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"lightgbm\":\n        model_dir = _MODELS_DIR / settings.model_granularity\n        if (model_dir / \"model.joblib\").exists():\n            logger.info(\"Stratégie LightGBM chargée depuis %s\", model_dir)\n            return LightGBMStrategy(model_dir)\n        logger.warning(\n            \"Modèle LightGBM introuvable (%s) — repli sur AlwaysHold\", model_dir\n        )\n    return AlwaysHold()",
+        "peekOfCode": "def build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"lightgbm\":\n        # Prefer the registry champion (phase 5); fall back to a flat model\n        # dir (phase 2 CLI output) for backward compatibility.\n        champion = ModelRegistry(_MODELS_DIR, settings.model_granularity).champion_dir()\n        if champion is not None:\n            logger.info(\"Stratégie LightGBM (champion) chargée depuis %s\", champion)\n            return LightGBMStrategy(champion)\n        legacy = _MODELS_DIR / settings.model_granularity\n        if (legacy / \"model.joblib\").exists():",
         "detail": "apps.engine.app.strategy.factory",
         "documentation": {}
     },
@@ -1376,7 +1583,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.strategy.factory",
         "description": "apps.engine.app.strategy.factory",
-        "peekOfCode": "logger = logging.getLogger(\"nexagold.strategy\")\n_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"lightgbm\":\n        model_dir = _MODELS_DIR / settings.model_granularity\n        if (model_dir / \"model.joblib\").exists():\n            logger.info(\"Stratégie LightGBM chargée depuis %s\", model_dir)\n            return LightGBMStrategy(model_dir)\n        logger.warning(\n            \"Modèle LightGBM introuvable (%s) — repli sur AlwaysHold\", model_dir",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.strategy\")\n_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"lightgbm\":\n        # Prefer the registry champion (phase 5); fall back to a flat model\n        # dir (phase 2 CLI output) for backward compatibility.\n        champion = ModelRegistry(_MODELS_DIR, settings.model_granularity).champion_dir()\n        if champion is not None:\n            logger.info(\"Stratégie LightGBM (champion) chargée depuis %s\", champion)\n            return LightGBMStrategy(champion)",
         "detail": "apps.engine.app.strategy.factory",
         "documentation": {}
     },
@@ -1385,7 +1592,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.strategy.factory",
         "description": "apps.engine.app.strategy.factory",
-        "peekOfCode": "_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"lightgbm\":\n        model_dir = _MODELS_DIR / settings.model_granularity\n        if (model_dir / \"model.joblib\").exists():\n            logger.info(\"Stratégie LightGBM chargée depuis %s\", model_dir)\n            return LightGBMStrategy(model_dir)\n        logger.warning(\n            \"Modèle LightGBM introuvable (%s) — repli sur AlwaysHold\", model_dir\n        )",
+        "peekOfCode": "_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"lightgbm\":\n        # Prefer the registry champion (phase 5); fall back to a flat model\n        # dir (phase 2 CLI output) for backward compatibility.\n        champion = ModelRegistry(_MODELS_DIR, settings.model_granularity).champion_dir()\n        if champion is not None:\n            logger.info(\"Stratégie LightGBM (champion) chargée depuis %s\", champion)\n            return LightGBMStrategy(champion)\n        legacy = _MODELS_DIR / settings.model_granularity",
         "detail": "apps.engine.app.strategy.factory",
         "documentation": {}
     },
@@ -1457,7 +1664,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.main",
         "description": "apps.engine.app.main",
-        "peekOfCode": "settings = get_settings()\nbroker: CapitalClient | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\ntrader: Trader | None = None\ndecisions_repo: StrategyDecisionRepository | None = None\n_ingestion_task: asyncio.Task | None = None\n_trade_task: asyncio.Task | None = None\ndef _broker_ready() -> bool:\n    return bool(",
+        "peekOfCode": "settings = get_settings()\nbroker: CapitalClient | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\ntrader: Trader | None = None\ndecisions_repo: StrategyDecisionRepository | None = None\nlearning: LearningService | None = None\n_ingestion_task: asyncio.Task | None = None\n_trade_task: asyncio.Task | None = None\n_learning_task: asyncio.Task | None = None",
         "detail": "apps.engine.app.main",
         "documentation": {}
     },
@@ -1558,6 +1765,15 @@
         "description": "apps.engine.tests_manual.test_dukascopy_parse",
         "peekOfCode": "m1 = aggregate_ticks(ticks, \"M1\")\nassert len(m1) == 3, f\"attendu 3 bougies M1, obtenu {len(m1)}\"\nassert all(c[\"volume\"] == 1 for c in m1), m1\nprint(\"OK: parse_ticks + aggregate_ticks valides\")",
         "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_registry",
+        "description": "apps.engine.tests_manual.test_registry",
+        "peekOfCode": "def main() -> None:\n    with tempfile.TemporaryDirectory() as tmp:\n        base = Path(tmp)\n        reg = ModelRegistry(base, \"M5\")\n        assert reg.champion() is None\n        assert reg.champion_dir() is None\n        assert reg.versions() == []\n        # First version becomes champion; create its model file so champion_dir resolves.\n        v1 = reg.version_dir(\"v1\")\n        v1.mkdir(parents=True)",
+        "detail": "apps.engine.tests_manual.test_registry",
         "documentation": {}
     },
     {

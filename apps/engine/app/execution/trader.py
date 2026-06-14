@@ -49,6 +49,10 @@ class Trader:
     def strategy_name(self) -> str:
         return self._strategy.name
 
+    def set_strategy(self, strategy: Strategy) -> None:
+        """Hot-swap the strategy (used by the learning loop on promotion)."""
+        self._strategy = strategy
+
     async def step(self) -> dict:
         s = self._settings
         candles = await self._broker.get_candles(

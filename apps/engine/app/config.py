@@ -34,6 +34,11 @@ class Settings(BaseSettings):
     stop_loss_pct: float = 0.005
     risk_reward_ratio: float = 1.5
 
+    # Learning loop (periodic retraining + champion/challenger). Off by default:
+    # retraining is heavy, opt in explicitly.
+    learning_enabled: bool = False
+    learning_interval_seconds: int = 86400
+
     # Data ingestion
     ingest_enabled: bool = True
     ingest_granularities: str = "M1,M5,M15"

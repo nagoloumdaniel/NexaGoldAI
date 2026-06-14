@@ -54,7 +54,26 @@ export interface Trade {
   closedAt: string | null;
 }
 
+export interface ModelVersion {
+  id: string;
+  config: { horizon: number; threshold: number };
+  metrics: {
+    value: number;
+    accuracy: number;
+    sharpe: number;
+    profit_factor: number | null;
+    samples: number;
+  };
+}
+
+export interface ModelRegistry {
+  granularity: string | null;
+  champion: string | null;
+  versions: ModelVersion[];
+}
+
 export const getSummary = () => get<Summary>("/dashboard/summary");
+export const getModels = () => get<ModelRegistry>("/dashboard/models");
 export const getCandles = (granularity = "M5", limit = 300) =>
   get<Candle[]>(`/dashboard/candles?granularity=${granularity}&limit=${limit}`);
 export const getDecisions = (limit = 50) =>

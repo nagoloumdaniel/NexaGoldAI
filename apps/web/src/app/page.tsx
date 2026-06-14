@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import DecisionsTable from "@/components/decisions-table";
+import ModelsPanel from "@/components/models-panel";
 import StatsCards from "@/components/stats-cards";
 import TradesTable from "@/components/trades-table";
 
@@ -43,6 +44,8 @@ export default function Home() {
           <DecisionsTable />
           <TradesTable />
         </div>
+
+        <ModelsPanel />
       </main>
     </div>
   );

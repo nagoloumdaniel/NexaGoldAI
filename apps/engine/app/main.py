@@ -7,6 +7,7 @@ pipeline (Capital.com -> `Candle` table) and the paper-trading loop
 
 import asyncio
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Query
 
@@ -18,6 +19,8 @@ from app.data.ingestion import IngestionService
 from app.data.trades import TradeRepository
 from app.db import Database
 from app.execution.trader import Trader
+from app.learning.registry import ModelRegistry
+from app.learning.service import LearningService
 from app.risk.manager import RiskManager
 from app.strategy.factory import build_strategy
 
@@ -28,8 +31,10 @@ database: Database | None = None
 ingestion: IngestionService | None = None
 trader: Trader | None = None
 decisions_repo: StrategyDecisionRepository | None = None
+learning: LearningService | None = None
 _ingestion_task: asyncio.Task | None = None
 _trade_task: asyncio.Task | None = None
+_learning_task: asyncio.Task | None = None
 
 
 def _broker_ready() -> bool:
@@ -42,8 +47,8 @@ def _broker_ready() -> bool:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global broker, database, ingestion, trader, decisions_repo
-    global _ingestion_task, _trade_task
+    global broker, database, ingestion, trader, decisions_repo, learning
+    global _ingestion_task, _trade_task, _learning_task
 
     broker = CapitalClient(settings)
     database = Database(settings)
@@ -60,15 +65,18 @@ async def lifespan(app: FastAPI):
             decisions_repo,
             TradeRepository(database.pool, settings.epic),
         )
+        learning = LearningService(settings, trader)
         if _broker_ready():
             if settings.ingest_enabled:
                 _ingestion_task = asyncio.create_task(ingestion.run_loop())
             if settings.trading_loop_enabled:
                 _trade_task = asyncio.create_task(trader.run_loop())
+        if settings.learning_enabled:
+            _learning_task = asyncio.create_task(learning.run_loop())
 
     yield
 
-    for task in (_ingestion_task, _trade_task):
+    for task in (_ingestion_task, _trade_task, _learning_task):
         if task is not None:
             task.cancel()
             try:
@@ -254,3 +262,26 @@ async def decisions_recent(limit: int = Query(20, ge=1, le=200)) -> list[dict]:
     if decisions_repo is None:
         raise HTTPException(status_code=503, detail="Base de données indisponible")
     return await decisions_repo.recent(limit)
+
+
+# -- Learning loop ----------------------------------------------------------
+
+
+@app.post("/learning/retrain")
+async def learning_retrain() -> dict:
+    """Run one retraining round: candidate configs compete, best is promoted."""
+    if learning is None:
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
+    return await learning.retrain_once()
+
+
+@app.get("/learning/registry")
+async def learning_registry() -> dict:
+    registry = ModelRegistry(
+        Path(__file__).resolve().parents[1] / "models", settings.model_granularity
+    )
+    return {
+        "granularity": settings.model_granularity,
+        "champion": registry.champion(),
+        "versions": registry.versions(),
+    }

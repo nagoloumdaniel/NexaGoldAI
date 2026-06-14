@@ -36,6 +36,11 @@ export class DashboardController {
     return this.dashboard.positions();
   }
 
+  @Get('models')
+  models() {
+    return this.dashboard.models();
+  }
+
   @Get('analytics')
   analytics() {
     return this.dashboard.analytics();

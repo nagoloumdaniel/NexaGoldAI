@@ -93,6 +93,16 @@ export class DashboardService {
     return (await this.engine<unknown[]>('/positions')) ?? [];
   }
 
+  async models() {
+    return (
+      (await this.engine<Record<string, unknown>>('/learning/registry')) ?? {
+        granularity: null,
+        champion: null,
+        versions: [],
+      }
+    );
+  }
+
   async analytics() {
     const closed = await this.prisma.trade.findMany({
       where: { status: 'CLOSED' },
