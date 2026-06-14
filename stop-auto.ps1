@@ -25,7 +25,7 @@ if (Test-Path $pidFile) {
   Remove-Item $pidFile -Force -ErrorAction SilentlyContinue
 }
 
-# 1b) Demarrage classique (start.bat) : fermer les fenetres par titre
+# 1b) Demarrage classique (start.ps1, fenetres visibles) : fermer par titre
 foreach ($t in @('NexaGold - Moteur', 'NexaGold - API', 'NexaGold - Dashboard', 'NexaGold - Lanceur')) {
   taskkill /FI "WINDOWTITLE eq $t*" /T /F 2>$null | Out-Null
 }
