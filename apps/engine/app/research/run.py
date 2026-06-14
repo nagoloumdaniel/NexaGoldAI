@@ -77,6 +77,7 @@ def main() -> None:
                 "feature_cols": feature_cols,
                 "config": config,
                 "granularity": args.granularity,
+                "confidence_threshold": report["best_confidence_threshold"],
             },
             indent=2,
         ),

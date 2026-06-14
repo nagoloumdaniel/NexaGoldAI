@@ -77,6 +77,7 @@ async def retrain(settings: Settings, granularity: str, folds: int = 5) -> dict:
                 "feature_cols": best["cols"],
                 "config": best["config"],
                 "granularity": granularity,
+                "confidence_threshold": best["report"]["best_confidence_threshold"],
             },
             indent=2,
         ),
@@ -95,6 +96,7 @@ async def retrain(settings: Settings, granularity: str, folds: int = 5) -> dict:
             "accuracy": best["report"]["accuracy"],
             "sharpe": best["report"]["pnl"]["sharpe_annualised"],
             "profit_factor": best["report"]["pnl"]["profit_factor"],
+            "confidence_threshold": best["report"]["best_confidence_threshold"],
             "samples": best["report"]["samples"],
         },
         make_champion=True,
@@ -103,12 +105,14 @@ async def retrain(settings: Settings, granularity: str, folds: int = 5) -> dict:
     summary = {
         "champion": version_id,
         "selected_config": best["config"],
+        "confidence_threshold": best["report"]["best_confidence_threshold"],
         "candles": int(len(df)),
         "leaderboard": [
             {
                 "config": entry["config"],
                 "sharpe": entry["report"]["pnl"]["sharpe_annualised"],
                 "accuracy": entry["report"]["accuracy"],
+                "confidence_threshold": entry["report"]["best_confidence_threshold"],
             }
             for entry in leaderboard
         ],

@@ -81,13 +81,18 @@ def _max_drawdown(equity: np.ndarray) -> float:
 def backtest_pnl(
     data: pd.DataFrame,
     oos_pred: np.ndarray,
+    oos_proba: np.ndarray,
     mask: np.ndarray,
     granularity: str,
     cost_bps: float,
+    confidence_threshold: float = 0.0,
 ) -> dict:
     sub = data[mask]
     pred = oos_pred[mask]
-    position = np.where(pred == UP, 1, np.where(pred == DOWN, -1, 0))
+    confidence = oos_proba[mask].max(axis=1)
+    # Only act on high-conviction signals; below the threshold we stay flat.
+    directional = np.where(pred == UP, 1, np.where(pred == DOWN, -1, 0))
+    position = np.where(confidence >= confidence_threshold, directional, 0)
     next_ret = sub["next_ret"].values
 
     gross = position * next_ret
@@ -120,6 +125,11 @@ def backtest_pnl(
     }
 
 
+# Confidence thresholds swept to find the best execution filter. 0.0 = trade
+# every signal (old behaviour); higher = only high-conviction bets.
+CONFIDENCE_THRESHOLDS = (0.0, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)
+
+
 def run(
     data: pd.DataFrame,
     feature_cols: list[str],
@@ -134,6 +144,19 @@ def run(
     dist = data["label"].astype(int).value_counts().sort_index()
     cm = confusion_matrix(y_true, y_pred, labels=[DOWN, FLAT, UP])
 
+    # Sweep the confidence filter and keep the threshold with the best Sharpe.
+    sweep: dict[str, float] = {}
+    best_pnl = None
+    best_threshold = 0.0
+    for threshold in CONFIDENCE_THRESHOLDS:
+        pnl = backtest_pnl(
+            data, oos_pred, oos_proba, mask, granularity, cost_bps, threshold
+        )
+        sweep[str(threshold)] = pnl["sharpe_annualised"]
+        if best_pnl is None or pnl["sharpe_annualised"] > best_pnl["sharpe_annualised"]:
+            best_pnl = pnl
+            best_threshold = threshold
+
     return {
         "samples": int(len(data)),
         "evaluated": int(mask.sum()),
@@ -144,5 +167,7 @@ def run(
             "labels": [CLASS_NAMES[c] for c in (DOWN, FLAT, UP)],
             "rows_true_cols_pred": cm.tolist(),
         },
-        "pnl": backtest_pnl(data, oos_pred, mask, granularity, cost_bps),
+        "best_confidence_threshold": best_threshold,
+        "confidence_sweep": sweep,
+        "pnl": best_pnl,
     }

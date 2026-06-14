@@ -1476,7 +1476,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.backtest",
         "description": "apps.engine.app.research.backtest",
-        "peekOfCode": "def backtest_pnl(\n    data: pd.DataFrame,\n    oos_pred: np.ndarray,\n    mask: np.ndarray,\n    granularity: str,\n    cost_bps: float,\n) -> dict:\n    sub = data[mask]\n    pred = oos_pred[mask]\n    position = np.where(pred == UP, 1, np.where(pred == DOWN, -1, 0))",
+        "peekOfCode": "def backtest_pnl(\n    data: pd.DataFrame,\n    oos_pred: np.ndarray,\n    oos_proba: np.ndarray,\n    mask: np.ndarray,\n    granularity: str,\n    cost_bps: float,\n    confidence_threshold: float = 0.0,\n) -> dict:\n    sub = data[mask]",
         "detail": "apps.engine.app.research.backtest",
         "documentation": {}
     },
@@ -1504,6 +1504,15 @@
         "importPath": "apps.engine.app.research.backtest",
         "description": "apps.engine.app.research.backtest",
         "peekOfCode": "DEFAULT_PARAMS = dict(\n    n_estimators=400,\n    learning_rate=0.05,\n    num_leaves=31,\n    min_child_samples=40,\n    subsample=0.8,\n    colsample_bytree=0.8,\n    reg_lambda=1.0,\n    class_weight=\"balanced\",\n    random_state=42,",
+        "detail": "apps.engine.app.research.backtest",
+        "documentation": {}
+    },
+    {
+        "label": "CONFIDENCE_THRESHOLDS",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.backtest",
+        "description": "apps.engine.app.research.backtest",
+        "peekOfCode": "CONFIDENCE_THRESHOLDS = (0.0, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)\ndef run(\n    data: pd.DataFrame,\n    feature_cols: list[str],\n    n_splits: int,\n    granularity: str,\n    cost_bps: float = 2.0,\n) -> dict:\n    oos_pred, oos_proba, mask = walk_forward(data, feature_cols, n_splits)\n    y_true = data[\"label\"].astype(int).values[mask]",
         "detail": "apps.engine.app.research.backtest",
         "documentation": {}
     },
@@ -1674,7 +1683,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.strategy.lightgbm_strategy",
         "description": "apps.engine.app.strategy.lightgbm_strategy",
-        "peekOfCode": "class LightGBMStrategy(Strategy):\n    name = \"lightgbm\"\n    def __init__(self, model_dir: str | Path):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        meta = json.loads((model_dir / \"meta.json\").read_text(encoding=\"utf-8\"))\n        self._feature_cols = meta[\"feature_cols\"]\n    def evaluate(self, candles: list[dict]) -> Signal:\n        df = candles_to_frame(candles)\n        if df.empty:",
+        "peekOfCode": "class LightGBMStrategy(Strategy):\n    name = \"lightgbm\"\n    def __init__(self, model_dir: str | Path):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        meta = json.loads((model_dir / \"meta.json\").read_text(encoding=\"utf-8\"))\n        self._feature_cols = meta[\"feature_cols\"]\n        # Confidence filter learned at training time: below it, stay flat.\n        self._confidence_threshold = float(meta.get(\"confidence_threshold\", 0.0))\n    def evaluate(self, candles: list[dict]) -> Signal:",
         "detail": "apps.engine.app.strategy.lightgbm_strategy",
         "documentation": {}
     },
@@ -1683,7 +1692,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.strategy.lightgbm_strategy",
         "description": "apps.engine.app.strategy.lightgbm_strategy",
-        "peekOfCode": "_ACTION = {UP: Action.BUY, DOWN: Action.SELL, FLAT: Action.HOLD}\nclass LightGBMStrategy(Strategy):\n    name = \"lightgbm\"\n    def __init__(self, model_dir: str | Path):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        meta = json.loads((model_dir / \"meta.json\").read_text(encoding=\"utf-8\"))\n        self._feature_cols = meta[\"feature_cols\"]\n    def evaluate(self, candles: list[dict]) -> Signal:\n        df = candles_to_frame(candles)",
+        "peekOfCode": "_ACTION = {UP: Action.BUY, DOWN: Action.SELL, FLAT: Action.HOLD}\nclass LightGBMStrategy(Strategy):\n    name = \"lightgbm\"\n    def __init__(self, model_dir: str | Path):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        meta = json.loads((model_dir / \"meta.json\").read_text(encoding=\"utf-8\"))\n        self._feature_cols = meta[\"feature_cols\"]\n        # Confidence filter learned at training time: below it, stay flat.\n        self._confidence_threshold = float(meta.get(\"confidence_threshold\", 0.0))",
         "detail": "apps.engine.app.strategy.lightgbm_strategy",
         "documentation": {}
     },

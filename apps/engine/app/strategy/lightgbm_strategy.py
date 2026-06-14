@@ -24,6 +24,8 @@ class LightGBMStrategy(Strategy):
         self._model = joblib.load(model_dir / "model.joblib")
         meta = json.loads((model_dir / "meta.json").read_text(encoding="utf-8"))
         self._feature_cols = meta["feature_cols"]
+        # Confidence filter learned at training time: below it, stay flat.
+        self._confidence_threshold = float(meta.get("confidence_threshold", 0.0))
 
     def evaluate(self, candles: list[dict]) -> Signal:
         df = candles_to_frame(candles)
@@ -44,9 +46,23 @@ class LightGBMStrategy(Strategy):
         predicted_class = int(self._model.classes_[best])
         confidence = float(proba[best])
         action = _ACTION[predicted_class]
+        features = latest.iloc[0].to_dict()
+
+        # Below the learned confidence threshold, don't trade (stay flat).
+        if action != Action.HOLD and confidence < self._confidence_threshold:
+            return Signal(
+                action=Action.HOLD,
+                confidence=confidence,
+                reason=(
+                    f"LightGBM: {action.value} ignoré "
+                    f"(p={confidence:.2f} < seuil {self._confidence_threshold:.2f})"
+                ),
+                features=features,
+            )
+
         return Signal(
             action=action,
             confidence=confidence,
             reason=f"LightGBM: {action.value} (p={confidence:.2f})",
-            features=latest.iloc[0].to_dict(),
+            features=features,
         )

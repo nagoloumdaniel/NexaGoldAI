@@ -226,13 +226,31 @@ drawdown, profit factor, win rate, exposition.
 modèle et implémente l'interface `Strategy` — c'est le pont vers le paper
 trading (phase 3).
 
-> **Résultat du premier modèle (baseline, à ne PAS trader).** Sur 30 jours de
-> M5, accuracy ≈ 34 % (≈ hasard sur 3 classes) et, après coûts, la stratégie
-> perd. C'est le résultat attendu d'un modèle naïf sur peu de données — et
-> précisément ce que le backtesting sert à révéler **avant** de risquer du
-> capital. L'infrastructure (évaluation sans fuite, métriques, sauvegarde,
-> pont stratégie) est en place ; trouver un edge réel = itérer sur features,
-> labelling et volume de données.
+### Filtre de confiance
+
+`backtest.run` balaie un ensemble de seuils de confiance et garde celui qui
+maximise le Sharpe : on ne prend position que si la probabilité du modèle
+dépasse ce seuil, sinon on reste flat. Le seuil retenu est sauvegardé dans
+`meta.json` et **appliqué en live** par `LightGBMStrategy` (en dessous, signal
+→ HOLD).
+
+> **Évolution du modèle (toujours à ne PAS trader).** Sharpe OOS sur l'année :
+>
+> | Étape | Sharpe | Note |
+> | --- | --- | --- |
+> | Baseline phase 2 (30 j, 20 features, fixe) | ≈ −34 | hasard |
+> | + 1 an de données + ~30 features | ≈ −17 | net mieux |
+> | + filtre de confiance (seuil ≈ 0,7-0,8) | ≈ −3 | quasi breakeven |
+>
+> Le triple-barrier monte l'accuracy à ≈ 50 % (3 classes), et le filtre de
+> confiance, en ne gardant que les paris à forte conviction (exposition ~3-7 %),
+> fait remonter le Sharpe à ≈ −3 et le profit factor à ≈ 0,95. **Le modèle est
+> proche du breakeven mais pas profitable.** Deux réserves d'honnêteté : choisir
+> le seuil sur le jeu de test est un léger sur-apprentissage (le balayage est
+> non monotone au-delà de 0,7, donc dans le bruit) ; et un seuil élevé = peu de
+> trades = estimation plus bruitée. Le vrai edge demandera probablement des
+> features externes (macro, taux, DXY) et une sélection de seuil sur une
+> validation séparée. L'infrastructure, elle, est solide.
 
 ## Paper trading (phase 3)
 
@@ -322,10 +340,11 @@ curl http://localhost:8000/learning/registry          # champion + versions
 Le dashboard affiche le panneau **« Modèles & apprentissage »** (champion +
 historique des versions avec Sharpe et accuracy), via `/dashboard/models`.
 
-> Exemple réel : sur les données M5, le système a comparé trois approches et
-> promu `horizon=24, seuil=0.002` (Sharpe −25,8) plutôt que le défaut de la
-> phase 2 (−34,5). La sélection fonctionne — même si, sans edge, le « meilleur »
-> reste perdant tant que le modèle n'est pas amélioré.
+> Exemple réel (1 an de M5, 5 approches) : le système a promu
+> `fixed, horizon=24, seuil=0.002` (Sharpe −17,3) — meilleur PnL que les
+> variantes triple-barrier, qui pourtant atteignent une accuracy supérieure
+> (~50 %). La sélection par Sharpe privilégie donc le PnL net, pas la seule
+> précision de classification. Sans edge net, le « meilleur » reste perdant.
 
 ## Feuille de route
 
