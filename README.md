@@ -198,13 +198,20 @@ Capital.com pour entretenir le présent.
 ## Backtesting & modèle (phase 2)
 
 Module de recherche dans [apps/engine/app/research/](apps/engine/app/research/) :
-`features.py` (indicateurs techniques causaux), `labeling.py` (cible 3 classes
-hausse/baisse/consolidation sur le rendement futur), `backtest.py` (validation
-walk-forward LightGBM + backtest PnL), `run.py` (CLI).
+`features.py` (indicateurs techniques causaux), `labeling.py` (cible 3 classes),
+`backtest.py` (validation walk-forward LightGBM + backtest PnL), `run.py` (CLI).
+
+Deux méthodes de labelling :
+
+- **fixed** : UP/DOWN si le rendement futur dépasse ±seuil.
+- **triple_barrier** : barrières haute/basse à ±`vol_mult` × volatilité récente,
+  plus une barrière temporelle ; le label est la première barrière touchée
+  (high/low intrabar). Volatilité-adaptatif et sensible au chemin.
 
 ```bash
 cd apps/engine
-.venv\Scripts\python.exe -m app.research.run --granularity M5 --horizon 12 --threshold 0.001 --folds 5
+.venv\Scripts\python.exe -m app.research.run --granularity M5 \
+    --labeling triple_barrier --horizon 24 --vol-mult 1.5 --folds 5
 ```
 
 Le CLI charge les bougies depuis la base, évalue le modèle en **walk-forward**

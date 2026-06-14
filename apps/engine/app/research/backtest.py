@@ -41,11 +41,10 @@ DEFAULT_PARAMS = dict(
 )
 
 
-def build_dataset(df: pd.DataFrame, horizon: int, threshold: float) -> pd.DataFrame:
+def build_dataset(df: pd.DataFrame, config: dict) -> pd.DataFrame:
+    """Features + label (labelling method chosen by `config`) + next-bar return."""
     feats = build_features(df)
-    label, fwd_ret = make_labels(df["close"], horizon, threshold)
-    feats["label"] = label
-    feats["fwd_ret"] = fwd_ret
+    feats["label"] = make_labels(df, config)
     feats["next_ret"] = df["close"].pct_change().shift(-1)
     return feats.dropna()
 

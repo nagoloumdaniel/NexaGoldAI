@@ -22,11 +22,14 @@ logger = logging.getLogger("nexagold.learning")
 
 MODELS_DIR = Path(__file__).resolve().parents[2] / "models"
 
-# Search space — different labelling horizons/thresholds = different "approaches".
+# Search space — each entry is a different "approach" (labelling method +
+# horizon/volatility). Triple-barrier and fixed compete head to head.
 CANDIDATE_CONFIGS = [
-    {"horizon": 12, "threshold": 0.0010},
-    {"horizon": 12, "threshold": 0.0015},
-    {"horizon": 24, "threshold": 0.0020},
+    {"labeling": "triple_barrier", "horizon": 12, "vol_mult": 1.0, "vol_window": 20},
+    {"labeling": "triple_barrier", "horizon": 24, "vol_mult": 1.5, "vol_window": 20},
+    {"labeling": "triple_barrier", "horizon": 48, "vol_mult": 2.0, "vol_window": 50},
+    {"labeling": "fixed", "horizon": 12, "threshold": 0.0010},
+    {"labeling": "fixed", "horizon": 24, "threshold": 0.0020},
 ]
 
 
@@ -45,7 +48,7 @@ async def retrain(settings: Settings, granularity: str, folds: int = 5) -> dict:
 
     leaderboard = []
     for config in CANDIDATE_CONFIGS:
-        data = bt.build_dataset(df, config["horizon"], config["threshold"])
+        data = bt.build_dataset(df, config)
         cols = feature_columns(data)
         report = bt.run(data, cols, folds, granularity)
         leaderboard.append(
@@ -72,8 +75,7 @@ async def retrain(settings: Settings, granularity: str, folds: int = 5) -> dict:
         json.dumps(
             {
                 "feature_cols": best["cols"],
-                "horizon": best["config"]["horizon"],
-                "threshold": best["config"]["threshold"],
+                "config": best["config"],
                 "granularity": granularity,
             },
             indent=2,

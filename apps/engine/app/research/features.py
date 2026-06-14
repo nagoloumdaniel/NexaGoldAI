@@ -19,6 +19,19 @@ def _rsi(close: pd.Series, period: int = 14) -> pd.Series:
     return 100 - 100 / (1 + rs)
 
 
+def _atr(df: pd.DataFrame, period: int = 14) -> pd.Series:
+    prev_close = df["close"].shift(1)
+    true_range = pd.concat(
+        [
+            df["high"] - df["low"],
+            (df["high"] - prev_close).abs(),
+            (df["low"] - prev_close).abs(),
+        ],
+        axis=1,
+    ).max(axis=1)
+    return true_range.rolling(period).mean()
+
+
 def build_features(df: pd.DataFrame) -> pd.DataFrame:
     close = df["close"]
     out = pd.DataFrame(index=df.index)
@@ -33,12 +46,29 @@ def build_features(df: pd.DataFrame) -> pd.DataFrame:
     for n in (5, 10, 20, 50):
         out[f"sma_ratio_{n}"] = close / close.rolling(n).mean() - 1
 
-    # Realised volatility
-    for n in (10, 20):
-        out[f"vol_{n}"] = out["ret_1"].rolling(n).std()
+    # Momentum acceleration (change in short-horizon return)
+    out["ret_accel"] = out["ret_3"] - out["ret_6"]
 
-    # RSI (scaled to 0..1)
+    # Realised volatility, multi-scale + ratio (regime)
+    for n in (5, 10, 20, 50):
+        out[f"vol_{n}"] = out["ret_1"].rolling(n).std()
+    out["vol_ratio"] = out["vol_5"] / out["vol_50"].replace(0, np.nan)
+
+    # Return distribution shape
+    out["skew_20"] = out["ret_1"].rolling(20).skew()
+
+    # ATR normalised by price
+    out["atr_14"] = _atr(df, 14) / close
+
+    # RSI at two periods (scaled to 0..1)
+    out["rsi_7"] = _rsi(close, 7) / 100.0
     out["rsi_14"] = _rsi(close, 14) / 100.0
+
+    # Donchian position: where close sits in the recent range (0..1)
+    for n in (20, 50):
+        hi = df["high"].rolling(n).max()
+        lo = df["low"].rolling(n).min()
+        out[f"donchian_{n}"] = (close - lo) / (hi - lo).replace(0, np.nan)
 
     # MACD, normalised by price
     ema12 = close.ewm(span=12, adjust=False).mean()

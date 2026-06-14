@@ -122,6 +122,14 @@
         "documentation": {}
     },
     {
+        "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
         "label": "Settings",
         "importPath": "app.config",
         "description": "app.config",
@@ -215,6 +223,136 @@
         "description": "app.config",
         "isExtraImport": true,
         "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "asyncio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "asyncio",
+        "description": "asyncio",
+        "detail": "asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalClient",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalClient",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalError",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalClient",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalError",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalClient",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalError",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CandleRepository",
+        "importPath": "app.data.candles",
+        "description": "app.data.candles",
+        "isExtraImport": true,
+        "detail": "app.data.candles",
+        "documentation": {}
+    },
+    {
+        "label": "CandleRepository",
+        "importPath": "app.data.candles",
+        "description": "app.data.candles",
+        "isExtraImport": true,
+        "detail": "app.data.candles",
+        "documentation": {}
+    },
+    {
+        "label": "CandleRepository",
+        "importPath": "app.data.candles",
+        "description": "app.data.candles",
+        "isExtraImport": true,
+        "detail": "app.data.candles",
+        "documentation": {}
+    },
+    {
+        "label": "IngestionService",
+        "importPath": "app.data.ingestion",
+        "description": "app.data.ingestion",
+        "isExtraImport": true,
+        "detail": "app.data.ingestion",
+        "documentation": {}
+    },
+    {
+        "label": "IngestionService",
+        "importPath": "app.data.ingestion",
+        "description": "app.data.ingestion",
+        "isExtraImport": true,
+        "detail": "app.data.ingestion",
+        "documentation": {}
+    },
+    {
+        "label": "Database",
+        "importPath": "app.db",
+        "description": "app.db",
+        "isExtraImport": true,
+        "detail": "app.db",
+        "documentation": {}
+    },
+    {
+        "label": "Database",
+        "importPath": "app.db",
+        "description": "app.db",
+        "isExtraImport": true,
+        "detail": "app.db",
         "documentation": {}
     },
     {
@@ -396,79 +534,6 @@
         "importPath": "struct",
         "description": "struct",
         "detail": "struct",
-        "documentation": {}
-    },
-    {
-        "label": "asyncio",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "asyncio",
-        "description": "asyncio",
-        "detail": "asyncio",
-        "documentation": {}
-    },
-    {
-        "label": "CapitalClient",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
-        "isExtraImport": true,
-        "detail": "app.broker.capital",
-        "documentation": {}
-    },
-    {
-        "label": "CapitalError",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
-        "isExtraImport": true,
-        "detail": "app.broker.capital",
-        "documentation": {}
-    },
-    {
-        "label": "CapitalClient",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
-        "isExtraImport": true,
-        "detail": "app.broker.capital",
-        "documentation": {}
-    },
-    {
-        "label": "CapitalError",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
-        "isExtraImport": true,
-        "detail": "app.broker.capital",
-        "documentation": {}
-    },
-    {
-        "label": "CapitalClient",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
-        "isExtraImport": true,
-        "detail": "app.broker.capital",
-        "documentation": {}
-    },
-    {
-        "label": "CapitalError",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
-        "isExtraImport": true,
-        "detail": "app.broker.capital",
-        "documentation": {}
-    },
-    {
-        "label": "CandleRepository",
-        "importPath": "app.data.candles",
-        "description": "app.data.candles",
-        "isExtraImport": true,
-        "detail": "app.data.candles",
-        "documentation": {}
-    },
-    {
-        "label": "CandleRepository",
-        "importPath": "app.data.candles",
-        "description": "app.data.candles",
-        "isExtraImport": true,
-        "detail": "app.data.candles",
         "documentation": {}
     },
     {
@@ -931,12 +996,27 @@
         "documentation": {}
     },
     {
-        "label": "argparse",
-        "kind": 6,
+        "label": "DOWN",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
         "isExtraImport": true,
-        "importPath": "argparse",
-        "description": "argparse",
-        "detail": "argparse",
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "UP",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "make_labels",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
         "documentation": {}
     },
     {
@@ -1060,22 +1140,6 @@
         "documentation": {}
     },
     {
-        "label": "IngestionService",
-        "importPath": "app.data.ingestion",
-        "description": "app.data.ingestion",
-        "isExtraImport": true,
-        "detail": "app.data.ingestion",
-        "documentation": {}
-    },
-    {
-        "label": "Database",
-        "importPath": "app.db",
-        "description": "app.db",
-        "isExtraImport": true,
-        "detail": "app.db",
-        "documentation": {}
-    },
-    {
         "label": "LearningService",
         "importPath": "app.learning.service",
         "description": "app.learning.service",
@@ -1153,6 +1217,15 @@
         "description": "apps.engine.app.broker.capital",
         "peekOfCode": "_RESOLUTION_MAP = {\n    \"M1\": \"MINUTE\",\n    \"M5\": \"MINUTE_5\",\n    \"M15\": \"MINUTE_15\",\n    \"M30\": \"MINUTE_30\",\n    \"H1\": \"HOUR\",\n    \"H4\": \"HOUR_4\",\n    \"D\": \"DAY\",\n    \"W\": \"WEEK\",\n}",
         "detail": "apps.engine.app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.app.data.backfill_cli",
+        "description": "apps.engine.app.data.backfill_cli",
+        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(description=\"Backfill Dukascopy\")\n    parser.add_argument(\"--granularity\", default=\"M5\")\n    parser.add_argument(\"--days\", type=int, default=365)\n    parser.add_argument(\"--concurrency\", type=int, default=16)\n    args = parser.parse_args()\n    asyncio.run(run(args.granularity, args.days, args.concurrency))\nif __name__ == \"__main__\":\n    main()",
+        "detail": "apps.engine.app.data.backfill_cli",
         "documentation": {}
     },
     {
@@ -1349,7 +1422,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.learning.trainer",
         "description": "apps.engine.app.learning.trainer",
-        "peekOfCode": "logger = logging.getLogger(\"nexagold.learning\")\nMODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\n# Search space — different labelling horizons/thresholds = different \"approaches\".\nCANDIDATE_CONFIGS = [\n    {\"horizon\": 12, \"threshold\": 0.0010},\n    {\"horizon\": 12, \"threshold\": 0.0015},\n    {\"horizon\": 24, \"threshold\": 0.0020},\n]\ndef _selection_metric(report: dict) -> float:\n    # Out-of-sample annualised Sharpe of the PnL backtest. Higher is better;",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.learning\")\nMODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\n# Search space — each entry is a different \"approach\" (labelling method +\n# horizon/volatility). Triple-barrier and fixed compete head to head.\nCANDIDATE_CONFIGS = [\n    {\"labeling\": \"triple_barrier\", \"horizon\": 12, \"vol_mult\": 1.0, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 24, \"vol_mult\": 1.5, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 48, \"vol_mult\": 2.0, \"vol_window\": 50},\n    {\"labeling\": \"fixed\", \"horizon\": 12, \"threshold\": 0.0010},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020},",
         "detail": "apps.engine.app.learning.trainer",
         "documentation": {}
     },
@@ -1358,7 +1431,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.learning.trainer",
         "description": "apps.engine.app.learning.trainer",
-        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\n# Search space — different labelling horizons/thresholds = different \"approaches\".\nCANDIDATE_CONFIGS = [\n    {\"horizon\": 12, \"threshold\": 0.0010},\n    {\"horizon\": 12, \"threshold\": 0.0015},\n    {\"horizon\": 24, \"threshold\": 0.0020},\n]\ndef _selection_metric(report: dict) -> float:\n    # Out-of-sample annualised Sharpe of the PnL backtest. Higher is better;\n    # may be negative (then we pick the least-bad, honestly).",
+        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\n# Search space — each entry is a different \"approach\" (labelling method +\n# horizon/volatility). Triple-barrier and fixed compete head to head.\nCANDIDATE_CONFIGS = [\n    {\"labeling\": \"triple_barrier\", \"horizon\": 12, \"vol_mult\": 1.0, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 24, \"vol_mult\": 1.5, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 48, \"vol_mult\": 2.0, \"vol_window\": 50},\n    {\"labeling\": \"fixed\", \"horizon\": 12, \"threshold\": 0.0010},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020},\n]",
         "detail": "apps.engine.app.learning.trainer",
         "documentation": {}
     },
@@ -1367,7 +1440,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.learning.trainer",
         "description": "apps.engine.app.learning.trainer",
-        "peekOfCode": "CANDIDATE_CONFIGS = [\n    {\"horizon\": 12, \"threshold\": 0.0010},\n    {\"horizon\": 12, \"threshold\": 0.0015},\n    {\"horizon\": 24, \"threshold\": 0.0020},\n]\ndef _selection_metric(report: dict) -> float:\n    # Out-of-sample annualised Sharpe of the PnL backtest. Higher is better;\n    # may be negative (then we pick the least-bad, honestly).\n    return report[\"pnl\"][\"sharpe_annualised\"]\nasync def retrain(settings: Settings, granularity: str, folds: int = 5) -> dict:",
+        "peekOfCode": "CANDIDATE_CONFIGS = [\n    {\"labeling\": \"triple_barrier\", \"horizon\": 12, \"vol_mult\": 1.0, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 24, \"vol_mult\": 1.5, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 48, \"vol_mult\": 2.0, \"vol_window\": 50},\n    {\"labeling\": \"fixed\", \"horizon\": 12, \"threshold\": 0.0010},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020},\n]\ndef _selection_metric(report: dict) -> float:\n    # Out-of-sample annualised Sharpe of the PnL backtest. Higher is better;\n    # may be negative (then we pick the least-bad, honestly).",
         "detail": "apps.engine.app.learning.trainer",
         "documentation": {}
     },
@@ -1376,7 +1449,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.backtest",
         "description": "apps.engine.app.research.backtest",
-        "peekOfCode": "def build_dataset(df: pd.DataFrame, horizon: int, threshold: float) -> pd.DataFrame:\n    feats = build_features(df)\n    label, fwd_ret = make_labels(df[\"close\"], horizon, threshold)\n    feats[\"label\"] = label\n    feats[\"fwd_ret\"] = fwd_ret\n    feats[\"next_ret\"] = df[\"close\"].pct_change().shift(-1)\n    return feats.dropna()\ndef make_model(params: dict | None = None) -> LGBMClassifier:\n    return LGBMClassifier(**(params or DEFAULT_PARAMS))\ndef walk_forward(data: pd.DataFrame, feature_cols: list[str], n_splits: int):",
+        "peekOfCode": "def build_dataset(df: pd.DataFrame, config: dict) -> pd.DataFrame:\n    \"\"\"Features + label (labelling method chosen by `config`) + next-bar return.\"\"\"\n    feats = build_features(df)\n    feats[\"label\"] = make_labels(df, config)\n    feats[\"next_ret\"] = df[\"close\"].pct_change().shift(-1)\n    return feats.dropna()\ndef make_model(params: dict | None = None) -> LGBMClassifier:\n    return LGBMClassifier(**(params or DEFAULT_PARAMS))\ndef walk_forward(data: pd.DataFrame, feature_cols: list[str], n_splits: int):\n    \"\"\"Out-of-sample predictions/probabilities via expanding-window CV.\"\"\"",
         "detail": "apps.engine.app.research.backtest",
         "documentation": {}
     },
@@ -1475,7 +1548,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.research.features",
         "description": "apps.engine.app.research.features",
-        "peekOfCode": "NON_FEATURE = {\"label\", \"fwd_ret\", \"next_ret\"}\ndef _rsi(close: pd.Series, period: int = 14) -> pd.Series:\n    delta = close.diff()\n    gain = delta.clip(lower=0).rolling(period).mean()\n    loss = (-delta.clip(upper=0)).rolling(period).mean()\n    rs = gain / loss.replace(0, np.nan)\n    return 100 - 100 / (1 + rs)\ndef build_features(df: pd.DataFrame) -> pd.DataFrame:\n    close = df[\"close\"]\n    out = pd.DataFrame(index=df.index)",
+        "peekOfCode": "NON_FEATURE = {\"label\", \"fwd_ret\", \"next_ret\"}\ndef _rsi(close: pd.Series, period: int = 14) -> pd.Series:\n    delta = close.diff()\n    gain = delta.clip(lower=0).rolling(period).mean()\n    loss = (-delta.clip(upper=0)).rolling(period).mean()\n    rs = gain / loss.replace(0, np.nan)\n    return 100 - 100 / (1 + rs)\ndef _atr(df: pd.DataFrame, period: int = 14) -> pd.Series:\n    prev_close = df[\"close\"].shift(1)\n    true_range = pd.concat(",
         "detail": "apps.engine.app.research.features",
         "documentation": {}
     },
@@ -1484,7 +1557,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.labeling",
         "description": "apps.engine.app.research.labeling",
-        "peekOfCode": "def make_labels(\n    close: pd.Series, horizon: int = 12, threshold: float = 0.001\n) -> tuple[pd.Series, pd.Series]:\n    fwd_ret = close.shift(-horizon) / close - 1\n    label = pd.Series(FLAT, index=close.index, dtype=\"float64\")\n    label[fwd_ret > threshold] = UP\n    label[fwd_ret < -threshold] = DOWN\n    # No future available for the final `horizon` bars.\n    label.iloc[-horizon:] = pd.NA\n    return label, fwd_ret",
+        "peekOfCode": "def make_labels(df: pd.DataFrame, config: dict) -> pd.Series:\n    method = config.get(\"labeling\", \"fixed\")\n    if method == \"triple_barrier\":\n        return _triple_barrier(\n            df,\n            config[\"horizon\"],\n            config.get(\"vol_mult\", 1.0),\n            config.get(\"vol_window\", 20),\n        )\n    return _fixed(df[\"close\"], config[\"horizon\"], config[\"threshold\"])",
         "detail": "apps.engine.app.research.labeling",
         "documentation": {}
     },
@@ -1493,7 +1566,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.research.labeling",
         "description": "apps.engine.app.research.labeling",
-        "peekOfCode": "CLASS_NAMES = {DOWN: \"DOWN\", FLAT: \"FLAT\", UP: \"UP\"}\ndef make_labels(\n    close: pd.Series, horizon: int = 12, threshold: float = 0.001\n) -> tuple[pd.Series, pd.Series]:\n    fwd_ret = close.shift(-horizon) / close - 1\n    label = pd.Series(FLAT, index=close.index, dtype=\"float64\")\n    label[fwd_ret > threshold] = UP\n    label[fwd_ret < -threshold] = DOWN\n    # No future available for the final `horizon` bars.\n    label.iloc[-horizon:] = pd.NA",
+        "peekOfCode": "CLASS_NAMES = {DOWN: \"DOWN\", FLAT: \"FLAT\", UP: \"UP\"}\ndef _fixed(close: pd.Series, horizon: int, threshold: float) -> pd.Series:\n    fwd_ret = close.shift(-horizon) / close - 1\n    label = pd.Series(FLAT, index=close.index, dtype=\"float64\")\n    label[fwd_ret > threshold] = UP\n    label[fwd_ret < -threshold] = DOWN\n    label.iloc[-horizon:] = pd.NA\n    return label\ndef _triple_barrier(\n    df: pd.DataFrame, horizon: int, vol_mult: float, vol_window: int",
         "detail": "apps.engine.app.research.labeling",
         "documentation": {}
     },
@@ -1502,7 +1575,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.run",
         "description": "apps.engine.app.research.run",
-        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(description=\"NexaGold walk-forward backtest\")\n    parser.add_argument(\"--granularity\", default=\"M5\")\n    parser.add_argument(\"--horizon\", type=int, default=12)\n    parser.add_argument(\"--threshold\", type=float, default=0.001)\n    parser.add_argument(\"--folds\", type=int, default=5)\n    parser.add_argument(\"--cost-bps\", type=float, default=2.0)\n    args = parser.parse_args()\n    settings = get_settings()\n    df = asyncio.run(load_candles(settings, args.granularity))",
+        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(description=\"NexaGold walk-forward backtest\")\n    parser.add_argument(\"--granularity\", default=\"M5\")\n    parser.add_argument(\n        \"--labeling\", choices=[\"fixed\", \"triple_barrier\"], default=\"fixed\"\n    )\n    parser.add_argument(\"--horizon\", type=int, default=12)\n    parser.add_argument(\"--threshold\", type=float, default=0.001)\n    parser.add_argument(\"--vol-mult\", type=float, default=1.0)\n    parser.add_argument(\"--vol-window\", type=int, default=20)",
         "detail": "apps.engine.app.research.run",
         "documentation": {}
     },
@@ -1511,7 +1584,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.research.run",
         "description": "apps.engine.app.research.run",
-        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef main() -> None:\n    parser = argparse.ArgumentParser(description=\"NexaGold walk-forward backtest\")\n    parser.add_argument(\"--granularity\", default=\"M5\")\n    parser.add_argument(\"--horizon\", type=int, default=12)\n    parser.add_argument(\"--threshold\", type=float, default=0.001)\n    parser.add_argument(\"--folds\", type=int, default=5)\n    parser.add_argument(\"--cost-bps\", type=float, default=2.0)\n    args = parser.parse_args()\n    settings = get_settings()",
+        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef main() -> None:\n    parser = argparse.ArgumentParser(description=\"NexaGold walk-forward backtest\")\n    parser.add_argument(\"--granularity\", default=\"M5\")\n    parser.add_argument(\n        \"--labeling\", choices=[\"fixed\", \"triple_barrier\"], default=\"fixed\"\n    )\n    parser.add_argument(\"--horizon\", type=int, default=12)\n    parser.add_argument(\"--threshold\", type=float, default=0.001)\n    parser.add_argument(\"--vol-mult\", type=float, default=1.0)",
         "detail": "apps.engine.app.research.run",
         "documentation": {}
     },
@@ -1765,6 +1838,69 @@
         "description": "apps.engine.tests_manual.test_dukascopy_parse",
         "peekOfCode": "m1 = aggregate_ticks(ticks, \"M1\")\nassert len(m1) == 3, f\"attendu 3 bougies M1, obtenu {len(m1)}\"\nassert all(c[\"volume\"] == 1 for c in m1), m1\nprint(\"OK: parse_ticks + aggregate_ticks valides\")",
         "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "base",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_labeling",
+        "description": "apps.engine.tests_manual.test_labeling",
+        "peekOfCode": "base = [100.0, 100.1, 99.9, 100.05, 99.95, 100.05, 99.95, 100.05, 99.95, 100.05,\n        99.95, 100.05]\nhigh = list(base)\nlow = list(base)\n# Inject an unmistakable up move within the horizon of bar 4...\nhigh[5] = 200.0\n# ...and an unmistakable down move within the horizon of bar 6.\nlow[7] = 50.0\ndf = pd.DataFrame({\"open\": base, \"high\": high, \"low\": low, \"close\": base})\nlabels = make_labels(",
+        "detail": "apps.engine.tests_manual.test_labeling",
+        "documentation": {}
+    },
+    {
+        "label": "high",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_labeling",
+        "description": "apps.engine.tests_manual.test_labeling",
+        "peekOfCode": "high = list(base)\nlow = list(base)\n# Inject an unmistakable up move within the horizon of bar 4...\nhigh[5] = 200.0\n# ...and an unmistakable down move within the horizon of bar 6.\nlow[7] = 50.0\ndf = pd.DataFrame({\"open\": base, \"high\": high, \"low\": low, \"close\": base})\nlabels = make_labels(\n    df,\n    {\"labeling\": \"triple_barrier\", \"horizon\": 2, \"vol_mult\": 1.0, \"vol_window\": 3},",
+        "detail": "apps.engine.tests_manual.test_labeling",
+        "documentation": {}
+    },
+    {
+        "label": "low",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_labeling",
+        "description": "apps.engine.tests_manual.test_labeling",
+        "peekOfCode": "low = list(base)\n# Inject an unmistakable up move within the horizon of bar 4...\nhigh[5] = 200.0\n# ...and an unmistakable down move within the horizon of bar 6.\nlow[7] = 50.0\ndf = pd.DataFrame({\"open\": base, \"high\": high, \"low\": low, \"close\": base})\nlabels = make_labels(\n    df,\n    {\"labeling\": \"triple_barrier\", \"horizon\": 2, \"vol_mult\": 1.0, \"vol_window\": 3},\n)",
+        "detail": "apps.engine.tests_manual.test_labeling",
+        "documentation": {}
+    },
+    {
+        "label": "high[5]",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_labeling",
+        "description": "apps.engine.tests_manual.test_labeling",
+        "peekOfCode": "high[5] = 200.0\n# ...and an unmistakable down move within the horizon of bar 6.\nlow[7] = 50.0\ndf = pd.DataFrame({\"open\": base, \"high\": high, \"low\": low, \"close\": base})\nlabels = make_labels(\n    df,\n    {\"labeling\": \"triple_barrier\", \"horizon\": 2, \"vol_mult\": 1.0, \"vol_window\": 3},\n)\nassert labels.iloc[4] == UP, f\"bar 4 attendu UP, obtenu {labels.iloc[4]}\"\nassert labels.iloc[6] == DOWN, f\"bar 6 attendu DOWN, obtenu {labels.iloc[6]}\"",
+        "detail": "apps.engine.tests_manual.test_labeling",
+        "documentation": {}
+    },
+    {
+        "label": "low[7]",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_labeling",
+        "description": "apps.engine.tests_manual.test_labeling",
+        "peekOfCode": "low[7] = 50.0\ndf = pd.DataFrame({\"open\": base, \"high\": high, \"low\": low, \"close\": base})\nlabels = make_labels(\n    df,\n    {\"labeling\": \"triple_barrier\", \"horizon\": 2, \"vol_mult\": 1.0, \"vol_window\": 3},\n)\nassert labels.iloc[4] == UP, f\"bar 4 attendu UP, obtenu {labels.iloc[4]}\"\nassert labels.iloc[6] == DOWN, f\"bar 6 attendu DOWN, obtenu {labels.iloc[6]}\"\n# The final `horizon` bars have no full future window -> unlabelled.\nassert pd.isna(labels.iloc[-1]) and pd.isna(labels.iloc[-2])",
+        "detail": "apps.engine.tests_manual.test_labeling",
+        "documentation": {}
+    },
+    {
+        "label": "df",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_labeling",
+        "description": "apps.engine.tests_manual.test_labeling",
+        "peekOfCode": "df = pd.DataFrame({\"open\": base, \"high\": high, \"low\": low, \"close\": base})\nlabels = make_labels(\n    df,\n    {\"labeling\": \"triple_barrier\", \"horizon\": 2, \"vol_mult\": 1.0, \"vol_window\": 3},\n)\nassert labels.iloc[4] == UP, f\"bar 4 attendu UP, obtenu {labels.iloc[4]}\"\nassert labels.iloc[6] == DOWN, f\"bar 6 attendu DOWN, obtenu {labels.iloc[6]}\"\n# The final `horizon` bars have no full future window -> unlabelled.\nassert pd.isna(labels.iloc[-1]) and pd.isna(labels.iloc[-2])\nprint(\"OK: triple-barrier valide\")",
+        "detail": "apps.engine.tests_manual.test_labeling",
+        "documentation": {}
+    },
+    {
+        "label": "labels",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_labeling",
+        "description": "apps.engine.tests_manual.test_labeling",
+        "peekOfCode": "labels = make_labels(\n    df,\n    {\"labeling\": \"triple_barrier\", \"horizon\": 2, \"vol_mult\": 1.0, \"vol_window\": 3},\n)\nassert labels.iloc[4] == UP, f\"bar 4 attendu UP, obtenu {labels.iloc[4]}\"\nassert labels.iloc[6] == DOWN, f\"bar 6 attendu DOWN, obtenu {labels.iloc[6]}\"\n# The final `horizon` bars have no full future window -> unlabelled.\nassert pd.isna(labels.iloc[-1]) and pd.isna(labels.iloc[-2])\nprint(\"OK: triple-barrier valide\")",
+        "detail": "apps.engine.tests_manual.test_labeling",
         "documentation": {}
     },
     {
