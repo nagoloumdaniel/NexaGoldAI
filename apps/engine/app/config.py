@@ -25,6 +25,15 @@ class Settings(BaseSettings):
     max_daily_loss_pct: float = 3.0
     max_open_positions: int = 1
 
+    # Paper trading loop (data -> signal -> risk -> order)
+    trading_loop_enabled: bool = True
+    trade_interval_seconds: int = 300
+    strategy_name: str = "lightgbm"
+    model_granularity: str = "M5"
+    decision_candles: int = 150
+    stop_loss_pct: float = 0.005
+    risk_reward_ratio: float = 1.5
+
     # Data ingestion
     ingest_enabled: bool = True
     ingest_granularities: str = "M1,M5,M15"

@@ -227,6 +227,40 @@ trading (phase 3).
 > pont stratégie) est en place ; trouver un edge réel = itérer sur features,
 > labelling et volume de données.
 
+## Paper trading (phase 3)
+
+La boucle [trader.py](apps/engine/app/execution/trader.py) exécute, à intervalle
+régulier, le cycle complet **données → signal → risque → ordre** sur le compte
+démo :
+
+1. récupère les dernières bougies et interroge la stratégie ([factory.py](apps/engine/app/strategy/factory.py)
+   charge le modèle LightGBM, sinon `AlwaysHold`) ;
+2. **journalise chaque décision** dans `StrategyDecision` (exécutée ou non) —
+   c'est le « pourquoi » de l'IA, et le jeu de données du réentraînement ;
+3. si le signal est actionnable et le marché ouvert : calcule un bracket
+   stop-loss / take-profit, passe par le `RiskManager` (taille de position,
+   pertes journalières, positions max) ;
+4. **n'envoie un ordre que si le risque approuve ET `TRADING_ENABLED=true`.**
+
+Par défaut `TRADING_ENABLED=false` : la boucle tourne, calcule et journalise
+les décisions sur le compte démo **sans jamais y toucher**. On accumule un
+journal honnête de ce que le bot *ferait*, avant de lever le kill switch.
+
+```bash
+curl http://localhost:8000/trade/status          # stratégie, kill switch, état boucle
+curl -X POST http://localhost:8000/trade/step    # une itération immédiate
+curl "http://localhost:8000/decisions/recent?limit=20"
+```
+
+Variables (défauts) : `TRADING_LOOP_ENABLED=true`, `TRADE_INTERVAL_SECONDS=300`,
+`STRATEGY_NAME=lightgbm`, `MODEL_GRANULARITY=M5`, `DECISION_CANDLES=150`,
+`STOP_LOSS_PCT=0.005`, `RISK_REWARD_RATIO=1.5`, et le kill switch
+`TRADING_ENABLED=false`.
+
+> Passer en réel = `TRADING_ENABLED=true` (+ `CAPITAL_ENV=live`). À ne faire
+> qu'après des semaines de paper trading aux métriques stables **et** avec un
+> modèle qui a un edge prouvé — ce qui n'est pas le cas du baseline actuel.
+
 ## Feuille de route
 
 1. ✅ **Pipeline de données** : ingestion continue Capital.com → table `Candle`,
@@ -234,8 +268,9 @@ trading (phase 3).
 2. ✅ **Backtesting + premier modèle** : features techniques, LightGBM,
    validation walk-forward (Sharpe, drawdown, profit factor). *(infrastructure
    faite ; le baseline n'a pas d'edge, à itérer)*
-3. **Paper trading** : boucle complète données → signal → risque → ordre sur
-   compte démo, journalisation de chaque décision (`StrategyDecision`).
+3. ✅ **Paper trading** : boucle complète données → signal → risque → ordre sur
+   compte démo, journalisation de chaque décision (`StrategyDecision`). *(fait,
+   kill switch actif)*
 4. **Dashboard** : positions, historique, analytics, raisons des décisions IA.
 5. **Boucle d'apprentissage** : réentraînement périodique, comparaison de
    stratégies, puis exploration RL (PPO) une fois le pipeline validé.

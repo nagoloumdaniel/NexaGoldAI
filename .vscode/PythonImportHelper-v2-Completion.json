@@ -130,6 +130,14 @@
         "documentation": {}
     },
     {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
         "label": "get_settings",
         "importPath": "app.config",
         "description": "app.config",
@@ -154,7 +162,23 @@
         "documentation": {}
     },
     {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
         "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
         "importPath": "app.config",
         "description": "app.config",
         "isExtraImport": true,
@@ -178,12 +202,149 @@
         "documentation": {}
     },
     {
+        "label": "Decimal",
+        "importPath": "decimal",
+        "description": "decimal",
+        "isExtraImport": true,
+        "detail": "decimal",
+        "documentation": {}
+    },
+    {
+        "label": "Decimal",
+        "importPath": "decimal",
+        "description": "decimal",
+        "isExtraImport": true,
+        "detail": "decimal",
+        "documentation": {}
+    },
+    {
         "label": "asyncpg",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "asyncpg",
         "description": "asyncpg",
         "detail": "asyncpg",
+        "documentation": {}
+    },
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Strategy",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "AlwaysHold",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Strategy",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Strategy",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
         "documentation": {}
     },
     {
@@ -220,6 +381,22 @@
         "importPath": "asyncio",
         "description": "asyncio",
         "detail": "asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalClient",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
+        "documentation": {}
+    },
+    {
+        "label": "CapitalError",
+        "importPath": "app.broker.capital",
+        "description": "app.broker.capital",
+        "isExtraImport": true,
+        "detail": "app.broker.capital",
         "documentation": {}
     },
     {
@@ -308,6 +485,62 @@
         "description": "app.data.dukascopy",
         "isExtraImport": true,
         "detail": "app.data.dukascopy",
+        "documentation": {}
+    },
+    {
+        "label": "StrategyDecisionRepository",
+        "importPath": "app.data.decisions",
+        "description": "app.data.decisions",
+        "isExtraImport": true,
+        "detail": "app.data.decisions",
+        "documentation": {}
+    },
+    {
+        "label": "StrategyDecisionRepository",
+        "importPath": "app.data.decisions",
+        "description": "app.data.decisions",
+        "isExtraImport": true,
+        "detail": "app.data.decisions",
+        "documentation": {}
+    },
+    {
+        "label": "TradeRepository",
+        "importPath": "app.data.trades",
+        "description": "app.data.trades",
+        "isExtraImport": true,
+        "detail": "app.data.trades",
+        "documentation": {}
+    },
+    {
+        "label": "TradeRepository",
+        "importPath": "app.data.trades",
+        "description": "app.data.trades",
+        "isExtraImport": true,
+        "detail": "app.data.trades",
+        "documentation": {}
+    },
+    {
+        "label": "RiskManager",
+        "importPath": "app.risk.manager",
+        "description": "app.risk.manager",
+        "isExtraImport": true,
+        "detail": "app.risk.manager",
+        "documentation": {}
+    },
+    {
+        "label": "RiskManager",
+        "importPath": "app.risk.manager",
+        "description": "app.risk.manager",
+        "isExtraImport": true,
+        "detail": "app.risk.manager",
+        "documentation": {}
+    },
+    {
+        "label": "RiskManager",
+        "importPath": "app.risk.manager",
+        "description": "app.risk.manager",
+        "isExtraImport": true,
+        "detail": "app.risk.manager",
         "documentation": {}
     },
     {
@@ -498,6 +731,14 @@
         "documentation": {}
     },
     {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
         "label": "joblib",
         "kind": 6,
         "isExtraImport": true,
@@ -563,54 +804,6 @@
         "documentation": {}
     },
     {
-        "label": "Action",
-        "importPath": "app.strategy.base",
-        "description": "app.strategy.base",
-        "isExtraImport": true,
-        "detail": "app.strategy.base",
-        "documentation": {}
-    },
-    {
-        "label": "Signal",
-        "importPath": "app.strategy.base",
-        "description": "app.strategy.base",
-        "isExtraImport": true,
-        "detail": "app.strategy.base",
-        "documentation": {}
-    },
-    {
-        "label": "Action",
-        "importPath": "app.strategy.base",
-        "description": "app.strategy.base",
-        "isExtraImport": true,
-        "detail": "app.strategy.base",
-        "documentation": {}
-    },
-    {
-        "label": "Signal",
-        "importPath": "app.strategy.base",
-        "description": "app.strategy.base",
-        "isExtraImport": true,
-        "detail": "app.strategy.base",
-        "documentation": {}
-    },
-    {
-        "label": "Strategy",
-        "importPath": "app.strategy.base",
-        "description": "app.strategy.base",
-        "isExtraImport": true,
-        "detail": "app.strategy.base",
-        "documentation": {}
-    },
-    {
-        "label": "Action",
-        "importPath": "app.strategy.base",
-        "description": "app.strategy.base",
-        "isExtraImport": true,
-        "detail": "app.strategy.base",
-        "documentation": {}
-    },
-    {
         "label": "ABC",
         "importPath": "abc",
         "description": "abc",
@@ -632,6 +825,22 @@
         "description": "enum",
         "isExtraImport": true,
         "detail": "enum",
+        "documentation": {}
+    },
+    {
+        "label": "LightGBMStrategy",
+        "importPath": "app.strategy.lightgbm_strategy",
+        "description": "app.strategy.lightgbm_strategy",
+        "isExtraImport": true,
+        "detail": "app.strategy.lightgbm_strategy",
+        "documentation": {}
+    },
+    {
+        "label": "LightGBMStrategy",
+        "importPath": "app.strategy.lightgbm_strategy",
+        "description": "app.strategy.lightgbm_strategy",
+        "isExtraImport": true,
+        "detail": "app.strategy.lightgbm_strategy",
         "documentation": {}
     },
     {
@@ -707,11 +916,27 @@
         "documentation": {}
     },
     {
-        "label": "LightGBMStrategy",
-        "importPath": "app.strategy.lightgbm_strategy",
-        "description": "app.strategy.lightgbm_strategy",
+        "label": "Trader",
+        "importPath": "app.execution.trader",
+        "description": "app.execution.trader",
         "isExtraImport": true,
-        "detail": "app.strategy.lightgbm_strategy",
+        "detail": "app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "compute_bracket",
+        "importPath": "app.execution.trader",
+        "description": "app.execution.trader",
+        "isExtraImport": true,
+        "detail": "app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "build_strategy",
+        "importPath": "app.strategy.factory",
+        "description": "app.strategy.factory",
+        "isExtraImport": true,
+        "detail": "app.strategy.factory",
         "documentation": {}
     },
     {
@@ -793,6 +1018,15 @@
         "description": "apps.engine.app.data.candles",
         "peekOfCode": "_UPSERT_SQL = \"\"\"\nINSERT INTO \"Candle\" (\"instrument\", \"granularity\", \"time\", \"open\", \"high\", \"low\", \"close\", \"volume\")\nVALUES ($1, $2, $3, $4, $5, $6, $7, $8)\nON CONFLICT (\"instrument\", \"granularity\", \"time\") DO UPDATE\nSET \"open\" = EXCLUDED.\"open\",\n    \"high\" = EXCLUDED.\"high\",\n    \"low\" = EXCLUDED.\"low\",\n    \"close\" = EXCLUDED.\"close\",\n    \"volume\" = EXCLUDED.\"volume\"\n\"\"\"",
         "detail": "apps.engine.app.data.candles",
+        "documentation": {}
+    },
+    {
+        "label": "StrategyDecisionRepository",
+        "kind": 6,
+        "importPath": "apps.engine.app.data.decisions",
+        "description": "apps.engine.app.data.decisions",
+        "peekOfCode": "class StrategyDecisionRepository:\n    def __init__(self, pool: asyncpg.Pool):\n        self._pool = pool\n    async def insert(self, strategy: str, signal: Signal) -> str:\n        decision_id = \"sd_\" + uuid.uuid4().hex\n        async with self._pool.acquire() as conn:\n            await conn.execute(\n                'INSERT INTO \"StrategyDecision\" '\n                '(\"id\", \"strategy\", \"action\", \"confidence\", \"reason\", \"features\", \"executed\") '\n                \"VALUES ($1, $2, $3, $4, $5, $6::jsonb, false)\",",
+        "detail": "apps.engine.app.data.decisions",
         "documentation": {}
     },
     {
@@ -892,6 +1126,42 @@
         "description": "apps.engine.app.data.ingestion",
         "peekOfCode": "_GRAN_MINUTES = {\n    \"M1\": 1,\n    \"M5\": 5,\n    \"M15\": 15,\n    \"M30\": 30,\n    \"H1\": 60,\n    \"H4\": 240,\n    \"D\": 1440,\n    \"W\": 10080,\n}",
         "detail": "apps.engine.app.data.ingestion",
+        "documentation": {}
+    },
+    {
+        "label": "TradeRepository",
+        "kind": 6,
+        "importPath": "apps.engine.app.data.trades",
+        "description": "apps.engine.app.data.trades",
+        "peekOfCode": "class TradeRepository:\n    def __init__(self, pool: asyncpg.Pool, instrument: str):\n        self._pool = pool\n        self._instrument = instrument\n    async def insert_open(\n        self,\n        signal: Signal,\n        units: float,\n        entry_price: float,\n        stop_loss: float,",
+        "detail": "apps.engine.app.data.trades",
+        "documentation": {}
+    },
+    {
+        "label": "Trader",
+        "kind": 6,
+        "importPath": "apps.engine.app.execution.trader",
+        "description": "apps.engine.app.execution.trader",
+        "peekOfCode": "class Trader:\n    def __init__(\n        self,\n        settings: Settings,\n        broker: CapitalClient,\n        strategy: Strategy,\n        risk: RiskManager,\n        decisions: StrategyDecisionRepository,\n        trades: TradeRepository,\n    ):",
+        "detail": "apps.engine.app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "compute_bracket",
+        "kind": 2,
+        "importPath": "apps.engine.app.execution.trader",
+        "description": "apps.engine.app.execution.trader",
+        "peekOfCode": "def compute_bracket(\n    action: Action, entry: float, stop_loss_pct: float, risk_reward: float\n) -> tuple[float, float]:\n    \"\"\"Stop-loss and take-profit prices around the entry.\"\"\"\n    if action == Action.BUY:\n        return entry * (1 - stop_loss_pct), entry * (1 + stop_loss_pct * risk_reward)\n    return entry * (1 + stop_loss_pct), entry * (1 - stop_loss_pct * risk_reward)\nclass Trader:\n    def __init__(\n        self,",
+        "detail": "apps.engine.app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "apps.engine.app.execution.trader",
+        "description": "apps.engine.app.execution.trader",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.trader\")\ndef compute_bracket(\n    action: Action, entry: float, stop_loss_pct: float, risk_reward: float\n) -> tuple[float, float]:\n    \"\"\"Stop-loss and take-profit prices around the entry.\"\"\"\n    if action == Action.BUY:\n        return entry * (1 - stop_loss_pct), entry * (1 + stop_loss_pct * risk_reward)\n    return entry * (1 + stop_loss_pct), entry * (1 - stop_loss_pct * risk_reward)\nclass Trader:\n    def __init__(",
+        "detail": "apps.engine.app.execution.trader",
         "documentation": {}
     },
     {
@@ -1093,6 +1363,33 @@
         "documentation": {}
     },
     {
+        "label": "build_strategy",
+        "kind": 2,
+        "importPath": "apps.engine.app.strategy.factory",
+        "description": "apps.engine.app.strategy.factory",
+        "peekOfCode": "def build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"lightgbm\":\n        model_dir = _MODELS_DIR / settings.model_granularity\n        if (model_dir / \"model.joblib\").exists():\n            logger.info(\"Stratégie LightGBM chargée depuis %s\", model_dir)\n            return LightGBMStrategy(model_dir)\n        logger.warning(\n            \"Modèle LightGBM introuvable (%s) — repli sur AlwaysHold\", model_dir\n        )\n    return AlwaysHold()",
+        "detail": "apps.engine.app.strategy.factory",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "apps.engine.app.strategy.factory",
+        "description": "apps.engine.app.strategy.factory",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.strategy\")\n_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"lightgbm\":\n        model_dir = _MODELS_DIR / settings.model_granularity\n        if (model_dir / \"model.joblib\").exists():\n            logger.info(\"Stratégie LightGBM chargée depuis %s\", model_dir)\n            return LightGBMStrategy(model_dir)\n        logger.warning(\n            \"Modèle LightGBM introuvable (%s) — repli sur AlwaysHold\", model_dir",
+        "detail": "apps.engine.app.strategy.factory",
+        "documentation": {}
+    },
+    {
+        "label": "_MODELS_DIR",
+        "kind": 5,
+        "importPath": "apps.engine.app.strategy.factory",
+        "description": "apps.engine.app.strategy.factory",
+        "peekOfCode": "_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"lightgbm\":\n        model_dir = _MODELS_DIR / settings.model_granularity\n        if (model_dir / \"model.joblib\").exists():\n            logger.info(\"Stratégie LightGBM chargée depuis %s\", model_dir)\n            return LightGBMStrategy(model_dir)\n        logger.warning(\n            \"Modèle LightGBM introuvable (%s) — repli sur AlwaysHold\", model_dir\n        )",
+        "detail": "apps.engine.app.strategy.factory",
+        "documentation": {}
+    },
+    {
         "label": "LightGBMStrategy",
         "kind": 6,
         "importPath": "apps.engine.app.strategy.lightgbm_strategy",
@@ -1160,7 +1457,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.main",
         "description": "apps.engine.app.main",
-        "peekOfCode": "settings = get_settings()\nbroker: CapitalClient | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\n_ingestion_task: asyncio.Task | None = None\n@asynccontextmanager\nasync def lifespan(app: FastAPI):\n    global broker, database, ingestion, _ingestion_task\n    broker = CapitalClient(settings)\n    database = Database(settings)",
+        "peekOfCode": "settings = get_settings()\nbroker: CapitalClient | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\ntrader: Trader | None = None\ndecisions_repo: StrategyDecisionRepository | None = None\n_ingestion_task: asyncio.Task | None = None\n_trade_task: asyncio.Task | None = None\ndef _broker_ready() -> bool:\n    return bool(",
         "detail": "apps.engine.app.main",
         "documentation": {}
     },
@@ -1261,6 +1558,78 @@
         "description": "apps.engine.tests_manual.test_dukascopy_parse",
         "peekOfCode": "m1 = aggregate_ticks(ticks, \"M1\")\nassert len(m1) == 3, f\"attendu 3 bougies M1, obtenu {len(m1)}\"\nassert all(c[\"volume\"] == 1 for c in m1), m1\nprint(\"OK: parse_ticks + aggregate_ticks valides\")",
         "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "ACCOUNT",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "ACCOUNT = {\"balance\": 1000.0, \"nav\": 1000.0}\nBUY = Signal(Action.BUY, 0.8, \"test buy\")\n# Bracket maths\nsl, tp = compute_bracket(Action.BUY, 4200.0, 0.005, 1.5)\nassert abs(sl - 4179.0) < 1e-6, sl\nassert abs(tp - 4231.5) < 1e-6, tp\nsl_s, tp_s = compute_bracket(Action.SELL, 4200.0, 0.005, 1.5)\nassert abs(sl_s - 4221.0) < 1e-6, sl_s\nassert abs(tp_s - 4168.5) < 1e-6, tp_s\n# Kill switch: trading disabled -> always rejected",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "BUY",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "BUY = Signal(Action.BUY, 0.8, \"test buy\")\n# Bracket maths\nsl, tp = compute_bracket(Action.BUY, 4200.0, 0.005, 1.5)\nassert abs(sl - 4179.0) < 1e-6, sl\nassert abs(tp - 4231.5) < 1e-6, tp\nsl_s, tp_s = compute_bracket(Action.SELL, 4200.0, 0.005, 1.5)\nassert abs(sl_s - 4221.0) < 1e-6, sl_s\nassert abs(tp_s - 4168.5) < 1e-6, tp_s\n# Kill switch: trading disabled -> always rejected\nrisk_off = RiskManager(Settings(trading_enabled=False))",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "risk_off",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "risk_off = RiskManager(Settings(trading_enabled=False))\nd = risk_off.review(BUY, ACCOUNT, [], 4200.0, sl)\nassert not d.approved and \"Kill switch\" in d.reason, d\n# Enabled: position sized from risk budget and stop distance\nrisk_on = RiskManager(\n    Settings(\n        trading_enabled=True,\n        max_risk_per_trade_pct=1.0,\n        max_daily_loss_pct=3.0,\n        max_open_positions=1,",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "d",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "d = risk_off.review(BUY, ACCOUNT, [], 4200.0, sl)\nassert not d.approved and \"Kill switch\" in d.reason, d\n# Enabled: position sized from risk budget and stop distance\nrisk_on = RiskManager(\n    Settings(\n        trading_enabled=True,\n        max_risk_per_trade_pct=1.0,\n        max_daily_loss_pct=3.0,\n        max_open_positions=1,\n    )",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "risk_on",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "risk_on = RiskManager(\n    Settings(\n        trading_enabled=True,\n        max_risk_per_trade_pct=1.0,\n        max_daily_loss_pct=3.0,\n        max_open_positions=1,\n    )\n)\nd = risk_on.review(BUY, ACCOUNT, [], 4200.0, sl)\n# risk budget = 1% of 1000 = 10 ; stop distance = 21 ; units = 10/21 ≈ 0.5",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "d",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "d = risk_on.review(BUY, ACCOUNT, [], 4200.0, sl)\n# risk budget = 1% of 1000 = 10 ; stop distance = 21 ; units = 10/21 ≈ 0.5\nassert d.approved, d\nassert abs(d.units - 0.5) < 1e-9, d.units\n# Max open positions enforced\nd = risk_on.review(BUY, ACCOUNT, [{\"x\": 1}], 4200.0, sl)\nassert not d.approved and \"Max open positions\" in d.reason, d\n# Daily loss limit: NAV far below balance -> rejected\nd = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl)\nassert not d.approved and \"loss limit\" in d.reason, d",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "d",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "d = risk_on.review(BUY, ACCOUNT, [{\"x\": 1}], 4200.0, sl)\nassert not d.approved and \"Max open positions\" in d.reason, d\n# Daily loss limit: NAV far below balance -> rejected\nd = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl)\nassert not d.approved and \"loss limit\" in d.reason, d\nprint(\"OK: risk gate + bracket valides\")",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "d",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "d = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl)\nassert not d.approved and \"loss limit\" in d.reason, d\nprint(\"OK: risk gate + bracket valides\")",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
         "documentation": {}
     },
     {

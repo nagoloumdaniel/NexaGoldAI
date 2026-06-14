@@ -1,8 +1,8 @@
 """NexaGold trading engine — FastAPI service.
 
-Exposes health/market endpoints for the NestJS backend and runs the data
-pipeline (Capital.com -> `Candle` table). The strategy/risk/execution loop
-ships in the next phase; market connectivity and ingestion are wired here.
+Exposes health/market endpoints for the NestJS backend and runs both the data
+pipeline (Capital.com -> `Candle` table) and the paper-trading loop
+(data -> signal -> risk -> order, gated by the TRADING_ENABLED kill switch).
 """
 
 import asyncio
@@ -13,44 +13,68 @@ from fastapi import FastAPI, HTTPException, Query
 from app.broker.capital import CapitalClient, CapitalError
 from app.config import get_settings
 from app.data.candles import CandleRepository
+from app.data.decisions import StrategyDecisionRepository
 from app.data.ingestion import IngestionService
+from app.data.trades import TradeRepository
 from app.db import Database
+from app.execution.trader import Trader
+from app.risk.manager import RiskManager
+from app.strategy.factory import build_strategy
 
 settings = get_settings()
 
 broker: CapitalClient | None = None
 database: Database | None = None
 ingestion: IngestionService | None = None
+trader: Trader | None = None
+decisions_repo: StrategyDecisionRepository | None = None
 _ingestion_task: asyncio.Task | None = None
+_trade_task: asyncio.Task | None = None
+
+
+def _broker_ready() -> bool:
+    return bool(
+        settings.capital_api_key
+        and settings.capital_identifier
+        and settings.capital_password
+    )
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global broker, database, ingestion, _ingestion_task
+    global broker, database, ingestion, trader, decisions_repo
+    global _ingestion_task, _trade_task
 
     broker = CapitalClient(settings)
     database = Database(settings)
     await database.connect()
 
     if database.is_connected:
-        repository = CandleRepository(database.pool)
-        ingestion = IngestionService(settings, broker, repository)
-        broker_ready = bool(
-            settings.capital_api_key
-            and settings.capital_identifier
-            and settings.capital_password
+        ingestion = IngestionService(settings, broker, CandleRepository(database.pool))
+        decisions_repo = StrategyDecisionRepository(database.pool)
+        trader = Trader(
+            settings,
+            broker,
+            build_strategy(settings),
+            RiskManager(settings),
+            decisions_repo,
+            TradeRepository(database.pool, settings.epic),
         )
-        if settings.ingest_enabled and broker_ready:
-            _ingestion_task = asyncio.create_task(ingestion.run_loop())
+        if _broker_ready():
+            if settings.ingest_enabled:
+                _ingestion_task = asyncio.create_task(ingestion.run_loop())
+            if settings.trading_loop_enabled:
+                _trade_task = asyncio.create_task(trader.run_loop())
 
     yield
 
-    if _ingestion_task is not None:
-        _ingestion_task.cancel()
-        try:
-            await _ingestion_task
-        except asyncio.CancelledError:
-            pass
+    for task in (_ingestion_task, _trade_task):
+        if task is not None:
+            task.cancel()
+            try:
+                await task
+            except asyncio.CancelledError:
+                pass
     await broker.close()
     await database.close()
 
@@ -172,3 +196,37 @@ async def ingest_dukascopy(
 async def candles_stats() -> dict:
     service = ensure_ingestion_ready()
     return {"instrument": settings.epic, "granularities": await service.stats()}
+
+
+# -- Paper trading ----------------------------------------------------------
+
+
+@app.post("/trade/step")
+async def trade_step() -> dict:
+    """Run one loop iteration: data -> signal -> risk -> (order if enabled)."""
+    ensure_broker_configured()
+    if trader is None:
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
+    try:
+        return await trader.step()
+    except CapitalError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+
+@app.get("/trade/status")
+async def trade_status() -> dict:
+    return {
+        "strategy": trader.strategy_name if trader else None,
+        "trading_enabled": settings.trading_enabled,
+        "loop_running": _trade_task is not None and not _trade_task.done(),
+        "interval_seconds": settings.trade_interval_seconds,
+        "stop_loss_pct": settings.stop_loss_pct,
+        "risk_reward_ratio": settings.risk_reward_ratio,
+    }
+
+
+@app.get("/decisions/recent")
+async def decisions_recent(limit: int = Query(20, ge=1, le=200)) -> list[dict]:
+    if decisions_repo is None:
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
+    return await decisions_repo.recent(limit)

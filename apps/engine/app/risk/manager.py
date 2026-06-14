@@ -43,9 +43,9 @@ class RiskManager:
             return RiskDecision(False, f"Max open positions reached ({s.max_open_positions})")
 
         balance = float(account["balance"])
-        # OANDA resets 'pl' daily stats elsewhere; until daily P&L tracking is
-        # wired to the database, use unrealized + realized P&L vs balance.
-        nav = float(account.get("NAV", balance))
+        # Until daily P&L tracking is wired to the database, approximate the
+        # day's loss as the gap between balance and current equity (NAV).
+        nav = float(account.get("nav", balance))
         daily_loss_limit = balance * s.max_daily_loss_pct / 100.0
         if balance - nav >= daily_loss_limit:
             return RiskDecision(False, f"Daily loss limit hit ({s.max_daily_loss_pct}%)")
