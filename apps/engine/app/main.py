@@ -150,6 +150,30 @@ async def account() -> dict:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
+@app.get("/positions")
+async def positions() -> list[dict]:
+    ensure_broker_configured()
+    try:
+        raw = await broker.get_open_positions()
+    except CapitalError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+    out = []
+    for entry in raw:
+        pos = entry.get("position", {})
+        market = entry.get("market", {})
+        out.append(
+            {
+                "instrument": market.get("epic"),
+                "direction": pos.get("direction"),
+                "size": pos.get("size"),
+                "open_level": pos.get("level"),
+                "pnl": pos.get("upl"),
+                "currency": pos.get("currency"),
+            }
+        )
+    return out
+
+
 # -- Data pipeline ----------------------------------------------------------
 
 

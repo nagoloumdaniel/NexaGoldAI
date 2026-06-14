@@ -261,6 +261,32 @@ Variables (défauts) : `TRADING_LOOP_ENABLED=true`, `TRADE_INTERVAL_SECONDS=300`
 > qu'après des semaines de paper trading aux métriques stables **et** avec un
 > modèle qui a un edge prouvé — ce qui n'est pas le cas du baseline actuel.
 
+## Dashboard (phase 4)
+
+L'API NestJS expose les données au frontend (module
+[dashboard](apps/api/src/dashboard/)) : lecture de la base via Prisma (bougies,
+décisions, trades, équité) et proxy du moteur pour le compte/positions en
+direct.
+
+```bash
+curl http://localhost:3001/dashboard/summary    # compte, drawdown, compteurs
+curl "http://localhost:3001/dashboard/candles?granularity=M5&limit=300"
+curl "http://localhost:3001/dashboard/decisions?limit=50"
+curl http://localhost:3001/dashboard/trades
+curl http://localhost:3001/dashboard/analytics  # win rate, profit factor, équité
+```
+
+Le dashboard Next.js ([apps/web](apps/web/src/)) consomme ces endpoints
+(rafraîchissement par polling) : cartes de stats (solde, NAV, P&L, drawdown,
+nb de décisions, positions), **graphique chandelier de l'or** (TradingView
+Lightweight Charts), flux des **décisions IA avec leurs raisons**, et historique
+des trades. Variable : `NEXT_PUBLIC_API_URL` (URL de l'API).
+
+```bash
+cd apps/web
+npm run dev   # http://localhost:3000 (API sur 3001 + moteur sur 8000 requis)
+```
+
 ## Feuille de route
 
 1. ✅ **Pipeline de données** : ingestion continue Capital.com → table `Candle`,
@@ -271,7 +297,8 @@ Variables (défauts) : `TRADING_LOOP_ENABLED=true`, `TRADE_INTERVAL_SECONDS=300`
 3. ✅ **Paper trading** : boucle complète données → signal → risque → ordre sur
    compte démo, journalisation de chaque décision (`StrategyDecision`). *(fait,
    kill switch actif)*
-4. **Dashboard** : positions, historique, analytics, raisons des décisions IA.
+4. ✅ **Dashboard** : positions, historique, analytics, raisons des décisions
+   IA, graphique chandelier. *(fait)*
 5. **Boucle d'apprentissage** : réentraînement périodique, comparaison de
    stratégies, puis exploration RL (PPO) une fois le pipeline validé.
 
