@@ -5,8 +5,9 @@
 #  Pas de "pause" : concu pour tourner sans interaction.
 # ============================================================
 $ErrorActionPreference = 'SilentlyContinue'
-$root = $PSScriptRoot
-$log  = Join-Path $root 'nexagold-scheduler.log'
+$root    = $PSScriptRoot
+$log     = Join-Path $root 'nexagold-scheduler.log'
+$pidFile = Join-Path $root 'logs\pids.txt'
 
 function Log($m) {
   "$([DateTime]::Now.ToString('yyyy-MM-dd HH:mm:ss')) [STOP] $m" |
@@ -15,7 +16,16 @@ function Log($m) {
 
 Log '=== Arret automatique demande ==='
 
-# 1) Fermer les fenetres de services lancees par start.bat (kill de l'arbre par titre)
+# 1a) Demarrage arriere-plan (start-hidden.ps1) : tuer l'arbre via les PID memorises
+if (Test-Path $pidFile) {
+  foreach ($procId in (Get-Content $pidFile | Where-Object { $_ -match '^\d+$' })) {
+    taskkill /PID $procId /T /F 2>$null | Out-Null
+    Log "Arbre du PID $procId arrete"
+  }
+  Remove-Item $pidFile -Force -ErrorAction SilentlyContinue
+}
+
+# 1b) Demarrage classique (start.bat) : fermer les fenetres par titre
 foreach ($t in @('NexaGold - Moteur', 'NexaGold - API', 'NexaGold - Dashboard', 'NexaGold - Lanceur')) {
   taskkill /FI "WINDOWTITLE eq $t*" /T /F 2>$null | Out-Null
 }

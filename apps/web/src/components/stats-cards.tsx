@@ -3,7 +3,7 @@
 import { getSummary } from "@/lib/api";
 import { usePolling } from "./use-polling";
 import { Stat } from "./ui/card";
-import { money, pct, signed, tone } from "@/lib/format";
+import { money, pct, signed, pnlTone } from "@/lib/format";
 
 export default function StatsCards() {
   const { data, error } = usePolling(getSummary, 10000);
@@ -32,7 +32,7 @@ export default function StatsCards() {
         <Stat
           label="P&L latent"
           value={upl != null ? `${signed(upl)} ${currency}`.trim() : "—"}
-          tone={tone(upl) === "flat" ? "ink" : tone(upl)}
+          tone={pnlTone(upl)}
         />
         <Stat
           label="Drawdown"

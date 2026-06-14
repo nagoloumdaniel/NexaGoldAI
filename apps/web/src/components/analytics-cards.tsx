@@ -3,7 +3,7 @@
 import { getAnalytics } from "@/lib/api";
 import { usePolling } from "./use-polling";
 import { Stat } from "./ui/card";
-import { num, ratioPct, signed, tone } from "@/lib/format";
+import { num, ratioPct, signed, pnlTone } from "@/lib/format";
 
 /** KPIs de performance calculés sur les trades clôturés. */
 export default function AnalyticsCards() {
@@ -24,7 +24,7 @@ export default function AnalyticsCards() {
       <Stat
         label="P&L total"
         value={data ? signed(data.totalPnl) : "—"}
-        tone={data ? (tone(data.totalPnl) === "flat" ? "ink" : tone(data.totalPnl)) : "ink"}
+        tone={data ? pnlTone(data.totalPnl) : "ink"}
         hint="trades clôturés"
       />
       <Stat

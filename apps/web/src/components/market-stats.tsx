@@ -3,7 +3,7 @@
 import { getCandles } from "@/lib/api";
 import { usePolling } from "./use-polling";
 import { Stat } from "./ui/card";
-import { num, signed, tone } from "@/lib/format";
+import { num, signed, pnlTone } from "@/lib/format";
 
 const fetcher = () => getCandles("M5", 300);
 
@@ -37,7 +37,7 @@ export default function MarketStats() {
             ? `${signed(change)} (${signed(changePct, 2)} %)`
             : "—"
         }
-        tone={tone(change) === "flat" ? "ink" : tone(change)}
+        tone={pnlTone(change)}
         hint="sur la fenêtre"
       />
       <Stat label="Plus haut" value={high != null ? num(high) : "—"} />

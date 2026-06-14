@@ -37,6 +37,12 @@ export function tone(n?: number | null): "up" | "down" | "flat" {
   return n > 0 ? "up" : "down";
 }
 
+/** Variante pour le composant Stat : "flat" et null retombent sur "ink". */
+export function pnlTone(n?: number | null): "up" | "down" | "ink" {
+  const t = tone(n);
+  return t === "flat" ? "ink" : t;
+}
+
 export function time(iso?: string | null): string {
   if (!iso) return "—";
   return new Date(iso).toLocaleTimeString("fr-FR", {
