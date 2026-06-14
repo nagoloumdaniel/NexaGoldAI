@@ -54,6 +54,22 @@ Plateforme de trading algorithmique sur l'or (XAU/USD) pilotée par IA.
 
 ## Démarrage local
 
+### Lancement rapide (double-clic)
+
+Après la première installation (ci-dessous), tout se relance en **double-cliquant
+`start.bat`** à la racine : il démarre l'infra Docker puis les 3 services (chacun
+dans sa fenêtre) et ouvre le dashboard. `stop.bat` arrête tout.
+
+- **Dashboard : <http://localhost:3002>** (port 3002 car 3000 est utilisé par un
+  autre projet local ; pinné dans le lanceur).
+- API : `localhost:3001` · Moteur : `localhost:8000`.
+
+Version PowerShell : `start.ps1`. Prérequis : l'installation initiale doit avoir
+été faite une fois (Docker démarré, `npm install`, venv + `pip install`,
+`prisma migrate`).
+
+### Installation initiale (une fois)
+
 Prérequis : Node 22+, Python 3.12+, Docker Desktop.
 
 ```bash
