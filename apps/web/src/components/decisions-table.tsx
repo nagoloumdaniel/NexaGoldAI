@@ -1,58 +1,70 @@
 "use client";
 
+import { useMemo } from "react";
 import { getDecisions } from "@/lib/api";
 import { usePolling } from "./use-polling";
+import { SectionCard, Empty } from "./ui/card";
+import { ActionBadge, Confidence } from "./ui/badge";
+import { time } from "@/lib/format";
 
-const ACTION_STYLE: Record<string, string> = {
-  BUY: "bg-green-500/10 text-green-600 dark:text-green-400",
-  SELL: "bg-red-500/10 text-red-600 dark:text-red-400",
-  HOLD: "bg-zinc-500/10 text-zinc-500 dark:text-zinc-400",
-};
-
-export default function DecisionsTable() {
-  const { data } = usePolling(() => getDecisions(15), 10000);
+export default function DecisionsTable({
+  limit = 15,
+  showReason = true,
+}: {
+  limit?: number;
+  showReason?: boolean;
+}) {
+  const fetcher = useStableDecisions(limit);
+  const { data } = usePolling(fetcher, 10000);
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
-      <h3 className="mb-4 text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-        Décisions IA récentes
-      </h3>
+    <SectionCard
+      title="Décisions IA récentes"
+      subtitle="Chaque évaluation du modèle est journalisée, exécutée ou non"
+      bodyClassName="p-0"
+    >
       {!data || data.length === 0 ? (
-        <p className="text-sm text-zinc-400">Aucune décision pour l&apos;instant.</p>
+        <div className="p-5">
+          <Empty>Aucune décision pour l&apos;instant.</Empty>
+        </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="text-left text-xs text-zinc-400">
-              <tr>
-                <th className="pb-2 font-medium">Heure</th>
-                <th className="pb-2 font-medium">Action</th>
-                <th className="pb-2 font-medium">Confiance</th>
-                <th className="pb-2 font-medium">Raison</th>
+            <thead>
+              <tr className="border-b border-line-soft text-left text-[11px] uppercase tracking-wider text-faint">
+                <th className="px-5 py-2.5 font-medium">Heure</th>
+                <th className="px-5 py-2.5 font-medium">Action</th>
+                <th className="px-5 py-2.5 font-medium">Confiance</th>
+                {showReason ? (
+                  <th className="px-5 py-2.5 font-medium">Raison</th>
+                ) : null}
+                <th className="px-5 py-2.5 font-medium">Exécutée</th>
               </tr>
             </thead>
             <tbody>
               {data.map((d, i) => (
                 <tr
                   key={i}
-                  className="border-t border-zinc-100 dark:border-zinc-800"
+                  className="border-b border-line-soft last:border-0 hover:bg-surface-2/40"
                 >
-                  <td className="py-2 text-zinc-500 dark:text-zinc-400">
-                    {new Date(d.time).toLocaleTimeString("fr-FR")}
+                  <td className="tnum px-5 py-3 text-muted">{time(d.time)}</td>
+                  <td className="px-5 py-3">
+                    <ActionBadge action={d.action} />
                   </td>
-                  <td className="py-2">
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                        ACTION_STYLE[d.action] ?? ACTION_STYLE.HOLD
-                      }`}
-                    >
-                      {d.action}
-                    </span>
+                  <td className="px-5 py-3">
+                    <Confidence value={d.confidence} />
                   </td>
-                  <td className="py-2 text-zinc-700 dark:text-zinc-300">
-                    {(d.confidence * 100).toFixed(0)} %
-                  </td>
-                  <td className="py-2 text-zinc-500 dark:text-zinc-400">
-                    {d.reason}
+                  {showReason ? (
+                    <td className="max-w-xs truncate px-5 py-3 text-muted">
+                      {d.reason}
+                    </td>
+                  ) : null}
+                  <td className="px-5 py-3">
+                    {d.executed ? (
+                      <span className="text-up">Oui</span>
+                    ) : (
+                      <span className="text-faint">Non</span>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -60,6 +72,11 @@ export default function DecisionsTable() {
           </table>
         </div>
       )}
-    </div>
+    </SectionCard>
   );
+}
+
+/** Stabilise la fonction de fetch pour usePolling (référence constante). */
+function useStableDecisions(limit: number) {
+  return useMemo(() => () => getDecisions(limit), [limit]);
 }

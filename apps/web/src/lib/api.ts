@@ -72,8 +72,17 @@ export interface ModelRegistry {
   versions: ModelVersion[];
 }
 
+export interface Analytics {
+  tradeCount: number;
+  winRate: number;
+  profitFactor: number | null;
+  totalPnl: number;
+  equityCurve: { time: string; nav: number }[];
+}
+
 export const getSummary = () => get<Summary>("/dashboard/summary");
 export const getModels = () => get<ModelRegistry>("/dashboard/models");
+export const getAnalytics = () => get<Analytics>("/dashboard/analytics");
 export const getCandles = (granularity = "M5", limit = 300) =>
   get<Candle[]>(`/dashboard/candles?granularity=${granularity}&limit=${limit}`);
 export const getDecisions = (limit = 50) =>

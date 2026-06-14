@@ -2,41 +2,47 @@
 
 import { getModels } from "@/lib/api";
 import { usePolling } from "./use-polling";
-
-const fmt = (n?: number | null) =>
-  n == null ? "—" : n.toLocaleString("fr-FR", { maximumFractionDigits: 2 });
+import { SectionCard, Empty } from "./ui/card";
+import { num, ratioPct } from "@/lib/format";
 
 export default function ModelsPanel() {
   const { data } = usePolling(getModels, 30000);
   const versions = data?.versions ?? [];
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
-      <h3 className="mb-1 text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-        Modèles &amp; apprentissage
-      </h3>
-      <p className="mb-4 text-xs text-zinc-400">
-        À chaque réentraînement, plusieurs configurations s&apos;affrontent ; la
-        meilleure devient le champion actif.
-      </p>
+    <SectionCard
+      title="Modèles & apprentissage"
+      subtitle="À chaque réentraînement, plusieurs configurations s'affrontent ; la meilleure devient le champion actif"
+      bodyClassName="p-0"
+      action={
+        data?.granularity ? (
+          <span className="rounded-md bg-surface-2 px-2 py-1 text-[11px] font-medium text-muted">
+            {data.granularity}
+          </span>
+        ) : null
+      }
+    >
       {versions.length === 0 ? (
-        <p className="text-sm text-zinc-400">
-          Aucun modèle entraîné — lancez{" "}
-          <code className="text-amber-600 dark:text-amber-400">
-            POST /learning/retrain
-          </code>
-          .
-        </p>
+        <div className="p-5">
+          <Empty>
+            Aucun modèle entraîné — lancez{" "}
+            <code className="rounded bg-surface-2 px-1.5 py-0.5 text-gold">
+              POST /learning/retrain
+            </code>
+            .
+          </Empty>
+        </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="text-left text-xs text-zinc-400">
-              <tr>
-                <th className="pb-2 font-medium">Version</th>
-                <th className="pb-2 font-medium">Horizon</th>
-                <th className="pb-2 font-medium">Seuil</th>
-                <th className="pb-2 font-medium">Sharpe</th>
-                <th className="pb-2 font-medium">Accuracy</th>
+            <thead>
+              <tr className="border-b border-line-soft text-left text-[11px] uppercase tracking-wider text-faint">
+                <th className="px-5 py-2.5 font-medium">Version</th>
+                <th className="px-5 py-2.5 font-medium">Horizon</th>
+                <th className="px-5 py-2.5 font-medium">Seuil</th>
+                <th className="px-5 py-2.5 font-medium">Sharpe</th>
+                <th className="px-5 py-2.5 font-medium">Accuracy</th>
+                <th className="px-5 py-2.5 font-medium">Échantillons</th>
               </tr>
             </thead>
             <tbody>
@@ -48,27 +54,32 @@ export default function ModelsPanel() {
                   return (
                     <tr
                       key={v.id}
-                      className="border-t border-zinc-100 dark:border-zinc-800"
+                      className={`border-b border-line-soft last:border-0 hover:bg-surface-2/40 ${
+                        isChampion ? "bg-gold/4" : ""
+                      }`}
                     >
-                      <td className="py-2 text-zinc-700 dark:text-zinc-300">
+                      <td className="px-5 py-3 text-ink">
                         {isChampion ? (
-                          <span className="mr-2 rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-600 dark:text-amber-400">
+                          <span className="mr-2 rounded-md bg-gold/10 px-2 py-0.5 text-[11px] font-semibold text-gold ring-1 ring-inset ring-gold/20">
                             champion
                           </span>
                         ) : null}
-                        {v.id}
+                        <span className="tnum">{v.id}</span>
                       </td>
-                      <td className="py-2 text-zinc-500 dark:text-zinc-400">
+                      <td className="tnum px-5 py-3 text-muted">
                         {v.config.horizon}
                       </td>
-                      <td className="py-2 text-zinc-500 dark:text-zinc-400">
+                      <td className="tnum px-5 py-3 text-muted">
                         {v.config.threshold}
                       </td>
-                      <td className="py-2 text-zinc-500 dark:text-zinc-400">
-                        {fmt(v.metrics.sharpe)}
+                      <td className="tnum px-5 py-3 text-muted">
+                        {num(v.metrics.sharpe)}
                       </td>
-                      <td className="py-2 text-zinc-500 dark:text-zinc-400">
-                        {fmt(v.metrics.accuracy * 100)} %
+                      <td className="tnum px-5 py-3 text-muted">
+                        {ratioPct(v.metrics.accuracy)}
+                      </td>
+                      <td className="tnum px-5 py-3 text-muted">
+                        {v.metrics.samples}
                       </td>
                     </tr>
                   );
@@ -77,6 +88,6 @@ export default function ModelsPanel() {
           </table>
         </div>
       )}
-    </div>
+    </SectionCard>
   );
 }

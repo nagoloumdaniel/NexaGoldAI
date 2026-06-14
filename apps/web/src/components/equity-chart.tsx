@@ -1,28 +1,21 @@
 "use client";
 
 import {
-  CandlestickData,
+  AreaData,
   ColorType,
   createChart,
   UTCTimestamp,
 } from "lightweight-charts";
 import { useEffect, useRef, useState } from "react";
-import { getCandles } from "@/lib/api";
+import { getAnalytics } from "@/lib/api";
 
-const GRANULARITIES = ["M5", "H1"] as const;
-type Granularity = (typeof GRANULARITIES)[number];
-
-export default function PriceChart({
-  height = 380,
-  selectable = false,
-  defaultGranularity = "M5",
-}: {
-  height?: number;
-  selectable?: boolean;
-  defaultGranularity?: Granularity;
-}) {
+/**
+ * Courbe d'équité (NAV dans le temps) à partir des snapshots d'équité.
+ * Vide tant qu'aucun EquitySnapshot n'a été enregistré par le moteur.
+ */
+export default function EquityChart({ height = 320 }: { height?: number }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [granularity, setGranularity] = useState<Granularity>(defaultGranularity);
+  const [empty, setEmpty] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -45,27 +38,23 @@ export default function PriceChart({
       rightPriceScale: { borderColor: "rgba(255,255,255,0.08)" },
     });
 
-    const series = chart.addCandlestickSeries({
-      upColor: "#22c55e",
-      downColor: "#ef4444",
-      borderUpColor: "#22c55e",
-      borderDownColor: "#ef4444",
-      wickUpColor: "#22c55e",
-      wickDownColor: "#ef4444",
+    const series = chart.addAreaSeries({
+      lineColor: "#d4af37",
+      topColor: "rgba(212,175,55,0.28)",
+      bottomColor: "rgba(212,175,55,0.01)",
+      lineWidth: 2,
     });
 
     let active = true;
     const load = () =>
-      getCandles(granularity, 300)
-        .then((candles) => {
+      getAnalytics()
+        .then((a) => {
           if (!active) return;
-          const data: CandlestickData[] = candles.map((c) => ({
-            time: (new Date(c.time).getTime() / 1000) as UTCTimestamp,
-            open: c.open,
-            high: c.high,
-            low: c.low,
-            close: c.close,
+          const data: AreaData[] = a.equityCurve.map((p) => ({
+            time: (new Date(p.time).getTime() / 1000) as UTCTimestamp,
+            value: p.nav,
           }));
+          setEmpty(data.length === 0);
           series.setData(data);
           chart.timeScale().fitContent();
         })
@@ -82,25 +71,13 @@ export default function PriceChart({
       window.removeEventListener("resize", onResize);
       chart.remove();
     };
-  }, [granularity, height]);
+  }, [height]);
 
   return (
-    <div>
-      {selectable ? (
-        <div className="mb-3 flex gap-1">
-          {GRANULARITIES.map((g) => (
-            <button
-              key={g}
-              onClick={() => setGranularity(g)}
-              className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
-                granularity === g
-                  ? "bg-surface-2 text-gold"
-                  : "text-muted hover:text-ink"
-              }`}
-            >
-              {g}
-            </button>
-          ))}
+    <div className="relative">
+      {empty ? (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center text-sm text-muted">
+          Aucun historique d&apos;équité enregistré pour l&apos;instant.
         </div>
       ) : null}
       <div ref={containerRef} className="w-full" />

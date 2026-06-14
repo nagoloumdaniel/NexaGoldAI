@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import DecisionsTable from "@/components/decisions-table";
 import ModelsPanel from "@/components/models-panel";
 import StatsCards from "@/components/stats-cards";
@@ -10,7 +11,7 @@ import TradesTable from "@/components/trades-table";
 const PriceChart = dynamic(() => import("@/components/price-chart"), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[360px] items-center justify-center text-sm text-zinc-400">
+    <div className="flex h-90 items-center justify-center text-sm text-zinc-400">
       Chargement du graphique…
     </div>
   ),
@@ -21,9 +22,19 @@ export default function Home() {
     <div className="flex flex-1 flex-col bg-zinc-50 font-sans dark:bg-zinc-950">
       <header className="border-b border-zinc-200 bg-white px-8 py-4 dark:border-zinc-800 dark:bg-zinc-900">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-            <span className="text-amber-500">Nexa</span>Gold
-          </h1>
+          <div className="flex items-center">
+            <Image
+              src="/nexagold.png"
+              alt="NexaGold"
+              width={400}
+              height={533}
+              priority
+              className="h-10 w-auto"
+            />
+            <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+              <span className="text-amber-500">Nexa</span>Gold
+            </h1>
+          </div>
           <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-600 dark:text-amber-400">
             Paper trading · XAU/USD
           </span>
