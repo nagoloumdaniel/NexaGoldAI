@@ -31,6 +31,11 @@ class Settings(BaseSettings):
     ingest_interval_seconds: int = 60
     ingest_recent_count: int = 50
 
+    # Dukascopy historical backfill — symbole et facteur de prix (XAUUSD = 3
+    # décimales, donc diviseur 1000).
+    dukascopy_symbol: str = "XAUUSD"
+    dukascopy_price_divisor: float = 1000.0
+
     # Infra
     database_url: str = ""
     redis_url: str = ""

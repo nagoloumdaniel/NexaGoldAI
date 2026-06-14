@@ -172,20 +172,33 @@ Endpoints (moteur, port 8000) :
 curl http://localhost:8000/health
 # refresh immédiat des dernières bougies
 curl -X POST http://localhost:8000/ingest/run
-# backfill (granularité + nb de jours, max 60)
+# backfill court depuis Capital.com (granularité + nb de jours, max 60)
 curl -X POST "http://localhost:8000/ingest/backfill?granularity=M5&days=2"
+# backfill profond depuis Dukascopy (ticks → bougies ; M1/M5/M15/M30/H1)
+curl -X POST "http://localhost:8000/ingest/dukascopy?granularity=M5&days=3"
 # couverture par granularité (count + plage temporelle)
 curl http://localhost:8000/candles/stats
 ```
 
-> La profondeur d'historique de Capital.com est limitée. Pour un historique
-> profond (mois/années) destiné à l'entraînement, le backfill **Dukascopy**
-> reste à ajouter — c'est la prochaine sous-étape.
+### Deux sources, une seule série
+
+- **Dukascopy** (`/ingest/dukascopy`) : source de l'**historique profond** pour
+  le backtesting. Télécharge les fichiers tick `.bi5` (un par heure, LZMA) en
+  pur stdlib, les agrège en bougies. Symbole `XAUUSD`, prix ÷ 1000.
+- **Capital.com** (boucle continue + `/ingest/backfill`) : le **temps réel** et
+  les bougies récentes (Dukascopy publie avec un délai).
+
+Les deux écrivent dans la même série `(GOLD, granularité, time)` : là où elles
+se recouvrent, la dernière écriture gagne. Les prix concordent (OHLC mid) ;
+seule la sémantique du **volume** diffère (Capital.com = volume négocié,
+Dukascopy = nombre de ticks). Sans impact pour un backtesting basé sur le prix.
+Usage recommandé : Dukascopy pour amorcer l'historique, puis la boucle
+Capital.com pour entretenir le présent.
 
 ## Feuille de route
 
-1. **Pipeline de données** : ingestion continue Capital.com → table `Candle`,
-   backfill historique Dukascopy.
+1. ✅ **Pipeline de données** : ingestion continue Capital.com → table `Candle`,
+   backfill historique Dukascopy. *(fait)*
 2. **Backtesting + premier modèle** : features techniques, LightGBM,
    validation walk-forward (Sharpe, drawdown, profit factor).
 3. **Paper trading** : boucle complète données → signal → risque → ordre sur

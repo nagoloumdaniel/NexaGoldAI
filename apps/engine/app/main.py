@@ -155,6 +155,19 @@ async def ingest_backfill(
     return {"granularity": granularity, "days": days, "upserted": upserted}
 
 
+@app.post("/ingest/dukascopy")
+async def ingest_dukascopy(
+    granularity: str = Query("M5"),
+    days: int = Query(1, ge=1, le=30),
+) -> dict:
+    """Backfill deep history from Dukascopy tick data (M1/M5/M15/M30/H1)."""
+    service = ensure_ingestion_ready()
+    try:
+        return await service.backfill_dukascopy(granularity, days)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
 @app.get("/candles/stats")
 async def candles_stats() -> dict:
     service = ensure_ingestion_ready()

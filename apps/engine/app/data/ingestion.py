@@ -14,6 +14,7 @@ from datetime import datetime, timedelta, timezone
 from app.broker.capital import CapitalClient, CapitalError
 from app.config import Settings
 from app.data.candles import CandleRepository
+from app.data.dukascopy import DukascopyClient, aggregate_ticks, supported_granularity
 
 logger = logging.getLogger("nexagold.ingestion")
 
@@ -87,6 +88,47 @@ class IngestionService:
             cursor = window_end
         logger.info("Backfill %s sur %d j -> %d bougies", granularity, days, total)
         return total
+
+    async def backfill_dukascopy(self, granularity: str, days: int) -> dict:
+        """Seed deep history from Dukascopy tick files (hour by hour)."""
+        if not supported_granularity(granularity):
+            raise ValueError(
+                f"Granularité {granularity} non supportée par Dukascopy "
+                "(utiliser M1, M5, M15, M30 ou H1)"
+            )
+        client = DukascopyClient(
+            self._settings.dukascopy_symbol, self._settings.dukascopy_price_divisor
+        )
+        end = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
+        cursor = end - timedelta(days=days)
+        hours = 0
+        hours_with_data = 0
+        ticks_total = 0
+        candles_total = 0
+        try:
+            while cursor < end:
+                ticks = await client.fetch_hour(cursor)
+                hours += 1
+                if ticks:
+                    hours_with_data += 1
+                    ticks_total += len(ticks)
+                    candles = aggregate_ticks(ticks, granularity)
+                    candles_total += await self._repository.upsert_many(
+                        self._settings.epic, granularity, candles
+                    )
+                cursor += timedelta(hours=1)
+        finally:
+            await client.close()
+        summary = {
+            "granularity": granularity,
+            "days": days,
+            "hours_scanned": hours,
+            "hours_with_data": hours_with_data,
+            "ticks": ticks_total,
+            "candles_upserted": candles_total,
+        }
+        logger.info("Backfill Dukascopy: %s", summary)
+        return summary
 
     async def run_loop(self) -> None:
         """Background task: ingest_recent() on a fixed interval until cancelled."""

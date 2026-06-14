@@ -57,6 +57,38 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "Any",
         "importPath": "typing",
         "description": "typing",
@@ -131,15 +163,6 @@
         "documentation": {}
     },
     {
-        "label": "asyncio",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "asyncio",
-        "description": "asyncio",
-        "detail": "asyncio",
-        "documentation": {}
-    },
-    {
         "label": "logging",
         "kind": 6,
         "isExtraImport": true,
@@ -149,6 +172,33 @@
         "documentation": {}
     },
     {
+        "label": "lzma",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "lzma",
+        "description": "lzma",
+        "detail": "lzma",
+        "documentation": {}
+    },
+    {
+        "label": "struct",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "struct",
+        "description": "struct",
+        "detail": "struct",
+        "documentation": {}
+    },
+    {
+        "label": "asyncio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "asyncio",
+        "description": "asyncio",
+        "detail": "asyncio",
+        "documentation": {}
+    },
+    {
         "label": "CapitalClient",
         "importPath": "app.broker.capital",
         "description": "app.broker.capital",
@@ -194,6 +244,46 @@
         "description": "app.data.candles",
         "isExtraImport": true,
         "detail": "app.data.candles",
+        "documentation": {}
+    },
+    {
+        "label": "DukascopyClient",
+        "importPath": "app.data.dukascopy",
+        "description": "app.data.dukascopy",
+        "isExtraImport": true,
+        "detail": "app.data.dukascopy",
+        "documentation": {}
+    },
+    {
+        "label": "aggregate_ticks",
+        "importPath": "app.data.dukascopy",
+        "description": "app.data.dukascopy",
+        "isExtraImport": true,
+        "detail": "app.data.dukascopy",
+        "documentation": {}
+    },
+    {
+        "label": "supported_granularity",
+        "importPath": "app.data.dukascopy",
+        "description": "app.data.dukascopy",
+        "isExtraImport": true,
+        "detail": "app.data.dukascopy",
+        "documentation": {}
+    },
+    {
+        "label": "aggregate_ticks",
+        "importPath": "app.data.dukascopy",
+        "description": "app.data.dukascopy",
+        "isExtraImport": true,
+        "detail": "app.data.dukascopy",
+        "documentation": {}
+    },
+    {
+        "label": "parse_ticks",
+        "importPath": "app.data.dukascopy",
+        "description": "app.data.dukascopy",
+        "isExtraImport": true,
+        "detail": "app.data.dukascopy",
         "documentation": {}
     },
     {
@@ -414,6 +504,78 @@
         "documentation": {}
     },
     {
+        "label": "DukascopyClient",
+        "kind": 6,
+        "importPath": "apps.engine.app.data.dukascopy",
+        "description": "apps.engine.app.data.dukascopy",
+        "peekOfCode": "class DukascopyClient:\n    def __init__(self, symbol: str, divisor: float, timeout: float = 30.0):\n        self._symbol = symbol\n        self._divisor = divisor\n        self._client = httpx.AsyncClient(timeout=timeout)\n    async def close(self) -> None:\n        await self._client.aclose()\n    def _url(self, hour_dt: datetime) -> str:\n        return _URL.format(\n            symbol=self._symbol,",
+        "detail": "apps.engine.app.data.dukascopy",
+        "documentation": {}
+    },
+    {
+        "label": "parse_ticks",
+        "kind": 2,
+        "importPath": "apps.engine.app.data.dukascopy",
+        "description": "apps.engine.app.data.dukascopy",
+        "peekOfCode": "def parse_ticks(raw: bytes, hour_dt: datetime, divisor: float) -> list[tuple]:\n    \"\"\"Decode one bi5 payload into (timestamp, bid, ask) tuples.\"\"\"\n    if not raw:\n        return []\n    data = _decompress(raw)\n    ticks = []\n    for offset in range(0, len(data) - (len(data) % _TICK.size), _TICK.size):\n        ms, ask, bid, _ask_vol, _bid_vol = _TICK.unpack_from(data, offset)\n        ts = hour_dt + timedelta(milliseconds=ms)\n        ticks.append((ts, bid / divisor, ask / divisor))",
+        "detail": "apps.engine.app.data.dukascopy",
+        "documentation": {}
+    },
+    {
+        "label": "aggregate_ticks",
+        "kind": 2,
+        "importPath": "apps.engine.app.data.dukascopy",
+        "description": "apps.engine.app.data.dukascopy",
+        "peekOfCode": "def aggregate_ticks(ticks: list[tuple], granularity: str) -> list[dict]:\n    \"\"\"Resample mid-price ticks into OHLCV candles. Volume = tick count.\"\"\"\n    bucket = _GRAN_SECONDS[granularity]\n    candles: dict[int, dict] = {}\n    for ts, bid, ask in ticks:\n        mid = (bid + ask) / 2\n        epoch = int(ts.replace(tzinfo=timezone.utc).timestamp())\n        start = epoch - (epoch % bucket)\n        candle = candles.get(start)\n        if candle is None:",
+        "detail": "apps.engine.app.data.dukascopy",
+        "documentation": {}
+    },
+    {
+        "label": "supported_granularity",
+        "kind": 2,
+        "importPath": "apps.engine.app.data.dukascopy",
+        "description": "apps.engine.app.data.dukascopy",
+        "peekOfCode": "def supported_granularity(granularity: str) -> bool:\n    return granularity in _GRAN_SECONDS\nclass DukascopyClient:\n    def __init__(self, symbol: str, divisor: float, timeout: float = 30.0):\n        self._symbol = symbol\n        self._divisor = divisor\n        self._client = httpx.AsyncClient(timeout=timeout)\n    async def close(self) -> None:\n        await self._client.aclose()\n    def _url(self, hour_dt: datetime) -> str:",
+        "detail": "apps.engine.app.data.dukascopy",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "apps.engine.app.data.dukascopy",
+        "description": "apps.engine.app.data.dukascopy",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.dukascopy\")\n_URL = (\n    \"https://datafeed.dukascopy.com/datafeed/\"\n    \"{symbol}/{year:04d}/{month:02d}/{day:02d}/{hour:02d}h_ticks.bi5\"\n)\n_TICK = struct.Struct(\">iiiff\")  # ms, ask, bid, ask_vol, bid_vol\n# Granularities whose buckets divide one hour — required for safe per-hour\n# aggregation (no candle straddles an hourly file boundary).\n_GRAN_SECONDS = {\"M1\": 60, \"M5\": 300, \"M15\": 900, \"M30\": 1800, \"H1\": 3600}\ndef _decompress(raw: bytes) -> bytes:",
+        "detail": "apps.engine.app.data.dukascopy",
+        "documentation": {}
+    },
+    {
+        "label": "_URL",
+        "kind": 5,
+        "importPath": "apps.engine.app.data.dukascopy",
+        "description": "apps.engine.app.data.dukascopy",
+        "peekOfCode": "_URL = (\n    \"https://datafeed.dukascopy.com/datafeed/\"\n    \"{symbol}/{year:04d}/{month:02d}/{day:02d}/{hour:02d}h_ticks.bi5\"\n)\n_TICK = struct.Struct(\">iiiff\")  # ms, ask, bid, ask_vol, bid_vol\n# Granularities whose buckets divide one hour — required for safe per-hour\n# aggregation (no candle straddles an hourly file boundary).\n_GRAN_SECONDS = {\"M1\": 60, \"M5\": 300, \"M15\": 900, \"M30\": 1800, \"H1\": 3600}\ndef _decompress(raw: bytes) -> bytes:\n    try:",
+        "detail": "apps.engine.app.data.dukascopy",
+        "documentation": {}
+    },
+    {
+        "label": "_TICK",
+        "kind": 5,
+        "importPath": "apps.engine.app.data.dukascopy",
+        "description": "apps.engine.app.data.dukascopy",
+        "peekOfCode": "_TICK = struct.Struct(\">iiiff\")  # ms, ask, bid, ask_vol, bid_vol\n# Granularities whose buckets divide one hour — required for safe per-hour\n# aggregation (no candle straddles an hourly file boundary).\n_GRAN_SECONDS = {\"M1\": 60, \"M5\": 300, \"M15\": 900, \"M30\": 1800, \"H1\": 3600}\ndef _decompress(raw: bytes) -> bytes:\n    try:\n        return lzma.decompress(raw)  # FORMAT_AUTO handles the .lzma \"alone\" format\n    except lzma.LZMAError:\n        return lzma.decompress(raw, format=lzma.FORMAT_ALONE)\ndef parse_ticks(raw: bytes, hour_dt: datetime, divisor: float) -> list[tuple]:",
+        "detail": "apps.engine.app.data.dukascopy",
+        "documentation": {}
+    },
+    {
+        "label": "_GRAN_SECONDS",
+        "kind": 5,
+        "importPath": "apps.engine.app.data.dukascopy",
+        "description": "apps.engine.app.data.dukascopy",
+        "peekOfCode": "_GRAN_SECONDS = {\"M1\": 60, \"M5\": 300, \"M15\": 900, \"M30\": 1800, \"H1\": 3600}\ndef _decompress(raw: bytes) -> bytes:\n    try:\n        return lzma.decompress(raw)  # FORMAT_AUTO handles the .lzma \"alone\" format\n    except lzma.LZMAError:\n        return lzma.decompress(raw, format=lzma.FORMAT_ALONE)\ndef parse_ticks(raw: bytes, hour_dt: datetime, divisor: float) -> list[tuple]:\n    \"\"\"Decode one bi5 payload into (timestamp, bid, ask) tuples.\"\"\"\n    if not raw:\n        return []",
+        "detail": "apps.engine.app.data.dukascopy",
+        "documentation": {}
+    },
+    {
         "label": "IngestionService",
         "kind": 6,
         "importPath": "apps.engine.app.data.ingestion",
@@ -555,6 +717,96 @@
         "description": "apps.engine.app.main",
         "peekOfCode": "app = FastAPI(title=\"NexaGold Engine\", version=\"0.1.0\", lifespan=lifespan)\ndef ensure_broker_configured() -> None:\n    if not (\n        settings.capital_api_key\n        and settings.capital_identifier\n        and settings.capital_password\n    ):\n        raise HTTPException(\n            status_code=503,\n            detail=(",
         "detail": "apps.engine.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "DIVISOR",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_dukascopy_parse",
+        "description": "apps.engine.tests_manual.test_dukascopy_parse",
+        "peekOfCode": "DIVISOR = 1000.0\nTICK = struct.Struct(\">iiiff\")\nHOUR = datetime(2026, 6, 10, 13, 0, 0)\n# Three ticks within the hour: (ms, ask_points, bid_points, ask_vol, bid_vol)\nraw_ticks = [\n    (0, 4219000, 4218000, 1.0, 1.0),       # mid 4218.5\n    (60_000, 4221000, 4220000, 1.0, 1.0),  # mid 4220.5  (high)\n    (120_000, 4217000, 4216000, 1.0, 1.0), # mid 4216.5  (low, close)\n]\npayload = b\"\".join(TICK.pack(*t) for t in raw_ticks)",
+        "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "TICK",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_dukascopy_parse",
+        "description": "apps.engine.tests_manual.test_dukascopy_parse",
+        "peekOfCode": "TICK = struct.Struct(\">iiiff\")\nHOUR = datetime(2026, 6, 10, 13, 0, 0)\n# Three ticks within the hour: (ms, ask_points, bid_points, ask_vol, bid_vol)\nraw_ticks = [\n    (0, 4219000, 4218000, 1.0, 1.0),       # mid 4218.5\n    (60_000, 4221000, 4220000, 1.0, 1.0),  # mid 4220.5  (high)\n    (120_000, 4217000, 4216000, 1.0, 1.0), # mid 4216.5  (low, close)\n]\npayload = b\"\".join(TICK.pack(*t) for t in raw_ticks)\ncompressed = lzma.compress(payload, format=lzma.FORMAT_ALONE)",
+        "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "HOUR",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_dukascopy_parse",
+        "description": "apps.engine.tests_manual.test_dukascopy_parse",
+        "peekOfCode": "HOUR = datetime(2026, 6, 10, 13, 0, 0)\n# Three ticks within the hour: (ms, ask_points, bid_points, ask_vol, bid_vol)\nraw_ticks = [\n    (0, 4219000, 4218000, 1.0, 1.0),       # mid 4218.5\n    (60_000, 4221000, 4220000, 1.0, 1.0),  # mid 4220.5  (high)\n    (120_000, 4217000, 4216000, 1.0, 1.0), # mid 4216.5  (low, close)\n]\npayload = b\"\".join(TICK.pack(*t) for t in raw_ticks)\ncompressed = lzma.compress(payload, format=lzma.FORMAT_ALONE)\nticks = parse_ticks(compressed, HOUR, DIVISOR)",
+        "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "raw_ticks",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_dukascopy_parse",
+        "description": "apps.engine.tests_manual.test_dukascopy_parse",
+        "peekOfCode": "raw_ticks = [\n    (0, 4219000, 4218000, 1.0, 1.0),       # mid 4218.5\n    (60_000, 4221000, 4220000, 1.0, 1.0),  # mid 4220.5  (high)\n    (120_000, 4217000, 4216000, 1.0, 1.0), # mid 4216.5  (low, close)\n]\npayload = b\"\".join(TICK.pack(*t) for t in raw_ticks)\ncompressed = lzma.compress(payload, format=lzma.FORMAT_ALONE)\nticks = parse_ticks(compressed, HOUR, DIVISOR)\nassert len(ticks) == 3, f\"attendu 3 ticks, obtenu {len(ticks)}\"\n# First tick: bid 4218.0 / ask 4219.0",
+        "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "payload",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_dukascopy_parse",
+        "description": "apps.engine.tests_manual.test_dukascopy_parse",
+        "peekOfCode": "payload = b\"\".join(TICK.pack(*t) for t in raw_ticks)\ncompressed = lzma.compress(payload, format=lzma.FORMAT_ALONE)\nticks = parse_ticks(compressed, HOUR, DIVISOR)\nassert len(ticks) == 3, f\"attendu 3 ticks, obtenu {len(ticks)}\"\n# First tick: bid 4218.0 / ask 4219.0\nassert abs(ticks[0][1] - 4218.0) < 1e-9, ticks[0]\nassert abs(ticks[0][2] - 4219.0) < 1e-9, ticks[0]\n# All three ticks fall in the same M5 bucket (13:00).\ncandles = aggregate_ticks(ticks, \"M5\")\nassert len(candles) == 1, f\"attendu 1 bougie M5, obtenu {len(candles)}\"",
+        "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "compressed",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_dukascopy_parse",
+        "description": "apps.engine.tests_manual.test_dukascopy_parse",
+        "peekOfCode": "compressed = lzma.compress(payload, format=lzma.FORMAT_ALONE)\nticks = parse_ticks(compressed, HOUR, DIVISOR)\nassert len(ticks) == 3, f\"attendu 3 ticks, obtenu {len(ticks)}\"\n# First tick: bid 4218.0 / ask 4219.0\nassert abs(ticks[0][1] - 4218.0) < 1e-9, ticks[0]\nassert abs(ticks[0][2] - 4219.0) < 1e-9, ticks[0]\n# All three ticks fall in the same M5 bucket (13:00).\ncandles = aggregate_ticks(ticks, \"M5\")\nassert len(candles) == 1, f\"attendu 1 bougie M5, obtenu {len(candles)}\"\nc = candles[0]",
+        "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "ticks",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_dukascopy_parse",
+        "description": "apps.engine.tests_manual.test_dukascopy_parse",
+        "peekOfCode": "ticks = parse_ticks(compressed, HOUR, DIVISOR)\nassert len(ticks) == 3, f\"attendu 3 ticks, obtenu {len(ticks)}\"\n# First tick: bid 4218.0 / ask 4219.0\nassert abs(ticks[0][1] - 4218.0) < 1e-9, ticks[0]\nassert abs(ticks[0][2] - 4219.0) < 1e-9, ticks[0]\n# All three ticks fall in the same M5 bucket (13:00).\ncandles = aggregate_ticks(ticks, \"M5\")\nassert len(candles) == 1, f\"attendu 1 bougie M5, obtenu {len(candles)}\"\nc = candles[0]\nassert c[\"time\"] == \"2026-06-10T13:00:00\", c[\"time\"]",
+        "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "candles",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_dukascopy_parse",
+        "description": "apps.engine.tests_manual.test_dukascopy_parse",
+        "peekOfCode": "candles = aggregate_ticks(ticks, \"M5\")\nassert len(candles) == 1, f\"attendu 1 bougie M5, obtenu {len(candles)}\"\nc = candles[0]\nassert c[\"time\"] == \"2026-06-10T13:00:00\", c[\"time\"]\nassert abs(c[\"open\"] - 4218.5) < 1e-9, c\nassert abs(c[\"high\"] - 4220.5) < 1e-9, c\nassert abs(c[\"low\"] - 4216.5) < 1e-9, c\nassert abs(c[\"close\"] - 4216.5) < 1e-9, c\nassert c[\"volume\"] == 3, c\n# Same ticks at M1 fall in three distinct buckets (13:00, 13:01, 13:02).",
+        "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "c",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_dukascopy_parse",
+        "description": "apps.engine.tests_manual.test_dukascopy_parse",
+        "peekOfCode": "c = candles[0]\nassert c[\"time\"] == \"2026-06-10T13:00:00\", c[\"time\"]\nassert abs(c[\"open\"] - 4218.5) < 1e-9, c\nassert abs(c[\"high\"] - 4220.5) < 1e-9, c\nassert abs(c[\"low\"] - 4216.5) < 1e-9, c\nassert abs(c[\"close\"] - 4216.5) < 1e-9, c\nassert c[\"volume\"] == 3, c\n# Same ticks at M1 fall in three distinct buckets (13:00, 13:01, 13:02).\nm1 = aggregate_ticks(ticks, \"M1\")\nassert len(m1) == 3, f\"attendu 3 bougies M1, obtenu {len(m1)}\"",
+        "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "m1",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_dukascopy_parse",
+        "description": "apps.engine.tests_manual.test_dukascopy_parse",
+        "peekOfCode": "m1 = aggregate_ticks(ticks, \"M1\")\nassert len(m1) == 3, f\"attendu 3 bougies M1, obtenu {len(m1)}\"\nassert all(c[\"volume\"] == 1 for c in m1), m1\nprint(\"OK: parse_ticks + aggregate_ticks valides\")",
+        "detail": "apps.engine.tests_manual.test_dukascopy_parse",
         "documentation": {}
     },
     {
