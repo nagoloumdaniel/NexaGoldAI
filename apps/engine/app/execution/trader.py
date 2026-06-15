@@ -92,11 +92,23 @@ class Trader:
             out["status"] = "market_closed"
             return out
 
+        # Le broker impose une distance de stop minimale (plus large pour un
+        # guaranteed stop). On élargit le stop si besoin AVANT le sizing, sinon
+        # l'ordre est rejeté et/ou le risque réel ne correspond plus à la taille.
+        rules = await self._broker.get_market_rules()
+        use_guaranteed = s.use_guaranteed_stop and rules["guaranteed_stop_allowed"]
+        min_stop_pct = (
+            rules["min_guaranteed_stop_pct"] if use_guaranteed else rules["min_stop_pct"]
+        )
+        stop_pct = max(s.stop_loss_pct, min_stop_pct * (1 + s.stop_distance_buffer))
+        out["stop_pct"] = round(stop_pct, 5)
+        out["guaranteed_stop"] = use_guaranteed
+
         account = await self._broker.get_account_summary()
         positions = await self._broker.get_open_positions()
         entry = price["ask"] if signal.action == Action.BUY else price["bid"]
         stop_loss, take_profit = compute_bracket(
-            signal.action, entry, s.stop_loss_pct, s.risk_reward_ratio
+            signal.action, entry, stop_pct, s.risk_reward_ratio
         )
 
         decision = self._risk.review(signal, account, positions, entry, stop_loss)
@@ -113,6 +125,8 @@ class Trader:
             units=decision.units,
             stop_loss_price=stop_loss,
             take_profit_price=take_profit,
+            guaranteed_stop=use_guaranteed,
+            decimals=rules["decimal_places"],
         )
         trade_id = await self._trades.insert_open(
             signal,

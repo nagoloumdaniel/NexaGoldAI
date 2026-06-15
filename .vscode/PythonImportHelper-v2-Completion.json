@@ -226,6 +226,14 @@
         "documentation": {}
     },
     {
+        "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
         "label": "argparse",
         "kind": 6,
         "isExtraImport": true,
@@ -802,6 +810,14 @@
         "documentation": {}
     },
     {
+        "label": "backtest",
+        "importPath": "app.research",
+        "description": "app.research",
+        "isExtraImport": true,
+        "detail": "app.research",
+        "documentation": {}
+    },
+    {
         "label": "load_candles",
         "importPath": "app.research.dataset",
         "description": "app.research.dataset",
@@ -834,6 +850,38 @@
         "documentation": {}
     },
     {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "feature_columns",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "build_features",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "feature_columns",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
         "label": "feature_columns",
         "importPath": "app.research.features",
         "description": "app.research.features",
@@ -851,22 +899,6 @@
     },
     {
         "label": "feature_columns",
-        "importPath": "app.research.features",
-        "description": "app.research.features",
-        "isExtraImport": true,
-        "detail": "app.research.features",
-        "documentation": {}
-    },
-    {
-        "label": "feature_columns",
-        "importPath": "app.research.features",
-        "description": "app.research.features",
-        "isExtraImport": true,
-        "detail": "app.research.features",
-        "documentation": {}
-    },
-    {
-        "label": "build_features",
         "importPath": "app.research.features",
         "description": "app.research.features",
         "isExtraImport": true,
@@ -1162,6 +1194,15 @@
         "importPath": "tempfile",
         "description": "tempfile",
         "detail": "tempfile",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
         "documentation": {}
     },
     {
@@ -2026,6 +2067,33 @@
         "description": "apps.engine.tests_manual.test_strategy_bridge",
         "peekOfCode": "MODEL_DIR = Path(__file__).resolve().parents[1] / \"models\" / \"M5\"\ndef main() -> None:\n    settings = get_settings()\n    df = asyncio.run(load_candles(settings, \"M5\"))\n    # Feed the last 120 candles as the engine would at decision time.\n    candles = [\n        {\n            \"time\": ts.isoformat(),\n            \"open\": row.open,\n            \"high\": row.high,",
         "detail": "apps.engine.tests_manual.test_strategy_bridge",
+        "documentation": {}
+    },
+    {
+        "label": "CONFIG",
+        "kind": 5,
+        "importPath": "apps.engine._backtest_long",
+        "description": "apps.engine._backtest_long",
+        "peekOfCode": "CONFIG = {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.002,\n          \"vol_mult\": 1.0, \"vol_window\": 20, \"macro\": False}\nFOLDS = 5\nCOST_GRID = [2.0, 5.0, 10.0, 15.0]\ndef _window_mask(mask, start_frac, end_frac):\n    idx = np.flatnonzero(mask)\n    lo, hi = int(len(idx) * start_frac), int(len(idx) * end_frac)\n    out = np.zeros(len(mask), dtype=bool)\n    out[idx[lo:hi]] = True\n    return out",
+        "detail": "apps.engine._backtest_long",
+        "documentation": {}
+    },
+    {
+        "label": "FOLDS",
+        "kind": 5,
+        "importPath": "apps.engine._backtest_long",
+        "description": "apps.engine._backtest_long",
+        "peekOfCode": "FOLDS = 5\nCOST_GRID = [2.0, 5.0, 10.0, 15.0]\ndef _window_mask(mask, start_frac, end_frac):\n    idx = np.flatnonzero(mask)\n    lo, hi = int(len(idx) * start_frac), int(len(idx) * end_frac)\n    out = np.zeros(len(mask), dtype=bool)\n    out[idx[lo:hi]] = True\n    return out\nasync def main() -> None:\n    granularity = sys.argv[1] if len(sys.argv) > 1 else \"H1\"",
+        "detail": "apps.engine._backtest_long",
+        "documentation": {}
+    },
+    {
+        "label": "COST_GRID",
+        "kind": 5,
+        "importPath": "apps.engine._backtest_long",
+        "description": "apps.engine._backtest_long",
+        "peekOfCode": "COST_GRID = [2.0, 5.0, 10.0, 15.0]\ndef _window_mask(mask, start_frac, end_frac):\n    idx = np.flatnonzero(mask)\n    lo, hi = int(len(idx) * start_frac), int(len(idx) * end_frac)\n    out = np.zeros(len(mask), dtype=bool)\n    out[idx[lo:hi]] = True\n    return out\nasync def main() -> None:\n    granularity = sys.argv[1] if len(sys.argv) > 1 else \"H1\"\n    n_windows = int(sys.argv[2]) if len(sys.argv) > 2 else 4",
+        "detail": "apps.engine._backtest_long",
         "documentation": {}
     },
     {

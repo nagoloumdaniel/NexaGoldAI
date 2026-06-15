@@ -112,6 +112,35 @@ class CapitalClient:
             "tradeable": snap.get("marketStatus") == "TRADEABLE",
         }
 
+    async def get_market_rules(self, epic: str | None = None) -> dict:
+        """Trading rules for one instrument (stop distances, decimals, etc.).
+
+        Distances are normalised to a fraction of price so the caller never has
+        to care whether Capital.com expressed them in POINTS or PERCENTAGE.
+        """
+        epic = epic or self._settings.epic
+        data = await self._request("GET", f"/api/v1/markets/{epic}")
+        rules = data.get("dealingRules", {})
+        snap = data.get("snapshot", {})
+        instrument = data.get("instrument", {})
+        price = _mid({"bid": snap.get("bid"), "ask": snap.get("offer")})
+
+        def _to_pct(rule: dict | None) -> float:
+            if not rule:
+                return 0.0
+            value = float(rule.get("value", 0))
+            if rule.get("unit") == "PERCENTAGE":
+                return value / 100.0
+            # POINTS (ou autre) : distance absolue rapportée au prix courant.
+            return value / price if price else 0.0
+
+        return {
+            "guaranteed_stop_allowed": bool(instrument.get("guaranteedStopAllowed", False)),
+            "min_guaranteed_stop_pct": _to_pct(rules.get("minGuaranteedStopDistance")),
+            "min_stop_pct": _to_pct(rules.get("minStopOrProfitDistance")),
+            "decimal_places": int(snap.get("decimalPlacesFactor", 2)),
+        }
+
     @staticmethod
     def _candles_from_response(data: dict) -> list[dict]:
         return [
@@ -199,12 +228,17 @@ class CapitalClient:
         epic: str | None = None,
         stop_loss_price: float | None = None,
         take_profit_price: float | None = None,
+        guaranteed_stop: bool = False,
+        decimals: int = 2,
     ) -> dict:
         """Market position. Positive units = buy, negative = sell.
 
         Capital.com expects a positive `size` plus an explicit `direction`,
         unlike OANDA's signed units — the engine keeps using signed units and
-        the conversion happens here.
+        the conversion happens here. Some accounts/instruments require a
+        guaranteed stop; set `guaranteed_stop` accordingly (the caller is
+        responsible for honouring the broker's minimum guaranteed-stop
+        distance, else the order is rejected).
         """
         epic = epic or self._settings.epic
         body: dict[str, Any] = {
@@ -212,10 +246,12 @@ class CapitalClient:
             "direction": "BUY" if units > 0 else "SELL",
             "size": abs(units),
         }
+        if guaranteed_stop:
+            body["guaranteedStop"] = True
         if stop_loss_price is not None:
-            body["stopLevel"] = round(stop_loss_price, 2)
+            body["stopLevel"] = round(stop_loss_price, decimals)
         if take_profit_price is not None:
-            body["profitLevel"] = round(take_profit_price, 2)
+            body["profitLevel"] = round(take_profit_price, decimals)
         return await self._request("POST", "/api/v1/positions", json=body)
 
     async def get_open_positions(self) -> list[dict]:
