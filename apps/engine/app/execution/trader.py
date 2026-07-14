@@ -15,10 +15,15 @@ from app.config import Settings
 from app.data.decisions import StrategyDecisionRepository
 from app.data.trades import TradeRepository
 from app.risk.manager import RiskManager
+from app.signals.math_features import build_math_summary
+from app.signals.regime import classify_regime
 from app.signals.structured import build_structured_signal
-from app.strategy.base import Action, Strategy
+from app.strategy.base import Action, Signal, Strategy
 
 logger = logging.getLogger("nexagold.trader")
+
+REGIME_SHADOW_STRATEGY = "expected-return-paper-regime-shadow"
+REGIME_SHADOW_FILTER = "exclude_regime:BULLISH_TREND"
 
 
 def compute_bracket(
@@ -68,6 +73,61 @@ def _positive_signal_value(signal, key: str, fallback: float) -> float:
     return value if value > 0 else fallback
 
 
+def _regime_shadow_signal(
+    settings: Settings,
+    candles: list[dict],
+    signal: Signal,
+    decision_id: str,
+) -> Signal | None:
+    """Prospective candidate filter, logged only as a non-executable decision."""
+    if signal.features.get("signal_kind") != "expected_return":
+        return None
+
+    math_summary = build_math_summary(
+        candles,
+        min_count=min(settings.decision_candles, 50),
+    )
+    regime_inputs = {
+        **math_summary,
+        "data_quality_score": float(math_summary.get("data_quality_score") or 0.0),
+    }
+    regime = classify_regime(regime_inputs)
+    blocked = signal.action == Action.BUY and regime["regime"] == "BULLISH_TREND"
+    features = {
+        **signal.features,
+        "signal_kind": "expected_return_regime_shadow",
+        "shadow_of_decision_id": decision_id,
+        "shadow_filter": REGIME_SHADOW_FILTER,
+        "shadow_filtered": blocked,
+        "shadow_execution_allowed": False,
+        "base_action": signal.action.value,
+        "market_regime": regime["regime"],
+        "regime_trend": regime["trend"],
+        "regime_volatility": regime["volatility"],
+        "regime_confidence": regime["confidence"],
+        "regime_filter_candidate": True,
+        "paper_only": True,
+    }
+    if blocked:
+        return Signal(
+            Action.HOLD,
+            signal.confidence,
+            (
+                f"Shadow {REGIME_SHADOW_FILTER}: BUY bloque en "
+                f"{regime['regime']}"
+            ),
+            features,
+            0.0,
+        )
+    return Signal(
+        signal.action,
+        signal.confidence,
+        f"Shadow {REGIME_SHADOW_FILTER}: decision conservee",
+        features,
+        signal.position_size,
+    )
+
+
 class Trader:
     def __init__(
         self,
@@ -92,6 +152,27 @@ class Trader:
     @property
     def strategy_paper_only(self) -> bool:
         return self._strategy.paper_only
+
+    @property
+    def effective_stop_loss_pct(self) -> float:
+        return float(
+            getattr(self._strategy, "stop_loss_floor_pct", self._settings.stop_loss_pct)
+        )
+
+    @property
+    def effective_stop_loss_atr_multiplier(self) -> float | None:
+        value = getattr(self._strategy, "stop_loss_atr_multiplier", None)
+        return float(value) if value is not None else None
+
+    @property
+    def effective_risk_reward_ratio(self) -> float:
+        return float(
+            getattr(
+                self._strategy,
+                "risk_reward_ratio",
+                self._settings.risk_reward_ratio,
+            )
+        )
 
     def set_strategy(self, strategy: Strategy) -> None:
         """Hot-swap the strategy (used by the learning loop on promotion)."""
@@ -166,6 +247,13 @@ class Trader:
 
         signal = self._strategy.evaluate(candles, macro_candles)
         decision_id = await self._decisions.insert(self._strategy.name, signal)
+        shadow_signal = _regime_shadow_signal(s, candles, signal, decision_id)
+        shadow_decision_id = None
+        if shadow_signal is not None:
+            shadow_decision_id = await self._decisions.insert(
+                REGIME_SHADOW_STRATEGY,
+                shadow_signal,
+            )
 
         out = {
             "decision_id": decision_id,
@@ -176,6 +264,9 @@ class Trader:
             "position_size": round(signal.position_size, 4),
             "status": "logged",
         }
+        if shadow_decision_id is not None:
+            out["shadow_decision_id"] = shadow_decision_id
+            out["shadow_filter"] = REGIME_SHADOW_FILTER
         if expired_closures:
             out["expired_closures"] = expired_closures
         if paper_reconciliation is not None:

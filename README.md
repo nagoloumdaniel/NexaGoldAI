@@ -120,13 +120,13 @@ cd apps/engine
     --symbol EURUSD --divisor 100000 --instrument EURUSD
 # 3. Bougies H1 dérivées des M5 (le modèle live tourne en H1)
 curl -X POST "http://localhost:8000/candles/resample?source=M5&target=H1&instrument=GOLD"
-# 4. Entraîner / promouvoir le champion (compare plusieurs approches)
-curl -X POST http://localhost:8000/learning/retrain
+# 4. Valider puis entraîner l'artefact strictement paper
+.venv\Scripts\python.exe -m app.research.train_expected_return_paper
 ```
 
-Ensuite, tout est automatique : le moteur ingère le temps réel, décide à
-chaque barre (journalisé, **sans ordre** tant que `TRADING_ENABLED=false`), et
-peut se réentraîner périodiquement (`LEARNING_ENABLED=true`). Le dashboard
+Ensuite, le moteur ingère le temps réel et décide à chaque barre. La stratégie
+`expected_return_paper` est verrouillée sur `CAPITAL_ENV=demo`; son apprentissage
+périodique reste désactivé pendant la validation prospective. Le dashboard
 (`localhost:3000`) et les récaps Telegram reflètent le tout.
 
 > **Granularité du modèle** : `MODEL_GRANULARITY=H1` par défaut (meilleur
@@ -269,9 +269,10 @@ long/short avec coûts de transaction. Il écrit `models/<granularité>/` :
 accuracy, F1 macro, matrice de confusion, et côté PnL Sharpe annualisé, max
 drawdown, profit factor, win rate, exposition.
 
-[lightgbm_strategy.py](apps/engine/app/strategy/lightgbm_strategy.py) charge ce
-modèle et implémente l'interface `Strategy` — c'est le pont vers le paper
-trading (phase 3).
+[expected_return_strategy.py](apps/engine/app/strategy/expected_return_strategy.py)
+charge l'artefact séparé `models/H1/expected_return_paper`. Il prédit directement
+le rendement à 24 h, ne prend que les achats au-dessus du seuil validé et cible
+15 % de volatilité annualisée sans levier.
 
 ### Filtre de confiance, validation séparée, macro
 
@@ -289,20 +290,21 @@ trading (phase 3).
 - **Granularité** : le système entraîne par granularité ; H1 donne le meilleur
   ratio signal/coût.
 
-> **Évolution du modèle.** Sharpe OOS (held-out test) :
+> **Évolution du modèle.** Validation H1 walk-forward imbriquée :
 >
 > | Étape | Sharpe |
 > | --- | --- |
 > | Baseline phase 2 (M5, 30 j, 20 features, fixe) | ≈ −34 |
 > | + 1 an de données + ~30 features | ≈ −17 |
 > | + filtre de confiance | ≈ −3 |
-> | **+ granularité H1** | **≈ +3 (positif)** |
+> | Classification H1 actuelle | −2,03 (rejetée) |
+> | Régression 24 h long-only + vol target | 1,19 |
+> | **+ bracket max(0,5 %, 3×ATR), objectif 3R** | **1,49** |
 >
-> Le passage en **H1** (moins de bruit, moins de coûts) combiné au filtre de
-> confiance fait **basculer le Sharpe en positif** sur la slice de test honnête —
-> premier résultat encourageant du projet. Réserve : l'échantillon H1 est plus
-> petit (~5 300 bougies), donc l'estimation est plus bruitée — à confirmer en
-> paper trading réel avant toute conclusion. Le kill switch reste actif.
+> Le candidat final affiche +53,33 %, Sharpe 1,49, profit factor 1,25 et max
+> drawdown −14,35 % sur 14 665 observations OOS. Un pli récent reste négatif et
+> le stress de coûts sévère n'est positif que de +0,66 % : ces chiffres autorisent
+> uniquement une validation paper prospective, jamais une conclusion de gain.
 
 ## Paper trading (phase 3)
 
@@ -310,14 +312,14 @@ La boucle [trader.py](apps/engine/app/execution/trader.py) exécute, à interval
 régulier, le cycle complet **données → signal → risque → ordre** sur le compte
 démo :
 
-1. récupère les dernières bougies et interroge la stratégie ([factory.py](apps/engine/app/strategy/factory.py)
-   charge le modèle LightGBM, sinon `AlwaysHold`) ;
+1. réconcilie les sorties SL/TP, ferme à 24 h les positions paper expirées, puis
+   interroge la régression expected-return ;
 2. **journalise chaque décision** dans `StrategyDecision` (exécutée ou non) —
    c'est le « pourquoi » de l'IA, et le jeu de données du réentraînement ;
-3. si le signal est actionnable et le marché ouvert : calcule un bracket
-   stop-loss / take-profit, passe par le `RiskManager` (taille de position,
-   pertes journalières, positions max) ;
-4. **n'envoie un ordre que si le risque approuve ET `TRADING_ENABLED=true`.**
+3. calcule le stop `max(0,5 %, 3×ATR)`, l'objectif `3R` et applique au sizing
+   de risque le multiplicateur causal de volatilité, plafonné à 100 % ;
+4. n'envoie un ordre que si le risque approuve, `TRADING_ENABLED=true` et
+   `CAPITAL_ENV=demo`.
 
 Par défaut `TRADING_ENABLED=false` : la boucle tourne, calcule et journalise
 les décisions sur le compte démo **sans jamais y toucher**. On accumule un
@@ -330,13 +332,18 @@ curl "http://localhost:8000/decisions/recent?limit=20"
 ```
 
 Variables (défauts) : `TRADING_LOOP_ENABLED=true`, `TRADE_INTERVAL_SECONDS=300`,
-`STRATEGY_NAME=lightgbm`, `MODEL_GRANULARITY=M5`, `DECISION_CANDLES=150`,
+`STRATEGY_NAME=expected_return_paper`, `MODEL_GRANULARITY=H1`, `DECISION_CANDLES=200`,
 `STOP_LOSS_PCT=0.005`, `RISK_REWARD_RATIO=1.5`, et le kill switch
 `TRADING_ENABLED=false`.
 
-> Passer en réel = `TRADING_ENABLED=true` (+ `CAPITAL_ENV=live`). À ne faire
-> qu'après des semaines de paper trading aux métriques stables **et** avec un
-> modèle qui a un edge prouvé — ce qui n'est pas le cas du baseline actuel.
+Pour `expected_return_paper`, les paramètres de l'artefact remplacent les deux
+valeurs globales de secours: stop `max(0,5 %, 3 x ATR14)` et objectif `3R`.
+`GET /trade/status` expose ces valeurs effectives.
+
+Le statut prospectif est disponible via `GET /paper/validation` et
+`GET /dashboard/paper-validation`. La revue devient éligible après 100 trades
+clôturés, sans promotion automatique. `expected_return_paper` refuse de charger
+si `CAPITAL_ENV=live`, même lorsque `TRADING_ENABLED=true`.
 
 ## Dashboard (phase 4)
 

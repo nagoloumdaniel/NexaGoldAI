@@ -21,12 +21,29 @@ class FixedPaperStrategy(Strategy):
     paper_horizon_hours = 24
 
     def evaluate(self, candles, macro_candles=None) -> Signal:
-        return Signal(Action.BUY, 0.7, "paper test", position_size=0.5)
+        return Signal(
+            Action.BUY,
+            0.7,
+            "paper test",
+            {
+                "signal_kind": "expected_return",
+                "expected_return": 0.004,
+                "expected_return_threshold": 0.003,
+                "position_size": 0.5,
+                "paper_only": True,
+            },
+            position_size=0.5,
+        )
 
 
 class FakeDecisions:
+    def __init__(self):
+        self.rows = []
+
     async def insert(self, strategy, signal):
-        return "decision-1"
+        decision_id = f"decision-{len(self.rows) + 1}"
+        self.rows.append((decision_id, strategy, signal))
+        return decision_id
 
     async def mark_executed(self, decision_id, trade_id):
         raise AssertionError("A live-blocked decision cannot execute")
@@ -98,16 +115,20 @@ async def main() -> None:
         raise AssertionError("expected-return paper strategy loaded in live mode")
 
     live_broker = FakeBroker()
+    live_decisions = FakeDecisions()
     live_trader = Trader(
         Settings(capital_env="live", trading_enabled=True),
         live_broker,
         FixedPaperStrategy(),
         RiskManager(Settings(capital_env="live", trading_enabled=True)),
-        FakeDecisions(),
+        live_decisions,
         FakeTrades(),
     )
     blocked = await live_trader.step()
     assert blocked["status"] == "paper_only_blocked", blocked
+    assert len(live_decisions.rows) == 2, live_decisions.rows
+    assert live_decisions.rows[1][1] == "expected-return-paper-regime-shadow"
+    assert live_decisions.rows[1][2].features["shadow_execution_allowed"] is False
     assert live_broker.price_calls == 0
     try:
         live_trader.set_strategy(AlwaysHold())

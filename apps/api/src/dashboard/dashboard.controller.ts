@@ -46,6 +46,11 @@ export class DashboardController {
     return this.dashboard.paperValidation();
   }
 
+  @Get('paper-regime-shadow')
+  regimeShadow() {
+    return this.dashboard.regimeShadow();
+  }
+
   @Get('analytics')
   analytics() {
     return this.dashboard.analytics();

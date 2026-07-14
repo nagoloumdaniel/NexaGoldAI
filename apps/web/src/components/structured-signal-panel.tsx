@@ -54,7 +54,7 @@ export default function StructuredSignalPanel() {
 
           <div className="-my-1">
             <Row
-              label="Confiance brute"
+              label={data.expected_move == null ? "Confiance brute" : "Score d'edge"}
               value={ratioPct(data.calibrated_confidence)}
             />
             <Row

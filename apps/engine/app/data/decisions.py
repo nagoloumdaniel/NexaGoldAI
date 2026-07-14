@@ -63,3 +63,32 @@ class StrategyDecisionRepository:
             }
             for r in rows
         ]
+
+    async def shadow_regime_status(self, strategy: str) -> dict:
+        async with self._pool.acquire() as conn:
+            row = await conn.fetchrow(
+                'SELECT COUNT(*) AS total, '
+                'COUNT(*) FILTER (WHERE "features"->>\'shadow_filtered\' = \'true\') AS filtered, '
+                'COUNT(*) FILTER (WHERE "action" = \'BUY\') AS buy, '
+                'COUNT(*) FILTER (WHERE "action" = \'HOLD\') AS hold, '
+                'MIN("time") AS started_at, MAX("time") AS last_seen_at '
+                'FROM "StrategyDecision" WHERE "strategy" = $1',
+                strategy,
+            )
+        total = int(row["total"])
+        filtered = int(row["filtered"])
+        return {
+            "strategy": strategy,
+            "filter": "exclude_regime:BULLISH_TREND",
+            "total_decisions": total,
+            "filtered_decisions": filtered,
+            "kept_decisions": total - filtered,
+            "filter_rate": filtered / total if total else 0.0,
+            "buy_decisions": int(row["buy"]),
+            "hold_decisions": int(row["hold"]),
+            "started_at": row["started_at"].isoformat() if row["started_at"] else None,
+            "last_seen_at": row["last_seen_at"].isoformat()
+            if row["last_seen_at"]
+            else None,
+            "execution_enabled": False,
+        }

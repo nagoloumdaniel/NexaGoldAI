@@ -273,6 +273,30 @@
         "documentation": {}
     },
     {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "Literal",
         "importPath": "typing",
         "description": "typing",
@@ -339,6 +363,30 @@
     },
     {
         "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_settings",
         "importPath": "app.config",
         "description": "app.config",
         "isExtraImport": true,
@@ -686,6 +734,14 @@
         "documentation": {}
     },
     {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
         "label": "Strategy",
         "importPath": "app.strategy.base",
         "description": "app.strategy.base",
@@ -1001,6 +1057,94 @@
         "documentation": {}
     },
     {
+        "label": "build_math_summary",
+        "importPath": "app.signals.math_features",
+        "description": "app.signals.math_features",
+        "isExtraImport": true,
+        "detail": "app.signals.math_features",
+        "documentation": {}
+    },
+    {
+        "label": "build_math_summary",
+        "importPath": "app.signals.math_features",
+        "description": "app.signals.math_features",
+        "isExtraImport": true,
+        "detail": "app.signals.math_features",
+        "documentation": {}
+    },
+    {
+        "label": "build_math_summary",
+        "importPath": "app.signals.math_features",
+        "description": "app.signals.math_features",
+        "isExtraImport": true,
+        "detail": "app.signals.math_features",
+        "documentation": {}
+    },
+    {
+        "label": "classify_regime",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
+        "isExtraImport": true,
+        "detail": "app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "classify_regime",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
+        "isExtraImport": true,
+        "detail": "app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "assess_regime_gate",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
+        "isExtraImport": true,
+        "detail": "app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "classify_regime",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
+        "isExtraImport": true,
+        "detail": "app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "assess_regime_gate",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
+        "isExtraImport": true,
+        "detail": "app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "classify_regime",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
+        "isExtraImport": true,
+        "detail": "app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "assess_regime_gate",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
+        "isExtraImport": true,
+        "detail": "app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "classify_regime",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
+        "isExtraImport": true,
+        "detail": "app.signals.regime",
+        "documentation": {}
+    },
+    {
         "label": "build_structured_signal",
         "importPath": "app.signals.structured",
         "description": "app.signals.structured",
@@ -1014,6 +1158,30 @@
         "description": "app.signals.structured",
         "isExtraImport": true,
         "detail": "app.signals.structured",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
         "documentation": {}
     },
     {
@@ -1122,6 +1290,14 @@
     },
     {
         "label": "Trader",
+        "importPath": "app.execution.trader",
+        "description": "app.execution.trader",
+        "isExtraImport": true,
+        "detail": "app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "REGIME_SHADOW_STRATEGY",
         "importPath": "app.execution.trader",
         "description": "app.execution.trader",
         "isExtraImport": true,
@@ -1330,6 +1506,30 @@
         "documentation": {}
     },
     {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
         "label": "candles_to_frame",
         "importPath": "app.research.dataset",
         "description": "app.research.dataset",
@@ -1450,12 +1650,139 @@
         "documentation": {}
     },
     {
-        "label": "numpy",
-        "kind": 6,
+        "label": "build_expected_return_dataset",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
         "isExtraImport": true,
-        "importPath": "numpy",
-        "description": "numpy",
-        "detail": "numpy",
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "run_nested_walk_forward",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_expected_return_dataset",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "run_nested_walk_forward",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_expected_return_dataset",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "run_nested_walk_forward",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_expected_return_dataset",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "calibrate_latest_threshold",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "make_regressor",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "run_nested_walk_forward",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_completed_daily_momentum_filter",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_expected_return_dataset",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "run_nested_walk_forward",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_completed_daily_momentum_filter",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_expected_return_dataset",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "simulate_event_strategy",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "summarize_simulations",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
         "documentation": {}
     },
     {
@@ -1465,6 +1792,79 @@
         "importPath": "pandas",
         "description": "pandas",
         "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "build_historical_regime_features",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "build_historical_regime_features",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "evaluate_regime_gate",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "summarize_gate_impact",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "REGIME_FEATURE_COLUMNS",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "build_historical_regime_features",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "evaluate_regime_gate",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "summarize_gate_impact",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
         "documentation": {}
     },
     {
@@ -1668,62 +2068,6 @@
         "documentation": {}
     },
     {
-        "label": "build_historical_regime_features",
-        "importPath": "app.research.regime_validation",
-        "description": "app.research.regime_validation",
-        "isExtraImport": true,
-        "detail": "app.research.regime_validation",
-        "documentation": {}
-    },
-    {
-        "label": "evaluate_regime_gate",
-        "importPath": "app.research.regime_validation",
-        "description": "app.research.regime_validation",
-        "isExtraImport": true,
-        "detail": "app.research.regime_validation",
-        "documentation": {}
-    },
-    {
-        "label": "summarize_gate_impact",
-        "importPath": "app.research.regime_validation",
-        "description": "app.research.regime_validation",
-        "isExtraImport": true,
-        "detail": "app.research.regime_validation",
-        "documentation": {}
-    },
-    {
-        "label": "REGIME_FEATURE_COLUMNS",
-        "importPath": "app.research.regime_validation",
-        "description": "app.research.regime_validation",
-        "isExtraImport": true,
-        "detail": "app.research.regime_validation",
-        "documentation": {}
-    },
-    {
-        "label": "build_historical_regime_features",
-        "importPath": "app.research.regime_validation",
-        "description": "app.research.regime_validation",
-        "isExtraImport": true,
-        "detail": "app.research.regime_validation",
-        "documentation": {}
-    },
-    {
-        "label": "evaluate_regime_gate",
-        "importPath": "app.research.regime_validation",
-        "description": "app.research.regime_validation",
-        "isExtraImport": true,
-        "detail": "app.research.regime_validation",
-        "documentation": {}
-    },
-    {
-        "label": "summarize_gate_impact",
-        "importPath": "app.research.regime_validation",
-        "description": "app.research.regime_validation",
-        "isExtraImport": true,
-        "detail": "app.research.regime_validation",
-        "documentation": {}
-    },
-    {
         "label": "dataclass",
         "importPath": "dataclasses",
         "description": "dataclasses",
@@ -1844,142 +2188,6 @@
         "documentation": {}
     },
     {
-        "label": "assess_regime_gate",
-        "importPath": "app.signals.regime",
-        "description": "app.signals.regime",
-        "isExtraImport": true,
-        "detail": "app.signals.regime",
-        "documentation": {}
-    },
-    {
-        "label": "classify_regime",
-        "importPath": "app.signals.regime",
-        "description": "app.signals.regime",
-        "isExtraImport": true,
-        "detail": "app.signals.regime",
-        "documentation": {}
-    },
-    {
-        "label": "assess_regime_gate",
-        "importPath": "app.signals.regime",
-        "description": "app.signals.regime",
-        "isExtraImport": true,
-        "detail": "app.signals.regime",
-        "documentation": {}
-    },
-    {
-        "label": "classify_regime",
-        "importPath": "app.signals.regime",
-        "description": "app.signals.regime",
-        "isExtraImport": true,
-        "detail": "app.signals.regime",
-        "documentation": {}
-    },
-    {
-        "label": "assess_regime_gate",
-        "importPath": "app.signals.regime",
-        "description": "app.signals.regime",
-        "isExtraImport": true,
-        "detail": "app.signals.regime",
-        "documentation": {}
-    },
-    {
-        "label": "classify_regime",
-        "importPath": "app.signals.regime",
-        "description": "app.signals.regime",
-        "isExtraImport": true,
-        "detail": "app.signals.regime",
-        "documentation": {}
-    },
-    {
-        "label": "build_expected_return_dataset",
-        "importPath": "app.research.expected_return",
-        "description": "app.research.expected_return",
-        "isExtraImport": true,
-        "detail": "app.research.expected_return",
-        "documentation": {}
-    },
-    {
-        "label": "calibrate_latest_threshold",
-        "importPath": "app.research.expected_return",
-        "description": "app.research.expected_return",
-        "isExtraImport": true,
-        "detail": "app.research.expected_return",
-        "documentation": {}
-    },
-    {
-        "label": "make_regressor",
-        "importPath": "app.research.expected_return",
-        "description": "app.research.expected_return",
-        "isExtraImport": true,
-        "detail": "app.research.expected_return",
-        "documentation": {}
-    },
-    {
-        "label": "run_nested_walk_forward",
-        "importPath": "app.research.expected_return",
-        "description": "app.research.expected_return",
-        "isExtraImport": true,
-        "detail": "app.research.expected_return",
-        "documentation": {}
-    },
-    {
-        "label": "build_completed_daily_momentum_filter",
-        "importPath": "app.research.expected_return",
-        "description": "app.research.expected_return",
-        "isExtraImport": true,
-        "detail": "app.research.expected_return",
-        "documentation": {}
-    },
-    {
-        "label": "build_expected_return_dataset",
-        "importPath": "app.research.expected_return",
-        "description": "app.research.expected_return",
-        "isExtraImport": true,
-        "detail": "app.research.expected_return",
-        "documentation": {}
-    },
-    {
-        "label": "run_nested_walk_forward",
-        "importPath": "app.research.expected_return",
-        "description": "app.research.expected_return",
-        "isExtraImport": true,
-        "detail": "app.research.expected_return",
-        "documentation": {}
-    },
-    {
-        "label": "build_completed_daily_momentum_filter",
-        "importPath": "app.research.expected_return",
-        "description": "app.research.expected_return",
-        "isExtraImport": true,
-        "detail": "app.research.expected_return",
-        "documentation": {}
-    },
-    {
-        "label": "build_expected_return_dataset",
-        "importPath": "app.research.expected_return",
-        "description": "app.research.expected_return",
-        "isExtraImport": true,
-        "detail": "app.research.expected_return",
-        "documentation": {}
-    },
-    {
-        "label": "simulate_event_strategy",
-        "importPath": "app.research.expected_return",
-        "description": "app.research.expected_return",
-        "isExtraImport": true,
-        "detail": "app.research.expected_return",
-        "documentation": {}
-    },
-    {
-        "label": "summarize_simulations",
-        "importPath": "app.research.expected_return",
-        "description": "app.research.expected_return",
-        "isExtraImport": true,
-        "detail": "app.research.expected_return",
-        "documentation": {}
-    },
-    {
         "label": "annotations",
         "importPath": "__future__",
         "description": "__future__",
@@ -2033,22 +2241,6 @@
         "description": "statistics",
         "isExtraImport": true,
         "detail": "statistics",
-        "documentation": {}
-    },
-    {
-        "label": "build_math_summary",
-        "importPath": "app.signals.math_features",
-        "description": "app.signals.math_features",
-        "isExtraImport": true,
-        "detail": "app.signals.math_features",
-        "documentation": {}
-    },
-    {
-        "label": "build_math_summary",
-        "importPath": "app.signals.math_features",
-        "description": "app.signals.math_features",
-        "isExtraImport": true,
-        "detail": "app.signals.math_features",
         "documentation": {}
     },
     {
@@ -2471,7 +2663,25 @@
         "kind": 5,
         "importPath": "apps.engine.app.execution.trader",
         "description": "apps.engine.app.execution.trader",
-        "peekOfCode": "logger = logging.getLogger(\"nexagold.trader\")\ndef compute_bracket(\n    action: Action, entry: float, stop_loss_pct: float, risk_reward: float\n) -> tuple[float, float]:\n    \"\"\"Stop-loss and take-profit prices around the entry.\"\"\"\n    if action == Action.BUY:\n        return entry * (1 - stop_loss_pct), entry * (1 + stop_loss_pct * risk_reward)\n    return entry * (1 + stop_loss_pct), entry * (1 - stop_loss_pct * risk_reward)\ndef _extract_deal_id(confirmation: dict | None) -> str | None:\n    \"\"\"Best-effort extraction of the real dealId from a broker confirmation.\"\"\"",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.trader\")\nREGIME_SHADOW_STRATEGY = \"expected-return-paper-regime-shadow\"\nREGIME_SHADOW_FILTER = \"exclude_regime:BULLISH_TREND\"\ndef compute_bracket(\n    action: Action, entry: float, stop_loss_pct: float, risk_reward: float\n) -> tuple[float, float]:\n    \"\"\"Stop-loss and take-profit prices around the entry.\"\"\"\n    if action == Action.BUY:\n        return entry * (1 - stop_loss_pct), entry * (1 + stop_loss_pct * risk_reward)\n    return entry * (1 + stop_loss_pct), entry * (1 - stop_loss_pct * risk_reward)",
+        "detail": "apps.engine.app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "REGIME_SHADOW_STRATEGY",
+        "kind": 5,
+        "importPath": "apps.engine.app.execution.trader",
+        "description": "apps.engine.app.execution.trader",
+        "peekOfCode": "REGIME_SHADOW_STRATEGY = \"expected-return-paper-regime-shadow\"\nREGIME_SHADOW_FILTER = \"exclude_regime:BULLISH_TREND\"\ndef compute_bracket(\n    action: Action, entry: float, stop_loss_pct: float, risk_reward: float\n) -> tuple[float, float]:\n    \"\"\"Stop-loss and take-profit prices around the entry.\"\"\"\n    if action == Action.BUY:\n        return entry * (1 - stop_loss_pct), entry * (1 + stop_loss_pct * risk_reward)\n    return entry * (1 + stop_loss_pct), entry * (1 - stop_loss_pct * risk_reward)\ndef _extract_deal_id(confirmation: dict | None) -> str | None:",
+        "detail": "apps.engine.app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "REGIME_SHADOW_FILTER",
+        "kind": 5,
+        "importPath": "apps.engine.app.execution.trader",
+        "description": "apps.engine.app.execution.trader",
+        "peekOfCode": "REGIME_SHADOW_FILTER = \"exclude_regime:BULLISH_TREND\"\ndef compute_bracket(\n    action: Action, entry: float, stop_loss_pct: float, risk_reward: float\n) -> tuple[float, float]:\n    \"\"\"Stop-loss and take-profit prices around the entry.\"\"\"\n    if action == Action.BUY:\n        return entry * (1 - stop_loss_pct), entry * (1 + stop_loss_pct * risk_reward)\n    return entry * (1 + stop_loss_pct), entry * (1 - stop_loss_pct * risk_reward)\ndef _extract_deal_id(confirmation: dict | None) -> str | None:\n    \"\"\"Best-effort extraction of the real dealId from a broker confirmation.\"\"\"",
         "detail": "apps.engine.app.execution.trader",
         "documentation": {}
     },
@@ -2527,6 +2737,78 @@
         "description": "apps.engine.app.learning.trainer",
         "peekOfCode": "CANDIDATE_CONFIGS = [\n    {\"labeling\": \"triple_barrier\", \"horizon\": 12, \"vol_mult\": 1.0, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 24, \"vol_mult\": 1.5, \"vol_window\": 20},\n    {\"labeling\": \"triple_barrier\", \"horizon\": 48, \"vol_mult\": 2.0, \"vol_window\": 50},\n    {\"labeling\": \"fixed\", \"horizon\": 12, \"threshold\": 0.0010},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020},\n    {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.0020, \"macro\": True},\n    {\n        \"labeling\": \"triple_barrier\",\n        \"horizon\": 24,",
         "detail": "apps.engine.app.learning.trainer",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.ablate_expected_return_exits",
+        "description": "apps.engine.app.research.ablate_expected_return_exits",
+        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(description=\"Ablation read-only des sorties\")\n    parser.add_argument(\"--granularity\", default=\"H1\")\n    parser.add_argument(\"--folds\", type=int, default=5)\n    parser.add_argument(\"--cost-bps-per-side\", type=float, default=1.5)\n    parser.add_argument(\"--financing-bps-per-day\", type=float, default=1.6)\n    parser.add_argument(\"--target-annual-volatility\", type=float, default=0.15)\n    parser.add_argument(\"--stop-loss-pct\", type=float, default=0.005)\n    parser.add_argument(\"--stop-loss-atr-multiplier\", type=float, default=3.0)\n    parser.add_argument(\"--output-dir\", type=Path)",
+        "detail": "apps.engine.app.research.ablate_expected_return_exits",
+        "documentation": {}
+    },
+    {
+        "label": "MODELS_DIR",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.ablate_expected_return_exits",
+        "description": "apps.engine.app.research.ablate_expected_return_exits",
+        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef _pct(value: float | None, digits: int = 2) -> str:\n    if value is None:\n        return \"n/a\"\n    return f\"{value * 100:.{digits}f}%\"\ndef _num(value: float | None, digits: int = 3) -> str:\n    if value is None:\n        return \"n/a\"\n    return f\"{value:.{digits}f}\"\ndef _score(report: dict[str, Any]) -> float:",
+        "detail": "apps.engine.app.research.ablate_expected_return_exits",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.audit_expected_return",
+        "description": "apps.engine.app.research.audit_expected_return",
+        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(description=\"Audit MFE/MAE expected-return paper\")\n    parser.add_argument(\"--granularity\", default=\"H1\")\n    parser.add_argument(\"--horizon\", type=int, default=24)\n    parser.add_argument(\"--folds\", type=int, default=5)\n    parser.add_argument(\"--cost-bps-per-side\", type=float, default=1.5)\n    parser.add_argument(\"--financing-bps-per-day\", type=float, default=1.6)\n    parser.add_argument(\"--target-annual-volatility\", type=float, default=0.15)\n    parser.add_argument(\"--stop-loss-pct\", type=float, default=0.005)\n    parser.add_argument(\"--stop-loss-atr-multiplier\", type=float, default=3.0)",
+        "detail": "apps.engine.app.research.audit_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "MODELS_DIR",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.audit_expected_return",
+        "description": "apps.engine.app.research.audit_expected_return",
+        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef _pct(value: float | None, digits: int = 2) -> str:\n    if value is None:\n        return \"n/a\"\n    return f\"{value * 100:.{digits}f}%\"\ndef _num(value: float | None, digits: int = 3) -> str:\n    if value is None:\n        return \"n/a\"\n    return f\"{value:.{digits}f}\"\ndef _priority(condition: bool, fallback: str = \"Moyenne\") -> str:",
+        "detail": "apps.engine.app.research.audit_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "add_regime_annotations",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.audit_expected_return_regimes",
+        "description": "apps.engine.app.research.audit_expected_return_regimes",
+        "peekOfCode": "def add_regime_annotations(candles: pd.DataFrame, data: pd.DataFrame) -> pd.DataFrame:\n    regime_features = build_historical_regime_features(candles).reindex(data.index)\n    enriched = data.join(regime_features)\n    names = []\n    trends = []\n    volatilities = []\n    confidences = []\n    for _, row in enriched.iterrows():\n        regime = classify_regime(_summary_from_row(row))\n        names.append(regime[\"regime\"])",
+        "detail": "apps.engine.app.research.audit_expected_return_regimes",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.audit_expected_return_regimes",
+        "description": "apps.engine.app.research.audit_expected_return_regimes",
+        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(description=\"Audit read-only par regime\")\n    parser.add_argument(\"--granularity\", default=\"H1\")\n    parser.add_argument(\"--horizon\", type=int, default=24)\n    parser.add_argument(\"--folds\", type=int, default=5)\n    parser.add_argument(\"--cost-bps-per-side\", type=float, default=1.5)\n    parser.add_argument(\"--financing-bps-per-day\", type=float, default=1.6)\n    parser.add_argument(\"--target-annual-volatility\", type=float, default=0.15)\n    parser.add_argument(\"--stop-loss-pct\", type=float, default=0.005)\n    parser.add_argument(\"--stop-loss-atr-multiplier\", type=float, default=3.0)",
+        "detail": "apps.engine.app.research.audit_expected_return_regimes",
+        "documentation": {}
+    },
+    {
+        "label": "MODELS_DIR",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.audit_expected_return_regimes",
+        "description": "apps.engine.app.research.audit_expected_return_regimes",
+        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\n_REGIME_INPUT_COLUMNS = {\n    \"momentum_12\": \"_regime_momentum_12\",\n    \"trend_strength\": \"_regime_trend_strength\",\n    \"zscore_20\": \"_regime_zscore_20\",\n    \"volatility_ratio_5_20\": \"_regime_volatility_ratio_5_20\",\n    \"atr_pct_14\": \"_regime_atr_pct_14\",\n}\ndef _pct(value: float | None, digits: int = 2) -> str:\n    if value is None:",
+        "detail": "apps.engine.app.research.audit_expected_return_regimes",
+        "documentation": {}
+    },
+    {
+        "label": "_REGIME_INPUT_COLUMNS",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.audit_expected_return_regimes",
+        "description": "apps.engine.app.research.audit_expected_return_regimes",
+        "peekOfCode": "_REGIME_INPUT_COLUMNS = {\n    \"momentum_12\": \"_regime_momentum_12\",\n    \"trend_strength\": \"_regime_trend_strength\",\n    \"zscore_20\": \"_regime_zscore_20\",\n    \"volatility_ratio_5_20\": \"_regime_volatility_ratio_5_20\",\n    \"atr_pct_14\": \"_regime_atr_pct_14\",\n}\ndef _pct(value: float | None, digits: int = 2) -> str:\n    if value is None:\n        return \"n/a\"",
+        "detail": "apps.engine.app.research.audit_expected_return_regimes",
         "documentation": {}
     },
     {
@@ -2723,7 +3005,16 @@
         "kind": 5,
         "importPath": "apps.engine.app.research.expected_return",
         "description": "apps.engine.app.research.expected_return",
-        "peekOfCode": "_BARS_PER_DAY = {\n    \"M1\": 24 * 60,\n    \"M5\": 24 * 12,\n    \"M15\": 24 * 4,\n    \"M30\": 24 * 2,\n    \"H1\": 24,\n    \"H4\": 6,\n    \"D1\": 1,\n}\n@dataclass",
+        "peekOfCode": "_BARS_PER_DAY = {\n    \"M1\": 24 * 60,\n    \"M5\": 24 * 12,\n    \"M15\": 24 * 4,\n    \"M30\": 24 * 2,\n    \"H1\": 24,\n    \"H4\": 6,\n    \"D1\": 1,\n}\n_ENTRY_CONTEXT_PREFIXES = (\"_regime_\", \"_session_\")",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "_ENTRY_CONTEXT_PREFIXES",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "_ENTRY_CONTEXT_PREFIXES = (\"_regime_\", \"_session_\")\n@dataclass\nclass EventSimulation:\n    \"\"\"Internal marked-to-market result for one contiguous test segment.\"\"\"\n    index: pd.Index\n    equity_curve: np.ndarray\n    bar_returns: np.ndarray\n    trades: pd.DataFrame\n    active_bars: float\ndef build_expected_return_dataset(",
         "detail": "apps.engine.app.research.expected_return",
         "documentation": {}
     },
@@ -3479,7 +3770,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_expected_return",
         "description": "apps.engine.tests_manual.test_expected_return",
-        "peekOfCode": "daily_index = pd.date_range(\"2025-01-01\", periods=110, freq=\"D\")\ndaily_candles = pd.DataFrame(\n    {\"close\": np.linspace(100.0, 200.0, len(daily_index))}, index=daily_index\n)\ndaily_filter = build_completed_daily_momentum_filter(daily_candles, lookback_days=100)\nassert daily_filter.iloc[:101].isna().all()\nassert daily_filter.iloc[101:].all()\nevent_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")\nevent_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\npredictions = np.full(len(event_data), 0.01)",
+        "peekOfCode": "daily_index = pd.date_range(\"2025-01-01\", periods=110, freq=\"D\")\ndaily_candles = pd.DataFrame(\n    {\"close\": np.linspace(100.0, 200.0, len(daily_index))}, index=daily_index\n)\ndaily_filter = build_completed_daily_momentum_filter(daily_candles, lookback_days=100)\nassert daily_filter.iloc[:101].isna().all()\nassert daily_filter.iloc[101:].all()\nevent_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")\nevent_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\nevent_data[\"_regime_name\"] = [\"BULLISH_TREND\"] * len(event_data)",
         "detail": "apps.engine.tests_manual.test_expected_return",
         "documentation": {}
     },
@@ -3488,7 +3779,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_expected_return",
         "description": "apps.engine.tests_manual.test_expected_return",
-        "peekOfCode": "daily_candles = pd.DataFrame(\n    {\"close\": np.linspace(100.0, 200.0, len(daily_index))}, index=daily_index\n)\ndaily_filter = build_completed_daily_momentum_filter(daily_candles, lookback_days=100)\nassert daily_filter.iloc[:101].isna().all()\nassert daily_filter.iloc[101:].all()\nevent_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")\nevent_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(",
+        "peekOfCode": "daily_candles = pd.DataFrame(\n    {\"close\": np.linspace(100.0, 200.0, len(daily_index))}, index=daily_index\n)\ndaily_filter = build_completed_daily_momentum_filter(daily_candles, lookback_days=100)\nassert daily_filter.iloc[:101].isna().all()\nassert daily_filter.iloc[101:].all()\nevent_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")\nevent_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\nevent_data[\"_regime_name\"] = [\"BULLISH_TREND\"] * len(event_data)\nevent_data[\"_regime_trend\"] = [\"BULLISH\"] * len(event_data)",
         "detail": "apps.engine.tests_manual.test_expected_return",
         "documentation": {}
     },
@@ -3497,7 +3788,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_expected_return",
         "description": "apps.engine.tests_manual.test_expected_return",
-        "peekOfCode": "daily_filter = build_completed_daily_momentum_filter(daily_candles, lookback_days=100)\nassert daily_filter.iloc[:101].isna().all()\nassert daily_filter.iloc[101:].all()\nevent_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")\nevent_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,",
+        "peekOfCode": "daily_filter = build_completed_daily_momentum_filter(daily_candles, lookback_days=100)\nassert daily_filter.iloc[:101].isna().all()\nassert daily_filter.iloc[101:].all()\nevent_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")\nevent_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\nevent_data[\"_regime_name\"] = [\"BULLISH_TREND\"] * len(event_data)\nevent_data[\"_regime_trend\"] = [\"BULLISH\"] * len(event_data)\nevent_data[\"_regime_volatility\"] = [\"NORMAL_VOLATILITY\"] * len(event_data)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(",
         "detail": "apps.engine.tests_manual.test_expected_return",
         "documentation": {}
     },
@@ -3506,7 +3797,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_expected_return",
         "description": "apps.engine.tests_manual.test_expected_return",
-        "peekOfCode": "event_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")\nevent_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,",
+        "peekOfCode": "event_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")\nevent_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\nevent_data[\"_regime_name\"] = [\"BULLISH_TREND\"] * len(event_data)\nevent_data[\"_regime_trend\"] = [\"BULLISH\"] * len(event_data)\nevent_data[\"_regime_volatility\"] = [\"NORMAL_VOLATILITY\"] * len(event_data)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,",
         "detail": "apps.engine.tests_manual.test_expected_return",
         "documentation": {}
     },
@@ -3515,7 +3806,34 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_expected_return",
         "description": "apps.engine.tests_manual.test_expected_return",
-        "peekOfCode": "event_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,\n    financing_bps_per_day=0.0,",
+        "peekOfCode": "event_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\nevent_data[\"_regime_name\"] = [\"BULLISH_TREND\"] * len(event_data)\nevent_data[\"_regime_trend\"] = [\"BULLISH\"] * len(event_data)\nevent_data[\"_regime_volatility\"] = [\"NORMAL_VOLATILITY\"] * len(event_data)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "event_data[\"_regime_name\"]",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "event_data[\"_regime_name\"] = [\"BULLISH_TREND\"] * len(event_data)\nevent_data[\"_regime_trend\"] = [\"BULLISH\"] * len(event_data)\nevent_data[\"_regime_volatility\"] = [\"NORMAL_VOLATILITY\"] * len(event_data)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "event_data[\"_regime_trend\"]",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "event_data[\"_regime_trend\"] = [\"BULLISH\"] * len(event_data)\nevent_data[\"_regime_volatility\"] = [\"NORMAL_VOLATILITY\"] * len(event_data)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "event_data[\"_regime_volatility\"]",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "event_data[\"_regime_volatility\"] = [\"NORMAL_VOLATILITY\"] * len(event_data)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,\n    financing_bps_per_day=0.0,",
         "detail": "apps.engine.tests_manual.test_expected_return",
         "documentation": {}
     },
@@ -3542,7 +3860,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_expected_return",
         "description": "apps.engine.tests_manual.test_expected_return",
-        "peekOfCode": "free_metrics = summarize_simulations([free])\nassert len(free.trades) == 2\nassert free.trades[\"entry_position\"].tolist() == [0, 2]\nassert free.trades[\"exit_position\"].tolist() == [2, 4]\nassert np.isclose(free_metrics[\"total_return\"], 0.04)\ncostly = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,",
+        "peekOfCode": "free_metrics = summarize_simulations([free])\nassert len(free.trades) == 2\nassert free.trades[\"entry_position\"].tolist() == [0, 2]\nassert free.trades[\"exit_position\"].tolist() == [2, 4]\nassert np.isclose(free.trades.iloc[0][\"mfe_pct\"], 0.02)\nassert np.isclose(free.trades.iloc[0][\"mae_pct\"], 0.0)\nassert np.isclose(free.trades.iloc[0][\"profit_capture_ratio\"], 1.0)\nassert free.trades.iloc[0][\"entry_regime_name\"] == \"BULLISH_TREND\"\nassert np.isclose(free_metrics[\"total_return\"], 0.04)\nassert free_metrics[\"by_entry_regime\"][\"BULLISH_TREND\"][\"trades\"] == 2",
         "detail": "apps.engine.tests_manual.test_expected_return",
         "documentation": {}
     },
@@ -3646,11 +3964,47 @@
         "documentation": {}
     },
     {
+        "label": "bracket_metrics",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "bracket_metrics = summarize_simulations([bracket])\nassert np.isclose(bracket_metrics[\"stop_loss_rate\"], 1.0)\nassert np.isclose(bracket_metrics[\"average_mae_r\"], 2.0)\ntrailing_data = pd.DataFrame(\n    {\n        \"_close\": [100.0, 102.0, 103.0, 101.0],\n        \"_high\": [100.0, 102.5, 103.5, 101.5],\n        \"_low\": [100.0, 101.5, 102.5, 100.5],\n    },\n    index=pd.date_range(\"2026-01-06\", periods=4, freq=\"h\"),",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "trailing_data",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "trailing_data = pd.DataFrame(\n    {\n        \"_close\": [100.0, 102.0, 103.0, 101.0],\n        \"_high\": [100.0, 102.5, 103.5, 101.5],\n        \"_low\": [100.0, 101.5, 102.5, 100.5],\n    },\n    index=pd.date_range(\"2026-01-06\", periods=4, freq=\"h\"),\n)\ntrailing = simulate_event_strategy(\n    trailing_data,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "trailing",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "trailing = simulate_event_strategy(\n    trailing_data,\n    np.full(len(trailing_data), 0.01),\n    horizon=3,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,\n    financing_bps_per_day=0.0,\n    stop_loss_pct=0.01,\n    risk_reward_ratio=0.0,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "trailing_metrics",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "trailing_metrics = summarize_simulations([trailing])\nassert np.isclose(trailing_metrics[\"trailing_stop_rate\"], 1.0)\nprint(\"OK: expected-return research valide\")",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
         "label": "FixedPaperStrategy",
         "kind": 6,
         "importPath": "apps.engine.tests_manual.test_expected_return_paper",
         "description": "apps.engine.tests_manual.test_expected_return_paper",
-        "peekOfCode": "class FixedPaperStrategy(Strategy):\n    name = \"expected-return-paper\"\n    paper_only = True\n    paper_horizon_hours = 24\n    def evaluate(self, candles, macro_candles=None) -> Signal:\n        return Signal(Action.BUY, 0.7, \"paper test\", position_size=0.5)\nclass FakeDecisions:\n    async def insert(self, strategy, signal):\n        return \"decision-1\"\n    async def mark_executed(self, decision_id, trade_id):",
+        "peekOfCode": "class FixedPaperStrategy(Strategy):\n    name = \"expected-return-paper\"\n    paper_only = True\n    paper_horizon_hours = 24\n    def evaluate(self, candles, macro_candles=None) -> Signal:\n        return Signal(\n            Action.BUY,\n            0.7,\n            \"paper test\",\n            {",
         "detail": "apps.engine.tests_manual.test_expected_return_paper",
         "documentation": {}
     },
@@ -3659,7 +4013,7 @@
         "kind": 6,
         "importPath": "apps.engine.tests_manual.test_expected_return_paper",
         "description": "apps.engine.tests_manual.test_expected_return_paper",
-        "peekOfCode": "class FakeDecisions:\n    async def insert(self, strategy, signal):\n        return \"decision-1\"\n    async def mark_executed(self, decision_id, trade_id):\n        raise AssertionError(\"A live-blocked decision cannot execute\")\nclass FakeTrades:\n    def __init__(self, rows=None):\n        self.rows = rows or []\n        self.closed = []\n    async def open_trades(self):",
+        "peekOfCode": "class FakeDecisions:\n    def __init__(self):\n        self.rows = []\n    async def insert(self, strategy, signal):\n        decision_id = f\"decision-{len(self.rows) + 1}\"\n        self.rows.append((decision_id, strategy, signal))\n        return decision_id\n    async def mark_executed(self, decision_id, trade_id):\n        raise AssertionError(\"A live-blocked decision cannot execute\")\nclass FakeTrades:",
         "detail": "apps.engine.tests_manual.test_expected_return_paper",
         "documentation": {}
     },
@@ -3686,7 +4040,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_expected_return_paper",
         "description": "apps.engine.tests_manual.test_expected_return_paper",
-        "peekOfCode": "MODEL_DIR = Path(__file__).resolve().parents[1] / \"models\" / \"H1\" / \"expected_return_paper\"\nclass FixedPaperStrategy(Strategy):\n    name = \"expected-return-paper\"\n    paper_only = True\n    paper_horizon_hours = 24\n    def evaluate(self, candles, macro_candles=None) -> Signal:\n        return Signal(Action.BUY, 0.7, \"paper test\", position_size=0.5)\nclass FakeDecisions:\n    async def insert(self, strategy, signal):\n        return \"decision-1\"",
+        "peekOfCode": "MODEL_DIR = Path(__file__).resolve().parents[1] / \"models\" / \"H1\" / \"expected_return_paper\"\nclass FixedPaperStrategy(Strategy):\n    name = \"expected-return-paper\"\n    paper_only = True\n    paper_horizon_hours = 24\n    def evaluate(self, candles, macro_candles=None) -> Signal:\n        return Signal(\n            Action.BUY,\n            0.7,\n            \"paper test\",",
         "detail": "apps.engine.tests_manual.test_expected_return_paper",
         "documentation": {}
     },

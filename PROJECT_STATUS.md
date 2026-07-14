@@ -211,3 +211,58 @@ Variantes rejetees:
 Verdict: `PROMOTE_TO_PAPER_TRADING`. L'integration live reste desactivee. Les
 variantes ont ete comparees sur l'historique disponible; une validation paper
 prospective est obligatoire avant toute nouvelle decision de promotion.
+
+## Parite d'execution et integration paper
+
+Le premier candidat a sortie fixe 24 h ne correspondait pas au moteur, qui
+impose un stop-loss et un take-profit. Le simulateur a donc ete aligne sur
+l'execution reelle:
+
+- parcours OHLC intrabar ;
+- stop prioritaire si stop et objectif sont touches dans la meme bougie ;
+- sorties `STOP_LOSS`, `TAKE_PROFIT` ou `HORIZON` ;
+- stop causal `max(0.5 %, 3 x ATR14)` et objectif `3R` ;
+- sortie temporelle broker par `dealId` apres 24 heures ;
+- meme bracket pendant la selection du seuil, les plis OOS et les stress.
+
+Resultat H1 aligne sur 14 665 observations OOS:
+
+- rendement `+53.33 %`, Sharpe `1.49`, profit factor `1.25` ;
+- max drawdown `-14.35 %`, 553 transactions ;
+- 4 plis positifs et 1 pli negatif (`-2.16 %`) ;
+- stress severe: `+0.66 %`, profit factor `1.014`.
+
+Integration ajoutee:
+
+- artefact distinct `models/H1/expected_return_paper`, non eligible live ;
+- seuil final recale sur la derniere validation: `0.30 %` ;
+- strategie `expected-return-paper`, long-only, vol target 15 %, sans levier ;
+- double verrou live dans la factory et le Trader ;
+- refus du hot-swap automatique vers une strategie non-paper ;
+- journal avec rendement attendu, seuil, couts, exposition, stop, horizon,
+  barre de decision et version du modele ;
+- reconciliation automatique des sorties SL/TP avant chaque decision ;
+- suivi `GET /paper/validation`, objectif 100 trades clotures, sans promotion
+  automatique ;
+- panneaux dashboard pour le signal expected-return et la progression paper.
+
+Verification locale controlee:
+
+- moteur lance avec overrides `TRADING_ENABLED=false`,
+  `TRADING_LOOP_ENABLED=false`, `INGEST_ENABLED=false` ;
+- strategie chargee: `expected-return-paper`, `paper_only=true` ;
+- preview observe: `BUY`, rendement attendu proche de `0.40 %`, exposition
+  proche de `70 %`, bracket 3R, mode `PAPER` ;
+- 12 tests manuels moteur, compilation Python, lint/typecheck web, lint/typecheck
+  API et tests NestJS valides ;
+- aucun ordre envoye pendant la verification.
+
+Mise en service paper:
+
+- moteur actif avec `CAPITAL_ENV=demo`, `TRADING_ENABLED=true` et boucle horaire ;
+- statut effectif expose: stop minimal `0.5 %`, multiplicateur `3 x ATR14`,
+  objectif `3R` ;
+- premiere decision prospective journalisee, sans execution car une position
+  GOLD issue de l'ancienne strategie occupe deja l'unique emplacement autorise ;
+- compteur de validation initialise a `0 / 100` trades clotures et promotion
+  live automatique desactivee.

@@ -138,6 +138,20 @@ export class DashboardService {
     );
   }
 
+  async regimeShadow() {
+    return (
+      (await this.engine<Record<string, unknown>>('/paper/regime-shadow')) ?? {
+        strategy: 'expected-return-paper-regime-shadow',
+        filter: 'exclude_regime:BULLISH_TREND',
+        total_decisions: 0,
+        filtered_decisions: 0,
+        kept_decisions: 0,
+        filter_rate: 0,
+        execution_enabled: false,
+      }
+    );
+  }
+
   async analytics() {
     const closed = await this.prisma.trade.findMany({
       where: { status: 'CLOSED' },

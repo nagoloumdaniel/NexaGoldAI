@@ -42,6 +42,8 @@ _BARS_PER_DAY = {
     "D1": 1,
 }
 
+_ENTRY_CONTEXT_PREFIXES = ("_regime_", "_session_")
+
 
 @dataclass
 class EventSimulation:
@@ -125,6 +127,8 @@ def simulate_event_strategy(
     risk_reward_ratio: float = 0.0,
     stop_loss_atr_multiplier: float = 0.0,
     stop_loss_atr_column: str = "atr_14",
+    exit_policy: str = "FIXED_BRACKET",
+    trailing_activation_r: float = 1.0,
 ) -> EventSimulation:
     """Trade non-overlapping fixed-horizon events and mark them to market.
 
@@ -142,8 +146,14 @@ def simulate_event_strategy(
     if stop_loss_pct < 0 or stop_loss_atr_multiplier < 0:
         raise ValueError("stop loss settings cannot be negative")
     bracket_enabled = stop_loss_pct > 0 or stop_loss_atr_multiplier > 0
-    if bracket_enabled and risk_reward_ratio <= 0:
+    exit_policy = exit_policy.upper()
+    if exit_policy not in {"FIXED_BRACKET", "TRAILING_STOP"}:
+        raise ValueError("exit_policy must be FIXED_BRACKET or TRAILING_STOP")
+    fixed_take_profit = exit_policy == "FIXED_BRACKET"
+    if bracket_enabled and fixed_take_profit and risk_reward_ratio <= 0:
         raise ValueError("risk_reward_ratio must be positive when a stop is used")
+    if exit_policy == "TRAILING_STOP" and trailing_activation_r < 0:
+        raise ValueError("trailing_activation_r cannot be negative")
     direction_mode = direction_mode.upper()
     if direction_mode not in {"BOTH", "LONG_ONLY", "SHORT_ONLY"}:
         raise ValueError("direction_mode must be BOTH, LONG_ONLY or SHORT_ONLY")
@@ -234,6 +244,8 @@ def simulate_event_strategy(
             take_profit_price = entry_price * (
                 1.0 - entry_stop_pct * risk_reward_ratio
             )
+        active_stop_price = stop_price
+        trailing_reference_price = entry_price
 
         actual_exit_position = exit_position
         actual_exit_price = close[exit_position]
@@ -241,19 +253,23 @@ def simulate_event_strategy(
 
         for marked_position in range(cursor + 1, exit_position + 1):
             stop_hit = bracket_enabled and (
-                (direction > 0 and low[marked_position] <= stop_price)
-                or (direction < 0 and high[marked_position] >= stop_price)
+                (direction > 0 and low[marked_position] <= active_stop_price)
+                or (direction < 0 and high[marked_position] >= active_stop_price)
             )
-            take_profit_hit = bracket_enabled and (
+            take_profit_hit = bracket_enabled and fixed_take_profit and (
                 (direction > 0 and high[marked_position] >= take_profit_price)
                 or (direction < 0 and low[marked_position] <= take_profit_price)
             )
             if stop_hit:
                 # Pessimistic ordering when both levels are touched in one bar.
-                marked_price = stop_price
+                marked_price = active_stop_price
                 actual_exit_position = marked_position
-                actual_exit_price = stop_price
-                exit_reason = "STOP_LOSS"
+                actual_exit_price = active_stop_price
+                exit_reason = (
+                    "TRAILING_STOP"
+                    if exit_policy == "TRAILING_STOP" and active_stop_price != stop_price
+                    else "STOP_LOSS"
+                )
             elif take_profit_hit:
                 marked_price = take_profit_price
                 actual_exit_position = marked_position
@@ -278,9 +294,50 @@ def simulate_event_strategy(
             equity[marked_position] = entry_capital * (1.0 + marked_return)
             if stop_hit or take_profit_hit:
                 break
+            if bracket_enabled and exit_policy == "TRAILING_STOP":
+                current_close = close[marked_position]
+                if direction > 0:
+                    favorable_move = current_close / entry_price - 1.0
+                    if favorable_move >= entry_stop_pct * trailing_activation_r:
+                        trailing_reference_price = max(
+                            trailing_reference_price, current_close
+                        )
+                        active_stop_price = max(
+                            active_stop_price,
+                            trailing_reference_price * (1.0 - entry_stop_pct),
+                        )
+                else:
+                    favorable_move = 1.0 - current_close / entry_price
+                    if favorable_move >= entry_stop_pct * trailing_activation_r:
+                        trailing_reference_price = min(
+                            trailing_reference_price, current_close
+                        )
+                        active_stop_price = min(
+                            active_stop_price,
+                            trailing_reference_price * (1.0 + entry_stop_pct),
+                        )
 
         holding_days = _elapsed_days(
             data.index, cursor, actual_exit_position, bars_per_day
+        )
+        path_high = high[cursor + 1 : actual_exit_position + 1]
+        path_low = low[cursor + 1 : actual_exit_position + 1]
+        if direction > 0:
+            mfe_pct = max(float(path_high.max()) / entry_price - 1.0, 0.0)
+            mae_pct = max(1.0 - float(path_low.min()) / entry_price, 0.0)
+        else:
+            mfe_pct = max(1.0 - float(path_low.min()) / entry_price, 0.0)
+            mae_pct = max(float(path_high.max()) / entry_price - 1.0, 0.0)
+        realised_direction_pct = direction * (actual_exit_price / entry_price - 1.0)
+        risk_pct = entry_stop_pct if bracket_enabled and entry_stop_pct > 0 else 0.0
+        realised_r = _safe_ratio(realised_direction_pct, risk_pct)
+        mfe_r = _safe_ratio(mfe_pct, risk_pct)
+        mae_r = _safe_ratio(mae_pct, risk_pct)
+        profit_capture_ratio = _safe_ratio(
+            max(realised_direction_pct, 0.0), mfe_pct
+        )
+        giveback_ratio = _safe_ratio(
+            max(mfe_pct - max(realised_direction_pct, 0.0), 0.0), mfe_pct
         )
         gross_return = (
             position_size * direction * (actual_exit_price / entry_price - 1.0)
@@ -291,24 +348,39 @@ def simulate_event_strategy(
         capital = entry_capital * (1.0 + net_return)
         equity[actual_exit_position] = capital
         active_bars += (actual_exit_position - cursor) * position_size
-        trades.append(
-            {
-                "entry_time": data.index[cursor],
-                "exit_time": data.index[actual_exit_position],
-                "entry_position": cursor,
-                "exit_position": actual_exit_position,
-                "direction": "BUY" if direction > 0 else "SELL",
-                "prediction": float(prediction),
-                "position_size": float(position_size),
-                "stop_loss_pct": float(entry_stop_pct),
-                "gross_return": float(gross_return),
-                "execution_return": float(execution_return),
-                "financing_return": float(financing_return),
-                "net_return": float(net_return),
-                "holding_days": float(holding_days),
-                "exit_reason": exit_reason,
-            }
-        )
+        trade_row = {
+            "entry_time": data.index[cursor],
+            "exit_time": data.index[actual_exit_position],
+            "entry_position": cursor,
+            "exit_position": actual_exit_position,
+            "direction": "BUY" if direction > 0 else "SELL",
+            "prediction": float(prediction),
+            "position_size": float(position_size),
+            "stop_loss_pct": float(entry_stop_pct),
+            "take_profit_pct": float(entry_stop_pct * risk_reward_ratio)
+            if bracket_enabled and fixed_take_profit
+            else None,
+            "exit_policy": exit_policy,
+            "trailing_activation_r": float(trailing_activation_r)
+            if exit_policy == "TRAILING_STOP"
+            else None,
+            "realised_direction_pct": float(realised_direction_pct),
+            "realised_r": realised_r,
+            "mfe_pct": float(mfe_pct),
+            "mae_pct": float(mae_pct),
+            "mfe_r": mfe_r,
+            "mae_r": mae_r,
+            "profit_capture_ratio": profit_capture_ratio,
+            "giveback_ratio": giveback_ratio,
+            "gross_return": float(gross_return),
+            "execution_return": float(execution_return),
+            "financing_return": float(financing_return),
+            "net_return": float(net_return),
+            "holding_days": float(holding_days),
+            "exit_reason": exit_reason,
+        }
+        trade_row.update(_trade_context(data.iloc[cursor]))
+        trades.append(trade_row)
         # Re-entry at the same close is allowed after the previous exit.
         cursor = actual_exit_position
 
@@ -352,6 +424,70 @@ def _direction_summary(trades: pd.DataFrame, direction: str) -> dict:
     }
 
 
+def _trade_context(row: pd.Series) -> dict:
+    context = {}
+    for column, value in row.items():
+        if not any(str(column).startswith(prefix) for prefix in _ENTRY_CONTEXT_PREFIXES):
+            continue
+        key = "entry" + str(column)
+        if pd.isna(value):
+            context[key] = None
+        elif isinstance(value, (np.floating, np.integer)):
+            context[key] = float(value)
+        else:
+            context[key] = value
+    return context
+
+
+def _trade_group_summary(trades: pd.DataFrame, column: str) -> dict:
+    if trades.empty or column not in trades.columns:
+        return {}
+    out = {}
+    for value, group in trades.groupby(column, dropna=False):
+        returns = group["net_return"].to_numpy(dtype=float)
+        exit_counts = group["exit_reason"].value_counts().to_dict()
+        total = len(group)
+        key = "UNKNOWN" if pd.isna(value) else str(value)
+        out[key] = {
+            "trades": int(total),
+            "compounded_return": float(np.prod(1.0 + returns) - 1.0)
+            if len(returns)
+            else 0.0,
+            "profit_factor": _profit_factor(returns),
+            "win_rate": float((returns > 0).mean()) if len(returns) else 0.0,
+            "expectancy_per_trade": float(returns.mean()) if len(returns) else 0.0,
+            "expectancy_r": _mean_or_none(group["realised_r"])
+            if "realised_r" in group
+            else None,
+            "average_mfe_r": _mean_or_none(group["mfe_r"])
+            if "mfe_r" in group
+            else None,
+            "average_mae_r": _mean_or_none(group["mae_r"])
+            if "mae_r" in group
+            else None,
+            "winner_profit_capture_ratio": _mean_or_none(
+                group.loc[group["net_return"] > 0, "profit_capture_ratio"]
+            )
+            if "profit_capture_ratio" in group
+            else None,
+            "stop_loss_rate": float(exit_counts.get("STOP_LOSS", 0) / total)
+            if total
+            else 0.0,
+            "take_profit_rate": float(exit_counts.get("TAKE_PROFIT", 0) / total)
+            if total
+            else 0.0,
+            "trailing_stop_rate": float(
+                exit_counts.get("TRAILING_STOP", 0) / total
+            )
+            if total
+            else 0.0,
+            "horizon_exit_rate": float(exit_counts.get("HORIZON", 0) / total)
+            if total
+            else 0.0,
+        }
+    return out
+
+
 def _observed_bars_per_year(simulations: list[EventSimulation]) -> float:
     observations = 0
     elapsed_years = 0.0
@@ -384,6 +520,25 @@ def summarize_simulations(simulations: list[EventSimulation]) -> dict:
             "win_rate": 0.0,
             "expectancy_per_trade": 0.0,
             "average_holding_days": 0.0,
+            "average_mfe_pct": None,
+            "median_mfe_pct": None,
+            "average_mae_pct": None,
+            "median_mae_pct": None,
+            "average_mfe_r": None,
+            "average_mae_r": None,
+            "average_realised_r": None,
+            "expectancy_r": None,
+            "profit_capture_ratio": None,
+            "winner_profit_capture_ratio": None,
+            "giveback_ratio": None,
+            "stop_loss_rate": 0.0,
+            "take_profit_rate": 0.0,
+            "trailing_stop_rate": 0.0,
+            "horizon_exit_rate": 0.0,
+            "by_exit_reason": {},
+            "by_entry_regime": {},
+            "by_entry_trend": {},
+            "by_entry_volatility": {},
             "by_direction": {
                 "BUY": _direction_summary(pd.DataFrame(), "BUY"),
                 "SELL": _direction_summary(pd.DataFrame(), "SELL"),
@@ -417,6 +572,14 @@ def summarize_simulations(simulations: list[EventSimulation]) -> dict:
     )
     total_bars = sum(len(simulation.index) for simulation in simulations)
     active_bars = sum(simulation.active_bars for simulation in simulations)
+    if not trades.empty:
+        exit_counts = trades["exit_reason"].value_counts().to_dict()
+        total_trades = len(trades)
+        winning_trades = trades.loc[trades["net_return"] > 0]
+    else:
+        exit_counts = {}
+        total_trades = 0
+        winning_trades = pd.DataFrame()
 
     return {
         "bars": int(total_bars),
@@ -433,6 +596,92 @@ def summarize_simulations(simulations: list[EventSimulation]) -> dict:
         "average_holding_days": float(trades["holding_days"].mean())
         if not trades.empty
         else 0.0,
+        "average_mfe_pct": _mean_or_none(trades["mfe_pct"])
+        if not trades.empty and "mfe_pct" in trades
+        else None,
+        "median_mfe_pct": _median_or_none(trades["mfe_pct"])
+        if not trades.empty and "mfe_pct" in trades
+        else None,
+        "average_mae_pct": _mean_or_none(trades["mae_pct"])
+        if not trades.empty and "mae_pct" in trades
+        else None,
+        "median_mae_pct": _median_or_none(trades["mae_pct"])
+        if not trades.empty and "mae_pct" in trades
+        else None,
+        "average_mfe_r": _mean_or_none(trades["mfe_r"])
+        if not trades.empty and "mfe_r" in trades
+        else None,
+        "average_mae_r": _mean_or_none(trades["mae_r"])
+        if not trades.empty and "mae_r" in trades
+        else None,
+        "average_realised_r": _mean_or_none(trades["realised_r"])
+        if not trades.empty and "realised_r" in trades
+        else None,
+        "expectancy_r": _mean_or_none(trades["realised_r"])
+        if not trades.empty and "realised_r" in trades
+        else None,
+        "profit_capture_ratio": _mean_or_none(trades["profit_capture_ratio"])
+        if not trades.empty and "profit_capture_ratio" in trades
+        else None,
+        "winner_profit_capture_ratio": _mean_or_none(
+            winning_trades["profit_capture_ratio"]
+        )
+        if not winning_trades.empty and "profit_capture_ratio" in winning_trades
+        else None,
+        "giveback_ratio": _mean_or_none(trades["giveback_ratio"])
+        if not trades.empty and "giveback_ratio" in trades
+        else None,
+        "stop_loss_rate": float(exit_counts.get("STOP_LOSS", 0) / total_trades)
+        if total_trades
+        else 0.0,
+        "take_profit_rate": float(exit_counts.get("TAKE_PROFIT", 0) / total_trades)
+        if total_trades
+        else 0.0,
+        "trailing_stop_rate": float(
+            exit_counts.get("TRAILING_STOP", 0) / total_trades
+        )
+        if total_trades
+        else 0.0,
+        "horizon_exit_rate": float(exit_counts.get("HORIZON", 0) / total_trades)
+        if total_trades
+        else 0.0,
+        "by_exit_reason": {
+            reason: {
+                "trades": int(count),
+                "rate": float(count / total_trades) if total_trades else 0.0,
+                "expectancy_per_trade": float(
+                    trades.loc[trades["exit_reason"] == reason, "net_return"].mean()
+                ),
+                "expectancy_r": _mean_or_none(
+                    trades.loc[trades["exit_reason"] == reason, "realised_r"]
+                )
+                if "realised_r" in trades
+                else None,
+                "average_mfe_r": _mean_or_none(
+                    trades.loc[trades["exit_reason"] == reason, "mfe_r"]
+                )
+                if "mfe_r" in trades
+                else None,
+                "average_mae_r": _mean_or_none(
+                    trades.loc[trades["exit_reason"] == reason, "mae_r"]
+                )
+                if "mae_r" in trades
+                else None,
+                "profit_capture_ratio": _mean_or_none(
+                    trades.loc[
+                        trades["exit_reason"] == reason, "profit_capture_ratio"
+                    ]
+                )
+                if "profit_capture_ratio" in trades
+                else None,
+            }
+            for reason, count in exit_counts.items()
+        },
+        "by_entry_regime": _trade_group_summary(trades, "entry_regime_name"),
+        "by_entry_trend": _trade_group_summary(trades, "entry_regime_trend"),
+        "by_entry_volatility": _trade_group_summary(
+            trades, "entry_regime_volatility"
+        ),
         "by_direction": {
             "BUY": _direction_summary(trades, "BUY"),
             "SELL": _direction_summary(trades, "SELL"),
@@ -456,6 +705,8 @@ def _select_threshold(
     risk_reward_ratio: float,
     stop_loss_atr_multiplier: float,
     stop_loss_atr_column: str,
+    exit_policy: str,
+    trailing_activation_r: float,
 ) -> tuple[float | None, dict[str, dict]]:
     sweep: dict[str, dict] = {}
     selected: float | None = None
@@ -477,6 +728,8 @@ def _select_threshold(
             risk_reward_ratio,
             stop_loss_atr_multiplier,
             stop_loss_atr_column,
+            exit_policy,
+            trailing_activation_r,
         )
         metrics = summarize_simulations([simulation])
         profit_factor = metrics["profit_factor"]
@@ -505,6 +758,22 @@ def _correlation(actual: np.ndarray, predicted: np.ndarray) -> float | None:
     if len(actual) < 2 or actual.std() == 0 or predicted.std() == 0:
         return None
     return float(np.corrcoef(actual, predicted)[0, 1])
+
+
+def _safe_ratio(numerator: float, denominator: float) -> float | None:
+    if denominator <= 0 or not np.isfinite(numerator) or not np.isfinite(denominator):
+        return None
+    return float(numerator / denominator)
+
+
+def _mean_or_none(values: pd.Series) -> float | None:
+    clean = values.replace([np.inf, -np.inf], np.nan).dropna()
+    return float(clean.mean()) if len(clean) else None
+
+
+def _median_or_none(values: pd.Series) -> float | None:
+    clean = values.replace([np.inf, -np.inf], np.nan).dropna()
+    return float(clean.median()) if len(clean) else None
 
 
 def causal_position_sizes(
@@ -543,6 +812,8 @@ def calibrate_latest_threshold(
     thresholds: tuple[float, ...] = EXPECTED_MOVE_THRESHOLDS,
     volatility_column: str = "vol_20",
     stop_loss_atr_column: str = "atr_14",
+    exit_policy: str = "FIXED_BRACKET",
+    trailing_activation_r: float = 1.0,
     model_params: dict | None = None,
 ) -> dict:
     """Calibrate the deployable threshold on the latest purged validation tail."""
@@ -581,6 +852,8 @@ def calibrate_latest_threshold(
         risk_reward_ratio,
         stop_loss_atr_multiplier,
         stop_loss_atr_column,
+        exit_policy,
+        trailing_activation_r,
     )
     simulation = simulate_event_strategy(
         validation_data,
@@ -597,6 +870,8 @@ def calibrate_latest_threshold(
         risk_reward_ratio,
         stop_loss_atr_multiplier,
         stop_loss_atr_column,
+        exit_policy,
+        trailing_activation_r,
     )
     return {
         "selected_threshold": threshold,
@@ -621,6 +896,8 @@ def _stress_report(
     risk_reward_ratio: float,
     stop_loss_atr_multiplier: float,
     stop_loss_atr_column: str,
+    exit_policy: str,
+    trailing_activation_r: float,
 ) -> dict:
     simulations = [
         simulate_event_strategy(
@@ -638,6 +915,8 @@ def _stress_report(
             risk_reward_ratio,
             stop_loss_atr_multiplier,
             stop_loss_atr_column,
+            exit_policy,
+            trailing_activation_r,
         )
         for artifact in artifacts
     ]
@@ -668,6 +947,8 @@ def run_nested_walk_forward(
     risk_reward_ratio: float = 0.0,
     stop_loss_atr_multiplier: float = 0.0,
     stop_loss_atr_column: str = "atr_14",
+    exit_policy: str = "FIXED_BRACKET",
+    trailing_activation_r: float = 1.0,
 ) -> dict:
     """Run nested expanding-window validation with a purged target horizon."""
     if not 0.1 <= validation_fraction <= 0.4:
@@ -727,6 +1008,8 @@ def run_nested_walk_forward(
             risk_reward_ratio,
             stop_loss_atr_multiplier,
             stop_loss_atr_column,
+            exit_policy,
+            trailing_activation_r,
         )
 
         model = make_regressor(model_params)
@@ -753,6 +1036,8 @@ def run_nested_walk_forward(
             risk_reward_ratio,
             stop_loss_atr_multiplier,
             stop_loss_atr_column,
+            exit_policy,
+            trailing_activation_r,
         )
         pnl = summarize_simulations([simulation])
         importances.append(model.feature_importances_.astype(float))
@@ -798,6 +1083,8 @@ def run_nested_walk_forward(
         risk_reward_ratio,
         stop_loss_atr_multiplier,
         stop_loss_atr_column,
+        exit_policy,
+        trailing_activation_r,
     )
     severe_costs = _stress_report(
         artifacts,
@@ -810,6 +1097,8 @@ def run_nested_walk_forward(
         risk_reward_ratio,
         stop_loss_atr_multiplier,
         stop_loss_atr_column,
+        exit_policy,
+        trailing_activation_r,
     )
 
     profitable_folds = sum(report["pnl"]["total_return"] > 0 for report in fold_reports)
@@ -873,6 +1162,10 @@ def run_nested_walk_forward(
             "stop_loss_atr_multiplier": stop_loss_atr_multiplier or None,
             "stop_loss_atr_column": stop_loss_atr_column
             if stop_loss_atr_multiplier
+            else None,
+            "exit_policy": exit_policy.upper(),
+            "trailing_activation_r": trailing_activation_r
+            if exit_policy.upper() == "TRAILING_STOP"
             else None,
         },
         "aggregate": aggregate,

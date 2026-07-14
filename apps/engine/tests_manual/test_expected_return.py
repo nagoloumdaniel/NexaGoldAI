@@ -45,6 +45,9 @@ assert daily_filter.iloc[101:].all()
 
 event_index = pd.date_range("2026-01-05", periods=5, freq="h")
 event_data = pd.DataFrame({"_close": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)
+event_data["_regime_name"] = ["BULLISH_TREND"] * len(event_data)
+event_data["_regime_trend"] = ["BULLISH"] * len(event_data)
+event_data["_regime_volatility"] = ["NORMAL_VOLATILITY"] * len(event_data)
 predictions = np.full(len(event_data), 0.01)
 free = simulate_event_strategy(
     event_data,
@@ -59,7 +62,12 @@ free_metrics = summarize_simulations([free])
 assert len(free.trades) == 2
 assert free.trades["entry_position"].tolist() == [0, 2]
 assert free.trades["exit_position"].tolist() == [2, 4]
+assert np.isclose(free.trades.iloc[0]["mfe_pct"], 0.02)
+assert np.isclose(free.trades.iloc[0]["mae_pct"], 0.0)
+assert np.isclose(free.trades.iloc[0]["profit_capture_ratio"], 1.0)
+assert free.trades.iloc[0]["entry_regime_name"] == "BULLISH_TREND"
 assert np.isclose(free_metrics["total_return"], 0.04)
+assert free_metrics["by_entry_regime"]["BULLISH_TREND"]["trades"] == 2
 
 costly = simulate_event_strategy(
     event_data,
@@ -138,5 +146,39 @@ assert len(bracket.trades) == 1
 assert bracket.trades.iloc[0]["exit_reason"] == "STOP_LOSS"
 assert bracket.trades.iloc[0]["exit_position"] == 1
 assert np.isclose(bracket.trades.iloc[0]["gross_return"], -0.01)
+assert np.isclose(bracket.trades.iloc[0]["mfe_r"], 2.0)
+assert np.isclose(bracket.trades.iloc[0]["mae_r"], 2.0)
+assert np.isclose(bracket.trades.iloc[0]["realised_r"], -1.0)
+assert np.isclose(bracket.trades.iloc[0]["profit_capture_ratio"], 0.0)
+bracket_metrics = summarize_simulations([bracket])
+assert np.isclose(bracket_metrics["stop_loss_rate"], 1.0)
+assert np.isclose(bracket_metrics["average_mae_r"], 2.0)
+
+trailing_data = pd.DataFrame(
+    {
+        "_close": [100.0, 102.0, 103.0, 101.0],
+        "_high": [100.0, 102.5, 103.5, 101.5],
+        "_low": [100.0, 101.5, 102.5, 100.5],
+    },
+    index=pd.date_range("2026-01-06", periods=4, freq="h"),
+)
+trailing = simulate_event_strategy(
+    trailing_data,
+    np.full(len(trailing_data), 0.01),
+    horizon=3,
+    threshold=0.005,
+    granularity="H1",
+    cost_bps_per_side=0.0,
+    financing_bps_per_day=0.0,
+    stop_loss_pct=0.01,
+    risk_reward_ratio=0.0,
+    exit_policy="TRAILING_STOP",
+    trailing_activation_r=1.0,
+)
+assert len(trailing.trades) == 1
+assert trailing.trades.iloc[0]["exit_reason"] == "TRAILING_STOP"
+assert np.isclose(trailing.trades.iloc[0]["realised_r"], 1.97)
+trailing_metrics = summarize_simulations([trailing])
+assert np.isclose(trailing_metrics["trailing_stop_rate"], 1.0)
 
 print("OK: expected-return research valide")

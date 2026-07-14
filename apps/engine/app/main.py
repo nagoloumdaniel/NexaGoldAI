@@ -21,7 +21,7 @@ from app.data.decisions import StrategyDecisionRepository
 from app.data.ingestion import IngestionService
 from app.data.trades import TradeRepository
 from app.db import Database
-from app.execution.trader import Trader
+from app.execution.trader import REGIME_SHADOW_STRATEGY, Trader
 from app.learning.registry import ModelRegistry
 from app.learning.service import LearningService
 from app.risk.manager import RiskManager
@@ -268,8 +268,17 @@ async def trade_status() -> dict:
         "trading_enabled": settings.trading_enabled,
         "loop_running": _trade_task is not None and not _trade_task.done(),
         "interval_seconds": settings.trade_interval_seconds,
-        "stop_loss_pct": settings.stop_loss_pct,
-        "risk_reward_ratio": settings.risk_reward_ratio,
+        "stop_loss_pct": (
+            trader.effective_stop_loss_pct if trader else settings.stop_loss_pct
+        ),
+        "stop_loss_atr_multiplier": (
+            trader.effective_stop_loss_atr_multiplier if trader else None
+        ),
+        "risk_reward_ratio": (
+            trader.effective_risk_reward_ratio
+            if trader
+            else settings.risk_reward_ratio
+        ),
     }
 
 
@@ -278,6 +287,13 @@ async def paper_validation() -> dict:
     if trader is None:
         raise HTTPException(status_code=503, detail="Base de donnees indisponible")
     return await trader.paper_validation_status()
+
+
+@app.get("/paper/regime-shadow")
+async def paper_regime_shadow() -> dict:
+    if decisions_repo is None:
+        raise HTTPException(status_code=503, detail="Base de donnees indisponible")
+    return await decisions_repo.shadow_regime_status(REGIME_SHADOW_STRATEGY)
 
 
 @app.get("/signal/latest")

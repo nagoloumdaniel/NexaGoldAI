@@ -52,6 +52,18 @@ class ExpectedReturnPaperStrategy(Strategy):
     def model_version(self) -> str:
         return str(self._meta["model_version"])
 
+    @property
+    def stop_loss_floor_pct(self) -> float:
+        return self._stop_floor
+
+    @property
+    def stop_loss_atr_multiplier(self) -> float:
+        return self._stop_atr_multiplier
+
+    @property
+    def risk_reward_ratio(self) -> float:
+        return self._risk_reward
+
     def evaluate(
         self, candles: list[dict], macro_candles: list[dict] | None = None
     ) -> Signal:

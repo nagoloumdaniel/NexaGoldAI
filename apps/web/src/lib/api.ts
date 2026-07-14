@@ -110,6 +110,7 @@ export interface TradeStatus {
   loop_running: boolean;
   interval_seconds: number;
   stop_loss_pct: number;
+  stop_loss_atr_multiplier?: number | null;
   risk_reward_ratio: number;
 }
 
@@ -248,6 +249,20 @@ export interface PaperValidation {
   last_closed_at: string | null;
 }
 
+export interface RegimeShadowStatus {
+  strategy: string;
+  filter: string;
+  total_decisions: number;
+  filtered_decisions: number;
+  kept_decisions: number;
+  filter_rate: number;
+  buy_decisions?: number;
+  hold_decisions?: number;
+  started_at: string | null;
+  last_seen_at: string | null;
+  execution_enabled: boolean;
+}
+
 export interface ResolveTradeResult {
   engineReachable?: boolean;
   updated: boolean;
@@ -263,6 +278,8 @@ export const getSummary = () => get<Summary>("/dashboard/summary");
 export const getModels = () => get<ModelRegistry>("/dashboard/models");
 export const getPaperValidation = () =>
   get<PaperValidation>("/dashboard/paper-validation");
+export const getRegimeShadow = () =>
+  get<RegimeShadowStatus>("/dashboard/paper-regime-shadow");
 export const getAnalytics = () => get<Analytics>("/dashboard/analytics");
 export const getSystemStatus = () => get<SystemStatus>("/dashboard/system");
 export const getStructuredSignal = () =>
