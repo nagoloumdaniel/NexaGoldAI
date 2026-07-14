@@ -17,8 +17,8 @@ export default function ModelsPanel() {
 
   return (
     <SectionCard
-      title="Modeles & apprentissage"
-      subtitle="Les configurations candidates sont comparees avant promotion"
+      title="Modèles & apprentissage"
+      subtitle="Les configurations candidates sont comparées avant promotion"
       bodyClassName="p-0"
       action={
         data?.granularity ? (
@@ -30,15 +30,15 @@ export default function ModelsPanel() {
     >
       {rows.length === 0 ? (
         <div className="p-5">
-          <Empty>Aucun modele entraine.</Empty>
+          <Empty>Aucun modèle entraîné.</Empty>
         </div>
       ) : (
         <DataTable
-          title="Modeles & apprentissage"
+          title="Modèles & apprentissage"
           rows={rows}
           columns={columns}
-          initialPageSize={10}
-          searchPlaceholder="Filtrer les modeles..."
+          initialPageSize={5}
+          searchPlaceholder="Filtrer les modèles..."
         />
       )}
     </SectionCard>
@@ -96,7 +96,7 @@ const columns: DataTableColumn<ModelRow>[] = [
   },
   {
     key: "samples",
-    header: "Echantillons",
+    header: "Échantillons",
     value: (v) => v.metrics.samples,
     render: (v) => <span className="tnum text-muted">{v.metrics.samples}</span>,
     className: "tnum px-5 py-3 text-muted",

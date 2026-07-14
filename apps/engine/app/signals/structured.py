@@ -88,18 +88,18 @@ def candle_quality(candles: list[dict], min_count: int) -> tuple[float, list[str
     latest = _parse_time(candles[-1].get("time"))
     stale_score = 1.0
     if latest is None:
-        warnings.append("Timestamp de derniere bougie illisible")
+        warnings.append("Timestamp de dernière bougie illisible")
         stale_score = 0.5
     else:
         age_seconds = (datetime.now(timezone.utc) - latest).total_seconds()
         # Conservative generic stale threshold. A regime-specific data-quality
         # engine will replace this once multi-timeframe support is introduced.
         if age_seconds > 3 * 3600:
-            warnings.append("Donnees potentiellement trop anciennes")
+            warnings.append("Données potentiellement trop anciennes")
             stale_score = 0.5
 
     if count_score < 1.0:
-        warnings.append("Historique recent insuffisant pour le modele")
+        warnings.append("Historique récent insuffisant pour le modèle")
     return round(min(count_score, stale_score), 3), warnings
 
 
@@ -129,10 +129,10 @@ def build_structured_signal(
             "allowed": True,
             "status": "NOT_APPLICABLE",
             "reasons": [
-                "Filtre de regime conserve en diagnostic; non applique au candidat paper"
+                "Filtre de régime conservé en diagnostic; non appliqué au candidat paper"
             ],
             "warnings": list(regime_gate.get("warnings", []))
-            + ["Le filtre de regime n'a pas valide son integration historique"],
+            + ["Le filtre de régime n'a pas validé son intégration historique"],
         }
 
     if signal.action == Action.BUY:
@@ -143,17 +143,17 @@ def build_structured_signal(
         probability_up, probability_down, probability_neutral = 0.0, 0.0, confidence
 
     if signal.action == Action.HOLD:
-        reasons.append("La strategie a refuse de trader")
+        reasons.append("La stratégie a refusé de trader")
     if signal.action != Action.HOLD and not regime_gate["allowed"]:
         direction = "NO_TRADE"
         reasons.extend(regime_gate["reasons"])
 
     if expected_return_signal:
         warnings.append(
-            "Score d'edge non calibre en probabilite; validation paper requise"
+            "Score d'edge non calibré en probabilité; validation paper requise"
         )
     else:
-        warnings.append("Confiance non calibree: score brut du modele reutilise")
+        warnings.append("Confiance non calibrée : score brut du modèle réutilisé")
     warnings.extend(regime.get("warnings", []))
     warnings.extend(regime_gate.get("warnings", []))
 
@@ -169,7 +169,7 @@ def build_structured_signal(
     if direction in {"BUY", "SELL"}:
         if not tradeable:
             direction = "NO_TRADE"
-            reasons.append("Marche non tradable selon le broker")
+            reasons.append("Marché non tradable selon le broker")
         elif bid is not None and ask is not None:
             entry = ask if signal.action == Action.BUY else bid
             signal_stop_pct = _safe_float(signal.features.get("stop_loss_pct"))
@@ -190,10 +190,10 @@ def build_structured_signal(
     execution_mode = "LIVE" if settings.capital_env == "live" else "DEMO"
     if signal.features.get("paper_only") is True:
         execution_mode = "PAPER"
-        warnings.append("Strategie verrouillee sur le compte demo")
+        warnings.append("Stratégie verrouillée sur le compte démo")
     elif not settings.trading_enabled:
         execution_mode = "PAPER"
-        warnings.append("Ordres bloques par TRADING_ENABLED=false")
+        warnings.append("Ordres bloqués par TRADING_ENABLED=false")
 
     reasons = list(dict.fromkeys(reasons))
     warnings = list(dict.fromkeys(warnings))

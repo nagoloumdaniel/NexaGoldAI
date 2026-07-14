@@ -2,10 +2,11 @@
 
 import { useMemo } from "react";
 import { getTrades, type Trade } from "@/lib/api";
+import { strategyLabel } from "@/lib/labels";
+import { num, signed, dateTime, tone } from "@/lib/format";
 import { usePolling } from "./use-polling";
 import { SectionCard, Empty } from "./ui/card";
 import { ActionBadge, StatusBadge } from "./ui/badge";
-import { num, signed, dateTime, tone } from "@/lib/format";
 import { DataTable, type DataTableColumn } from "./ui/data-table";
 
 export default function TradesTable({
@@ -34,7 +35,7 @@ export default function TradesTable({
           <Empty>
             {onlyOpen
               ? "Aucune position ouverte."
-              : "Aucun trade - le kill switch est actif."}
+              : "Aucun trade. Le kill switch est actif."}
           </Empty>
         </div>
       ) : (
@@ -42,7 +43,7 @@ export default function TradesTable({
           title={title}
           rows={rows}
           columns={columns}
-          initialPageSize={10}
+          initialPageSize={5}
           searchPlaceholder="Filtrer les trades..."
         />
       )}
@@ -77,7 +78,7 @@ function buildColumns(): DataTableColumn<Trade>[] {
     },
     {
       key: "entryPrice",
-      header: "Entree",
+      header: "Entrée",
       value: (t) => t.entryPrice,
       pdfValue: (t) => num(t.entryPrice),
       render: (t) => <span className="tnum text-ink">{num(t.entryPrice)}</span>,
@@ -126,9 +127,9 @@ function buildColumns(): DataTableColumn<Trade>[] {
     },
     {
       key: "strategy",
-      header: "Strategie",
-      value: (t) => t.strategy,
-      render: (t) => <span className="text-muted">{t.strategy}</span>,
+      header: "Stratégie",
+      value: (t) => strategyLabel(t.strategy),
+      render: (t) => <span className="text-muted">{strategyLabel(t.strategy)}</span>,
       className: "px-5 py-3",
     },
   ];

@@ -113,7 +113,7 @@ def _regime_shadow_signal(
             Action.HOLD,
             signal.confidence,
             (
-                f"Shadow {REGIME_SHADOW_FILTER}: BUY bloque en "
+                f"Shadow {REGIME_SHADOW_FILTER}: BUY bloqué en "
                 f"{regime['regime']}"
             ),
             features,
@@ -122,7 +122,7 @@ def _regime_shadow_signal(
     return Signal(
         signal.action,
         signal.confidence,
-        f"Shadow {REGIME_SHADOW_FILTER}: decision conservee",
+        f"Shadow {REGIME_SHADOW_FILTER}: décision conservée",
         features,
         signal.position_size,
     )
@@ -281,7 +281,7 @@ class Trader:
             return out
         if self._strategy.paper_only and s.capital_env != "demo":
             out["status"] = "paper_only_blocked"
-            out["reason"] = "Strategie paper interdite hors environnement demo"
+            out["reason"] = "Stratégie paper interdite hors environnement démo"
             return out
 
         price = await self._broker.get_price()
@@ -398,7 +398,7 @@ class Trader:
                     else None
                 )
             except CapitalError as exc:
-                logger.warning("Cloture horizon echouee pour %s: %s", deal_id, exc)
+                logger.warning("Clôture horizon échouée pour %s: %s", deal_id, exc)
                 results.append(
                     {"trade_id": trade["id"], "status": "broker_error"}
                 )
@@ -450,6 +450,64 @@ class Trader:
             }
         )
         return stats
+
+    async def promotion_eligibility_status(self) -> dict:
+        paper = await self.paper_validation_status()
+        shadow = await self._decisions.shadow_regime_status(REGIME_SHADOW_STRATEGY)
+        requirements = [
+            {
+                "code": "EDGE_SCORE_CALIBRATED",
+                "label": "Score d'edge calibré en probabilité",
+                "passed": False,
+                "detail": (
+                    "Le score expected-return mesure un rendement attendu, pas une "
+                    "probabilité de gain calibrée."
+                ),
+            },
+            {
+                "code": "PAPER_VALIDATION_COMPLETE",
+                "label": "Validation paper terminée",
+                "passed": bool(paper["eligible_for_review"]),
+                "detail": (
+                    f"{paper['closed_trades']} / "
+                    f"{paper['target_closed_trades']} trades clôturés."
+                ),
+            },
+            {
+                "code": "REGIME_FILTER_VALIDATED",
+                "label": "Filtre de régime validé historiquement",
+                "passed": False,
+                "detail": (
+                    f"{shadow['total_decisions']} décision(s) shadow observée(s). "
+                    "Le filtre reste diagnostique."
+                ),
+            },
+            {
+                "code": "DEMO_PAPER_LOCK",
+                "label": "Verrou démo/paper actif",
+                "passed": self._strategy.paper_only and self._settings.capital_env == "demo",
+                "detail": (
+                    f"Environnement={self._settings.capital_env}, "
+                    f"paper_only={self._strategy.paper_only}, "
+                    f"ordres={self._settings.trading_enabled}."
+                ),
+            },
+        ]
+        blockers = [item for item in requirements if not item["passed"]]
+        return {
+            "strategy": self._strategy.name,
+            "promotion_eligible": False,
+            "review_eligible": bool(paper["eligible_for_review"]) and not blockers,
+            "automatic_live_promotion": False,
+            "capital_env": self._settings.capital_env,
+            "trading_enabled": self._settings.trading_enabled,
+            "paper_only": self._strategy.paper_only,
+            "checked_at": datetime.now(timezone.utc).isoformat(),
+            "requirements": requirements,
+            "blockers": blockers,
+            "paper": paper,
+            "regime_shadow": shadow,
+        }
 
     async def reconcile_open_trades(
         self, mutate: bool = False, close_missing: bool = False
@@ -518,7 +576,7 @@ class Trader:
                         {
                             "trade_id": trade["id"],
                             "broker_trade_id": trade["broker_trade_id"],
-                            "reason": "No accepted close activity found",
+                            "reason": "Aucune activité de clôture acceptée trouvée",
                         }
                     )
                 rows.append(
@@ -719,7 +777,7 @@ class Trader:
         if exit_price is None:
             return {
                 "updated": False,
-                "reason": "exit_price requis pour une cloture manuelle",
+                "reason": "exit_price requis pour une clôture manuelle",
             }
 
         pnl = _compute_pnl(

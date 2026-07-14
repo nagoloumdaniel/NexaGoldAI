@@ -152,6 +152,39 @@ export class DashboardService {
     );
   }
 
+  async promotionEligibility() {
+    return (
+      (await this.engine<Record<string, unknown>>(
+        '/paper/promotion-eligibility',
+      )) ?? {
+        strategy: 'expected-return-paper',
+        promotion_eligible: false,
+        review_eligible: false,
+        automatic_live_promotion: false,
+        capital_env: 'demo',
+        trading_enabled: false,
+        paper_only: true,
+        checked_at: null,
+        requirements: [
+          {
+            code: 'ENGINE_UNREACHABLE',
+            label: 'Moteur joignable',
+            passed: false,
+            detail: 'Moteur injoignable; promotion impossible.',
+          },
+        ],
+        blockers: [
+          {
+            code: 'ENGINE_UNREACHABLE',
+            label: 'Moteur joignable',
+            passed: false,
+            detail: 'Moteur injoignable; promotion impossible.',
+          },
+        ],
+      }
+    );
+  }
+
   async analytics() {
     const closed = await this.prisma.trade.findMany({
       where: { status: 'CLOSED' },

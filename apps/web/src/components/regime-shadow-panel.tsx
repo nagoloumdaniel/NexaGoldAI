@@ -23,18 +23,18 @@ export default function RegimeShadowPanel() {
 
   return (
     <SectionCard
-      title="Shadow rÃ©gime"
-      subtitle="Filtre candidat observÃ© sans exÃ©cution"
+      title="Shadow régime"
+      subtitle="Filtre candidat observé sans exécution"
       action={
         <span className={active ? "tnum text-xs text-muted" : "text-xs text-faint"}>
-          {active ? `${filtered} bloquÃ©es` : "En attente"}
+          {active ? `${filtered} bloquées` : "En attente"}
         </span>
       }
     >
       <div className="grid grid-cols-2 gap-x-6 border-b border-line-soft sm:grid-cols-4">
-        <Metric label="DÃ©cisions" value={String(total)} />
-        <Metric label="ConservÃ©es" value={String(kept)} />
-        <Metric label="BloquÃ©es" value={String(filtered)} />
+        <Metric label="Décisions" value={String(total)} />
+        <Metric label="Conservées" value={String(kept)} />
+        <Metric label="Bloquées" value={String(filtered)} />
         <Metric label="Taux filtre" value={ratioPct(data?.filter_rate ?? 0)} />
       </div>
 
@@ -44,7 +44,7 @@ export default function RegimeShadowPanel() {
           <div className="mt-1 truncate text-muted">{data?.filter ?? "-"}</div>
         </div>
         <div className="min-w-0">
-          <div className="text-[11px] uppercase text-faint">DerniÃ¨re observation</div>
+          <div className="text-[11px] uppercase text-faint">Dernière observation</div>
           <div className="tnum mt-1 text-muted">
             {data?.last_seen_at ? time(data.last_seen_at) : "-"}
           </div>
@@ -52,11 +52,11 @@ export default function RegimeShadowPanel() {
       </div>
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-sm">
-        <span className={data?.execution_enabled ? "text-danger" : "text-up"}>
-          {data?.execution_enabled ? "ExÃ©cution active" : "Aucune exÃ©cution"}
+        <span className={data?.execution_enabled ? "text-down" : "text-up"}>
+          {data?.execution_enabled ? "Exécution active" : "Aucune exécution"}
         </span>
         <span className="text-muted">
-          {active ? "Comparaison prospective en cours" : "Actif aprÃ¨s redÃ©marrage moteur"}
+          {active ? "Comparaison prospective en cours" : "Actif après redémarrage moteur"}
         </span>
       </div>
     </SectionCard>

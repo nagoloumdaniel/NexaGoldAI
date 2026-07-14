@@ -51,6 +51,11 @@ export class DashboardController {
     return this.dashboard.regimeShadow();
   }
 
+  @Get('promotion-eligibility')
+  promotionEligibility() {
+    return this.dashboard.promotionEligibility();
+  }
+
   @Get('analytics')
   analytics() {
     return this.dashboard.analytics();

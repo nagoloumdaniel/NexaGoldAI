@@ -285,15 +285,22 @@ async def trade_status() -> dict:
 @app.get("/paper/validation")
 async def paper_validation() -> dict:
     if trader is None:
-        raise HTTPException(status_code=503, detail="Base de donnees indisponible")
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
     return await trader.paper_validation_status()
 
 
 @app.get("/paper/regime-shadow")
 async def paper_regime_shadow() -> dict:
     if decisions_repo is None:
-        raise HTTPException(status_code=503, detail="Base de donnees indisponible")
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
     return await decisions_repo.shadow_regime_status(REGIME_SHADOW_STRATEGY)
+
+
+@app.get("/paper/promotion-eligibility")
+async def paper_promotion_eligibility() -> dict:
+    if trader is None:
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
+    return await trader.promotion_eligibility_status()
 
 
 @app.get("/signal/latest")
@@ -301,7 +308,7 @@ async def signal_latest() -> dict:
     """Read-only structured signal preview for dashboards and diagnostics."""
     ensure_broker_configured()
     if trader is None:
-        raise HTTPException(status_code=503, detail="Base de donnÃ©es indisponible")
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
     registry = ModelRegistry(
         Path(__file__).resolve().parents[1] / "models", settings.model_granularity
     )
@@ -323,7 +330,7 @@ async def trades_reconciliation() -> dict:
     """Read-only comparison between DB open trades and broker positions."""
     ensure_broker_configured()
     if trader is None:
-        raise HTTPException(status_code=503, detail="Base de donnÃ©es indisponible")
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
     try:
         return await trader.reconcile_open_trades(mutate=False)
     except CapitalError as exc:
@@ -339,7 +346,7 @@ async def trades_reconcile(close_missing: bool = Query(False)) -> dict:
     """
     ensure_broker_configured()
     if trader is None:
-        raise HTTPException(status_code=503, detail="Base de donnÃ©es indisponible")
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
     try:
         return await trader.reconcile_open_trades(
             mutate=True, close_missing=close_missing

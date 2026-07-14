@@ -56,7 +56,7 @@ def assess_regime_gate(
             allowed=False,
             status="NOT_APPLICABLE",
             agreement="NEUTRAL",
-            reasons=["Aucun signal directionnel a evaluer"],
+            reasons=["Aucun signal directionnel à évaluer"],
             warnings=[],
         ).to_dict()
 
@@ -74,7 +74,7 @@ def assess_regime_gate(
 
     if quality < 0.8 or regime == "LOW_DATA_QUALITY":
         blocked = True
-        reasons.append("Qualite des donnees insuffisante")
+        reasons.append("Qualité des données insuffisante")
 
     vol_ratio = _optional_float(math_summary.get("volatility_ratio_5_20"))
     atr_pct = _optional_float(math_summary.get("atr_pct_14"))
@@ -83,33 +83,33 @@ def assess_regime_gate(
     )
     if extreme_volatility:
         blocked = True
-        reasons.append("Volatilite extreme incompatible avec ce signal")
-        warnings.append("Filtre regime: volatilite extreme detectee")
+        reasons.append("Volatilité extrême incompatible avec ce signal")
+        warnings.append("Filtre régime : volatilité extrême détectée")
     elif volatility == "HIGH_VOLATILITY":
-        warnings.append("Regime de forte volatilite: execution a surveiller")
+        warnings.append("Régime de forte volatilité : exécution à surveiller")
 
     expected_trend = "BULLISH" if direction == "BUY" else "BEARISH"
     opposite_trend = "BEARISH" if direction == "BUY" else "BULLISH"
     if trend == expected_trend:
         agreement = "ALIGNED"
-        reasons.append(f"Signal {direction} aligne avec le regime {trend}")
+        reasons.append(f"Signal {direction} aligné avec le régime {trend}")
     elif trend == opposite_trend:
         agreement = "CONFLICT"
         if confidence >= 0.45:
             blocked = True
             reasons.append(
-                f"Signal {direction} en contradiction forte avec le regime {trend}"
+                f"Signal {direction} en contradiction forte avec le régime {trend}"
             )
         else:
             warnings.append(
-                f"Signal {direction} en contradiction avec un regime peu fiable"
+                f"Signal {direction} en contradiction avec un régime peu fiable"
             )
     elif trend == "RANGE":
         agreement = "NEUTRAL"
-        warnings.append("Regime lateral: avantage directionnel non confirme")
+        warnings.append("Régime latéral : avantage directionnel non confirmé")
     else:
         agreement = "UNKNOWN"
-        warnings.append("Compatibilite modele/regime indeterminee")
+        warnings.append("Compatibilité modèle/régime indéterminée")
 
     return RegimeGate(
         allowed=not blocked,
@@ -128,7 +128,7 @@ def classify_regime(math_summary: dict | None) -> dict:
             volatility="UNKNOWN",
             confidence=0.0,
             reasons=[],
-            warnings=["Resume mathematique indisponible"],
+            warnings=["Résumé mathématique indisponible"],
         ).to_dict()
 
     quality = float(math_summary.get("data_quality_score") or 0)
@@ -141,7 +141,7 @@ def classify_regime(math_summary: dict | None) -> dict:
             trend="UNKNOWN",
             volatility="UNKNOWN",
             confidence=round(quality, 3),
-            reasons=["Qualite des donnees insuffisante pour classifier le regime"],
+            reasons=["Qualité des données insuffisante pour classifier le régime"],
             warnings=warnings,
         ).to_dict()
 
@@ -161,12 +161,12 @@ def classify_regime(math_summary: dict | None) -> dict:
         elif momentum_12 < -0.003 and slope < 0:
             trend = "BEARISH"
             trend_score = min(abs(momentum_12) * 50, 1.0)
-            reasons.append("Momentum 12 negatif et pente negative")
+            reasons.append("Momentum 12 négatif et pente négative")
         elif zscore is not None and abs(zscore) < 0.7:
-            reasons.append("Prix proche de sa moyenne recente")
+            reasons.append("Prix proche de sa moyenne récente")
     else:
         trend = "UNKNOWN"
-        warnings.append("Tendance indeterminee: momentum ou pente indisponible")
+        warnings.append("Tendance indéterminée : momentum ou pente indisponible")
 
     volatility = "NORMAL_VOLATILITY"
     vol_score = 0.5
@@ -174,19 +174,19 @@ def classify_regime(math_summary: dict | None) -> dict:
         if vol_ratio >= 1.6:
             volatility = "HIGH_VOLATILITY"
             vol_score = min(vol_ratio / 2.5, 1.0)
-            reasons.append("Volatilite courte superieure au regime recent")
+            reasons.append("Volatilité courte supérieure au régime récent")
         elif vol_ratio <= 0.6:
             volatility = "LOW_VOLATILITY"
             vol_score = min((0.6 - vol_ratio) / 0.6, 1.0)
-            reasons.append("Contraction de volatilite")
+            reasons.append("Contraction de volatilité")
     elif atr_pct is not None:
         if atr_pct >= 0.01:
             volatility = "HIGH_VOLATILITY"
             vol_score = min(atr_pct / 0.02, 1.0)
-            reasons.append("ATR eleve relativement au prix")
+            reasons.append("ATR élevé relativement au prix")
     else:
         volatility = "UNKNOWN_VOLATILITY"
-        warnings.append("Volatilite indeterminee")
+        warnings.append("Volatilité indéterminée")
 
     if volatility == "HIGH_VOLATILITY":
         regime = f"{trend}_HIGH_VOLATILITY" if trend != "UNKNOWN" else "HIGH_VOLATILITY"
@@ -201,7 +201,7 @@ def classify_regime(math_summary: dict | None) -> dict:
 
     confidence = round(max(0.0, min(quality * max(trend_score, vol_score), 1.0)), 3)
     if not reasons:
-        reasons.append("Aucun signal de regime dominant")
+        reasons.append("Aucun signal de régime dominant")
 
     return MarketRegime(
         regime=regime,

@@ -2,10 +2,11 @@
 
 import { useMemo } from "react";
 import { getDecisions, type Decision } from "@/lib/api";
+import { humanizeText, strategyLabel } from "@/lib/labels";
+import { ratioPct, time } from "@/lib/format";
 import { usePolling } from "./use-polling";
 import { SectionCard, Empty } from "./ui/card";
 import { ActionBadge, Confidence } from "./ui/badge";
-import { ratioPct, time } from "@/lib/format";
 import { DataTable, type DataTableColumn } from "./ui/data-table";
 
 function featureNumber(
@@ -35,21 +36,21 @@ export default function DecisionsTable({
 
   return (
     <SectionCard
-      title="Decisions IA recentes"
-      subtitle="Chaque evaluation du modele est journalisee, executee ou non"
+      title="Décisions IA récentes"
+      subtitle="Chaque évaluation du modèle est journalisée, exécutée ou non"
       bodyClassName="p-0"
     >
       {!data || data.length === 0 ? (
         <div className="p-5">
-          <Empty>Aucune decision pour l&apos;instant.</Empty>
+          <Empty>Aucune décision pour l&apos;instant.</Empty>
         </div>
       ) : (
         <DataTable
-          title="Decisions IA recentes"
+          title="Décisions IA récentes"
           rows={data}
           columns={columns}
-          initialPageSize={10}
-          searchPlaceholder="Filtrer les decisions..."
+          initialPageSize={5}
+          searchPlaceholder="Filtrer les décisions..."
         />
       )}
     </SectionCard>
@@ -71,9 +72,9 @@ function buildColumns(
     },
     {
       key: "strategy",
-      header: "Strategie",
-      value: (d) => d.strategy,
-      render: (d) => <span className="text-muted">{d.strategy}</span>,
+      header: "Stratégie",
+      value: (d) => strategyLabel(d.strategy),
+      render: (d) => <span className="text-muted">{strategyLabel(d.strategy)}</span>,
       className: "px-5 py-3",
     },
     {
@@ -137,16 +138,18 @@ function buildColumns(
     columns.push({
       key: "reason",
       header: "Raison",
-      value: (d) => d.reason,
+      value: (d) => humanizeText(d.reason),
       render: (d) => (
-        <span className="block max-w-xs truncate text-muted">{d.reason}</span>
+        <span className="block max-w-xs truncate text-muted">
+          {humanizeText(d.reason)}
+        </span>
       ),
       className: "px-5 py-3",
     });
   }
   columns.push({
     key: "executed",
-    header: "Executee",
+    header: "Exécutée",
     value: (d) => (d.executed ? "Oui" : "Non"),
     render: (d) =>
       d.executed ? (

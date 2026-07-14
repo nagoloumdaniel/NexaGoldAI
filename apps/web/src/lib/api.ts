@@ -2,7 +2,7 @@ const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${BASE}${path}`, { cache: "no-store" });
-  if (!res.ok) throw new Error(`${path} → ${res.status}`);
+  if (!res.ok) throw new Error(`${path} -> ${res.status}`);
   return (await res.json()) as T;
 }
 
@@ -263,6 +263,28 @@ export interface RegimeShadowStatus {
   execution_enabled: boolean;
 }
 
+export interface PromotionRequirement {
+  code: string;
+  label: string;
+  passed: boolean;
+  detail: string;
+}
+
+export interface PromotionEligibility {
+  strategy: string;
+  promotion_eligible: boolean;
+  review_eligible: boolean;
+  automatic_live_promotion: false;
+  capital_env: string;
+  trading_enabled: boolean;
+  paper_only: boolean;
+  checked_at: string | null;
+  requirements: PromotionRequirement[];
+  blockers: PromotionRequirement[];
+  paper?: PaperValidation;
+  regime_shadow?: RegimeShadowStatus;
+}
+
 export interface ResolveTradeResult {
   engineReachable?: boolean;
   updated: boolean;
@@ -280,6 +302,8 @@ export const getPaperValidation = () =>
   get<PaperValidation>("/dashboard/paper-validation");
 export const getRegimeShadow = () =>
   get<RegimeShadowStatus>("/dashboard/paper-regime-shadow");
+export const getPromotionEligibility = () =>
+  get<PromotionEligibility>("/dashboard/promotion-eligibility");
 export const getAnalytics = () => get<Analytics>("/dashboard/analytics");
 export const getSystemStatus = () => get<SystemStatus>("/dashboard/system");
 export const getStructuredSignal = () =>

@@ -15,6 +15,7 @@ import {
   type ReconciliationStatus,
   type UntrackedBrokerPosition,
 } from "@/lib/api";
+import { humanizeText, reconciliationStatusLabel } from "@/lib/labels";
 import { signed } from "@/lib/format";
 import { usePolling } from "./use-polling";
 import { SectionCard, Empty } from "./ui/card";
@@ -39,6 +40,12 @@ function Metric({ label, value }: { label: string; value: number | null }) {
 function rowId(item: DisplayRow) {
   if (item.kind === "db") return item.row.trade_id;
   return item.row.deal_id ?? item.row.deal_reference ?? `broker-${item.index}`;
+}
+
+function statusTone(status: string) {
+  if (status === "matched") return "text-up";
+  if (status === "closed_from_broker") return "text-ai";
+  return "text-warn";
 }
 
 export default function ReconciliationPanel() {
@@ -83,8 +90,10 @@ export default function ReconciliationPanel() {
       const result = await resolveTrade(tradeId, { status: "CANCELLED" });
       setManualResult(
         result.updated
-          ? `${tradeId} marque CANCELLED.`
-          : result.reason ?? "Resolution refusee.",
+          ? `${tradeId} marqué annulé.`
+          : result.reason
+            ? humanizeText(result.reason)
+            : "Résolution refusée.",
       );
       setSyncResult(await getReconciliation());
     } catch (error) {
@@ -98,7 +107,7 @@ export default function ReconciliationPanel() {
     const raw = exitPrices[tradeId];
     const exitPrice = Number(raw);
     if (!raw || Number.isNaN(exitPrice) || exitPrice <= 0) {
-      setSyncError("Prix de sortie requis pour cloturer manuellement.");
+      setSyncError("Prix de sortie requis pour clôturer manuellement.");
       return;
     }
     setResolvingId(tradeId);
@@ -111,8 +120,10 @@ export default function ReconciliationPanel() {
       });
       setManualResult(
         result.updated
-          ? `${tradeId} cloture: P&L ${signed(result.pnl ?? 0)}.`
-          : result.reason ?? "Resolution refusee.",
+          ? `${tradeId} clôturé : P&L ${signed(result.pnl ?? 0)}.`
+          : result.reason
+            ? humanizeText(result.reason)
+            : "Résolution refusée.",
       );
       setSyncResult(await getReconciliation());
     } catch (error) {
@@ -136,7 +147,7 @@ export default function ReconciliationPanel() {
 
   return (
     <SectionCard
-      title="Reconciliation broker"
+      title="Réconciliation broker"
       subtitle="Comparaison des trades ouverts en base avec les positions Capital.com"
       bodyClassName="p-0"
       action={
@@ -153,18 +164,18 @@ export default function ReconciliationPanel() {
       <div className="space-y-4 p-5">
         {offline ? (
           <p className="rounded-lg border border-warn/20 bg-warn/5 px-4 py-2.5 text-sm text-warn">
-            Moteur injoignable - reconciliation indisponible.
+            Moteur injoignable. Réconciliation indisponible.
           </p>
         ) : null}
         {syncError ? (
           <p className="rounded-lg border border-down/20 bg-down/5 px-4 py-2.5 text-sm text-down">
-            Synchronisation echouee: {syncError}
+            Synchronisation échouée : {humanizeText(syncError)}
           </p>
         ) : null}
         {syncResult && !offline ? (
           <p className="rounded-lg border border-ai/20 bg-ai/5 px-4 py-2.5 text-sm text-ai">
-            Sync terminee: {syncResult.closed ?? 0} cloturee(s),{" "}
-            {syncResult.unresolved_closures.length} non resolue(s),{" "}
+            Synchronisation terminée : {syncResult.closed ?? 0} clôturée(s),{" "}
+            {syncResult.unresolved_closures.length} non résolue(s),{" "}
             {syncResult.untracked_broker_positions ?? 0} hors DB.
           </p>
         ) : null}
@@ -177,8 +188,8 @@ export default function ReconciliationPanel() {
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
           <Metric label="DB ouvertes" value={view?.db_open_trades ?? null} />
           <Metric label="Broker ouvertes" value={view?.broker_open_positions ?? null} />
-          <Metric label="Matchees" value={view?.matched ?? null} />
-          <Metric label="Cloturees" value={view?.closed ?? null} />
+          <Metric label="Matchées" value={view?.matched ?? null} />
+          <Metric label="Clôturées" value={view?.closed ?? null} />
           <Metric label="Manquantes" value={view?.missing_on_broker ?? null} />
           <Metric label="Hors DB" value={view?.untracked_broker_positions ?? null} />
         </div>
@@ -186,16 +197,16 @@ export default function ReconciliationPanel() {
 
       {tableRows.length === 0 ? (
         <div className="px-5 pb-5">
-          <Empty>Aucun ecart de reconciliation a afficher.</Empty>
+          <Empty>Aucun écart de réconciliation à afficher.</Empty>
         </div>
       ) : (
         <div className="border-t border-line-soft">
           <DataTable
-            title="Reconciliation broker"
+            title="Réconciliation broker"
             rows={tableRows}
             columns={columns}
-            initialPageSize={10}
-            searchPlaceholder="Filtrer la reconciliation..."
+            initialPageSize={5}
+            searchPlaceholder="Filtrer la réconciliation..."
           />
         </div>
       )}
@@ -263,25 +274,15 @@ function buildColumns({
     {
       key: "status",
       header: "Statut",
-      value: (item) => (item.kind === "db" ? item.row.status : "untracked"),
+      value: (item) =>
+        item.kind === "db"
+          ? reconciliationStatusLabel(item.row.status)
+          : reconciliationStatusLabel("untracked"),
       render: (item) => {
-        if (item.kind === "broker") return <span className="text-warn">Non suivie</span>;
-        const status = item.row.status;
+        const status = item.kind === "db" ? item.row.status : "untracked";
         return (
-          <span
-            className={
-              status === "matched"
-                ? "text-up"
-                : status === "closed_from_broker"
-                  ? "text-ai"
-                  : "text-warn"
-            }
-          >
-            {status === "matched"
-              ? "Matchee"
-              : status === "closed_from_broker"
-                ? "Cloturee broker"
-                : "Absente broker"}
+          <span className={statusTone(status)}>
+            {reconciliationStatusLabel(status)}
           </span>
         );
       },
@@ -306,10 +307,10 @@ function buildColumns({
     },
     {
       key: "resolution",
-      header: "Resolution",
+      header: "Résolution",
       value: (item) =>
         item.kind === "db" && item.row.status === "missing_on_broker"
-          ? "resolution manuelle disponible"
+          ? "Résolution manuelle disponible"
           : "-",
       pdfValue: () => "-",
       render: (item) => {
@@ -322,7 +323,7 @@ function buildColumns({
               type="number"
               inputMode="decimal"
               step="0.01"
-              placeholder="Prix sortie"
+              placeholder="Prix de sortie"
               value={exitPrices[item.row.trade_id] ?? ""}
               onChange={(event) =>
                 setExitPrices((current) => ({
@@ -338,7 +339,7 @@ function buildColumns({
               disabled={resolvingId === item.row.trade_id}
               className="h-8 rounded-md bg-ai/10 px-2.5 text-xs font-medium text-ai ring-1 ring-inset ring-ai/20 transition-colors hover:bg-ai/15 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Cloturer
+              Clôturer
             </button>
             <button
               type="button"

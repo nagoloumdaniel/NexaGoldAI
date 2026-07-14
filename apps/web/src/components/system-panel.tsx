@@ -1,6 +1,7 @@
 "use client";
 
 import { getModels, getSummary, getSystemStatus } from "@/lib/api";
+import { strategyLabel } from "@/lib/labels";
 import { usePolling } from "./use-polling";
 import { SectionCard } from "./ui/card";
 
@@ -9,10 +10,8 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 function Dot({ ok }: { ok: boolean }) {
   return (
     <span className="inline-flex items-center gap-2 text-sm">
-      <span
-        className={`h-2 w-2 rounded-full ${ok ? "bg-up" : "bg-down"}`}
-      />
-      {ok ? "Connecte" : "Injoignable"}
+      <span className={`h-2 w-2 rounded-full ${ok ? "bg-up" : "bg-down"}`} />
+      {ok ? "Connecté" : "Injoignable"}
     </span>
   );
 }
@@ -58,7 +57,7 @@ export default function SystemPanel() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
-      <SectionCard title="Etat des connexions" subtitle="Services locaux">
+      <SectionCard title="État des connexions" subtitle="Services locaux">
         <div className="-my-1">
           <Row label="API NestJS">
             <Dot ok={apiOk} />
@@ -69,15 +68,15 @@ export default function SystemPanel() {
           <Row label="Base moteur">
             <BoolText
               value={health?.database_connected}
-              on="Connectee"
+              on="Connectée"
               off="Indisponible"
             />
           </Row>
           <Row label="Broker">
             <BoolText
               value={health?.broker_configured}
-              on="Configure"
-              off="Non configure"
+              on="Configuré"
+              off="Non configuré"
             />
           </Row>
           <Row label="URL API">
@@ -91,7 +90,7 @@ export default function SystemPanel() {
         </div>
       </SectionCard>
 
-      <SectionCard title="Configuration" subtitle="Parametres en lecture seule">
+      <SectionCard title="Configuration" subtitle="Paramètres en lecture seule">
         <div className="-my-1">
           <Row label="Instrument">{health?.epic ?? "GOLD"} (XAU/USD)</Row>
           <Row label="Courtier">Capital.com</Row>
@@ -99,8 +98,8 @@ export default function SystemPanel() {
           <Row label="Kill switch">
             <BoolText
               value={tradingEnabled}
-              on="Ordres autorises"
-              off="Ordres bloques"
+              on="Ordres autorisés"
+              off="Ordres bloqués"
               dangerWhenOn
             />
           </Row>
@@ -108,20 +107,20 @@ export default function SystemPanel() {
             <BoolText
               value={health?.ingestion_running}
               on="Active"
-              off="Arretee"
+              off="Arrêtée"
             />
           </Row>
           <Row label="Boucle trading">
             <BoolText
               value={trade?.loop_running}
               on="Active"
-              off="Arretee"
+              off="Arrêtée"
             />
           </Row>
-          <Row label="Strategie">
-            <span className="tnum text-xs">{trade?.strategy ?? "-"}</span>
+          <Row label="Stratégie">
+            <span className="tnum text-xs">{strategyLabel(trade?.strategy)}</span>
           </Row>
-          <Row label="Modele champion">
+          <Row label="Modèle champion">
             <span className="tnum text-xs">
               {models?.champion ?? "-"}
               {models?.granularity ? ` / ${models.granularity}` : ""}
@@ -131,15 +130,15 @@ export default function SystemPanel() {
       </SectionCard>
 
       <SectionCard
-        title="A propos"
+        title="À propos"
         subtitle="Bot personnel en local"
         className="lg:col-span-2"
       >
         <p className="text-sm leading-relaxed text-muted">
           NexaGold fonctionne actuellement comme un cockpit local de supervision.
-          Les actions sensibles restent disponibles cote API, mais cette page met
-          maintenant en avant l&apos;etat reel du moteur et du kill switch avant toute
-          decision operationnelle.
+          Les actions sensibles restent disponibles côté API, mais cette page met
+          maintenant en avant l&apos;état réel du moteur et du kill switch avant toute
+          décision opérationnelle.
         </p>
       </SectionCard>
     </div>

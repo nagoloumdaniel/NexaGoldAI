@@ -1,14 +1,14 @@
 "use client";
 
 import { getDecisions } from "@/lib/api";
+import { humanizeText, strategyLabel } from "@/lib/labels";
+import { dateTime } from "@/lib/format";
 import { usePolling } from "./use-polling";
 import { SectionCard, Empty } from "./ui/card";
 import { ActionBadge } from "./ui/badge";
-import { dateTime } from "@/lib/format";
 
 const fetcher = () => getDecisions(1);
 
-/** Carte signature : dernière analyse de l'IA mise en avant. */
 export default function AiActivity() {
   const { data } = usePolling(fetcher, 10000);
   const last = data?.[0] ?? null;
@@ -16,7 +16,7 @@ export default function AiActivity() {
   return (
     <SectionCard
       title="Dernière analyse IA"
-      subtitle={last ? `Stratégie ${last.strategy}` : "En attente de décision"}
+      subtitle={last ? `Stratégie ${strategyLabel(last.strategy)}` : "En attente de décision"}
     >
       {!last ? (
         <Empty>Aucune décision pour l&apos;instant.</Empty>
@@ -50,7 +50,7 @@ export default function AiActivity() {
             <p className="text-[11px] font-medium uppercase tracking-wider text-faint">
               Raison
             </p>
-            <p className="mt-1.5 text-sm text-muted">{last.reason}</p>
+            <p className="mt-1.5 text-sm text-muted">{humanizeText(last.reason)}</p>
           </div>
 
           <div className="flex items-center gap-2 border-t border-line-soft pt-3 text-xs">

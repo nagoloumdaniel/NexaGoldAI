@@ -3,6 +3,7 @@
 import { useMemo, useState, type ReactNode } from "react";
 
 type SortDirection = "asc" | "desc";
+const PAGE_SIZES = [5, 10, 25, 50];
 
 export interface DataTableColumn<T> {
   key: string;
@@ -25,6 +26,12 @@ function compareValues(a: string | number | null | undefined, b: string | number
     numeric: true,
     sensitivity: "base",
   });
+}
+
+function sortLabel(direction: SortDirection | undefined) {
+  if (direction === "asc") return "Asc";
+  if (direction === "desc") return "Desc";
+  return "Trier";
 }
 
 function escapeHtml(value: string) {
@@ -63,7 +70,7 @@ function exportPdf<T>(title: string, columns: DataTableColumn<T>[], rows: T[]) {
 </head>
 <body>
   <h1>${escapeHtml(title)}</h1>
-  <p>${rows.length} ligne(s) exportee(s) - ${new Date().toLocaleString("fr-FR")}</p>
+  <p>${rows.length} ligne(s) exportée(s) - ${new Date().toLocaleString("fr-FR")}</p>
   <table>
     <thead><tr>${columns.map((column) => `<th>${escapeHtml(column.header)}</th>`).join("")}</tr></thead>
     <tbody>${htmlRows}</tbody>
@@ -81,7 +88,7 @@ export function DataTable<T>({
   title,
   rows,
   columns,
-  initialPageSize = 10,
+  initialPageSize = 5,
   searchPlaceholder = "Filtrer...",
 }: {
   title: string;
@@ -121,6 +128,7 @@ export function DataTable<T>({
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const safePage = Math.min(page, totalPages);
   const visible = filtered.slice((safePage - 1) * pageSize, safePage * pageSize);
+  const hasFilter = query.trim().length > 0;
 
   function toggleSort(key: string) {
     setPage(1);
@@ -132,61 +140,94 @@ export function DataTable<T>({
 
   return (
     <>
-      <div className="flex flex-col gap-3 border-b border-line-soft p-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex min-w-0 flex-1 items-center gap-2">
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => {
-              setQuery(event.target.value);
-              setPage(1);
-            }}
-            placeholder={searchPlaceholder}
-            className="h-9 w-full max-w-sm rounded-md border border-line bg-surface-2 px-3 text-sm text-ink outline-none transition-colors placeholder:text-faint focus:border-gold"
-          />
-          <select
-            value={pageSize}
-            onChange={(event) => {
-              setPageSize(Number(event.target.value));
-              setPage(1);
-            }}
-            className="h-9 rounded-md border border-line bg-surface-2 px-2 text-sm text-muted outline-none focus:border-gold"
-          >
-            {[5, 10, 25, 50].map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select>
+      <div className="border-b border-line-soft bg-surface/40 p-4">
+        <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+          <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-center">
+            <label className="sr-only" htmlFor={`${title}-filter`}>
+              Filtrer le tableau
+            </label>
+            <input
+              id={`${title}-filter`}
+              type="search"
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setPage(1);
+              }}
+              placeholder={searchPlaceholder}
+              className="h-9 w-full max-w-md rounded-md border border-line bg-surface-2 px-3 text-sm text-ink outline-none transition-colors placeholder:text-faint focus:border-gold"
+            />
+            {hasFilter ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery("");
+                  setPage(1);
+                }}
+                className="h-9 rounded-md border border-line px-3 text-xs font-medium text-muted transition-colors hover:bg-surface-2 hover:text-ink"
+              >
+                Effacer
+              </button>
+            ) : null}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <label className="text-xs font-medium text-faint" htmlFor={`${title}-size`}>
+              Lignes
+            </label>
+            <select
+              id={`${title}-size`}
+              value={pageSize}
+              onChange={(event) => {
+                setPageSize(Number(event.target.value));
+                setPage(1);
+              }}
+              className="h-9 rounded-md border border-line bg-surface-2 px-2 text-sm text-muted outline-none focus:border-gold"
+            >
+              {PAGE_SIZES.map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              onClick={() => exportPdf(title, columns, filtered)}
+              disabled={filtered.length === 0}
+              className="h-9 rounded-md bg-gold/10 px-3 text-xs font-medium text-gold ring-1 ring-inset ring-gold/20 transition-colors hover:bg-gold/15 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Export PDF
+            </button>
+          </div>
         </div>
-        <button
-          type="button"
-          onClick={() => exportPdf(title, columns, filtered)}
-          disabled={filtered.length === 0}
-          className="h-9 rounded-md bg-gold/10 px-3 text-xs font-medium text-gold ring-1 ring-inset ring-gold/20 transition-colors hover:bg-gold/15 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          Export PDF
-        </button>
+
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-faint">
+          <span className="tnum rounded-md bg-surface-2 px-2 py-1 ring-1 ring-inset ring-line-soft">
+            {filtered.length} / {rows.length} ligne(s)
+          </span>
+          {sort ? (
+            <span className="rounded-md bg-surface-2 px-2 py-1 ring-1 ring-inset ring-line-soft">
+              Tri: {columns.find((column) => column.key === sort.key)?.header}{" "}
+              {sortLabel(sort.direction).toLowerCase()}
+            </span>
+          ) : null}
+        </div>
       </div>
 
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-line-soft text-left text-[11px] uppercase text-faint">
+            <tr className="border-b border-line-soft bg-surface-2/40 text-left text-[11px] uppercase text-faint">
               {columns.map((column) => (
-                <th key={column.key} className="px-5 py-2.5 font-medium">
+                <th key={column.key} className="px-5 py-2.5 font-medium" scope="col">
                   <button
                     type="button"
                     onClick={() => toggleSort(column.key)}
-                    className="inline-flex h-7 items-center gap-1 text-left uppercase text-faint hover:text-muted"
+                    className="inline-flex h-7 max-w-full items-center gap-2 text-left uppercase text-faint transition-colors hover:text-muted"
                   >
-                    {column.header}
-                    <span className="text-[10px]">
-                      {sort?.key === column.key
-                        ? sort.direction === "asc"
-                          ? "A-Z"
-                          : "Z-A"
-                        : "-"}
+                    <span className="truncate">{column.header}</span>
+                    <span className="rounded border border-line-soft px-1.5 py-0.5 text-[9px] normal-case text-faint">
+                      {sortLabel(sort?.key === column.key ? sort.direction : undefined)}
                     </span>
                   </button>
                 </th>
@@ -226,10 +267,10 @@ export function DataTable<T>({
             disabled={safePage <= 1}
             className="h-8 rounded-md border border-line px-3 text-xs transition-colors hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Precedent
+            Précédent
           </button>
-          <span className="tnum text-xs">
-            {safePage} / {totalPages}
+          <span className="tnum rounded-md bg-surface-2 px-2 py-1 text-xs ring-1 ring-inset ring-line-soft">
+            Page {safePage} / {totalPages}
           </span>
           <button
             type="button"
