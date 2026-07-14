@@ -1,11 +1,12 @@
 "use client";
 
 import { useMemo } from "react";
-import { getDecisions } from "@/lib/api";
+import { getDecisions, type Decision } from "@/lib/api";
 import { usePolling } from "./use-polling";
 import { SectionCard, Empty } from "./ui/card";
 import { ActionBadge, Confidence } from "./ui/badge";
 import { ratioPct, time } from "@/lib/format";
+import { DataTable, type DataTableColumn } from "./ui/data-table";
 
 function featureNumber(
   features: Record<string, unknown> | null | undefined,
@@ -16,7 +17,7 @@ function featureNumber(
 }
 
 export default function DecisionsTable({
-  limit = 15,
+  limit = 50,
   showReason = true,
 }: {
   limit?: number;
@@ -27,90 +28,137 @@ export default function DecisionsTable({
   const showsExpectedReturn = Boolean(
     data?.some((decision) => decision.features?.signal_kind === "expected_return"),
   );
+  const columns = useMemo(
+    () => buildColumns(showReason, showsExpectedReturn),
+    [showReason, showsExpectedReturn],
+  );
 
   return (
     <SectionCard
-      title="Décisions IA récentes"
-      subtitle="Chaque évaluation du modèle est journalisée, exécutée ou non"
+      title="Decisions IA recentes"
+      subtitle="Chaque evaluation du modele est journalisee, executee ou non"
       bodyClassName="p-0"
     >
       {!data || data.length === 0 ? (
         <div className="p-5">
-          <Empty>Aucune décision pour l&apos;instant.</Empty>
+          <Empty>Aucune decision pour l&apos;instant.</Empty>
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-line-soft text-left text-[11px] uppercase tracking-wider text-faint">
-                <th className="px-5 py-2.5 font-medium">Heure</th>
-                <th className="px-5 py-2.5 font-medium">Action</th>
-                <th className="px-5 py-2.5 font-medium">Confiance</th>
-                {showsExpectedReturn ? (
-                  <>
-                    <th className="px-5 py-2.5 font-medium">Rendement attendu</th>
-                    <th className="px-5 py-2.5 font-medium">Seuil</th>
-                    <th className="px-5 py-2.5 font-medium">Exposition</th>
-                  </>
-                ) : null}
-                {showReason ? (
-                  <th className="px-5 py-2.5 font-medium">Raison</th>
-                ) : null}
-                <th className="px-5 py-2.5 font-medium">Exécutée</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((d, i) => (
-                <tr
-                  key={i}
-                  className="border-b border-line-soft last:border-0 hover:bg-surface-2/40"
-                >
-                  <td className="tnum px-5 py-3 text-muted">{time(d.time)}</td>
-                  <td className="px-5 py-3">
-                    <ActionBadge action={d.action} />
-                  </td>
-                  <td className="px-5 py-3">
-                    <Confidence value={d.confidence} />
-                  </td>
-                  {showsExpectedReturn ? (
-                    <>
-                      <td className="tnum px-5 py-3 text-muted">
-                        {ratioPct(featureNumber(d.features, "expected_return"), 3)}
-                      </td>
-                      <td className="tnum px-5 py-3 text-muted">
-                        {ratioPct(
-                          featureNumber(d.features, "expected_return_threshold"),
-                          3,
-                        )}
-                      </td>
-                      <td className="tnum px-5 py-3 text-muted">
-                        {ratioPct(featureNumber(d.features, "position_size"), 1)}
-                      </td>
-                    </>
-                  ) : null}
-                  {showReason ? (
-                    <td className="max-w-xs truncate px-5 py-3 text-muted">
-                      {d.reason}
-                    </td>
-                  ) : null}
-                  <td className="px-5 py-3">
-                    {d.executed ? (
-                      <span className="text-up">Oui</span>
-                    ) : (
-                      <span className="text-faint">Non</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          title="Decisions IA recentes"
+          rows={data}
+          columns={columns}
+          initialPageSize={10}
+          searchPlaceholder="Filtrer les decisions..."
+        />
       )}
     </SectionCard>
   );
 }
 
-/** Stabilise la fonction de fetch pour usePolling (référence constante). */
+function buildColumns(
+  showReason: boolean,
+  showsExpectedReturn: boolean,
+): DataTableColumn<Decision>[] {
+  const columns: DataTableColumn<Decision>[] = [
+    {
+      key: "time",
+      header: "Heure",
+      value: (d) => time(d.time),
+      sortValue: (d) => new Date(d.time).getTime(),
+      render: (d) => <span className="tnum text-muted">{time(d.time)}</span>,
+      className: "tnum px-5 py-3 text-muted",
+    },
+    {
+      key: "strategy",
+      header: "Strategie",
+      value: (d) => d.strategy,
+      render: (d) => <span className="text-muted">{d.strategy}</span>,
+      className: "px-5 py-3",
+    },
+    {
+      key: "action",
+      header: "Action",
+      value: (d) => d.action,
+      render: (d) => <ActionBadge action={d.action} />,
+      className: "px-5 py-3",
+    },
+    {
+      key: "confidence",
+      header: "Confiance",
+      value: (d) => d.confidence,
+      pdfValue: (d) => ratioPct(d.confidence),
+      render: (d) => <Confidence value={d.confidence} />,
+      className: "px-5 py-3",
+    },
+  ];
+  if (showsExpectedReturn) {
+    columns.push(
+      {
+        key: "expected_return",
+        header: "Rendement attendu",
+        value: (d) => featureNumber(d.features, "expected_return"),
+        pdfValue: (d) => ratioPct(featureNumber(d.features, "expected_return"), 3),
+        render: (d) => (
+          <span className="tnum text-muted">
+            {ratioPct(featureNumber(d.features, "expected_return"), 3)}
+          </span>
+        ),
+        className: "tnum px-5 py-3 text-muted",
+      },
+      {
+        key: "threshold",
+        header: "Seuil",
+        value: (d) => featureNumber(d.features, "expected_return_threshold"),
+        pdfValue: (d) =>
+          ratioPct(featureNumber(d.features, "expected_return_threshold"), 3),
+        render: (d) => (
+          <span className="tnum text-muted">
+            {ratioPct(featureNumber(d.features, "expected_return_threshold"), 3)}
+          </span>
+        ),
+        className: "tnum px-5 py-3 text-muted",
+      },
+      {
+        key: "position_size",
+        header: "Exposition",
+        value: (d) => featureNumber(d.features, "position_size"),
+        pdfValue: (d) => ratioPct(featureNumber(d.features, "position_size"), 1),
+        render: (d) => (
+          <span className="tnum text-muted">
+            {ratioPct(featureNumber(d.features, "position_size"), 1)}
+          </span>
+        ),
+        className: "tnum px-5 py-3 text-muted",
+      },
+    );
+  }
+  if (showReason) {
+    columns.push({
+      key: "reason",
+      header: "Raison",
+      value: (d) => d.reason,
+      render: (d) => (
+        <span className="block max-w-xs truncate text-muted">{d.reason}</span>
+      ),
+      className: "px-5 py-3",
+    });
+  }
+  columns.push({
+    key: "executed",
+    header: "Executee",
+    value: (d) => (d.executed ? "Oui" : "Non"),
+    render: (d) =>
+      d.executed ? (
+        <span className="text-up">Oui</span>
+      ) : (
+        <span className="text-faint">Non</span>
+      ),
+    className: "px-5 py-3",
+  });
+  return columns;
+}
+
 function useStableDecisions(limit: number) {
   return useMemo(() => () => getDecisions(limit), [limit]);
 }

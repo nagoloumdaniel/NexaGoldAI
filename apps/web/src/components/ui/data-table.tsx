@@ -71,7 +71,7 @@ function exportPdf<T>(title: string, columns: DataTableColumn<T>[], rows: T[]) {
   <script>window.addEventListener("load", () => { window.print(); });</script>
 </body>
 </html>`;
-  const win = window.open("", "_blank", "noopener,noreferrer,width=1200,height=800");
+  const win = window.open("", "_blank", "width=1200,height=800");
   if (!win) return;
   win.document.write(html);
   win.document.close();
