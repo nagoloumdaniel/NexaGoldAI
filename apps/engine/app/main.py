@@ -264,12 +264,20 @@ async def trade_step() -> dict:
 async def trade_status() -> dict:
     return {
         "strategy": trader.strategy_name if trader else None,
+        "paper_only": bool(trader and trader.strategy_paper_only),
         "trading_enabled": settings.trading_enabled,
         "loop_running": _trade_task is not None and not _trade_task.done(),
         "interval_seconds": settings.trade_interval_seconds,
         "stop_loss_pct": settings.stop_loss_pct,
         "risk_reward_ratio": settings.risk_reward_ratio,
     }
+
+
+@app.get("/paper/validation")
+async def paper_validation() -> dict:
+    if trader is None:
+        raise HTTPException(status_code=503, detail="Base de donnees indisponible")
+    return await trader.paper_validation_status()
 
 
 @app.get("/signal/latest")

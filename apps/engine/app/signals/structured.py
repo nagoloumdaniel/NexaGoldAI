@@ -65,6 +65,7 @@ class StructuredSignal:
     recommended_entry: float | None
     recommended_sl: float | None
     recommended_tp: float | None
+    recommended_exposure: float | None
     risk_reward_ratio: float | None
     reasons: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
@@ -121,6 +122,18 @@ def build_structured_signal(
 
     direction = signal.action.value if signal.action != Action.HOLD else "NO_TRADE"
     confidence = max(0.0, min(float(signal.confidence), 1.0))
+    expected_return_signal = signal.features.get("signal_kind") == "expected_return"
+    if expected_return_signal:
+        regime_gate = {
+            **regime_gate,
+            "allowed": True,
+            "status": "NOT_APPLICABLE",
+            "reasons": [
+                "Filtre de regime conserve en diagnostic; non applique au candidat paper"
+            ],
+            "warnings": list(regime_gate.get("warnings", []))
+            + ["Le filtre de regime n'a pas valide son integration historique"],
+        }
 
     if signal.action == Action.BUY:
         probability_up, probability_down, probability_neutral = confidence, 0.0, 1 - confidence
@@ -135,7 +148,12 @@ def build_structured_signal(
         direction = "NO_TRADE"
         reasons.extend(regime_gate["reasons"])
 
-    warnings.append("Confiance non calibree: score brut du modele reutilise")
+    if expected_return_signal:
+        warnings.append(
+            "Score d'edge non calibre en probabilite; validation paper requise"
+        )
+    else:
+        warnings.append("Confiance non calibree: score brut du modele reutilise")
     warnings.extend(regime.get("warnings", []))
     warnings.extend(regime_gate.get("warnings", []))
 
@@ -154,19 +172,26 @@ def build_structured_signal(
             reasons.append("Marche non tradable selon le broker")
         elif bid is not None and ask is not None:
             entry = ask if signal.action == Action.BUY else bid
+            signal_stop_pct = _safe_float(signal.features.get("stop_loss_pct"))
+            stop_pct = signal_stop_pct or settings.stop_loss_pct
+            signal_rr = _safe_float(signal.features.get("risk_reward_ratio"))
+            bracket_rr = signal_rr or settings.risk_reward_ratio
             stop_loss, take_profit = _bracket(
                 signal.action,
                 entry,
-                settings.stop_loss_pct,
-                settings.risk_reward_ratio,
+                stop_pct,
+                bracket_rr,
             )
-            rr = settings.risk_reward_ratio
+            rr = bracket_rr
         else:
             direction = "NO_TRADE"
             reasons.append("Prix bid/ask indisponible")
 
     execution_mode = "LIVE" if settings.capital_env == "live" else "DEMO"
-    if not settings.trading_enabled:
+    if signal.features.get("paper_only") is True:
+        execution_mode = "PAPER"
+        warnings.append("Strategie verrouillee sur le compte demo")
+    elif not settings.trading_enabled:
         execution_mode = "PAPER"
         warnings.append("Ordres bloques par TRADING_ENABLED=false")
 
@@ -181,18 +206,24 @@ def build_structured_signal(
         probability_up=round(probability_up, 4),
         probability_down=round(probability_down, 4),
         probability_neutral=round(probability_neutral, 4),
-        raw_model_score=round(confidence, 4),
+        raw_model_score=round(
+            _safe_float(signal.features.get("expected_return")) or confidence,
+            6 if expected_return_signal else 4,
+        ),
         calibrated_confidence=round(confidence, 4),
         uncertainty=round(1 - confidence, 4),
         data_quality_score=quality,
         market_regime=regime["regime"],
-        expected_move=None,
-        expected_value_after_costs=None,
+        expected_move=_safe_float(signal.features.get("expected_return")),
+        expected_value_after_costs=_safe_float(
+            signal.features.get("expected_value_after_costs")
+        ),
         spread=round(spread, 5) if spread is not None else None,
         slippage_estimate=None,
         recommended_entry=round(entry, 3) if entry is not None else None,
         recommended_sl=round(stop_loss, 3) if stop_loss is not None else None,
         recommended_tp=round(take_profit, 3) if take_profit is not None else None,
+        recommended_exposure=round(signal.position_size, 4),
         risk_reward_ratio=rr,
         reasons=reasons,
         warnings=warnings,

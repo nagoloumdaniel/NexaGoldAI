@@ -185,7 +185,47 @@
         "documentation": {}
     },
     {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
@@ -330,6 +370,38 @@
         "documentation": {}
     },
     {
+        "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
         "label": "Settings",
         "importPath": "app.config",
         "description": "app.config",
@@ -347,6 +419,14 @@
     },
     {
         "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_settings",
         "importPath": "app.config",
         "description": "app.config",
         "isExtraImport": true,
@@ -646,6 +726,30 @@
         "documentation": {}
     },
     {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Strategy",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
         "label": "AlwaysHold",
         "importPath": "app.strategy.base",
         "description": "app.strategy.base",
@@ -663,6 +767,38 @@
     },
     {
         "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Strategy",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "AlwaysHold",
         "importPath": "app.strategy.base",
         "description": "app.strategy.base",
         "isExtraImport": true,
@@ -857,11 +993,11 @@
         "documentation": {}
     },
     {
-        "label": "build_structured_signal",
-        "importPath": "app.signals.structured",
-        "description": "app.signals.structured",
+        "label": "RiskManager",
+        "importPath": "app.risk.manager",
+        "description": "app.risk.manager",
         "isExtraImport": true,
-        "detail": "app.signals.structured",
+        "detail": "app.risk.manager",
         "documentation": {}
     },
     {
@@ -873,11 +1009,11 @@
         "documentation": {}
     },
     {
-        "label": "Path",
-        "importPath": "pathlib",
-        "description": "pathlib",
+        "label": "build_structured_signal",
+        "importPath": "app.signals.structured",
+        "description": "app.signals.structured",
         "isExtraImport": true,
-        "detail": "pathlib",
+        "detail": "app.signals.structured",
         "documentation": {}
     },
     {
@@ -934,6 +1070,62 @@
         "description": "pathlib",
         "isExtraImport": true,
         "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Trader",
+        "importPath": "app.execution.trader",
+        "description": "app.execution.trader",
+        "isExtraImport": true,
+        "detail": "app.execution.trader",
         "documentation": {}
     },
     {
@@ -990,6 +1182,14 @@
         "description": "app.learning.trainer",
         "isExtraImport": true,
         "detail": "app.learning.trainer",
+        "documentation": {}
+    },
+    {
+        "label": "build_strategy",
+        "importPath": "app.strategy.factory",
+        "description": "app.strategy.factory",
+        "isExtraImport": true,
+        "detail": "app.strategy.factory",
         "documentation": {}
     },
     {
@@ -1074,6 +1274,38 @@
         "documentation": {}
     },
     {
+        "label": "backtest",
+        "importPath": "app.research",
+        "description": "app.research",
+        "isExtraImport": true,
+        "detail": "app.research",
+        "documentation": {}
+    },
+    {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
         "label": "load_candles",
         "importPath": "app.research.dataset",
         "description": "app.research.dataset",
@@ -1106,6 +1338,22 @@
         "documentation": {}
     },
     {
+        "label": "candles_to_frame",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
         "label": "load_candles",
         "importPath": "app.research.dataset",
         "description": "app.research.dataset",
@@ -1138,6 +1386,22 @@
         "documentation": {}
     },
     {
+        "label": "build_features",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "feature_columns",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
         "label": "feature_columns",
         "importPath": "app.research.features",
         "description": "app.research.features",
@@ -1163,6 +1427,22 @@
     },
     {
         "label": "build_features",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "build_features",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "feature_columns",
         "importPath": "app.research.features",
         "description": "app.research.features",
         "isExtraImport": true,
@@ -1196,6 +1476,14 @@
         "documentation": {}
     },
     {
+        "label": "LGBMRegressor",
+        "importPath": "lightgbm",
+        "description": "lightgbm",
+        "isExtraImport": true,
+        "detail": "lightgbm",
+        "documentation": {}
+    },
+    {
         "label": "accuracy_score",
         "importPath": "sklearn.metrics",
         "description": "sklearn.metrics",
@@ -1217,6 +1505,14 @@
         "description": "sklearn.metrics",
         "isExtraImport": true,
         "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "TimeSeriesSplit",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
         "documentation": {}
     },
     {
@@ -1284,6 +1580,22 @@
         "documentation": {}
     },
     {
+        "label": "DOWN",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "UP",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
         "label": "make_labels",
         "importPath": "app.research.labeling",
         "description": "app.research.labeling",
@@ -1340,6 +1652,166 @@
         "documentation": {}
     },
     {
+        "label": "DOWN",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "UP",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "build_historical_regime_features",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "evaluate_regime_gate",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "summarize_gate_impact",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "REGIME_FEATURE_COLUMNS",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "build_historical_regime_features",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "evaluate_regime_gate",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "summarize_gate_impact",
+        "importPath": "app.research.regime_validation",
+        "description": "app.research.regime_validation",
+        "isExtraImport": true,
+        "detail": "app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "asdict",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "asdict",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "asdict",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "field",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "field",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
         "label": "build_macro_features",
         "importPath": "app.research.macro",
         "description": "app.research.macro",
@@ -1364,83 +1836,147 @@
         "documentation": {}
     },
     {
-        "label": "dataclass",
-        "importPath": "dataclasses",
-        "description": "dataclasses",
+        "label": "Counter",
+        "importPath": "collections",
+        "description": "collections",
         "isExtraImport": true,
-        "detail": "dataclasses",
+        "detail": "collections",
         "documentation": {}
     },
     {
-        "label": "asdict",
-        "importPath": "dataclasses",
-        "description": "dataclasses",
+        "label": "assess_regime_gate",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
         "isExtraImport": true,
-        "detail": "dataclasses",
+        "detail": "app.signals.regime",
         "documentation": {}
     },
     {
-        "label": "dataclass",
-        "importPath": "dataclasses",
-        "description": "dataclasses",
+        "label": "classify_regime",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
         "isExtraImport": true,
-        "detail": "dataclasses",
+        "detail": "app.signals.regime",
         "documentation": {}
     },
     {
-        "label": "asdict",
-        "importPath": "dataclasses",
-        "description": "dataclasses",
+        "label": "assess_regime_gate",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
         "isExtraImport": true,
-        "detail": "dataclasses",
+        "detail": "app.signals.regime",
         "documentation": {}
     },
     {
-        "label": "dataclass",
-        "importPath": "dataclasses",
-        "description": "dataclasses",
+        "label": "classify_regime",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
         "isExtraImport": true,
-        "detail": "dataclasses",
+        "detail": "app.signals.regime",
         "documentation": {}
     },
     {
-        "label": "asdict",
-        "importPath": "dataclasses",
-        "description": "dataclasses",
+        "label": "assess_regime_gate",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
         "isExtraImport": true,
-        "detail": "dataclasses",
+        "detail": "app.signals.regime",
         "documentation": {}
     },
     {
-        "label": "dataclass",
-        "importPath": "dataclasses",
-        "description": "dataclasses",
+        "label": "classify_regime",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
         "isExtraImport": true,
-        "detail": "dataclasses",
+        "detail": "app.signals.regime",
         "documentation": {}
     },
     {
-        "label": "field",
-        "importPath": "dataclasses",
-        "description": "dataclasses",
+        "label": "build_expected_return_dataset",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
         "isExtraImport": true,
-        "detail": "dataclasses",
+        "detail": "app.research.expected_return",
         "documentation": {}
     },
     {
-        "label": "dataclass",
-        "importPath": "dataclasses",
-        "description": "dataclasses",
+        "label": "calibrate_latest_threshold",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
         "isExtraImport": true,
-        "detail": "dataclasses",
+        "detail": "app.research.expected_return",
         "documentation": {}
     },
     {
-        "label": "field",
-        "importPath": "dataclasses",
-        "description": "dataclasses",
+        "label": "make_regressor",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
         "isExtraImport": true,
-        "detail": "dataclasses",
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "run_nested_walk_forward",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_completed_daily_momentum_filter",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_expected_return_dataset",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "run_nested_walk_forward",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_completed_daily_momentum_filter",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_expected_return_dataset",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "simulate_event_strategy",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "summarize_simulations",
+        "importPath": "app.research.expected_return",
+        "description": "app.research.expected_return",
+        "isExtraImport": true,
+        "detail": "app.research.expected_return",
         "documentation": {}
     },
     {
@@ -1516,38 +2052,6 @@
         "documentation": {}
     },
     {
-        "label": "assess_regime_gate",
-        "importPath": "app.signals.regime",
-        "description": "app.signals.regime",
-        "isExtraImport": true,
-        "detail": "app.signals.regime",
-        "documentation": {}
-    },
-    {
-        "label": "classify_regime",
-        "importPath": "app.signals.regime",
-        "description": "app.signals.regime",
-        "isExtraImport": true,
-        "detail": "app.signals.regime",
-        "documentation": {}
-    },
-    {
-        "label": "assess_regime_gate",
-        "importPath": "app.signals.regime",
-        "description": "app.signals.regime",
-        "isExtraImport": true,
-        "detail": "app.signals.regime",
-        "documentation": {}
-    },
-    {
-        "label": "classify_regime",
-        "importPath": "app.signals.regime",
-        "description": "app.signals.regime",
-        "isExtraImport": true,
-        "detail": "app.signals.regime",
-        "documentation": {}
-    },
-    {
         "label": "ABC",
         "importPath": "abc",
         "description": "abc",
@@ -1569,6 +2073,22 @@
         "description": "enum",
         "isExtraImport": true,
         "detail": "enum",
+        "documentation": {}
+    },
+    {
+        "label": "ExpectedReturnPaperStrategy",
+        "importPath": "app.strategy.expected_return_strategy",
+        "description": "app.strategy.expected_return_strategy",
+        "isExtraImport": true,
+        "detail": "app.strategy.expected_return_strategy",
+        "documentation": {}
+    },
+    {
+        "label": "ExpectedReturnPaperStrategy",
+        "importPath": "app.strategy.expected_return_strategy",
+        "description": "app.strategy.expected_return_strategy",
+        "isExtraImport": true,
+        "detail": "app.strategy.expected_return_strategy",
         "documentation": {}
     },
     {
@@ -1657,6 +2177,14 @@
         "description": "app.learning.service",
         "isExtraImport": true,
         "detail": "app.learning.service",
+        "documentation": {}
+    },
+    {
+        "label": "backtest_pnl",
+        "importPath": "app.research.backtest",
+        "description": "app.research.backtest",
+        "isExtraImport": true,
+        "detail": "app.research.backtest",
         "documentation": {}
     },
     {
@@ -2033,7 +2561,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.backtest",
         "description": "apps.engine.app.research.backtest",
-        "peekOfCode": "def backtest_pnl(\n    data: pd.DataFrame,\n    oos_pred: np.ndarray,\n    oos_proba: np.ndarray,\n    mask: np.ndarray,\n    granularity: str,\n    cost_bps: float,\n    confidence_threshold: float = 0.0,\n) -> dict:\n    sub = data[mask]",
+        "peekOfCode": "def backtest_pnl(\n    data: pd.DataFrame,\n    oos_pred: np.ndarray,\n    oos_proba: np.ndarray,\n    mask: np.ndarray,\n    granularity: str,\n    cost_bps: float,\n    confidence_threshold: float = 0.0,\n    position_filter: np.ndarray | None = None,\n) -> dict:",
         "detail": "apps.engine.app.research.backtest",
         "documentation": {}
     },
@@ -2069,7 +2597,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.research.backtest",
         "description": "apps.engine.app.research.backtest",
-        "peekOfCode": "CONFIDENCE_THRESHOLDS = (0.0, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)\ndef _submask(mask: np.ndarray, start_frac: float, end_frac: float) -> np.ndarray:\n    \"\"\"A contiguous (time-ordered) slice of the evaluated rows.\"\"\"\n    idx = np.flatnonzero(mask)\n    lo = int(len(idx) * start_frac)\n    hi = int(len(idx) * end_frac)\n    out = np.zeros(len(mask), dtype=bool)\n    out[idx[lo:hi]] = True\n    return out\ndef run(",
+        "peekOfCode": "CONFIDENCE_THRESHOLDS = (0.0, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)\ndef _submask(mask: np.ndarray, start_frac: float, end_frac: float) -> np.ndarray:\n    \"\"\"A contiguous (time-ordered) slice of the evaluated rows.\"\"\"\n    idx = np.flatnonzero(mask)\n    lo = int(len(idx) * start_frac)\n    hi = int(len(idx) * end_frac)\n    out = np.zeros(len(mask), dtype=bool)\n    out[idx[lo:hi]] = True\n    return out\ndef _select_threshold(",
         "detail": "apps.engine.app.research.backtest",
         "documentation": {}
     },
@@ -2092,6 +2620,114 @@
         "documentation": {}
     },
     {
+        "label": "EventSimulation",
+        "kind": 6,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "class EventSimulation:\n    \"\"\"Internal marked-to-market result for one contiguous test segment.\"\"\"\n    index: pd.Index\n    equity_curve: np.ndarray\n    bar_returns: np.ndarray\n    trades: pd.DataFrame\n    active_bars: float\ndef build_expected_return_dataset(\n    candles: pd.DataFrame,\n    horizon: int = 24,",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_expected_return_dataset",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "def build_expected_return_dataset(\n    candles: pd.DataFrame,\n    horizon: int = 24,\n    macro_df: pd.DataFrame | None = None,\n    rate_df: pd.DataFrame | None = None,\n) -> tuple[pd.DataFrame, list[str]]:\n    \"\"\"Build causal features and the close-to-close forward-return target.\"\"\"\n    if horizon < 1:\n        raise ValueError(\"horizon must be at least one bar\")\n    features = build_features(candles, macro_df, rate_df)",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "build_completed_daily_momentum_filter",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "def build_completed_daily_momentum_filter(\n    candles: pd.DataFrame, lookback_days: int = 100\n) -> pd.Series:\n    \"\"\"Allow long entries only after positive completed-day momentum.\n    The daily signal is shifted by one observed trading day. Intraday bars on\n    day D therefore only use a daily close available before day D began.\n    \"\"\"\n    if lookback_days < 2:\n        raise ValueError(\"lookback_days must be at least two\")\n    if not isinstance(candles.index, pd.DatetimeIndex):",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "make_regressor",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "def make_regressor(params: dict | None = None) -> LGBMRegressor:\n    return LGBMRegressor(**(params or DEFAULT_REGRESSOR_PARAMS))\ndef _elapsed_days(index: pd.Index, start: int, end: int, bars_per_day: int) -> float:\n    nominal = (end - start) / bars_per_day\n    try:\n        elapsed = (index[end] - index[start]).total_seconds() / 86400.0\n    except (AttributeError, TypeError):\n        elapsed = nominal\n    # Calendar time is conservative around weekends and market closures.\n    return max(float(elapsed), float(nominal), 0.0)",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "simulate_event_strategy",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "def simulate_event_strategy(\n    data: pd.DataFrame,\n    predictions: np.ndarray,\n    horizon: int,\n    threshold: float | None,\n    granularity: str,\n    cost_bps_per_side: float,\n    financing_bps_per_day: float,\n    direction_mode: str = \"BOTH\",\n    position_filter: np.ndarray | None = None,",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "summarize_simulations",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "def summarize_simulations(simulations: list[EventSimulation]) -> dict:\n    \"\"\"Aggregate sequential test folds without allowing cross-fold trades.\"\"\"\n    if not simulations:\n        return {\n            \"bars\": 0,\n            \"trades\": 0,\n            \"exposure\": 0.0,\n            \"total_return\": 0.0,\n            \"sharpe_annualised\": 0.0,\n            \"max_drawdown\": 0.0,",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "causal_position_sizes",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "def causal_position_sizes(\n    data: pd.DataFrame,\n    target_annual_volatility: float | None,\n    granularity: str,\n    volatility_column: str = \"vol_20\",\n) -> np.ndarray | None:\n    \"\"\"Return causal, unlevered volatility-target position multipliers.\"\"\"\n    if target_annual_volatility is None:\n        return None\n    if not 0 < target_annual_volatility <= 1:",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "calibrate_latest_threshold",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "def calibrate_latest_threshold(\n    data: pd.DataFrame,\n    feature_columns: list[str],\n    horizon: int,\n    granularity: str,\n    cost_bps_per_side: float,\n    financing_bps_per_day: float,\n    direction_mode: str,\n    target_annual_volatility: float | None,\n    stop_loss_pct: float,",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "run_nested_walk_forward",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "def run_nested_walk_forward(\n    data: pd.DataFrame,\n    feature_columns: list[str],\n    horizon: int = 24,\n    n_splits: int = 5,\n    granularity: str = \"H1\",\n    cost_bps_per_side: float = 1.5,\n    financing_bps_per_day: float = 1.6,\n    validation_fraction: float = 0.2,\n    minimum_validation_trades: int = 15,",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "DEFAULT_REGRESSOR_PARAMS",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "DEFAULT_REGRESSOR_PARAMS = {\n    \"n_estimators\": 400,\n    \"learning_rate\": 0.05,\n    \"num_leaves\": 31,\n    \"min_child_samples\": 40,\n    \"subsample\": 0.8,\n    \"colsample_bytree\": 0.8,\n    \"reg_lambda\": 1.0,\n    \"random_state\": 42,\n    \"n_jobs\": -1,",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "EXPECTED_MOVE_THRESHOLDS",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "EXPECTED_MOVE_THRESHOLDS = (0.001, 0.002, 0.003, 0.004, 0.005, 0.0075, 0.01)\n_BARS_PER_DAY = {\n    \"M1\": 24 * 60,\n    \"M5\": 24 * 12,\n    \"M15\": 24 * 4,\n    \"M30\": 24 * 2,\n    \"H1\": 24,\n    \"H4\": 6,\n    \"D1\": 1,\n}",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "_BARS_PER_DAY",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.expected_return",
+        "description": "apps.engine.app.research.expected_return",
+        "peekOfCode": "_BARS_PER_DAY = {\n    \"M1\": 24 * 60,\n    \"M5\": 24 * 12,\n    \"M15\": 24 * 4,\n    \"M30\": 24 * 2,\n    \"H1\": 24,\n    \"H4\": 6,\n    \"D1\": 1,\n}\n@dataclass",
+        "detail": "apps.engine.app.research.expected_return",
+        "documentation": {}
+    },
+    {
         "label": "build_features",
         "kind": 2,
         "importPath": "apps.engine.app.research.features",
@@ -2105,7 +2741,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.features",
         "description": "apps.engine.app.research.features",
-        "peekOfCode": "def feature_columns(frame: pd.DataFrame) -> list[str]:\n    return [c for c in frame.columns if c not in NON_FEATURE]",
+        "peekOfCode": "def feature_columns(frame: pd.DataFrame) -> list[str]:\n    return [\n        c\n        for c in frame.columns\n        if c not in NON_FEATURE and not c.startswith(\"_regime_\")\n    ]",
         "detail": "apps.engine.app.research.features",
         "documentation": {}
     },
@@ -2114,7 +2750,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.research.features",
         "description": "apps.engine.app.research.features",
-        "peekOfCode": "NON_FEATURE = {\"label\", \"fwd_ret\", \"next_ret\"}\ndef _rsi(close: pd.Series, period: int = 14) -> pd.Series:\n    delta = close.diff()\n    gain = delta.clip(lower=0).rolling(period).mean()\n    loss = (-delta.clip(upper=0)).rolling(period).mean()\n    rs = gain / loss.replace(0, np.nan)\n    return 100 - 100 / (1 + rs)\ndef _atr(df: pd.DataFrame, period: int = 14) -> pd.Series:\n    prev_close = df[\"close\"].shift(1)\n    true_range = pd.concat(",
+        "peekOfCode": "NON_FEATURE = {\"label\", \"fwd_ret\", \"next_ret\", \"future_return\"}\ndef _rsi(close: pd.Series, period: int = 14) -> pd.Series:\n    delta = close.diff()\n    gain = delta.clip(lower=0).rolling(period).mean()\n    loss = (-delta.clip(upper=0)).rolling(period).mean()\n    rs = gain / loss.replace(0, np.nan)\n    return 100 - 100 / (1 + rs)\ndef _atr(df: pd.DataFrame, period: int = 14) -> pd.Series:\n    prev_close = df[\"close\"].shift(1)\n    true_range = pd.concat(",
         "detail": "apps.engine.app.research.features",
         "documentation": {}
     },
@@ -2155,6 +2791,51 @@
         "documentation": {}
     },
     {
+        "label": "build_historical_regime_features",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.regime_validation",
+        "description": "apps.engine.app.research.regime_validation",
+        "peekOfCode": "def build_historical_regime_features(df: pd.DataFrame) -> pd.DataFrame:\n    \"\"\"Recreate the live gate inputs at every bar without future data.\"\"\"\n    close = df[\"close\"].astype(float)\n    returns = close.pct_change()\n    out = pd.DataFrame(index=df.index)\n    out[\"_regime_momentum_12\"] = close.pct_change(12)\n    window = 20\n    x = np.arange(window, dtype=float)\n    weights = x - x.mean()\n    denominator = float(np.dot(weights, weights))",
+        "detail": "apps.engine.app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "evaluate_regime_gate",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.regime_validation",
+        "description": "apps.engine.app.research.regime_validation",
+        "peekOfCode": "def evaluate_regime_gate(\n    data: pd.DataFrame,\n    oos_pred: np.ndarray,\n    mask: np.ndarray,\n) -> pd.DataFrame:\n    \"\"\"Evaluate BUY/SELL compatibility for every out-of-sample prediction.\"\"\"\n    missing = sorted(set(REGIME_FEATURE_COLUMNS) - set(data.columns))\n    if missing:\n        raise ValueError(f\"Colonnes de regime absentes: {', '.join(missing)}\")\n    if len(data) != len(oos_pred) or len(data) != len(mask):",
+        "detail": "apps.engine.app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "summarize_gate_impact",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.regime_validation",
+        "description": "apps.engine.app.research.regime_validation",
+        "peekOfCode": "def summarize_gate_impact(\n    evaluation: pd.DataFrame,\n    oos_pred: np.ndarray,\n    oos_proba: np.ndarray,\n    test_mask: np.ndarray,\n    confidence_threshold: float,\n    baseline: dict,\n    filtered: dict,\n) -> dict:\n    \"\"\"Explain what the gate removed and how held-out PnL changed.\"\"\"",
+        "detail": "apps.engine.app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "REGIME_FEATURE_COLUMNS",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.regime_validation",
+        "description": "apps.engine.app.research.regime_validation",
+        "peekOfCode": "REGIME_FEATURE_COLUMNS = (\n    \"_regime_momentum_12\",\n    \"_regime_trend_strength\",\n    \"_regime_zscore_20\",\n    \"_regime_volatility_ratio_5_20\",\n    \"_regime_atr_pct_14\",\n)\n_SUMMARY_COLUMNS = {\n    \"momentum_12\": \"_regime_momentum_12\",\n    \"trend_strength\": \"_regime_trend_strength\",",
+        "detail": "apps.engine.app.research.regime_validation",
+        "documentation": {}
+    },
+    {
+        "label": "_SUMMARY_COLUMNS",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.regime_validation",
+        "description": "apps.engine.app.research.regime_validation",
+        "peekOfCode": "_SUMMARY_COLUMNS = {\n    \"momentum_12\": \"_regime_momentum_12\",\n    \"trend_strength\": \"_regime_trend_strength\",\n    \"zscore_20\": \"_regime_zscore_20\",\n    \"volatility_ratio_5_20\": \"_regime_volatility_ratio_5_20\",\n    \"atr_pct_14\": \"_regime_atr_pct_14\",\n}\ndef build_historical_regime_features(df: pd.DataFrame) -> pd.DataFrame:\n    \"\"\"Recreate the live gate inputs at every bar without future data.\"\"\"\n    close = df[\"close\"].astype(float)",
+        "detail": "apps.engine.app.research.regime_validation",
+        "documentation": {}
+    },
+    {
         "label": "main",
         "kind": 2,
         "importPath": "apps.engine.app.research.run",
@@ -2170,6 +2851,51 @@
         "description": "apps.engine.app.research.run",
         "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef main() -> None:\n    parser = argparse.ArgumentParser(description=\"NexaGold walk-forward backtest\")\n    parser.add_argument(\"--granularity\", default=\"M5\")\n    parser.add_argument(\n        \"--labeling\", choices=[\"fixed\", \"triple_barrier\"], default=\"fixed\"\n    )\n    parser.add_argument(\"--horizon\", type=int, default=12)\n    parser.add_argument(\"--threshold\", type=float, default=0.001)\n    parser.add_argument(\"--vol-mult\", type=float, default=1.0)",
         "detail": "apps.engine.app.research.run",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.train_expected_return_paper",
+        "description": "apps.engine.app.research.train_expected_return_paper",
+        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(description=\"Train expected-return paper model\")\n    parser.add_argument(\"--granularity\", default=\"H1\")\n    parser.add_argument(\"--horizon\", type=int, default=24)\n    parser.add_argument(\"--folds\", type=int, default=5)\n    parser.add_argument(\"--cost-bps-per-side\", type=float, default=1.5)\n    parser.add_argument(\"--financing-bps-per-day\", type=float, default=1.6)\n    parser.add_argument(\"--target-annual-volatility\", type=float, default=0.15)\n    parser.add_argument(\"--stop-loss-pct\", type=float, default=0.005)\n    parser.add_argument(\"--stop-loss-atr-multiplier\", type=float, default=3.0)",
+        "detail": "apps.engine.app.research.train_expected_return_paper",
+        "documentation": {}
+    },
+    {
+        "label": "MODELS_DIR",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.train_expected_return_paper",
+        "description": "apps.engine.app.research.train_expected_return_paper",
+        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef main() -> None:\n    parser = argparse.ArgumentParser(description=\"Train expected-return paper model\")\n    parser.add_argument(\"--granularity\", default=\"H1\")\n    parser.add_argument(\"--horizon\", type=int, default=24)\n    parser.add_argument(\"--folds\", type=int, default=5)\n    parser.add_argument(\"--cost-bps-per-side\", type=float, default=1.5)\n    parser.add_argument(\"--financing-bps-per-day\", type=float, default=1.6)\n    parser.add_argument(\"--target-annual-volatility\", type=float, default=0.15)\n    parser.add_argument(\"--stop-loss-pct\", type=float, default=0.005)",
+        "detail": "apps.engine.app.research.train_expected_return_paper",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.validate_expected_return",
+        "description": "apps.engine.app.research.validate_expected_return",
+        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(\n        description=\"Validation imbriquee read-only de la strategie de rendement attendu\"\n    )\n    parser.add_argument(\"--granularity\", default=\"H1\")\n    parser.add_argument(\"--horizon\", type=int, default=24)\n    parser.add_argument(\"--folds\", type=int, default=5)\n    parser.add_argument(\"--cost-bps-per-side\", type=float, default=1.5)\n    parser.add_argument(\"--financing-bps-per-day\", type=float, default=1.6)\n    parser.add_argument(\"--minimum-validation-trades\", type=int, default=15)",
+        "detail": "apps.engine.app.research.validate_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.validate_regime",
+        "description": "apps.engine.app.research.validate_regime",
+        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(description=\"Validation read-only du filtre regime\")\n    parser.add_argument(\"--granularity\", default=\"H1\")\n    parser.add_argument(\"--folds\", type=int, default=5)\n    parser.add_argument(\"--cost-bps\", type=float)\n    parser.add_argument(\"--output\", type=Path)\n    args = parser.parse_args()\n    model_dir = MODELS_DIR / args.granularity\n    meta = _read_json(model_dir / \"meta.json\")\n    previous_report = _read_json(model_dir / \"report.json\")",
+        "detail": "apps.engine.app.research.validate_regime",
+        "documentation": {}
+    },
+    {
+        "label": "MODELS_DIR",
+        "kind": 5,
+        "importPath": "apps.engine.app.research.validate_regime",
+        "description": "apps.engine.app.research.validate_regime",
+        "peekOfCode": "MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef _read_json(path: Path) -> dict:\n    return json.loads(path.read_text(encoding=\"utf-8\")) if path.exists() else {}\ndef main() -> None:\n    parser = argparse.ArgumentParser(description=\"Validation read-only du filtre regime\")\n    parser.add_argument(\"--granularity\", default=\"H1\")\n    parser.add_argument(\"--folds\", type=int, default=5)\n    parser.add_argument(\"--cost-bps\", type=float)\n    parser.add_argument(\"--output\", type=Path)\n    args = parser.parse_args()",
+        "detail": "apps.engine.app.research.validate_regime",
         "documentation": {}
     },
     {
@@ -2456,7 +3182,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.strategy.base",
         "description": "apps.engine.app.strategy.base",
-        "peekOfCode": "class Strategy(ABC):\n    \"\"\"A strategy turns recent candles into a trading signal. It never talks\n    to the broker directly — execution and risk are the engine's job.\"\"\"\n    name: str = \"base\"\n    # Whether evaluate() needs the macro candles (the Trader fetches them on demand).\n    needs_macro: bool = False\n    @abstractmethod\n    def evaluate(\n        self, candles: list[dict], macro_candles: list[dict] | None = None\n    ) -> Signal:",
+        "peekOfCode": "class Strategy(ABC):\n    \"\"\"A strategy turns recent candles into a trading signal. It never talks\n    to the broker directly — execution and risk are the engine's job.\"\"\"\n    name: str = \"base\"\n    # Whether evaluate() needs the macro candles (the Trader fetches them on demand).\n    needs_macro: bool = False\n    paper_only: bool = False\n    paper_horizon_hours: int | None = None\n    @abstractmethod\n    def evaluate(",
         "detail": "apps.engine.app.strategy.base",
         "documentation": {}
     },
@@ -2470,11 +3196,29 @@
         "documentation": {}
     },
     {
+        "label": "ExpectedReturnPaperStrategy",
+        "kind": 6,
+        "importPath": "apps.engine.app.strategy.expected_return_strategy",
+        "description": "apps.engine.app.strategy.expected_return_strategy",
+        "peekOfCode": "class ExpectedReturnPaperStrategy(Strategy):\n    name = \"expected-return-paper\"\n    paper_only = True\n    def __init__(self, model_dir: str | Path, configured_granularity: str):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        self._meta = json.loads(\n            (model_dir / \"meta.json\").read_text(encoding=\"utf-8\")\n        )\n        if self._meta.get(\"model_kind\") != \"expected_return_regressor\":",
+        "detail": "apps.engine.app.strategy.expected_return_strategy",
+        "documentation": {}
+    },
+    {
+        "label": "_BARS_PER_DAY",
+        "kind": 5,
+        "importPath": "apps.engine.app.strategy.expected_return_strategy",
+        "description": "apps.engine.app.strategy.expected_return_strategy",
+        "peekOfCode": "_BARS_PER_DAY = {\"M1\": 1440, \"M5\": 288, \"M15\": 96, \"M30\": 48, \"H1\": 24, \"H4\": 6, \"D1\": 1}\nclass ExpectedReturnPaperStrategy(Strategy):\n    name = \"expected-return-paper\"\n    paper_only = True\n    def __init__(self, model_dir: str | Path, configured_granularity: str):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        self._meta = json.loads(\n            (model_dir / \"meta.json\").read_text(encoding=\"utf-8\")\n        )",
+        "detail": "apps.engine.app.strategy.expected_return_strategy",
+        "documentation": {}
+    },
+    {
         "label": "build_strategy",
         "kind": 2,
         "importPath": "apps.engine.app.strategy.factory",
         "description": "apps.engine.app.strategy.factory",
-        "peekOfCode": "def build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"lightgbm\":\n        # Prefer the registry champion (phase 5); fall back to a flat model\n        # dir (phase 2 CLI output) for backward compatibility.\n        champion = ModelRegistry(_MODELS_DIR, settings.model_granularity).champion_dir()\n        if champion is not None:\n            logger.info(\"Stratégie LightGBM (champion) chargée depuis %s\", champion)\n            return LightGBMStrategy(champion)\n        legacy = _MODELS_DIR / settings.model_granularity\n        if (legacy / \"model.joblib\").exists():",
+        "peekOfCode": "def build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"expected_return_paper\":\n        if settings.capital_env != \"demo\":\n            raise RuntimeError(\n                \"expected_return_paper est strictement interdit hors CAPITAL_ENV=demo\"\n            )\n        paper_dir = (\n            _MODELS_DIR / settings.model_granularity / \"expected_return_paper\"\n        )\n        if (paper_dir / \"model.joblib\").exists() and (paper_dir / \"meta.json\").exists():",
         "detail": "apps.engine.app.strategy.factory",
         "documentation": {}
     },
@@ -2483,7 +3227,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.strategy.factory",
         "description": "apps.engine.app.strategy.factory",
-        "peekOfCode": "logger = logging.getLogger(\"nexagold.strategy\")\n_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"lightgbm\":\n        # Prefer the registry champion (phase 5); fall back to a flat model\n        # dir (phase 2 CLI output) for backward compatibility.\n        champion = ModelRegistry(_MODELS_DIR, settings.model_granularity).champion_dir()\n        if champion is not None:\n            logger.info(\"Stratégie LightGBM (champion) chargée depuis %s\", champion)\n            return LightGBMStrategy(champion)",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.strategy\")\n_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"expected_return_paper\":\n        if settings.capital_env != \"demo\":\n            raise RuntimeError(\n                \"expected_return_paper est strictement interdit hors CAPITAL_ENV=demo\"\n            )\n        paper_dir = (\n            _MODELS_DIR / settings.model_granularity / \"expected_return_paper\"",
         "detail": "apps.engine.app.strategy.factory",
         "documentation": {}
     },
@@ -2492,7 +3236,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.strategy.factory",
         "description": "apps.engine.app.strategy.factory",
-        "peekOfCode": "_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"lightgbm\":\n        # Prefer the registry champion (phase 5); fall back to a flat model\n        # dir (phase 2 CLI output) for backward compatibility.\n        champion = ModelRegistry(_MODELS_DIR, settings.model_granularity).champion_dir()\n        if champion is not None:\n            logger.info(\"Stratégie LightGBM (champion) chargée depuis %s\", champion)\n            return LightGBMStrategy(champion)\n        legacy = _MODELS_DIR / settings.model_granularity",
+        "peekOfCode": "_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"expected_return_paper\":\n        if settings.capital_env != \"demo\":\n            raise RuntimeError(\n                \"expected_return_paper est strictement interdit hors CAPITAL_ENV=demo\"\n            )\n        paper_dir = (\n            _MODELS_DIR / settings.model_granularity / \"expected_return_paper\"\n        )",
         "detail": "apps.engine.app.strategy.factory",
         "documentation": {}
     },
@@ -2674,6 +3418,276 @@
         "description": "apps.engine.tests_manual.test_dukascopy_parse",
         "peekOfCode": "m1 = aggregate_ticks(ticks, \"M1\")\nassert len(m1) == 3, f\"attendu 3 bougies M1, obtenu {len(m1)}\"\nassert all(c[\"volume\"] == 1 for c in m1), m1\nprint(\"OK: parse_ticks + aggregate_ticks valides\")",
         "detail": "apps.engine.tests_manual.test_dukascopy_parse",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "index = pd.date_range(\"2026-01-01\", periods=90, freq=\"h\")\nclose = pd.Series(\n    100.0 + np.linspace(0.0, 10.0, len(index)) + np.sin(np.arange(len(index)) / 2.0),\n    index=index,\n)\ncandles = pd.DataFrame(\n    {\n        \"open\": close - 0.1,\n        \"high\": close + 0.5,\n        \"low\": close - 0.5,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "close",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "close = pd.Series(\n    100.0 + np.linspace(0.0, 10.0, len(index)) + np.sin(np.arange(len(index)) / 2.0),\n    index=index,\n)\ncandles = pd.DataFrame(\n    {\n        \"open\": close - 0.1,\n        \"high\": close + 0.5,\n        \"low\": close - 0.5,\n        \"close\": close,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "candles",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "candles = pd.DataFrame(\n    {\n        \"open\": close - 0.1,\n        \"high\": close + 0.5,\n        \"low\": close - 0.5,\n        \"close\": close,\n        \"volume\": 100.0 + np.sin(np.arange(len(index))) * 10.0,\n    },\n    index=index,\n)",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "first_time",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "first_time = dataset.index[0]\nfirst_position = candles.index.get_loc(first_time)\nexpected_target = candles[\"close\"].iloc[first_position + 2] / candles[\"close\"].iloc[first_position] - 1.0\nassert np.isclose(dataset.loc[first_time, \"_future_return\"], expected_target)\ndaily_index = pd.date_range(\"2025-01-01\", periods=110, freq=\"D\")\ndaily_candles = pd.DataFrame(\n    {\"close\": np.linspace(100.0, 200.0, len(daily_index))}, index=daily_index\n)\ndaily_filter = build_completed_daily_momentum_filter(daily_candles, lookback_days=100)\nassert daily_filter.iloc[:101].isna().all()",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "first_position",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "first_position = candles.index.get_loc(first_time)\nexpected_target = candles[\"close\"].iloc[first_position + 2] / candles[\"close\"].iloc[first_position] - 1.0\nassert np.isclose(dataset.loc[first_time, \"_future_return\"], expected_target)\ndaily_index = pd.date_range(\"2025-01-01\", periods=110, freq=\"D\")\ndaily_candles = pd.DataFrame(\n    {\"close\": np.linspace(100.0, 200.0, len(daily_index))}, index=daily_index\n)\ndaily_filter = build_completed_daily_momentum_filter(daily_candles, lookback_days=100)\nassert daily_filter.iloc[:101].isna().all()\nassert daily_filter.iloc[101:].all()",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "expected_target",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "expected_target = candles[\"close\"].iloc[first_position + 2] / candles[\"close\"].iloc[first_position] - 1.0\nassert np.isclose(dataset.loc[first_time, \"_future_return\"], expected_target)\ndaily_index = pd.date_range(\"2025-01-01\", periods=110, freq=\"D\")\ndaily_candles = pd.DataFrame(\n    {\"close\": np.linspace(100.0, 200.0, len(daily_index))}, index=daily_index\n)\ndaily_filter = build_completed_daily_momentum_filter(daily_candles, lookback_days=100)\nassert daily_filter.iloc[:101].isna().all()\nassert daily_filter.iloc[101:].all()\nevent_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "daily_index",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "daily_index = pd.date_range(\"2025-01-01\", periods=110, freq=\"D\")\ndaily_candles = pd.DataFrame(\n    {\"close\": np.linspace(100.0, 200.0, len(daily_index))}, index=daily_index\n)\ndaily_filter = build_completed_daily_momentum_filter(daily_candles, lookback_days=100)\nassert daily_filter.iloc[:101].isna().all()\nassert daily_filter.iloc[101:].all()\nevent_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")\nevent_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\npredictions = np.full(len(event_data), 0.01)",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "daily_candles",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "daily_candles = pd.DataFrame(\n    {\"close\": np.linspace(100.0, 200.0, len(daily_index))}, index=daily_index\n)\ndaily_filter = build_completed_daily_momentum_filter(daily_candles, lookback_days=100)\nassert daily_filter.iloc[:101].isna().all()\nassert daily_filter.iloc[101:].all()\nevent_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")\nevent_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "daily_filter",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "daily_filter = build_completed_daily_momentum_filter(daily_candles, lookback_days=100)\nassert daily_filter.iloc[:101].isna().all()\nassert daily_filter.iloc[101:].all()\nevent_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")\nevent_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "event_index",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "event_index = pd.date_range(\"2026-01-05\", periods=5, freq=\"h\")\nevent_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "event_data",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "event_data = pd.DataFrame({\"_close\": [100.0, 101.0, 102.0, 103.0, 104.0]}, index=event_index)\npredictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,\n    financing_bps_per_day=0.0,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "predictions",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "predictions = np.full(len(event_data), 0.01)\nfree = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,\n    financing_bps_per_day=0.0,\n)",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "free",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "free = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,\n    financing_bps_per_day=0.0,\n)\nfree_metrics = summarize_simulations([free])",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "free_metrics",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "free_metrics = summarize_simulations([free])\nassert len(free.trades) == 2\nassert free.trades[\"entry_position\"].tolist() == [0, 2]\nassert free.trades[\"exit_position\"].tolist() == [2, 4]\nassert np.isclose(free_metrics[\"total_return\"], 0.04)\ncostly = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "costly",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "costly = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=5.0,\n    financing_bps_per_day=2.0,\n)\ncostly_metrics = summarize_simulations([costly])",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "costly_metrics",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "costly_metrics = summarize_simulations([costly])\nassert costly_metrics[\"total_return\"] < free_metrics[\"total_return\"]\nassert costly_metrics[\"expectancy_per_trade\"] < free_metrics[\"expectancy_per_trade\"]\nhalf_sized = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "half_sized",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "half_sized = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,\n    financing_bps_per_day=0.0,\n    position_sizes=np.full(len(event_data), 0.5),\n)",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "half_sized_metrics",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "half_sized_metrics = summarize_simulations([half_sized])\nassert 0 < half_sized_metrics[\"total_return\"] < free_metrics[\"total_return\"]\nassert np.isclose(half_sized.trades[\"position_size\"], 0.5).all()\nflat = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=None,\n    granularity=\"H1\",\n    cost_bps_per_side=5.0,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "flat",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "flat = simulate_event_strategy(\n    event_data,\n    predictions,\n    horizon=2,\n    threshold=None,\n    granularity=\"H1\",\n    cost_bps_per_side=5.0,\n    financing_bps_per_day=2.0,\n)\nflat_metrics = summarize_simulations([flat])",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "flat_metrics",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "flat_metrics = summarize_simulations([flat])\nassert flat_metrics[\"trades\"] == 0\nassert flat_metrics[\"total_return\"] == 0.0\nshort_predictions = np.full(len(event_data), -0.01)\nlong_only = simulate_event_strategy(\n    event_data,\n    short_predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "short_predictions",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "short_predictions = np.full(len(event_data), -0.01)\nlong_only = simulate_event_strategy(\n    event_data,\n    short_predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,\n    financing_bps_per_day=0.0,\n    direction_mode=\"LONG_ONLY\",",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "long_only",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "long_only = simulate_event_strategy(\n    event_data,\n    short_predictions,\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,\n    financing_bps_per_day=0.0,\n    direction_mode=\"LONG_ONLY\",\n)",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "bracket_index",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "bracket_index = pd.date_range(\"2026-01-05\", periods=3, freq=\"h\")\nbracket_data = pd.DataFrame(\n    {\n        \"_close\": [100.0, 100.5, 101.0],\n        \"_high\": [100.0, 102.0, 101.0],\n        \"_low\": [100.0, 98.0, 101.0],\n    },\n    index=bracket_index,\n)\nbracket = simulate_event_strategy(",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "bracket_data",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "bracket_data = pd.DataFrame(\n    {\n        \"_close\": [100.0, 100.5, 101.0],\n        \"_high\": [100.0, 102.0, 101.0],\n        \"_low\": [100.0, 98.0, 101.0],\n    },\n    index=bracket_index,\n)\nbracket = simulate_event_strategy(\n    bracket_data,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "bracket",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return",
+        "description": "apps.engine.tests_manual.test_expected_return",
+        "peekOfCode": "bracket = simulate_event_strategy(\n    bracket_data,\n    np.full(len(bracket_data), 0.01),\n    horizon=2,\n    threshold=0.005,\n    granularity=\"H1\",\n    cost_bps_per_side=0.0,\n    financing_bps_per_day=0.0,\n    stop_loss_pct=0.01,\n    risk_reward_ratio=1.5,",
+        "detail": "apps.engine.tests_manual.test_expected_return",
+        "documentation": {}
+    },
+    {
+        "label": "FixedPaperStrategy",
+        "kind": 6,
+        "importPath": "apps.engine.tests_manual.test_expected_return_paper",
+        "description": "apps.engine.tests_manual.test_expected_return_paper",
+        "peekOfCode": "class FixedPaperStrategy(Strategy):\n    name = \"expected-return-paper\"\n    paper_only = True\n    paper_horizon_hours = 24\n    def evaluate(self, candles, macro_candles=None) -> Signal:\n        return Signal(Action.BUY, 0.7, \"paper test\", position_size=0.5)\nclass FakeDecisions:\n    async def insert(self, strategy, signal):\n        return \"decision-1\"\n    async def mark_executed(self, decision_id, trade_id):",
+        "detail": "apps.engine.tests_manual.test_expected_return_paper",
+        "documentation": {}
+    },
+    {
+        "label": "FakeDecisions",
+        "kind": 6,
+        "importPath": "apps.engine.tests_manual.test_expected_return_paper",
+        "description": "apps.engine.tests_manual.test_expected_return_paper",
+        "peekOfCode": "class FakeDecisions:\n    async def insert(self, strategy, signal):\n        return \"decision-1\"\n    async def mark_executed(self, decision_id, trade_id):\n        raise AssertionError(\"A live-blocked decision cannot execute\")\nclass FakeTrades:\n    def __init__(self, rows=None):\n        self.rows = rows or []\n        self.closed = []\n    async def open_trades(self):",
+        "detail": "apps.engine.tests_manual.test_expected_return_paper",
+        "documentation": {}
+    },
+    {
+        "label": "FakeTrades",
+        "kind": 6,
+        "importPath": "apps.engine.tests_manual.test_expected_return_paper",
+        "description": "apps.engine.tests_manual.test_expected_return_paper",
+        "peekOfCode": "class FakeTrades:\n    def __init__(self, rows=None):\n        self.rows = rows or []\n        self.closed = []\n    async def open_trades(self):\n        return self.rows\n    async def close_trade(self, trade_id, exit_price, pnl, closed_at):\n        self.closed.append((trade_id, exit_price, pnl, closed_at))\n    async def paper_validation(self, strategy):\n        return {",
+        "detail": "apps.engine.tests_manual.test_expected_return_paper",
+        "documentation": {}
+    },
+    {
+        "label": "FakeBroker",
+        "kind": 6,
+        "importPath": "apps.engine.tests_manual.test_expected_return_paper",
+        "description": "apps.engine.tests_manual.test_expected_return_paper",
+        "peekOfCode": "class FakeBroker:\n    def __init__(self):\n        self.price_calls = 0\n        self.closed_deals = []\n    async def get_candles(self, **kwargs):\n        return [{\"time\": \"2026-07-14T00:00:00\", \"close\": 100.0}]\n    async def get_price(self):\n        self.price_calls += 1\n        raise AssertionError(\"Paper-only live lock must run before price/order calls\")\n    async def close_position_by_deal_id(self, deal_id):",
+        "detail": "apps.engine.tests_manual.test_expected_return_paper",
+        "documentation": {}
+    },
+    {
+        "label": "MODEL_DIR",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_expected_return_paper",
+        "description": "apps.engine.tests_manual.test_expected_return_paper",
+        "peekOfCode": "MODEL_DIR = Path(__file__).resolve().parents[1] / \"models\" / \"H1\" / \"expected_return_paper\"\nclass FixedPaperStrategy(Strategy):\n    name = \"expected-return-paper\"\n    paper_only = True\n    paper_horizon_hours = 24\n    def evaluate(self, candles, macro_candles=None) -> Signal:\n        return Signal(Action.BUY, 0.7, \"paper test\", position_size=0.5)\nclass FakeDecisions:\n    async def insert(self, strategy, signal):\n        return \"decision-1\"",
+        "detail": "apps.engine.tests_manual.test_expected_return_paper",
         "documentation": {}
     },
     {
@@ -2884,6 +3898,141 @@
         "documentation": {}
     },
     {
+        "label": "index",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "index = pd.date_range(\"2026-01-01\", periods=80, freq=\"h\")\nclose = pd.Series(np.linspace(100.0, 120.0, len(index)), index=index)\ncandles = pd.DataFrame(\n    {\n        \"open\": close - 0.1,\n        \"high\": close + 0.5,\n        \"low\": close - 0.5,\n        \"close\": close,\n        \"volume\": 100.0,\n    },",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "close",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "close = pd.Series(np.linspace(100.0, 120.0, len(index)), index=index)\ncandles = pd.DataFrame(\n    {\n        \"open\": close - 0.1,\n        \"high\": close + 0.5,\n        \"low\": close - 0.5,\n        \"close\": close,\n        \"volume\": 100.0,\n    },\n    index=index,",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "candles",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "candles = pd.DataFrame(\n    {\n        \"open\": close - 0.1,\n        \"high\": close + 0.5,\n        \"low\": close - 0.5,\n        \"close\": close,\n        \"volume\": 100.0,\n    },\n    index=index,\n)",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "regime_features",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "regime_features = build_historical_regime_features(candles).dropna()\nassert len(regime_features) > 0\nassert set(REGIME_FEATURE_COLUMNS).issubset(regime_features.columns)\nassert not set(REGIME_FEATURE_COLUMNS).intersection(feature_columns(regime_features))\nmask = np.ones(len(regime_features), dtype=bool)\nbuy_pred = np.full(len(regime_features), UP, dtype=int)\nsell_pred = np.full(len(regime_features), DOWN, dtype=int)\nbuy_evaluation = evaluate_regime_gate(regime_features, buy_pred, mask)\nassert buy_evaluation[\"allowed\"].all(), buy_evaluation[\"status\"].value_counts()\nassert set(buy_evaluation[\"agreement\"]) == {\"ALIGNED\"}",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "mask",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "mask = np.ones(len(regime_features), dtype=bool)\nbuy_pred = np.full(len(regime_features), UP, dtype=int)\nsell_pred = np.full(len(regime_features), DOWN, dtype=int)\nbuy_evaluation = evaluate_regime_gate(regime_features, buy_pred, mask)\nassert buy_evaluation[\"allowed\"].all(), buy_evaluation[\"status\"].value_counts()\nassert set(buy_evaluation[\"agreement\"]) == {\"ALIGNED\"}\nsell_evaluation = evaluate_regime_gate(regime_features, sell_pred, mask)\nassert not sell_evaluation[\"allowed\"].any(), sell_evaluation[\"status\"].value_counts()\nassert set(sell_evaluation[\"agreement\"]) == {\"CONFLICT\"}\ndata = regime_features.copy()",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "buy_pred",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "buy_pred = np.full(len(regime_features), UP, dtype=int)\nsell_pred = np.full(len(regime_features), DOWN, dtype=int)\nbuy_evaluation = evaluate_regime_gate(regime_features, buy_pred, mask)\nassert buy_evaluation[\"allowed\"].all(), buy_evaluation[\"status\"].value_counts()\nassert set(buy_evaluation[\"agreement\"]) == {\"ALIGNED\"}\nsell_evaluation = evaluate_regime_gate(regime_features, sell_pred, mask)\nassert not sell_evaluation[\"allowed\"].any(), sell_evaluation[\"status\"].value_counts()\nassert set(sell_evaluation[\"agreement\"]) == {\"CONFLICT\"}\ndata = regime_features.copy()\ndata[\"next_ret\"] = 0.001",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "sell_pred",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "sell_pred = np.full(len(regime_features), DOWN, dtype=int)\nbuy_evaluation = evaluate_regime_gate(regime_features, buy_pred, mask)\nassert buy_evaluation[\"allowed\"].all(), buy_evaluation[\"status\"].value_counts()\nassert set(buy_evaluation[\"agreement\"]) == {\"ALIGNED\"}\nsell_evaluation = evaluate_regime_gate(regime_features, sell_pred, mask)\nassert not sell_evaluation[\"allowed\"].any(), sell_evaluation[\"status\"].value_counts()\nassert set(sell_evaluation[\"agreement\"]) == {\"CONFLICT\"}\ndata = regime_features.copy()\ndata[\"next_ret\"] = 0.001\nproba = np.zeros((len(data), 3))",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "buy_evaluation",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "buy_evaluation = evaluate_regime_gate(regime_features, buy_pred, mask)\nassert buy_evaluation[\"allowed\"].all(), buy_evaluation[\"status\"].value_counts()\nassert set(buy_evaluation[\"agreement\"]) == {\"ALIGNED\"}\nsell_evaluation = evaluate_regime_gate(regime_features, sell_pred, mask)\nassert not sell_evaluation[\"allowed\"].any(), sell_evaluation[\"status\"].value_counts()\nassert set(sell_evaluation[\"agreement\"]) == {\"CONFLICT\"}\ndata = regime_features.copy()\ndata[\"next_ret\"] = 0.001\nproba = np.zeros((len(data), 3))\nproba[:, DOWN] = 0.9",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "sell_evaluation",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "sell_evaluation = evaluate_regime_gate(regime_features, sell_pred, mask)\nassert not sell_evaluation[\"allowed\"].any(), sell_evaluation[\"status\"].value_counts()\nassert set(sell_evaluation[\"agreement\"]) == {\"CONFLICT\"}\ndata = regime_features.copy()\ndata[\"next_ret\"] = 0.001\nproba = np.zeros((len(data), 3))\nproba[:, DOWN] = 0.9\nproba[:, UP] = 0.1\nbaseline = backtest_pnl(\n    data,",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "data",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "data = regime_features.copy()\ndata[\"next_ret\"] = 0.001\nproba = np.zeros((len(data), 3))\nproba[:, DOWN] = 0.9\nproba[:, UP] = 0.1\nbaseline = backtest_pnl(\n    data,\n    sell_pred,\n    proba,\n    mask,",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "data[\"next_ret\"]",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "data[\"next_ret\"] = 0.001\nproba = np.zeros((len(data), 3))\nproba[:, DOWN] = 0.9\nproba[:, UP] = 0.1\nbaseline = backtest_pnl(\n    data,\n    sell_pred,\n    proba,\n    mask,\n    \"H1\",",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "proba",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "proba = np.zeros((len(data), 3))\nproba[:, DOWN] = 0.9\nproba[:, UP] = 0.1\nbaseline = backtest_pnl(\n    data,\n    sell_pred,\n    proba,\n    mask,\n    \"H1\",\n    cost_bps=2.0,",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "baseline",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "baseline = backtest_pnl(\n    data,\n    sell_pred,\n    proba,\n    mask,\n    \"H1\",\n    cost_bps=2.0,\n    confidence_threshold=0.8,\n)\nfiltered = backtest_pnl(",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "filtered",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "filtered = backtest_pnl(\n    data,\n    sell_pred,\n    proba,\n    mask,\n    \"H1\",\n    cost_bps=2.0,\n    confidence_threshold=0.8,\n    position_filter=sell_evaluation[\"allowed\"].to_numpy(dtype=bool),\n)",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
+        "label": "impact",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime_backtest",
+        "description": "apps.engine.tests_manual.test_regime_backtest",
+        "peekOfCode": "impact = summarize_gate_impact(\n    sell_evaluation,\n    sell_pred,\n    proba,\n    mask,\n    0.8,\n    baseline,\n    filtered,\n)\nassert impact[\"block_rate\"] == 1.0, impact",
+        "detail": "apps.engine.tests_manual.test_regime_backtest",
+        "documentation": {}
+    },
+    {
         "label": "main",
         "kind": 2,
         "importPath": "apps.engine.tests_manual.test_registry",
@@ -2942,7 +4091,25 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_risk_bracket",
         "description": "apps.engine.tests_manual.test_risk_bracket",
-        "peekOfCode": "d = risk_on.review(BUY, ACCOUNT, [], 4200.0, sl)\n# risk budget = 1% of 1000 = 10 ; stop distance = 21 ; units = 10/21 ≈ 0.5\nassert d.approved, d\nassert abs(d.units - 0.5) < 1e-9, d.units\n# Max open positions enforced\nd = risk_on.review(BUY, ACCOUNT, [{\"x\": 1}], 4200.0, sl)\nassert not d.approved and \"Max open positions\" in d.reason, d\n# Daily loss limit: NAV far below balance -> rejected\nd = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl)\nassert not d.approved and \"loss limit\" in d.reason, d",
+        "peekOfCode": "d = risk_on.review(BUY, ACCOUNT, [], 4200.0, sl)\n# risk budget = 1% of 1000 = 10 ; stop distance = 21 ; units = 10/21 ≈ 0.5\nassert d.approved, d\nassert abs(d.units - 0.5) < 1e-9, d.units\n# Strategy volatility targeting scales the normal risk budget without leverage.\nhalf_size_buy = Signal(Action.BUY, 0.8, \"test half size\", position_size=0.5)\nd = risk_on.review(half_size_buy, ACCOUNT, [], 4200.0, sl)\nassert d.approved, d\nassert d.units == 0.2, d.units\nassert \"50.0%\" in d.reason, d.reason",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "half_size_buy",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "half_size_buy = Signal(Action.BUY, 0.8, \"test half size\", position_size=0.5)\nd = risk_on.review(half_size_buy, ACCOUNT, [], 4200.0, sl)\nassert d.approved, d\nassert d.units == 0.2, d.units\nassert \"50.0%\" in d.reason, d.reason\n# Max open positions enforced\nd = risk_on.review(BUY, ACCOUNT, [{\"x\": 1}], 4200.0, sl)\nassert not d.approved and \"Max open positions\" in d.reason, d\n# Daily loss limit: NAV far below balance -> rejected\nd = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl)",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "d",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "d = risk_on.review(half_size_buy, ACCOUNT, [], 4200.0, sl)\nassert d.approved, d\nassert d.units == 0.2, d.units\nassert \"50.0%\" in d.reason, d.reason\n# Max open positions enforced\nd = risk_on.review(BUY, ACCOUNT, [{\"x\": 1}], 4200.0, sl)\nassert not d.approved and \"Max open positions\" in d.reason, d\n# Daily loss limit: NAV far below balance -> rejected\nd = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl)\nassert not d.approved and \"loss limit\" in d.reason, d",
         "detail": "apps.engine.tests_manual.test_risk_bracket",
         "documentation": {}
     },
@@ -3015,6 +4182,15 @@
         "importPath": "apps.engine.tests_manual.test_structured_signal",
         "description": "apps.engine.tests_manual.test_structured_signal",
         "peekOfCode": "buy = build_structured_signal(\n    settings,\n    \"test\",\n    Signal(Action.BUY, 0.8, \"buy reason\"),\n    candles,\n    price,\n    \"champion-test\",\n)\nassert buy[\"direction\"] == \"BUY\", buy\nassert buy[\"recommended_entry\"] == 101.5, buy",
+        "detail": "apps.engine.tests_manual.test_structured_signal",
+        "documentation": {}
+    },
+    {
+        "label": "expected_return",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_structured_signal",
+        "description": "apps.engine.tests_manual.test_structured_signal",
+        "peekOfCode": "expected_return = build_structured_signal(\n    settings,\n    \"expected-return-paper\",\n    Signal(\n        Action.BUY,\n        0.7,\n        \"expected-return buy\",\n        features={\n            \"signal_kind\": \"expected_return\",\n            \"expected_return\": 0.004,",
         "detail": "apps.engine.tests_manual.test_structured_signal",
         "documentation": {}
     },

@@ -57,6 +57,18 @@ export default function StructuredSignalPanel() {
               label="Confiance brute"
               value={ratioPct(data.calibrated_confidence)}
             />
+            <Row
+              label="Rendement attendu"
+              value={ratioPct(data.expected_move, 3)}
+            />
+            <Row
+              label="Espérance après coûts"
+              value={ratioPct(data.expected_value_after_costs, 3)}
+            />
+            <Row
+              label="Exposition recommandée"
+              value={ratioPct(data.recommended_exposure, 1)}
+            />
             <Row label="Incertitude" value={ratioPct(data.uncertainty)} />
             <Row
               label="Qualite donnees"

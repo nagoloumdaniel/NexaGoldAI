@@ -39,6 +39,35 @@ assert buy["execution_mode"] == "PAPER", buy
 assert buy["model_version"] == "champion-test", buy
 assert buy["regime_gate"]["allowed"] is True, buy
 
+expected_return = build_structured_signal(
+    settings,
+    "expected-return-paper",
+    Signal(
+        Action.BUY,
+        0.7,
+        "expected-return buy",
+        features={
+            "signal_kind": "expected_return",
+            "expected_return": 0.004,
+            "expected_value_after_costs": 0.0035,
+            "stop_loss_pct": 0.012,
+            "risk_reward_ratio": 3.0,
+            "paper_only": True,
+        },
+        position_size=0.6,
+    ),
+    candles,
+    price,
+    "paper-test",
+)
+assert expected_return["execution_mode"] == "PAPER", expected_return
+assert expected_return["expected_move"] == 0.004, expected_return
+assert expected_return["expected_value_after_costs"] == 0.0035, expected_return
+assert expected_return["recommended_exposure"] == 0.6, expected_return
+assert expected_return["risk_reward_ratio"] == 3.0, expected_return
+assert expected_return["recommended_sl"] == 100.282, expected_return
+assert expected_return["regime_gate"]["status"] == "NOT_APPLICABLE", expected_return
+
 hold = build_structured_signal(
     settings,
     "test",

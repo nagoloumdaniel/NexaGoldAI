@@ -26,6 +26,8 @@ class Signal:
     reason: str
     # Feature values used for the decision, kept for retraining datasets.
     features: dict = field(default_factory=dict)
+    # Causal 0..1 multiplier applied to the normal risk-sized position.
+    position_size: float = 1.0
 
 
 class Strategy(ABC):
@@ -35,6 +37,8 @@ class Strategy(ABC):
     name: str = "base"
     # Whether evaluate() needs the macro candles (the Trader fetches them on demand).
     needs_macro: bool = False
+    paper_only: bool = False
+    paper_horizon_hours: int | None = None
 
     @abstractmethod
     def evaluate(

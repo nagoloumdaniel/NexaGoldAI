@@ -142,3 +142,72 @@ Test controle en mode `PAPER`: le modele proposait `BUY` avec un score brut de
 `0.803`. Le filtre a correctement retourne `NO_TRADE`, `BLOCKED`, `CONFLICT`.
 Ce verdict reste limite a `GET /signal/latest` et ne modifie pas encore la boucle
 d'execution reelle.
+
+## Validation historique du filtre de regime
+
+Ajoute:
+
+- variables historiques causales identiques au filtre live, exclues des features
+  LightGBM pour isoler l'effet du filtre ;
+- masque de position optionnel dans le simulateur P&L ;
+- comparaison au meme seuil de confiance, puis avec seuil filtre choisi sur la
+  validation uniquement ;
+- decomposition des blocages par regime, accord et raison ;
+- metriques d'esperance par barre active et decision conservative de promotion ;
+- CLI read-only `python -m app.research.validate_regime --granularity H1` ;
+- test manuel `tests_manual.test_regime_backtest`.
+
+Validation H1 walk-forward, 5 folds, embargo 24, cout 1.5 bps, donnees du
+2023-06-18 au 2026-07-14:
+
+- 17 812 bougies, 17 598 echantillons, 14 665 predictions hors echantillon ;
+- seuil brut et filtre selectionnes sur validation: `0.8` ;
+- tranche test: 5 866 barres ;
+- 266 barres directionnelles bloquees sur 551, soit `48.28 %` ;
+- strategie brute: rendement `-16.64 %`, Sharpe `-2.03`, max drawdown
+  `-18.67 %`, profit factor `0.846`, 433 evenements de turnover ;
+- strategie filtree: rendement `-4.22 %`, Sharpe `-0.62`, max drawdown
+  `-9.97 %`, profit factor `0.959`, 286 evenements de turnover ;
+- le filtre reduit donc nettement la perte et le drawdown, mais l'esperance reste
+  negative et le profit factor reste inferieur a 1.
+
+Verdict: `REJECT_LIVE_INTEGRATION`. Le filtre reste read-only. Une amelioration
+relative d'une strategie perdante ne constitue pas un edge exploitable.
+
+## Strategie de rendement attendu 24 h
+
+La classification `DOWN/FLAT/UP` a ete remplacee, pour la recherche uniquement,
+par une hypothese de regression directe du rendement futur a 24 heures:
+
+- validation walk-forward imbriquee en 5 plis et embargo de 24 barres ;
+- seuil de rendement attendu choisi dans une validation anterieure a chaque pli ;
+- transactions non chevauchantes conservees 24 barres ;
+- marquage a marche pendant la position ;
+- cout de base de 1.5 bps par cote et financement conservateur de 1.6 bps/jour ;
+- abstention complete lorsque la validation anterieure ne trouve aucun seuil ;
+- achats uniquement, les ventes ayant degrade la stabilite hors echantillon ;
+- ciblage causal de 15 % de volatilite annualisee, exposition plafonnee a 100 %,
+  sans levier ni martingale.
+
+Validation H1 sur les donnees du projet:
+
+- 17 598 echantillons et 14 665 observations hors echantillon ;
+- rendement compose `+36.28 %` ;
+- Sharpe annualise `1.19` ;
+- profit factor `1.32` ;
+- max drawdown `-12.94 %` ;
+- 318 transactions et exposition notionnelle moyenne `43.69 %` ;
+- 4 plis positifs, 0 negatif et 1 pli sans transaction ;
+- couts doubles: rendement `+18.19 %` ;
+- stress a 5 bps/cote et 3.2 bps/jour: rendement `+6.22 %`, profit factor `1.07`.
+
+Variantes rejetees:
+
+- regression BUY/SELL: `+36.85 %`, mais seulement 2 plis positifs, drawdown
+  `-29.70 %` et rendement severe `-11.95 %` ;
+- filtre de momentum journalier 100 jours: Sharpe `0.78`, un pli negatif et
+  rendement severe `-7.09 %`.
+
+Verdict: `PROMOTE_TO_PAPER_TRADING`. L'integration live reste desactivee. Les
+variantes ont ete comparees sur l'historique disponible; une validation paper
+prospective est obligatoire avant toute nouvelle decision de promotion.

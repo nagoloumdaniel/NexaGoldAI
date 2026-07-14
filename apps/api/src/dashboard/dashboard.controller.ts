@@ -41,6 +41,11 @@ export class DashboardController {
     return this.dashboard.models();
   }
 
+  @Get('paper-validation')
+  paperValidation() {
+    return this.dashboard.paperValidation();
+  }
+
   @Get('analytics')
   analytics() {
     return this.dashboard.analytics();

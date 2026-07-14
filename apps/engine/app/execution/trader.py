@@ -60,6 +60,14 @@ def _compute_pnl(side: str, units: float, entry: float, exit_price: float) -> fl
     return (entry - exit_price) * units
 
 
+def _positive_signal_value(signal, key: str, fallback: float) -> float:
+    try:
+        value = float(signal.features.get(key, fallback))
+    except (TypeError, ValueError):
+        return fallback
+    return value if value > 0 else fallback
+
+
 class Trader:
     def __init__(
         self,
@@ -81,8 +89,14 @@ class Trader:
     def strategy_name(self) -> str:
         return self._strategy.name
 
+    @property
+    def strategy_paper_only(self) -> bool:
+        return self._strategy.paper_only
+
     def set_strategy(self, strategy: Strategy) -> None:
         """Hot-swap the strategy (used by the learning loop on promotion)."""
+        if self._strategy.paper_only and not strategy.paper_only:
+            raise RuntimeError("A paper-only strategy cannot be hot-swapped automatically")
         self._strategy = strategy
 
     async def preview_signal(self, model_version: str | None = None) -> dict:
@@ -113,17 +127,27 @@ class Trader:
             price = await self._broker.get_price()
         except CapitalError:
             price = None
+        effective_version = getattr(self._strategy, "model_version", model_version)
         return build_structured_signal(
             s,
             self._strategy.name,
             signal,
             candles,
             price,
-            model_version,
+            effective_version,
         )
 
     async def step(self) -> dict:
         s = self._settings
+        paper_reconciliation = None
+        if self._strategy.paper_only and s.capital_env == "demo":
+            try:
+                paper_reconciliation = await self.reconcile_open_trades(
+                    mutate=True, close_missing=True
+                )
+            except CapitalError as exc:
+                logger.warning("Reconciliation paper differee: %s", exc)
+        expired_closures = await self._close_expired_paper_positions()
         candles = await self._broker.get_candles(
             granularity=s.model_granularity, count=s.decision_candles
         )
@@ -149,11 +173,24 @@ class Trader:
             "action": signal.action.value,
             "confidence": round(signal.confidence, 3),
             "reason": signal.reason,
+            "position_size": round(signal.position_size, 4),
             "status": "logged",
         }
+        if expired_closures:
+            out["expired_closures"] = expired_closures
+        if paper_reconciliation is not None:
+            out["paper_reconciliation"] = {
+                "matched": paper_reconciliation["matched"],
+                "closed": paper_reconciliation["closed"],
+                "unresolved": len(paper_reconciliation["unresolved_closures"]),
+            }
 
         if signal.action == Action.HOLD:
             out["status"] = "hold"
+            return out
+        if self._strategy.paper_only and s.capital_env != "demo":
+            out["status"] = "paper_only_blocked"
+            out["reason"] = "Strategie paper interdite hors environnement demo"
             return out
 
         price = await self._broker.get_price()
@@ -169,15 +206,25 @@ class Trader:
         min_stop_pct = (
             rules["min_guaranteed_stop_pct"] if use_guaranteed else rules["min_stop_pct"]
         )
-        stop_pct = max(s.stop_loss_pct, min_stop_pct * (1 + s.stop_distance_buffer))
+        strategy_stop_pct = _positive_signal_value(
+            signal, "stop_loss_pct", s.stop_loss_pct
+        )
+        risk_reward = _positive_signal_value(
+            signal, "risk_reward_ratio", s.risk_reward_ratio
+        )
+        stop_pct = max(
+            strategy_stop_pct,
+            min_stop_pct * (1 + s.stop_distance_buffer),
+        )
         out["stop_pct"] = round(stop_pct, 5)
+        out["risk_reward_ratio"] = round(risk_reward, 3)
         out["guaranteed_stop"] = use_guaranteed
 
         account = await self._broker.get_account_summary()
         positions = await self._broker.get_open_positions()
         entry = price["ask"] if signal.action == Action.BUY else price["bid"]
         stop_loss, take_profit = compute_bracket(
-            signal.action, entry, stop_pct, s.risk_reward_ratio
+            signal.action, entry, stop_pct, risk_reward
         )
 
         decision = self._risk.review(signal, account, positions, entry, stop_loss)
@@ -226,6 +273,92 @@ class Trader:
         if confirmation is not None:
             out["confirmation_status"] = confirmation.get("dealStatus")
         return out
+
+    async def _close_expired_paper_positions(self) -> list[dict]:
+        horizon_hours = self._strategy.paper_horizon_hours
+        if (
+            not self._strategy.paper_only
+            or self._settings.capital_env != "demo"
+            or not self._settings.trading_enabled
+            or not horizon_hours
+        ):
+            return []
+
+        now = datetime.now(timezone.utc)
+        results = []
+        for trade in await self._trades.open_trades():
+            if trade.get("strategy") != self._strategy.name:
+                continue
+            opened_at = _parse_broker_time(trade.get("opened_at"))
+            if opened_at is None or now - opened_at < timedelta(hours=horizon_hours):
+                continue
+            deal_id = await self._resolve_deal_id(trade.get("broker_trade_id"))
+            if not deal_id:
+                results.append(
+                    {"trade_id": trade["id"], "status": "missing_deal_id"}
+                )
+                continue
+            try:
+                close_order = await self._broker.close_position_by_deal_id(deal_id)
+                close_reference = close_order.get("dealReference")
+                confirmation = (
+                    await self._broker.get_deal_confirmation(str(close_reference))
+                    if close_reference
+                    else None
+                )
+            except CapitalError as exc:
+                logger.warning("Cloture horizon echouee pour %s: %s", deal_id, exc)
+                results.append(
+                    {"trade_id": trade["id"], "status": "broker_error"}
+                )
+                continue
+
+            exit_price = (confirmation or {}).get("level")
+            closed_at = _parse_broker_time(
+                (confirmation or {}).get("date")
+                or (confirmation or {}).get("dateUTC")
+            )
+            if exit_price is not None and closed_at is not None:
+                pnl = _compute_pnl(
+                    trade["side"],
+                    trade["units"],
+                    trade["entry_price"],
+                    float(exit_price),
+                )
+                await self._trades.close_trade(
+                    trade["id"], float(exit_price), pnl, closed_at
+                )
+                results.append(
+                    {
+                        "trade_id": trade["id"],
+                        "status": "closed_at_horizon",
+                        "exit_price": float(exit_price),
+                        "pnl": round(pnl, 2),
+                    }
+                )
+            else:
+                results.append(
+                    {
+                        "trade_id": trade["id"],
+                        "status": "close_requested_pending_reconciliation",
+                    }
+                )
+        return results
+
+    async def paper_validation_status(self) -> dict:
+        stats = await self._trades.paper_validation("expected-return-paper")
+        target = self._settings.paper_validation_min_trades
+        stats.update(
+            {
+                "target_closed_trades": target,
+                "progress": min(stats["closed_trades"] / target, 1.0)
+                if target > 0
+                else 1.0,
+                "eligible_for_review": stats["closed_trades"] >= target,
+                "automatic_live_promotion": False,
+            }
+        )
+        return stats
 
     async def reconcile_open_trades(
         self, mutate: bool = False, close_missing: bool = False

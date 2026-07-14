@@ -5,7 +5,15 @@ import { getDecisions } from "@/lib/api";
 import { usePolling } from "./use-polling";
 import { SectionCard, Empty } from "./ui/card";
 import { ActionBadge, Confidence } from "./ui/badge";
-import { time } from "@/lib/format";
+import { ratioPct, time } from "@/lib/format";
+
+function featureNumber(
+  features: Record<string, unknown> | null | undefined,
+  key: string,
+) {
+  const value = features?.[key];
+  return typeof value === "number" ? value : null;
+}
 
 export default function DecisionsTable({
   limit = 15,
@@ -16,6 +24,9 @@ export default function DecisionsTable({
 }) {
   const fetcher = useStableDecisions(limit);
   const { data } = usePolling(fetcher, 10000);
+  const showsExpectedReturn = Boolean(
+    data?.some((decision) => decision.features?.signal_kind === "expected_return"),
+  );
 
   return (
     <SectionCard
@@ -35,6 +46,13 @@ export default function DecisionsTable({
                 <th className="px-5 py-2.5 font-medium">Heure</th>
                 <th className="px-5 py-2.5 font-medium">Action</th>
                 <th className="px-5 py-2.5 font-medium">Confiance</th>
+                {showsExpectedReturn ? (
+                  <>
+                    <th className="px-5 py-2.5 font-medium">Rendement attendu</th>
+                    <th className="px-5 py-2.5 font-medium">Seuil</th>
+                    <th className="px-5 py-2.5 font-medium">Exposition</th>
+                  </>
+                ) : null}
                 {showReason ? (
                   <th className="px-5 py-2.5 font-medium">Raison</th>
                 ) : null}
@@ -54,6 +72,22 @@ export default function DecisionsTable({
                   <td className="px-5 py-3">
                     <Confidence value={d.confidence} />
                   </td>
+                  {showsExpectedReturn ? (
+                    <>
+                      <td className="tnum px-5 py-3 text-muted">
+                        {ratioPct(featureNumber(d.features, "expected_return"), 3)}
+                      </td>
+                      <td className="tnum px-5 py-3 text-muted">
+                        {ratioPct(
+                          featureNumber(d.features, "expected_return_threshold"),
+                          3,
+                        )}
+                      </td>
+                      <td className="tnum px-5 py-3 text-muted">
+                        {ratioPct(featureNumber(d.features, "position_size"), 1)}
+                      </td>
+                    </>
+                  ) : null}
                   {showReason ? (
                     <td className="max-w-xs truncate px-5 py-3 text-muted">
                       {d.reason}

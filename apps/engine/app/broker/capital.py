@@ -315,3 +315,9 @@ class CapitalClient:
                 if deal_id:
                     closed.append(await self._request("DELETE", f"/api/v1/positions/{deal_id}"))
         return {"closed": closed}
+
+    async def close_position_by_deal_id(self, deal_id: str) -> dict:
+        """Close exactly one position, never every position on an instrument."""
+        if not deal_id:
+            raise ValueError("deal_id is required")
+        return await self._request("DELETE", f"/api/v1/positions/{deal_id}")

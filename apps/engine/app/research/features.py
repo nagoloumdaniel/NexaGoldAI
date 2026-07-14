@@ -10,7 +10,7 @@ import pandas as pd
 from app.research.macro import build_macro_features, build_rate_features
 
 # Columns produced here that are NOT model inputs (kept for labels/PnL).
-NON_FEATURE = {"label", "fwd_ret", "next_ret"}
+NON_FEATURE = {"label", "fwd_ret", "next_ret", "future_return"}
 
 
 def _rsi(close: pd.Series, period: int = 14) -> pd.Series:
@@ -118,4 +118,8 @@ def build_features(
 
 
 def feature_columns(frame: pd.DataFrame) -> list[str]:
-    return [c for c in frame.columns if c not in NON_FEATURE]
+    return [
+        c
+        for c in frame.columns
+        if c not in NON_FEATURE and not c.startswith("_regime_")
+    ]

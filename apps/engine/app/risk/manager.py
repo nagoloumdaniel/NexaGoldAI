@@ -56,11 +56,18 @@ class RiskManager:
 
         # Risk a fixed % of balance per trade, sized by stop distance.
         risk_budget = balance * s.max_risk_per_trade_pct / 100.0
-        units = round(risk_budget / risk_per_unit, 1)
+        multiplier = float(signal.position_size)
+        if not 0 < multiplier <= 1:
+            return RiskDecision(False, "Invalid strategy position multiplier")
+        units = round(risk_budget / risk_per_unit * multiplier, 1)
         if units <= 0:
             return RiskDecision(False, "Computed position size is zero")
 
         if signal.action == Action.SELL:
             units = -units
 
-        return RiskDecision(True, "Approved", units=units)
+        return RiskDecision(
+            True,
+            f"Approved (strategy exposure {multiplier:.1%})",
+            units=units,
+        )

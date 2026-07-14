@@ -16,6 +16,11 @@ from sklearn.model_selection import TimeSeriesSplit
 
 from app.research.features import build_features, feature_columns
 from app.research.labeling import CLASS_NAMES, DOWN, FLAT, UP, make_labels
+from app.research.regime_validation import (
+    build_historical_regime_features,
+    evaluate_regime_gate,
+    summarize_gate_impact,
+)
 
 # Bars per year, per granularity — used to annualise the Sharpe ratio.
 _BARS_PER_YEAR = {
@@ -55,6 +60,7 @@ def build_dataset(
     use_macro = macro_df if config.get("macro") else None
     use_rates = rate_df if config.get("rates") else None
     feats = build_features(df, use_macro, use_rates)
+    feats = pd.concat([feats, build_historical_regime_features(df)], axis=1)
     feats["label"] = make_labels(df, config)
     feats["next_ret"] = df["close"].pct_change().shift(-1)
     return feats.dropna()
@@ -106,6 +112,7 @@ def backtest_pnl(
     granularity: str,
     cost_bps: float,
     confidence_threshold: float = 0.0,
+    position_filter: np.ndarray | None = None,
 ) -> dict:
     sub = data[mask]
     pred = oos_pred[mask]
@@ -113,6 +120,10 @@ def backtest_pnl(
     # Only act on high-conviction signals; below the threshold we stay flat.
     directional = np.where(pred == UP, 1, np.where(pred == DOWN, -1, 0))
     position = np.where(confidence >= confidence_threshold, directional, 0)
+    if position_filter is not None:
+        if len(position_filter) != len(data):
+            raise ValueError("Le filtre de position doit avoir la taille des donnees")
+        position = np.where(np.asarray(position_filter, dtype=bool)[mask], position, 0)
     next_ret = sub["next_ret"].values
 
     gross = position * next_ret
@@ -142,6 +153,10 @@ def backtest_pnl(
         if losses.sum() != 0
         else None,
         "win_rate": float((net[active] > 0).mean()) if active.any() else 0.0,
+        "mean_net_return_per_bar": float(net.mean()) if len(net) else 0.0,
+        "expectancy_per_active_bar": float(net[active].mean())
+        if active.any()
+        else 0.0,
     }
 
 
@@ -158,6 +173,36 @@ def _submask(mask: np.ndarray, start_frac: float, end_frac: float) -> np.ndarray
     out = np.zeros(len(mask), dtype=bool)
     out[idx[lo:hi]] = True
     return out
+
+
+def _select_threshold(
+    data: pd.DataFrame,
+    oos_pred: np.ndarray,
+    oos_proba: np.ndarray,
+    validation_mask: np.ndarray,
+    granularity: str,
+    cost_bps: float,
+    position_filter: np.ndarray | None = None,
+) -> tuple[float, dict[str, float]]:
+    sweep: dict[str, float] = {}
+    best_threshold = 0.0
+    best_sharpe = None
+    for threshold in CONFIDENCE_THRESHOLDS:
+        pnl = backtest_pnl(
+            data,
+            oos_pred,
+            oos_proba,
+            validation_mask,
+            granularity,
+            cost_bps,
+            threshold,
+            position_filter=position_filter,
+        )
+        sweep[str(threshold)] = pnl["sharpe_annualised"]
+        if best_sharpe is None or pnl["sharpe_annualised"] > best_sharpe:
+            best_sharpe = pnl["sharpe_annualised"]
+            best_threshold = threshold
+    return best_threshold, sweep
 
 
 def run(
@@ -181,20 +226,69 @@ def run(
     val_mask = _submask(mask, 0.0, 0.6)
     test_mask = _submask(mask, 0.6, 1.0)
 
-    sweep: dict[str, float] = {}
-    best_threshold = 0.0
-    best_val_sharpe = None
-    for threshold in CONFIDENCE_THRESHOLDS:
-        val_pnl = backtest_pnl(
-            data, oos_pred, oos_proba, val_mask, granularity, cost_bps, threshold
-        )
-        sweep[str(threshold)] = val_pnl["sharpe_annualised"]
-        if best_val_sharpe is None or val_pnl["sharpe_annualised"] > best_val_sharpe:
-            best_val_sharpe = val_pnl["sharpe_annualised"]
-            best_threshold = threshold
+    best_threshold, sweep = _select_threshold(
+        data,
+        oos_pred,
+        oos_proba,
+        val_mask,
+        granularity,
+        cost_bps,
+    )
 
     test_pnl = backtest_pnl(
         data, oos_pred, oos_proba, test_mask, granularity, cost_bps, best_threshold
+    )
+
+    regime_evaluation = evaluate_regime_gate(data, oos_pred, mask)
+    regime_filter = regime_evaluation["allowed"].to_numpy(dtype=bool)
+    gated_threshold, gated_sweep = _select_threshold(
+        data,
+        oos_pred,
+        oos_proba,
+        val_mask,
+        granularity,
+        cost_bps,
+        position_filter=regime_filter,
+    )
+    filtered_same_threshold = backtest_pnl(
+        data,
+        oos_pred,
+        oos_proba,
+        test_mask,
+        granularity,
+        cost_bps,
+        best_threshold,
+        position_filter=regime_filter,
+    )
+    filtered_optimized = backtest_pnl(
+        data,
+        oos_pred,
+        oos_proba,
+        test_mask,
+        granularity,
+        cost_bps,
+        gated_threshold,
+        position_filter=regime_filter,
+    )
+    regime_validation = summarize_gate_impact(
+        regime_evaluation,
+        oos_pred,
+        oos_proba,
+        test_mask,
+        best_threshold,
+        test_pnl,
+        filtered_same_threshold,
+    )
+    regime_validation.update(
+        {
+            "mode": "READ_ONLY",
+            "baseline_confidence_threshold": best_threshold,
+            "gated_confidence_threshold": gated_threshold,
+            "gated_validation_sweep": gated_sweep,
+            "baseline": test_pnl,
+            "filtered_same_threshold": filtered_same_threshold,
+            "filtered_optimized_threshold": filtered_optimized,
+        }
     )
 
     return {
@@ -212,4 +306,5 @@ def run(
         "embargo": embargo,
         # Headline PnL = held-out test slice at the validation-chosen threshold.
         "pnl": test_pnl,
+        "regime_gate_validation": regime_validation,
     }

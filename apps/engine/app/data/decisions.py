@@ -44,18 +44,22 @@ class StrategyDecisionRepository:
     async def recent(self, limit: int = 20) -> list[dict]:
         async with self._pool.acquire() as conn:
             rows = await conn.fetch(
-                'SELECT "time", "strategy", "action", "confidence", "reason", "executed" '
+                'SELECT "id", "time", "strategy", "action", "confidence", "reason", '
+                '"features", "executed", "tradeId" '
                 'FROM "StrategyDecision" ORDER BY "time" DESC LIMIT $1',
                 limit,
             )
         return [
             {
+                "id": r["id"],
                 "time": r["time"].isoformat(),
                 "strategy": r["strategy"],
                 "action": r["action"],
                 "confidence": float(r["confidence"]),
                 "reason": r["reason"],
+                "features": r["features"],
                 "executed": r["executed"],
+                "trade_id": r["tradeId"],
             }
             for r in rows
         ]

@@ -48,6 +48,8 @@ export interface Decision {
   action: "BUY" | "SELL" | "HOLD";
   confidence: number;
   reason: string;
+  features?: Record<string, unknown> | null;
+  tradeId?: string | null;
   executed: boolean;
 }
 
@@ -103,6 +105,7 @@ export interface EngineHealth {
 
 export interface TradeStatus {
   strategy: string | null;
+  paper_only?: boolean;
   trading_enabled: boolean;
   loop_running: boolean;
   interval_seconds: number;
@@ -187,6 +190,7 @@ export interface StructuredSignal {
   recommended_entry?: number | null;
   recommended_sl?: number | null;
   recommended_tp?: number | null;
+  recommended_exposure?: number | null;
   risk_reward_ratio?: number | null;
   reasons: string[];
   warnings: string[];
@@ -226,6 +230,24 @@ export interface StructuredSignal {
   } | null;
 }
 
+export interface PaperValidation {
+  strategy: string;
+  total_trades: number;
+  open_trades: number;
+  closed_trades: number;
+  wins: number;
+  losses: number;
+  win_rate: number;
+  total_pnl: number;
+  profit_factor: number | null;
+  target_closed_trades: number;
+  progress: number;
+  eligible_for_review: boolean;
+  automatic_live_promotion: false;
+  started_at: string | null;
+  last_closed_at: string | null;
+}
+
 export interface ResolveTradeResult {
   engineReachable?: boolean;
   updated: boolean;
@@ -239,6 +261,8 @@ export interface ResolveTradeResult {
 
 export const getSummary = () => get<Summary>("/dashboard/summary");
 export const getModels = () => get<ModelRegistry>("/dashboard/models");
+export const getPaperValidation = () =>
+  get<PaperValidation>("/dashboard/paper-validation");
 export const getAnalytics = () => get<Analytics>("/dashboard/analytics");
 export const getSystemStatus = () => get<SystemStatus>("/dashboard/system");
 export const getStructuredSignal = () =>

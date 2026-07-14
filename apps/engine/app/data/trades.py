@@ -112,3 +112,40 @@ class TradeRepository:
                 str(broker_ref) if broker_ref is not None else None,
             )
         return trade_id
+
+    async def paper_validation(self, strategy: str) -> dict:
+        async with self._pool.acquire() as conn:
+            row = await conn.fetchrow(
+                'SELECT COUNT(*) AS total, '
+                'COUNT(*) FILTER (WHERE "status" = \'OPEN\'::"TradeStatus") AS open, '
+                'COUNT(*) FILTER (WHERE "status" = \'CLOSED\'::"TradeStatus") AS closed, '
+                'COUNT(*) FILTER (WHERE "status" = \'CLOSED\'::"TradeStatus" '
+                'AND "pnl" > 0) AS wins, '
+                'COALESCE(SUM("pnl") FILTER (WHERE "status" = \'CLOSED\'::"TradeStatus"), 0) AS total_pnl, '
+                'COALESCE(SUM("pnl") FILTER (WHERE "status" = \'CLOSED\'::"TradeStatus" '
+                'AND "pnl" > 0), 0) AS gross_profit, '
+                'COALESCE(SUM("pnl") FILTER (WHERE "status" = \'CLOSED\'::"TradeStatus" '
+                'AND "pnl" < 0), 0) AS gross_loss, '
+                'MIN("openedAt") AS started_at, MAX("closedAt") AS last_closed_at '
+                'FROM "Trade" WHERE "strategy" = $1',
+                strategy,
+            )
+        closed = int(row["closed"])
+        wins = int(row["wins"])
+        gross_loss = float(row["gross_loss"])
+        gross_profit = float(row["gross_profit"])
+        return {
+            "strategy": strategy,
+            "total_trades": int(row["total"]),
+            "open_trades": int(row["open"]),
+            "closed_trades": closed,
+            "wins": wins,
+            "losses": closed - wins,
+            "win_rate": wins / closed if closed else 0.0,
+            "total_pnl": float(row["total_pnl"]),
+            "profit_factor": gross_profit / abs(gross_loss) if gross_loss < 0 else None,
+            "started_at": row["started_at"].isoformat() if row["started_at"] else None,
+            "last_closed_at": row["last_closed_at"].isoformat()
+            if row["last_closed_at"]
+            else None,
+        }

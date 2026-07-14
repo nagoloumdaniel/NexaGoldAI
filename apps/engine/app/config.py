@@ -33,6 +33,7 @@ class Settings(BaseSettings):
     decision_candles: int = 150
     stop_loss_pct: float = 0.005
     risk_reward_ratio: float = 1.5
+    paper_validation_min_trades: int = 100
     # Certains comptes/instruments Capital.com exigent un guaranteed stop. Quand
     # activé, le trader force guaranteedStop=true et élargit le stop pour
     # respecter la distance minimale du broker (minGuaranteedStopDistance).

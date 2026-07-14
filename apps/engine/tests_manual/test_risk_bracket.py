@@ -40,6 +40,13 @@ d = risk_on.review(BUY, ACCOUNT, [], 4200.0, sl)
 assert d.approved, d
 assert abs(d.units - 0.5) < 1e-9, d.units
 
+# Strategy volatility targeting scales the normal risk budget without leverage.
+half_size_buy = Signal(Action.BUY, 0.8, "test half size", position_size=0.5)
+d = risk_on.review(half_size_buy, ACCOUNT, [], 4200.0, sl)
+assert d.approved, d
+assert d.units == 0.2, d.units
+assert "50.0%" in d.reason, d.reason
+
 # Max open positions enforced
 d = risk_on.review(BUY, ACCOUNT, [{"x": 1}], 4200.0, sl)
 assert not d.approved and "Max open positions" in d.reason, d

@@ -85,6 +85,8 @@ export class DashboardService {
       action: d.action,
       confidence: Number(d.confidence),
       reason: d.reason,
+      features: d.features,
+      tradeId: d.tradeId,
       executed: d.executed,
     }));
   }
@@ -119,6 +121,19 @@ export class DashboardService {
         granularity: null,
         champion: null,
         versions: [],
+      }
+    );
+  }
+
+  async paperValidation() {
+    return (
+      (await this.engine<Record<string, unknown>>('/paper/validation')) ?? {
+        strategy: 'expected-return-paper',
+        closed_trades: 0,
+        target_closed_trades: 100,
+        progress: 0,
+        eligible_for_review: false,
+        automatic_live_promotion: false,
       }
     );
   }
