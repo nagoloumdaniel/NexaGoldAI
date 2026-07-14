@@ -254,9 +254,56 @@ class CapitalClient:
             body["profitLevel"] = round(take_profit_price, decimals)
         return await self._request("POST", "/api/v1/positions", json=body)
 
+    async def get_deal_confirmation(self, deal_reference: str) -> dict:
+        """Return broker confirmation for a POST /positions dealReference.
+
+        Capital.com returns a dealReference when an order is submitted; that is
+        not always the final position id. The confirmation response contains
+        affectedDeals, where the actual dealId can usually be read.
+        """
+        return await self._request("GET", f"/api/v1/confirms/{deal_reference}")
+
     async def get_open_positions(self) -> list[dict]:
         data = await self._request("GET", "/api/v1/positions")
         return data.get("positions", [])
+
+    async def get_activity_history(
+        self,
+        start: datetime | None = None,
+        end: datetime | None = None,
+        deal_id: str | None = None,
+        detailed: bool = True,
+    ) -> list[dict]:
+        """Account activity history.
+
+        Capital.com documents a maximum one-day range for from/to on this
+        endpoint; callers should page by day for wider windows.
+        """
+        params: dict[str, str | bool] = {"detailed": detailed}
+        if start is not None:
+            params["from"] = start.strftime("%Y-%m-%dT%H:%M:%S")
+        if end is not None:
+            params["to"] = end.strftime("%Y-%m-%dT%H:%M:%S")
+        if deal_id:
+            params["dealId"] = deal_id
+        data = await self._request("GET", "/api/v1/history/activity", params=params)
+        return data.get("activities") or data.get("activity") or []
+
+    @staticmethod
+    def normalise_position(entry: dict) -> dict:
+        """Flatten a Capital.com position entry for reconciliation and API use."""
+        pos = entry.get("position", {})
+        market = entry.get("market", {})
+        return {
+            "deal_id": pos.get("dealId"),
+            "deal_reference": pos.get("dealReference"),
+            "instrument": market.get("epic"),
+            "direction": pos.get("direction"),
+            "size": float(pos.get("size") or 0),
+            "open_level": float(pos.get("level") or 0),
+            "pnl": float(pos.get("upl") or 0),
+            "currency": pos.get("currency"),
+        }
 
     async def close_position(self, epic: str | None = None) -> dict:
         """Close every open position on the given epic (Capital closes per dealId)."""

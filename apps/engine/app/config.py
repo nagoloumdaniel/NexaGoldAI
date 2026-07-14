@@ -62,6 +62,11 @@ class Settings(BaseSettings):
     macro_instrument: str = "EURUSD"
     capital_macro_epic: str = "EURUSD"
 
+    # Taux réels US (FRED DFII10) — driver fondamental de l'or. Série journalière
+    # stockée sous granularité "D" et clé instrument = rates_instrument.
+    rates_series: str = "DFII10"
+    rates_instrument: str = "DFII10"
+
     # Infra
     database_url: str = ""
     redis_url: str = ""

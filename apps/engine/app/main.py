@@ -7,9 +7,12 @@ pipeline (Capital.com -> `Candle` table) and the paper-trading loop
 
 import asyncio
 from contextlib import asynccontextmanager
+from datetime import datetime
+from typing import Literal
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Query
+from pydantic import BaseModel
 
 from app.broker.capital import CapitalClient, CapitalError
 from app.config import get_settings
@@ -25,6 +28,12 @@ from app.risk.manager import RiskManager
 from app.strategy.factory import build_strategy
 
 settings = get_settings()
+
+
+class ResolveTradeRequest(BaseModel):
+    status: Literal["CANCELLED", "CLOSED"]
+    exit_price: float | None = None
+    closed_at: datetime | None = None
 
 broker: CapitalClient | None = None
 database: Database | None = None
@@ -167,18 +176,7 @@ async def positions() -> list[dict]:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     out = []
     for entry in raw:
-        pos = entry.get("position", {})
-        market = entry.get("market", {})
-        out.append(
-            {
-                "instrument": market.get("epic"),
-                "direction": pos.get("direction"),
-                "size": pos.get("size"),
-                "open_level": pos.get("level"),
-                "pnl": pos.get("upl"),
-                "currency": pos.get("currency"),
-            }
-        )
+        out.append(broker.normalise_position(entry))
     return out
 
 
@@ -274,11 +272,76 @@ async def trade_status() -> dict:
     }
 
 
+@app.get("/signal/latest")
+async def signal_latest() -> dict:
+    """Read-only structured signal preview for dashboards and diagnostics."""
+    ensure_broker_configured()
+    if trader is None:
+        raise HTTPException(status_code=503, detail="Base de donnÃ©es indisponible")
+    registry = ModelRegistry(
+        Path(__file__).resolve().parents[1] / "models", settings.model_granularity
+    )
+    try:
+        return await trader.preview_signal(model_version=registry.champion())
+    except CapitalError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+
 @app.get("/decisions/recent")
 async def decisions_recent(limit: int = Query(20, ge=1, le=200)) -> list[dict]:
     if decisions_repo is None:
         raise HTTPException(status_code=503, detail="Base de données indisponible")
     return await decisions_repo.recent(limit)
+
+
+@app.get("/trades/reconciliation")
+async def trades_reconciliation() -> dict:
+    """Read-only comparison between DB open trades and broker positions."""
+    ensure_broker_configured()
+    if trader is None:
+        raise HTTPException(status_code=503, detail="Base de donnÃ©es indisponible")
+    try:
+        return await trader.reconcile_open_trades(mutate=False)
+    except CapitalError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+
+@app.post("/trades/reconcile")
+async def trades_reconcile(close_missing: bool = Query(False)) -> dict:
+    """Backfill broker deal ids for matched open trades.
+
+    With close_missing=true, DB trades missing from broker open positions are
+    closed only when an accepted close activity is found in broker history.
+    """
+    ensure_broker_configured()
+    if trader is None:
+        raise HTTPException(status_code=503, detail="Base de donnÃ©es indisponible")
+    try:
+        return await trader.reconcile_open_trades(
+            mutate=True, close_missing=close_missing
+        )
+    except CapitalError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+
+@app.post("/trades/{trade_id}/resolve")
+async def trades_resolve_manual(trade_id: str, payload: ResolveTradeRequest) -> dict:
+    """Manual operator resolution for stale DB trades.
+
+    CANCELLED marks the DB trade as cancelled. CLOSED requires `exit_price` and
+    computes P&L from the stored entry, side and size.
+    """
+    if trader is None:
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
+    result = await trader.resolve_trade_manual(
+        trade_id,
+        payload.status,
+        payload.exit_price,
+        payload.closed_at,
+    )
+    if not result.get("updated"):
+        raise HTTPException(status_code=400, detail=result)
+    return result
 
 
 # -- Learning loop ----------------------------------------------------------

@@ -1,5 +1,6 @@
 import PageHeader from "@/components/shell/page-header";
 import TradesTable from "@/components/trades-table";
+import ReconciliationPanel from "@/components/reconciliation-panel";
 
 export default function PositionsPage() {
   return (
@@ -10,6 +11,7 @@ export default function PositionsPage() {
       />
 
       <div className="space-y-6">
+        <ReconciliationPanel />
         <TradesTable
           title="Positions ouvertes"
           subtitle="Trades actuellement en cours"

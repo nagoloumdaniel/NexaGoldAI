@@ -7,6 +7,7 @@ captures entry, bracket and the deciding strategy/reason.
 
 import json
 import uuid
+from datetime import datetime, timezone
 from decimal import Decimal
 
 import asyncpg
@@ -18,6 +19,66 @@ class TradeRepository:
     def __init__(self, pool: asyncpg.Pool, instrument: str):
         self._pool = pool
         self._instrument = instrument
+
+    async def open_trades(self) -> list[dict]:
+        async with self._pool.acquire() as conn:
+            rows = await conn.fetch(
+                'SELECT "id", "instrument", "side", "units", "entryPrice", '
+                '"stopLoss", "takeProfit", "strategy", "brokerTradeId", "openedAt" '
+                'FROM "Trade" WHERE "status" = \'OPEN\'::"TradeStatus" '
+                'ORDER BY "openedAt" DESC'
+            )
+        return [
+            {
+                "id": r["id"],
+                "instrument": r["instrument"],
+                "side": r["side"],
+                "units": float(r["units"]),
+                "entry_price": float(r["entryPrice"]),
+                "stop_loss": float(r["stopLoss"]) if r["stopLoss"] is not None else None,
+                "take_profit": float(r["takeProfit"])
+                if r["takeProfit"] is not None
+                else None,
+                "strategy": r["strategy"],
+                "broker_trade_id": r["brokerTradeId"],
+                "opened_at": r["openedAt"].isoformat(),
+            }
+            for r in rows
+        ]
+
+    async def set_broker_trade_id(self, trade_id: str, broker_trade_id: str) -> None:
+        async with self._pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE "Trade" SET "brokerTradeId" = $2 WHERE "id" = $1',
+                trade_id,
+                broker_trade_id,
+            )
+
+    async def close_trade(
+        self, trade_id: str, exit_price: float, pnl: float, closed_at: datetime
+    ) -> None:
+        if closed_at.tzinfo is not None:
+            closed_at = closed_at.astimezone(timezone.utc).replace(tzinfo=None)
+        async with self._pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE "Trade" SET "status" = \'CLOSED\'::"TradeStatus", '
+                '"exitPrice" = $2, "pnl" = $3, "closedAt" = $4 WHERE "id" = $1',
+                trade_id,
+                Decimal(str(round(exit_price, 3))),
+                Decimal(str(round(pnl, 2))),
+                closed_at,
+            )
+
+    async def cancel_trade(self, trade_id: str, closed_at: datetime) -> None:
+        if closed_at.tzinfo is not None:
+            closed_at = closed_at.astimezone(timezone.utc).replace(tzinfo=None)
+        async with self._pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE "Trade" SET "status" = \'CANCELLED\'::"TradeStatus", '
+                '"closedAt" = $2 WHERE "id" = $1',
+                trade_id,
+                closed_at,
+            )
 
     async def insert_open(
         self,

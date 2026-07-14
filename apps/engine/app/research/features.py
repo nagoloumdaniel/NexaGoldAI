@@ -7,7 +7,7 @@ including the current bar, so there is no lookahead leaking future prices.
 import numpy as np
 import pandas as pd
 
-from app.research.macro import build_macro_features
+from app.research.macro import build_macro_features, build_rate_features
 
 # Columns produced here that are NOT model inputs (kept for labels/PnL).
 NON_FEATURE = {"label", "fwd_ret", "next_ret"}
@@ -35,7 +35,9 @@ def _atr(df: pd.DataFrame, period: int = 14) -> pd.Series:
 
 
 def build_features(
-    df: pd.DataFrame, macro_df: pd.DataFrame | None = None
+    df: pd.DataFrame,
+    macro_df: pd.DataFrame | None = None,
+    rate_df: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
     close = df["close"]
     out = pd.DataFrame(index=df.index)
@@ -106,6 +108,11 @@ def build_features(
     if macro_df is not None and not macro_df.empty:
         macro = build_macro_features(df.index, macro_df, close)
         out = pd.concat([out, macro], axis=1)
+
+    # Taux réels (optional) — driver fondamental de l'or (FRED DFII10).
+    if rate_df is not None and not rate_df.empty:
+        rates = build_rate_features(df.index, rate_df)
+        out = pd.concat([out, rates], axis=1)
 
     return out
 

@@ -33,6 +33,9 @@ def main() -> None:
     parser.add_argument("--vol-mult", type=float, default=1.0)
     parser.add_argument("--vol-window", type=int, default=20)
     parser.add_argument("--macro", action="store_true", help="Inclure les features macro")
+    parser.add_argument(
+        "--rates", action="store_true", help="Inclure les features de taux réels (FRED)"
+    )
     parser.add_argument("--folds", type=int, default=5)
     parser.add_argument("--cost-bps", type=float, default=2.0)
     args = parser.parse_args()
@@ -44,6 +47,7 @@ def main() -> None:
         "vol_mult": args.vol_mult,
         "vol_window": args.vol_window,
         "macro": args.macro,
+        "rates": args.rates,
     }
 
     settings = get_settings()
@@ -58,7 +62,18 @@ def main() -> None:
             load_candles(settings, args.granularity, instrument=settings.macro_instrument)
         )
 
-    data = bt.build_dataset(df, config, macro_df)
+    rate_df = None
+    if args.rates:
+        # Série de taux journalière (granularité "D"), alignée plus tard sur
+        # la timeline de l'or par build_rate_features.
+        rate_df = asyncio.run(
+            load_candles(settings, "D", instrument=settings.rates_instrument)
+        )
+        if rate_df.empty:
+            print(json.dumps({"error": "Pas de données de taux — lancer fred_cli d'abord"}))
+            return
+
+    data = bt.build_dataset(df, config, macro_df, rate_df)
     feature_cols = feature_columns(data)
     report = bt.run(
         data,

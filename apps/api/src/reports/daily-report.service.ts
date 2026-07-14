@@ -33,7 +33,10 @@ export class DailyReportService {
   async sendDailyReport(): Promise<{ sent: boolean; detail: string }> {
     const account = await this.fetchEngineAccount();
     if (!account) {
-      return { sent: false, detail: 'Moteur ou compte Capital.com injoignable' };
+      return {
+        sent: false,
+        detail: 'Moteur ou compte Capital.com injoignable',
+      };
     }
 
     // Baseline du P&L journalier : le dernier snapshot (celui d'hier soir,
@@ -119,7 +122,10 @@ export class DailyReportService {
   ): Promise<{ sent: boolean; detail: string }> {
     const account = await this.fetchEngineAccount();
     if (!account) {
-      return { sent: false, detail: 'Moteur ou compte Capital.com injoignable' };
+      return {
+        sent: false,
+        detail: 'Moteur ou compte Capital.com injoignable',
+      };
     }
 
     const snapshots = await this.prisma.equitySnapshot.findMany({

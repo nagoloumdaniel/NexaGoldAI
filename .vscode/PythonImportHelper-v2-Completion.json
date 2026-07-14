@@ -57,6 +57,78 @@
         "documentation": {}
     },
     {
+        "label": "date",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
@@ -97,7 +169,71 @@
         "documentation": {}
     },
     {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Literal",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -130,7 +266,63 @@
         "documentation": {}
     },
     {
+        "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
         "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_settings",
         "importPath": "app.config",
         "description": "app.config",
         "isExtraImport": true,
@@ -186,22 +378,6 @@
         "documentation": {}
     },
     {
-        "label": "Settings",
-        "importPath": "app.config",
-        "description": "app.config",
-        "isExtraImport": true,
-        "detail": "app.config",
-        "documentation": {}
-    },
-    {
-        "label": "Settings",
-        "importPath": "app.config",
-        "description": "app.config",
-        "isExtraImport": true,
-        "detail": "app.config",
-        "documentation": {}
-    },
-    {
         "label": "get_settings",
         "importPath": "app.config",
         "description": "app.config",
@@ -211,22 +387,6 @@
     },
     {
         "label": "Settings",
-        "importPath": "app.config",
-        "description": "app.config",
-        "isExtraImport": true,
-        "detail": "app.config",
-        "documentation": {}
-    },
-    {
-        "label": "get_settings",
-        "importPath": "app.config",
-        "description": "app.config",
-        "isExtraImport": true,
-        "detail": "app.config",
-        "documentation": {}
-    },
-    {
-        "label": "get_settings",
         "importPath": "app.config",
         "description": "app.config",
         "isExtraImport": true,
@@ -332,6 +492,14 @@
         "documentation": {}
     },
     {
+        "label": "CandleRepository",
+        "importPath": "app.data.candles",
+        "description": "app.data.candles",
+        "isExtraImport": true,
+        "detail": "app.data.candles",
+        "documentation": {}
+    },
+    {
         "label": "IngestionService",
         "importPath": "app.data.ingestion",
         "description": "app.data.ingestion",
@@ -345,6 +513,14 @@
         "description": "app.data.ingestion",
         "isExtraImport": true,
         "detail": "app.data.ingestion",
+        "documentation": {}
+    },
+    {
+        "label": "Database",
+        "importPath": "app.db",
+        "description": "app.db",
+        "isExtraImport": true,
+        "detail": "app.db",
         "documentation": {}
     },
     {
@@ -454,6 +630,22 @@
         "documentation": {}
     },
     {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
         "label": "AlwaysHold",
         "importPath": "app.strategy.base",
         "description": "app.strategy.base",
@@ -518,6 +710,22 @@
         "documentation": {}
     },
     {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
         "label": "logging",
         "kind": 6,
         "isExtraImport": true,
@@ -542,6 +750,14 @@
         "importPath": "struct",
         "description": "struct",
         "detail": "struct",
+        "documentation": {}
+    },
+    {
+        "label": "FredClient",
+        "importPath": "app.data.fred",
+        "description": "app.data.fred",
+        "isExtraImport": true,
+        "detail": "app.data.fred",
         "documentation": {}
     },
     {
@@ -641,6 +857,22 @@
         "documentation": {}
     },
     {
+        "label": "build_structured_signal",
+        "importPath": "app.signals.structured",
+        "description": "app.signals.structured",
+        "isExtraImport": true,
+        "detail": "app.signals.structured",
+        "documentation": {}
+    },
+    {
+        "label": "build_structured_signal",
+        "importPath": "app.signals.structured",
+        "description": "app.signals.structured",
+        "isExtraImport": true,
+        "detail": "app.signals.structured",
+        "documentation": {}
+    },
+    {
         "label": "Path",
         "importPath": "pathlib",
         "description": "pathlib",
@@ -714,6 +946,30 @@
     },
     {
         "label": "Trader",
+        "importPath": "app.execution.trader",
+        "description": "app.execution.trader",
+        "isExtraImport": true,
+        "detail": "app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "_compute_pnl",
+        "importPath": "app.execution.trader",
+        "description": "app.execution.trader",
+        "isExtraImport": true,
+        "detail": "app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "_extract_deal_id",
+        "importPath": "app.execution.trader",
+        "description": "app.execution.trader",
+        "isExtraImport": true,
+        "detail": "app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "_parse_broker_time",
         "importPath": "app.execution.trader",
         "description": "app.execution.trader",
         "isExtraImport": true,
@@ -834,6 +1090,14 @@
         "documentation": {}
     },
     {
+        "label": "load_candles",
+        "importPath": "app.research.dataset",
+        "description": "app.research.dataset",
+        "isExtraImport": true,
+        "detail": "app.research.dataset",
+        "documentation": {}
+    },
+    {
         "label": "candles_to_frame",
         "importPath": "app.research.dataset",
         "description": "app.research.dataset",
@@ -850,14 +1114,6 @@
         "documentation": {}
     },
     {
-        "label": "load_candles",
-        "importPath": "app.research.dataset",
-        "description": "app.research.dataset",
-        "isExtraImport": true,
-        "detail": "app.research.dataset",
-        "documentation": {}
-    },
-    {
         "label": "feature_columns",
         "importPath": "app.research.features",
         "description": "app.research.features",
@@ -899,6 +1155,14 @@
     },
     {
         "label": "feature_columns",
+        "importPath": "app.research.features",
+        "description": "app.research.features",
+        "isExtraImport": true,
+        "detail": "app.research.features",
+        "documentation": {}
+    },
+    {
+        "label": "build_features",
         "importPath": "app.research.features",
         "description": "app.research.features",
         "isExtraImport": true,
@@ -1012,6 +1276,30 @@
         "documentation": {}
     },
     {
+        "label": "UP",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "make_labels",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
+        "label": "DOWN",
+        "importPath": "app.research.labeling",
+        "description": "app.research.labeling",
+        "isExtraImport": true,
+        "detail": "app.research.labeling",
+        "documentation": {}
+    },
+    {
         "label": "FLAT",
         "importPath": "app.research.labeling",
         "description": "app.research.labeling",
@@ -1060,7 +1348,63 @@
         "documentation": {}
     },
     {
+        "label": "build_rate_features",
+        "importPath": "app.research.macro",
+        "description": "app.research.macro",
+        "isExtraImport": true,
+        "detail": "app.research.macro",
+        "documentation": {}
+    },
+    {
+        "label": "build_rate_features",
+        "importPath": "app.research.macro",
+        "description": "app.research.macro",
+        "isExtraImport": true,
+        "detail": "app.research.macro",
+        "documentation": {}
+    },
+    {
         "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "asdict",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "asdict",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "asdict",
         "importPath": "dataclasses",
         "description": "dataclasses",
         "isExtraImport": true,
@@ -1081,6 +1425,126 @@
         "description": "dataclasses",
         "isExtraImport": true,
         "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "field",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "log",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "sqrt",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "isnan",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "log",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "mean",
+        "importPath": "statistics",
+        "description": "statistics",
+        "isExtraImport": true,
+        "detail": "statistics",
+        "documentation": {}
+    },
+    {
+        "label": "pstdev",
+        "importPath": "statistics",
+        "description": "statistics",
+        "isExtraImport": true,
+        "detail": "statistics",
+        "documentation": {}
+    },
+    {
+        "label": "build_math_summary",
+        "importPath": "app.signals.math_features",
+        "description": "app.signals.math_features",
+        "isExtraImport": true,
+        "detail": "app.signals.math_features",
+        "documentation": {}
+    },
+    {
+        "label": "build_math_summary",
+        "importPath": "app.signals.math_features",
+        "description": "app.signals.math_features",
+        "isExtraImport": true,
+        "detail": "app.signals.math_features",
+        "documentation": {}
+    },
+    {
+        "label": "assess_regime_gate",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
+        "isExtraImport": true,
+        "detail": "app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "classify_regime",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
+        "isExtraImport": true,
+        "detail": "app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "assess_regime_gate",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
+        "isExtraImport": true,
+        "detail": "app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "classify_regime",
+        "importPath": "app.signals.regime",
+        "description": "app.signals.regime",
+        "isExtraImport": true,
+        "detail": "app.signals.regime",
         "documentation": {}
     },
     {
@@ -1180,6 +1644,14 @@
         "documentation": {}
     },
     {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
         "label": "LearningService",
         "importPath": "app.learning.service",
         "description": "app.learning.service",
@@ -1194,15 +1666,6 @@
         "importPath": "tempfile",
         "description": "tempfile",
         "detail": "tempfile",
-        "documentation": {}
-    },
-    {
-        "label": "sys",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "sys",
-        "description": "sys",
-        "detail": "sys",
         "documentation": {}
     },
     {
@@ -1377,6 +1840,51 @@
         "documentation": {}
     },
     {
+        "label": "FredError",
+        "kind": 6,
+        "importPath": "apps.engine.app.data.fred",
+        "description": "apps.engine.app.data.fred",
+        "peekOfCode": "class FredError(Exception):\n    \"\"\"Raised when FRED returns an error or an unparsable payload.\"\"\"\nclass FredClient:\n    def __init__(self, timeout: float = 30.0):\n        self._client = httpx.AsyncClient(timeout=timeout)\n    async def close(self) -> None:\n        await self._client.aclose()\n    async def fetch_series(\n        self, series_id: str, start: date, end: date | None = None\n    ) -> list[dict]:",
+        "detail": "apps.engine.app.data.fred",
+        "documentation": {}
+    },
+    {
+        "label": "FredClient",
+        "kind": 6,
+        "importPath": "apps.engine.app.data.fred",
+        "description": "apps.engine.app.data.fred",
+        "peekOfCode": "class FredClient:\n    def __init__(self, timeout: float = 30.0):\n        self._client = httpx.AsyncClient(timeout=timeout)\n    async def close(self) -> None:\n        await self._client.aclose()\n    async def fetch_series(\n        self, series_id: str, start: date, end: date | None = None\n    ) -> list[dict]:\n        \"\"\"Download one FRED series as a list of daily candle dicts (ascending).\"\"\"\n        params = {\"id\": series_id, \"cosd\": start.isoformat()}",
+        "detail": "apps.engine.app.data.fred",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "apps.engine.app.data.fred",
+        "description": "apps.engine.app.data.fred",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.fred\")\n_URL = \"https://fred.stlouisfed.org/graph/fredgraph.csv\"\nclass FredError(Exception):\n    \"\"\"Raised when FRED returns an error or an unparsable payload.\"\"\"\nclass FredClient:\n    def __init__(self, timeout: float = 30.0):\n        self._client = httpx.AsyncClient(timeout=timeout)\n    async def close(self) -> None:\n        await self._client.aclose()\n    async def fetch_series(",
+        "detail": "apps.engine.app.data.fred",
+        "documentation": {}
+    },
+    {
+        "label": "_URL",
+        "kind": 5,
+        "importPath": "apps.engine.app.data.fred",
+        "description": "apps.engine.app.data.fred",
+        "peekOfCode": "_URL = \"https://fred.stlouisfed.org/graph/fredgraph.csv\"\nclass FredError(Exception):\n    \"\"\"Raised when FRED returns an error or an unparsable payload.\"\"\"\nclass FredClient:\n    def __init__(self, timeout: float = 30.0):\n        self._client = httpx.AsyncClient(timeout=timeout)\n    async def close(self) -> None:\n        await self._client.aclose()\n    async def fetch_series(\n        self, series_id: str, start: date, end: date | None = None",
+        "detail": "apps.engine.app.data.fred",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.app.data.fred_cli",
+        "description": "apps.engine.app.data.fred_cli",
+        "peekOfCode": "def main() -> None:\n    parser = argparse.ArgumentParser(description=\"Backfill série macro FRED\")\n    parser.add_argument(\"--series\", default=\"DFII10\", help=\"ID série FRED (ex. DFII10)\")\n    parser.add_argument(\"--days\", type=int, default=1095)\n    parser.add_argument(\n        \"--instrument\", default=None, help=\"Clé instrument en base (défaut: =série)\"\n    )\n    asyncio.run(run(parser.parse_args()))\nif __name__ == \"__main__\":\n    main()",
+        "detail": "apps.engine.app.data.fred_cli",
+        "documentation": {}
+    },
+    {
         "label": "IngestionService",
         "kind": 6,
         "importPath": "apps.engine.app.data.ingestion",
@@ -1408,7 +1916,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.data.trades",
         "description": "apps.engine.app.data.trades",
-        "peekOfCode": "class TradeRepository:\n    def __init__(self, pool: asyncpg.Pool, instrument: str):\n        self._pool = pool\n        self._instrument = instrument\n    async def insert_open(\n        self,\n        signal: Signal,\n        units: float,\n        entry_price: float,\n        stop_loss: float,",
+        "peekOfCode": "class TradeRepository:\n    def __init__(self, pool: asyncpg.Pool, instrument: str):\n        self._pool = pool\n        self._instrument = instrument\n    async def open_trades(self) -> list[dict]:\n        async with self._pool.acquire() as conn:\n            rows = await conn.fetch(\n                'SELECT \"id\", \"instrument\", \"side\", \"units\", \"entryPrice\", '\n                '\"stopLoss\", \"takeProfit\", \"strategy\", \"brokerTradeId\", \"openedAt\" '\n                'FROM \"Trade\" WHERE \"status\" = \\'OPEN\\'::\"TradeStatus\" '",
         "detail": "apps.engine.app.data.trades",
         "documentation": {}
     },
@@ -1426,7 +1934,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.execution.trader",
         "description": "apps.engine.app.execution.trader",
-        "peekOfCode": "def compute_bracket(\n    action: Action, entry: float, stop_loss_pct: float, risk_reward: float\n) -> tuple[float, float]:\n    \"\"\"Stop-loss and take-profit prices around the entry.\"\"\"\n    if action == Action.BUY:\n        return entry * (1 - stop_loss_pct), entry * (1 + stop_loss_pct * risk_reward)\n    return entry * (1 + stop_loss_pct), entry * (1 - stop_loss_pct * risk_reward)\nclass Trader:\n    def __init__(\n        self,",
+        "peekOfCode": "def compute_bracket(\n    action: Action, entry: float, stop_loss_pct: float, risk_reward: float\n) -> tuple[float, float]:\n    \"\"\"Stop-loss and take-profit prices around the entry.\"\"\"\n    if action == Action.BUY:\n        return entry * (1 - stop_loss_pct), entry * (1 + stop_loss_pct * risk_reward)\n    return entry * (1 + stop_loss_pct), entry * (1 - stop_loss_pct * risk_reward)\ndef _extract_deal_id(confirmation: dict | None) -> str | None:\n    \"\"\"Best-effort extraction of the real dealId from a broker confirmation.\"\"\"\n    if not confirmation:",
         "detail": "apps.engine.app.execution.trader",
         "documentation": {}
     },
@@ -1435,7 +1943,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.execution.trader",
         "description": "apps.engine.app.execution.trader",
-        "peekOfCode": "logger = logging.getLogger(\"nexagold.trader\")\ndef compute_bracket(\n    action: Action, entry: float, stop_loss_pct: float, risk_reward: float\n) -> tuple[float, float]:\n    \"\"\"Stop-loss and take-profit prices around the entry.\"\"\"\n    if action == Action.BUY:\n        return entry * (1 - stop_loss_pct), entry * (1 + stop_loss_pct * risk_reward)\n    return entry * (1 + stop_loss_pct), entry * (1 - stop_loss_pct * risk_reward)\nclass Trader:\n    def __init__(",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.trader\")\ndef compute_bracket(\n    action: Action, entry: float, stop_loss_pct: float, risk_reward: float\n) -> tuple[float, float]:\n    \"\"\"Stop-loss and take-profit prices around the entry.\"\"\"\n    if action == Action.BUY:\n        return entry * (1 - stop_loss_pct), entry * (1 + stop_loss_pct * risk_reward)\n    return entry * (1 + stop_loss_pct), entry * (1 - stop_loss_pct * risk_reward)\ndef _extract_deal_id(confirmation: dict | None) -> str | None:\n    \"\"\"Best-effort extraction of the real dealId from a broker confirmation.\"\"\"",
         "detail": "apps.engine.app.execution.trader",
         "documentation": {}
     },
@@ -1498,7 +2006,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.backtest",
         "description": "apps.engine.app.research.backtest",
-        "peekOfCode": "def build_dataset(\n    df: pd.DataFrame, config: dict, macro_df: pd.DataFrame | None = None\n) -> pd.DataFrame:\n    \"\"\"Features + label (labelling method chosen by `config`) + next-bar return.\n    `macro_df` is included as features only when `config[\"macro\"]` is set.\n    \"\"\"\n    use_macro = macro_df if config.get(\"macro\") else None\n    feats = build_features(df, use_macro)\n    feats[\"label\"] = make_labels(df, config)\n    feats[\"next_ret\"] = df[\"close\"].pct_change().shift(-1)",
+        "peekOfCode": "def build_dataset(\n    df: pd.DataFrame,\n    config: dict,\n    macro_df: pd.DataFrame | None = None,\n    rate_df: pd.DataFrame | None = None,\n) -> pd.DataFrame:\n    \"\"\"Features + label (labelling method chosen by `config`) + next-bar return.\n    `macro_df` is included as features only when `config[\"macro\"]` is set;\n    `rate_df` (real-rate series) only when `config[\"rates\"]` is set.\n    \"\"\"",
         "detail": "apps.engine.app.research.backtest",
         "documentation": {}
     },
@@ -1588,7 +2096,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.research.features",
         "description": "apps.engine.app.research.features",
-        "peekOfCode": "def build_features(\n    df: pd.DataFrame, macro_df: pd.DataFrame | None = None\n) -> pd.DataFrame:\n    close = df[\"close\"]\n    out = pd.DataFrame(index=df.index)\n    # Momentum / returns over several horizons\n    out[\"ret_1\"] = close.pct_change()\n    out[\"ret_3\"] = close.pct_change(3)\n    out[\"ret_6\"] = close.pct_change(6)\n    out[\"ret_12\"] = close.pct_change(12)",
+        "peekOfCode": "def build_features(\n    df: pd.DataFrame,\n    macro_df: pd.DataFrame | None = None,\n    rate_df: pd.DataFrame | None = None,\n) -> pd.DataFrame:\n    close = df[\"close\"]\n    out = pd.DataFrame(index=df.index)\n    # Momentum / returns over several horizons\n    out[\"ret_1\"] = close.pct_change()\n    out[\"ret_3\"] = close.pct_change(3)",
         "detail": "apps.engine.app.research.features",
         "documentation": {}
     },
@@ -1629,6 +2137,15 @@
         "documentation": {}
     },
     {
+        "label": "build_rate_features",
+        "kind": 2,
+        "importPath": "apps.engine.app.research.macro",
+        "description": "apps.engine.app.research.macro",
+        "peekOfCode": "def build_rate_features(\n    index: pd.DatetimeIndex, rate_df: pd.DataFrame\n) -> pd.DataFrame:\n    \"\"\"Features depuis une série de TAUX (ex. taux réel US 10 ans, FRED DFII10).\n    Contrairement à un prix, un taux réel peut être nul ou négatif : on utilise\n    donc le NIVEAU et des VARIATIONS absolues (diff), jamais de pct_change.\n    La série est journalière ; on la décale d'un jour avant de l'aligner sur la\n    timeline de l'or (forward-fill), pour n'utiliser qu'une valeur déjà publiée\n    — pas de lookahead.\n    \"\"\"",
+        "detail": "apps.engine.app.research.macro",
+        "documentation": {}
+    },
+    {
         "label": "build_macro_features",
         "kind": 2,
         "importPath": "apps.engine.app.research.macro",
@@ -1656,6 +2173,168 @@
         "documentation": {}
     },
     {
+        "label": "pnl",
+        "kind": 2,
+        "importPath": "apps.engine.app.research._exp_rate_gate",
+        "description": "apps.engine.app.research._exp_rate_gate",
+        "peekOfCode": "def pnl(position: np.ndarray, next_ret: np.ndarray, cost_bps: float) -> dict:\n    \"\"\"PnL long/short avec coûts de transaction (même maths que backtest_pnl).\"\"\"\n    gross = position * next_ret\n    prev = np.concatenate([[0], position[:-1]])\n    cost = np.abs(position - prev) * (cost_bps / 1e4)\n    net = gross - cost\n    equity = np.cumprod(1 + net)\n    active = position != 0\n    wins = net[active & (net > 0)]\n    losses = net[active & (net < 0)]",
+        "detail": "apps.engine.app.research._exp_rate_gate",
+        "documentation": {}
+    },
+    {
+        "label": "positions",
+        "kind": 2,
+        "importPath": "apps.engine.app.research._exp_rate_gate",
+        "description": "apps.engine.app.research._exp_rate_gate",
+        "peekOfCode": "def positions(pred, proba, threshold, regime=None):\n    \"\"\"Positions directionnelles, filtrées par confiance puis (option) par régime.\n    regime > 0 = taux réel en hausse (bloque longs) ; < 0 = baisse (bloque shorts).\n    NaN = pas d'avis -> aucun filtrage.\n    \"\"\"\n    conf = proba.max(axis=1)\n    directional = np.where(pred == UP, 1, np.where(pred == DOWN, -1, 0))\n    pos = np.where(conf >= threshold, directional, 0)\n    if regime is not None:\n        rising = regime > 0",
+        "detail": "apps.engine.app.research._exp_rate_gate",
+        "documentation": {}
+    },
+    {
+        "label": "slice_mask",
+        "kind": 2,
+        "importPath": "apps.engine.app.research._exp_rate_gate",
+        "description": "apps.engine.app.research._exp_rate_gate",
+        "peekOfCode": "def slice_mask(n: int, lo: float, hi: float) -> np.ndarray:\n    m = np.zeros(n, dtype=bool)\n    m[int(n * lo) : int(n * hi)] = True\n    return m\ndef best_threshold(pred, proba, next_ret, val, regime=None) -> float:\n    best_t, best_s = 0.0, None\n    for t in THRESHOLDS:\n        s = pnl(positions(pred[val], proba[val], t, regime[val] if regime is not None else None),\n                next_ret[val], COST_BPS)[\"sharpe\"]\n        if best_s is None or s > best_s:",
+        "detail": "apps.engine.app.research._exp_rate_gate",
+        "documentation": {}
+    },
+    {
+        "label": "best_threshold",
+        "kind": 2,
+        "importPath": "apps.engine.app.research._exp_rate_gate",
+        "description": "apps.engine.app.research._exp_rate_gate",
+        "peekOfCode": "def best_threshold(pred, proba, next_ret, val, regime=None) -> float:\n    best_t, best_s = 0.0, None\n    for t in THRESHOLDS:\n        s = pnl(positions(pred[val], proba[val], t, regime[val] if regime is not None else None),\n                next_ret[val], COST_BPS)[\"sharpe\"]\n        if best_s is None or s > best_s:\n            best_s, best_t = s, t\n    return best_t\nasync def main() -> None:\n    settings = get_settings()",
+        "detail": "apps.engine.app.research._exp_rate_gate",
+        "documentation": {}
+    },
+    {
+        "label": "GRANULARITY",
+        "kind": 5,
+        "importPath": "apps.engine.app.research._exp_rate_gate",
+        "description": "apps.engine.app.research._exp_rate_gate",
+        "peekOfCode": "GRANULARITY = \"H1\"\nCONFIG = {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.002}\nFOLDS = 5\nCOST_BPS = 2.0\nTHRESHOLDS = (0.0, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)\ndef pnl(position: np.ndarray, next_ret: np.ndarray, cost_bps: float) -> dict:\n    \"\"\"PnL long/short avec coûts de transaction (même maths que backtest_pnl).\"\"\"\n    gross = position * next_ret\n    prev = np.concatenate([[0], position[:-1]])\n    cost = np.abs(position - prev) * (cost_bps / 1e4)",
+        "detail": "apps.engine.app.research._exp_rate_gate",
+        "documentation": {}
+    },
+    {
+        "label": "CONFIG",
+        "kind": 5,
+        "importPath": "apps.engine.app.research._exp_rate_gate",
+        "description": "apps.engine.app.research._exp_rate_gate",
+        "peekOfCode": "CONFIG = {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.002}\nFOLDS = 5\nCOST_BPS = 2.0\nTHRESHOLDS = (0.0, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)\ndef pnl(position: np.ndarray, next_ret: np.ndarray, cost_bps: float) -> dict:\n    \"\"\"PnL long/short avec coûts de transaction (même maths que backtest_pnl).\"\"\"\n    gross = position * next_ret\n    prev = np.concatenate([[0], position[:-1]])\n    cost = np.abs(position - prev) * (cost_bps / 1e4)\n    net = gross - cost",
+        "detail": "apps.engine.app.research._exp_rate_gate",
+        "documentation": {}
+    },
+    {
+        "label": "FOLDS",
+        "kind": 5,
+        "importPath": "apps.engine.app.research._exp_rate_gate",
+        "description": "apps.engine.app.research._exp_rate_gate",
+        "peekOfCode": "FOLDS = 5\nCOST_BPS = 2.0\nTHRESHOLDS = (0.0, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)\ndef pnl(position: np.ndarray, next_ret: np.ndarray, cost_bps: float) -> dict:\n    \"\"\"PnL long/short avec coûts de transaction (même maths que backtest_pnl).\"\"\"\n    gross = position * next_ret\n    prev = np.concatenate([[0], position[:-1]])\n    cost = np.abs(position - prev) * (cost_bps / 1e4)\n    net = gross - cost\n    equity = np.cumprod(1 + net)",
+        "detail": "apps.engine.app.research._exp_rate_gate",
+        "documentation": {}
+    },
+    {
+        "label": "COST_BPS",
+        "kind": 5,
+        "importPath": "apps.engine.app.research._exp_rate_gate",
+        "description": "apps.engine.app.research._exp_rate_gate",
+        "peekOfCode": "COST_BPS = 2.0\nTHRESHOLDS = (0.0, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)\ndef pnl(position: np.ndarray, next_ret: np.ndarray, cost_bps: float) -> dict:\n    \"\"\"PnL long/short avec coûts de transaction (même maths que backtest_pnl).\"\"\"\n    gross = position * next_ret\n    prev = np.concatenate([[0], position[:-1]])\n    cost = np.abs(position - prev) * (cost_bps / 1e4)\n    net = gross - cost\n    equity = np.cumprod(1 + net)\n    active = position != 0",
+        "detail": "apps.engine.app.research._exp_rate_gate",
+        "documentation": {}
+    },
+    {
+        "label": "THRESHOLDS",
+        "kind": 5,
+        "importPath": "apps.engine.app.research._exp_rate_gate",
+        "description": "apps.engine.app.research._exp_rate_gate",
+        "peekOfCode": "THRESHOLDS = (0.0, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8)\ndef pnl(position: np.ndarray, next_ret: np.ndarray, cost_bps: float) -> dict:\n    \"\"\"PnL long/short avec coûts de transaction (même maths que backtest_pnl).\"\"\"\n    gross = position * next_ret\n    prev = np.concatenate([[0], position[:-1]])\n    cost = np.abs(position - prev) * (cost_bps / 1e4)\n    net = gross - cost\n    equity = np.cumprod(1 + net)\n    active = position != 0\n    wins = net[active & (net > 0)]",
+        "detail": "apps.engine.app.research._exp_rate_gate",
+        "documentation": {}
+    },
+    {
+        "label": "load_gold",
+        "kind": 2,
+        "importPath": "apps.engine.app.research._exp_trend_daily",
+        "description": "apps.engine.app.research._exp_trend_daily",
+        "peekOfCode": "def load_gold() -> pd.DataFrame:\n    headers = {\"User-Agent\": \"Mozilla/5.0\"}\n    data = httpx.get(URL, headers=headers, timeout=30.0).json()\n    r = data[\"chart\"][\"result\"][0]\n    q = r[\"indicators\"][\"quote\"][0]\n    df = pd.DataFrame(\n        {\"open\": q[\"open\"], \"high\": q[\"high\"], \"low\": q[\"low\"], \"close\": q[\"close\"]},\n        index=pd.to_datetime(r[\"timestamp\"], unit=\"s\").normalize(),\n    )\n    return df.dropna()",
+        "detail": "apps.engine.app.research._exp_trend_daily",
+        "documentation": {}
+    },
+    {
+        "label": "metrics",
+        "kind": 2,
+        "importPath": "apps.engine.app.research._exp_trend_daily",
+        "description": "apps.engine.app.research._exp_trend_daily",
+        "peekOfCode": "def metrics(strat_ret: pd.Series, position: pd.Series) -> dict:\n    eq = (1 + strat_ret).cumprod()\n    active = position != 0\n    wins = strat_ret[active & (strat_ret > 0)]\n    losses = strat_ret[active & (strat_ret < 0)]\n    std = strat_ret.std()\n    years = len(strat_ret) / ANN\n    turn = position.diff().abs().fillna(position.abs())\n    return {\n        \"sharpe\": round(float(strat_ret.mean() / std * np.sqrt(ANN)), 2) if std > 0 else 0.0,",
+        "detail": "apps.engine.app.research._exp_trend_daily",
+        "documentation": {}
+    },
+    {
+        "label": "run_rule",
+        "kind": 2,
+        "importPath": "apps.engine.app.research._exp_trend_daily",
+        "description": "apps.engine.app.research._exp_trend_daily",
+        "peekOfCode": "def run_rule(close, ret, signal: pd.Series, cost_bps: float) -> tuple[pd.Series, pd.Series]:\n    \"\"\"signal en {-1,0,1} calculé à la clôture t ; appliqué au rendement t+1 (causal).\"\"\"\n    position = signal.shift(1).fillna(0)\n    turn = position.diff().abs().fillna(position.abs())\n    strat = position * ret - turn * (cost_bps / 1e4)\n    return strat, position\ndef rules(df: pd.DataFrame) -> dict[str, pd.Series]:\n    close, high, low = df[\"close\"], df[\"high\"], df[\"low\"]\n    out: dict[str, pd.Series] = {}\n    # Time-series momentum : long si rendement passé N jours > 0",
+        "detail": "apps.engine.app.research._exp_trend_daily",
+        "documentation": {}
+    },
+    {
+        "label": "rules",
+        "kind": 2,
+        "importPath": "apps.engine.app.research._exp_trend_daily",
+        "description": "apps.engine.app.research._exp_trend_daily",
+        "peekOfCode": "def rules(df: pd.DataFrame) -> dict[str, pd.Series]:\n    close, high, low = df[\"close\"], df[\"high\"], df[\"low\"]\n    out: dict[str, pd.Series] = {}\n    # Time-series momentum : long si rendement passé N jours > 0\n    for n in (50, 100, 200):\n        mom = close.pct_change(n)\n        out[f\"TSMOM{n} L/F\"] = (mom > 0).astype(float)\n        out[f\"TSMOM{n} L/S\"] = np.sign(mom).replace(0, np.nan).ffill().fillna(0)\n    # Croisement de moyennes mobiles\n    for fast, slow in ((20, 100), (50, 200)):",
+        "detail": "apps.engine.app.research._exp_trend_daily",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.app.research._exp_trend_daily",
+        "description": "apps.engine.app.research._exp_trend_daily",
+        "peekOfCode": "def main() -> None:\n    df = load_gold()\n    close = df[\"close\"]\n    ret = close.pct_change().fillna(0)\n    halves = {\n        \"full\": df.index >= df.index[0],\n        \"h1_early\": df.index < df.index[len(df) // 2],\n        \"h2_late\": df.index >= df.index[len(df) // 2],\n    }\n    # Benchmark buy & hold",
+        "detail": "apps.engine.app.research._exp_trend_daily",
+        "documentation": {}
+    },
+    {
+        "label": "URL",
+        "kind": 5,
+        "importPath": "apps.engine.app.research._exp_trend_daily",
+        "description": "apps.engine.app.research._exp_trend_daily",
+        "peekOfCode": "URL = (\n    \"https://query1.finance.yahoo.com/v8/finance/chart/GC=F\"\n    \"?period1=946684800&period2=9999999999&interval=1d\"\n)\nCOST_BPS = 2.0          # coût par changement de position (turnover unit)\nANN = 252               # jours de bourse / an\nFIN_BPS_PER_YEAR = 0.0  # financement CFD ignoré ici (voir note dans le rapport)\ndef load_gold() -> pd.DataFrame:\n    headers = {\"User-Agent\": \"Mozilla/5.0\"}\n    data = httpx.get(URL, headers=headers, timeout=30.0).json()",
+        "detail": "apps.engine.app.research._exp_trend_daily",
+        "documentation": {}
+    },
+    {
+        "label": "COST_BPS",
+        "kind": 5,
+        "importPath": "apps.engine.app.research._exp_trend_daily",
+        "description": "apps.engine.app.research._exp_trend_daily",
+        "peekOfCode": "COST_BPS = 2.0          # coût par changement de position (turnover unit)\nANN = 252               # jours de bourse / an\nFIN_BPS_PER_YEAR = 0.0  # financement CFD ignoré ici (voir note dans le rapport)\ndef load_gold() -> pd.DataFrame:\n    headers = {\"User-Agent\": \"Mozilla/5.0\"}\n    data = httpx.get(URL, headers=headers, timeout=30.0).json()\n    r = data[\"chart\"][\"result\"][0]\n    q = r[\"indicators\"][\"quote\"][0]\n    df = pd.DataFrame(\n        {\"open\": q[\"open\"], \"high\": q[\"high\"], \"low\": q[\"low\"], \"close\": q[\"close\"]},",
+        "detail": "apps.engine.app.research._exp_trend_daily",
+        "documentation": {}
+    },
+    {
+        "label": "ANN",
+        "kind": 5,
+        "importPath": "apps.engine.app.research._exp_trend_daily",
+        "description": "apps.engine.app.research._exp_trend_daily",
+        "peekOfCode": "ANN = 252               # jours de bourse / an\nFIN_BPS_PER_YEAR = 0.0  # financement CFD ignoré ici (voir note dans le rapport)\ndef load_gold() -> pd.DataFrame:\n    headers = {\"User-Agent\": \"Mozilla/5.0\"}\n    data = httpx.get(URL, headers=headers, timeout=30.0).json()\n    r = data[\"chart\"][\"result\"][0]\n    q = r[\"indicators\"][\"quote\"][0]\n    df = pd.DataFrame(\n        {\"open\": q[\"open\"], \"high\": q[\"high\"], \"low\": q[\"low\"], \"close\": q[\"close\"]},\n        index=pd.to_datetime(r[\"timestamp\"], unit=\"s\").normalize(),",
+        "detail": "apps.engine.app.research._exp_trend_daily",
+        "documentation": {}
+    },
+    {
+        "label": "FIN_BPS_PER_YEAR",
+        "kind": 5,
+        "importPath": "apps.engine.app.research._exp_trend_daily",
+        "description": "apps.engine.app.research._exp_trend_daily",
+        "peekOfCode": "FIN_BPS_PER_YEAR = 0.0  # financement CFD ignoré ici (voir note dans le rapport)\ndef load_gold() -> pd.DataFrame:\n    headers = {\"User-Agent\": \"Mozilla/5.0\"}\n    data = httpx.get(URL, headers=headers, timeout=30.0).json()\n    r = data[\"chart\"][\"result\"][0]\n    q = r[\"indicators\"][\"quote\"][0]\n    df = pd.DataFrame(\n        {\"open\": q[\"open\"], \"high\": q[\"high\"], \"low\": q[\"low\"], \"close\": q[\"close\"]},\n        index=pd.to_datetime(r[\"timestamp\"], unit=\"s\").normalize(),\n    )",
+        "detail": "apps.engine.app.research._exp_trend_daily",
+        "documentation": {}
+    },
+    {
         "label": "RiskDecision",
         "kind": 6,
         "importPath": "apps.engine.app.risk.manager",
@@ -1671,6 +2350,87 @@
         "description": "apps.engine.app.risk.manager",
         "peekOfCode": "class RiskManager:\n    def __init__(self, settings: Settings):\n        self._settings = settings\n    def review(\n        self,\n        signal: Signal,\n        account: dict,\n        open_positions: list[dict],\n        price: float,\n        stop_loss_price: float,",
         "detail": "apps.engine.app.risk.manager",
+        "documentation": {}
+    },
+    {
+        "label": "MathSummary",
+        "kind": 6,
+        "importPath": "apps.engine.app.signals.math_features",
+        "description": "apps.engine.app.signals.math_features",
+        "peekOfCode": "class MathSummary:\n    simple_return_1: float | None\n    log_return_1: float | None\n    cumulative_return: float | None\n    momentum_3: float | None\n    momentum_12: float | None\n    momentum_acceleration: float | None\n    realised_volatility_20: float | None\n    volatility_ratio_5_20: float | None\n    atr_14: float | None",
+        "detail": "apps.engine.app.signals.math_features",
+        "documentation": {}
+    },
+    {
+        "label": "build_math_summary",
+        "kind": 2,
+        "importPath": "apps.engine.app.signals.math_features",
+        "description": "apps.engine.app.signals.math_features",
+        "peekOfCode": "def build_math_summary(candles: list[dict], min_count: int = 50) -> dict:\n    closes = _floats(candles, \"close\")\n    warnings: list[str] = []\n    if len(closes) < 2:\n        return MathSummary(\n            simple_return_1=None,\n            log_return_1=None,\n            cumulative_return=None,\n            momentum_3=None,\n            momentum_12=None,",
+        "detail": "apps.engine.app.signals.math_features",
+        "documentation": {}
+    },
+    {
+        "label": "MarketRegime",
+        "kind": 6,
+        "importPath": "apps.engine.app.signals.regime",
+        "description": "apps.engine.app.signals.regime",
+        "peekOfCode": "class MarketRegime:\n    regime: str\n    trend: str\n    volatility: str\n    confidence: float\n    reasons: list[str]\n    warnings: list[str]\n    def to_dict(self) -> dict:\n        return asdict(self)\n@dataclass",
+        "detail": "apps.engine.app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "RegimeGate",
+        "kind": 6,
+        "importPath": "apps.engine.app.signals.regime",
+        "description": "apps.engine.app.signals.regime",
+        "peekOfCode": "class RegimeGate:\n    allowed: bool\n    status: str\n    agreement: str\n    reasons: list[str]\n    warnings: list[str]\n    def to_dict(self) -> dict:\n        return asdict(self)\ndef _optional_float(value: object) -> float | None:\n    try:",
+        "detail": "apps.engine.app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "assess_regime_gate",
+        "kind": 2,
+        "importPath": "apps.engine.app.signals.regime",
+        "description": "apps.engine.app.signals.regime",
+        "peekOfCode": "def assess_regime_gate(\n    direction: str,\n    regime_details: dict | None,\n    math_summary: dict | None,\n) -> dict:\n    \"\"\"Decide whether a directional preview is compatible with its regime.\n    This gate only enriches the read-only structured signal. The live trading\n    path keeps its existing strategy and risk-manager behavior.\n    \"\"\"\n    direction = direction.upper()",
+        "detail": "apps.engine.app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "classify_regime",
+        "kind": 2,
+        "importPath": "apps.engine.app.signals.regime",
+        "description": "apps.engine.app.signals.regime",
+        "peekOfCode": "def classify_regime(math_summary: dict | None) -> dict:\n    if not math_summary:\n        return MarketRegime(\n            regime=\"UNKNOWN\",\n            trend=\"UNKNOWN\",\n            volatility=\"UNKNOWN\",\n            confidence=0.0,\n            reasons=[],\n            warnings=[\"Resume mathematique indisponible\"],\n        ).to_dict()",
+        "detail": "apps.engine.app.signals.regime",
+        "documentation": {}
+    },
+    {
+        "label": "StructuredSignal",
+        "kind": 6,
+        "importPath": "apps.engine.app.signals.structured",
+        "description": "apps.engine.app.signals.structured",
+        "peekOfCode": "class StructuredSignal:\n    symbol: str\n    timestamp: str\n    timeframe: str\n    direction: str\n    probability_up: float\n    probability_down: float\n    probability_neutral: float\n    raw_model_score: float\n    calibrated_confidence: float",
+        "detail": "apps.engine.app.signals.structured",
+        "documentation": {}
+    },
+    {
+        "label": "candle_quality",
+        "kind": 2,
+        "importPath": "apps.engine.app.signals.structured",
+        "description": "apps.engine.app.signals.structured",
+        "peekOfCode": "def candle_quality(candles: list[dict], min_count: int) -> tuple[float, list[str]]:\n    warnings: list[str] = []\n    if not candles:\n        return 0.0, [\"Aucune bougie disponible\"]\n    count_score = min(len(candles) / max(min_count, 1), 1.0)\n    latest = _parse_time(candles[-1].get(\"time\"))\n    stale_score = 1.0\n    if latest is None:\n        warnings.append(\"Timestamp de derniere bougie illisible\")\n        stale_score = 0.5",
+        "detail": "apps.engine.app.signals.structured",
+        "documentation": {}
+    },
+    {
+        "label": "build_structured_signal",
+        "kind": 2,
+        "importPath": "apps.engine.app.signals.structured",
+        "description": "apps.engine.app.signals.structured",
+        "peekOfCode": "def build_structured_signal(\n    settings: Settings,\n    strategy_name: str,\n    signal: Signal,\n    candles: list[dict],\n    price: dict | None,\n    model_version: str | None,\n) -> dict:\n    quality, warnings = candle_quality(candles, settings.decision_candles)\n    math_summary = build_math_summary(candles, min_count=min(settings.decision_candles, 50))",
+        "detail": "apps.engine.app.signals.structured",
         "documentation": {}
     },
     {
@@ -1782,6 +2542,15 @@
         "documentation": {}
     },
     {
+        "label": "ResolveTradeRequest",
+        "kind": 6,
+        "importPath": "apps.engine.app.main",
+        "description": "apps.engine.app.main",
+        "peekOfCode": "class ResolveTradeRequest(BaseModel):\n    status: Literal[\"CANCELLED\", \"CLOSED\"]\n    exit_price: float | None = None\n    closed_at: datetime | None = None\nbroker: CapitalClient | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\ntrader: Trader | None = None\ndecisions_repo: StrategyDecisionRepository | None = None\nlearning: LearningService | None = None",
+        "detail": "apps.engine.app.main",
+        "documentation": {}
+    },
+    {
         "label": "ensure_broker_configured",
         "kind": 2,
         "importPath": "apps.engine.app.main",
@@ -1804,7 +2573,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.main",
         "description": "apps.engine.app.main",
-        "peekOfCode": "settings = get_settings()\nbroker: CapitalClient | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\ntrader: Trader | None = None\ndecisions_repo: StrategyDecisionRepository | None = None\nlearning: LearningService | None = None\n_ingestion_task: asyncio.Task | None = None\n_trade_task: asyncio.Task | None = None\n_learning_task: asyncio.Task | None = None",
+        "peekOfCode": "settings = get_settings()\nclass ResolveTradeRequest(BaseModel):\n    status: Literal[\"CANCELLED\", \"CLOSED\"]\n    exit_price: float | None = None\n    closed_at: datetime | None = None\nbroker: CapitalClient | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\ntrader: Trader | None = None\ndecisions_repo: StrategyDecisionRepository | None = None",
         "detail": "apps.engine.app.main",
         "documentation": {}
     },
@@ -1971,6 +2740,150 @@
         "documentation": {}
     },
     {
+        "label": "candles",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_math_features",
+        "description": "apps.engine.tests_manual.test_math_features",
+        "peekOfCode": "candles = []\nfor i in range(60):\n    close = 100.0 + i\n    candles.append(\n        {\n            \"time\": f\"2026-01-01T{i % 24:02d}:00:00\",\n            \"open\": close - 0.2,\n            \"high\": close + 1.0,\n            \"low\": close - 1.0,\n            \"close\": close,",
+        "detail": "apps.engine.tests_manual.test_math_features",
+        "documentation": {}
+    },
+    {
+        "label": "summary",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_math_features",
+        "description": "apps.engine.tests_manual.test_math_features",
+        "peekOfCode": "summary = build_math_summary(candles, min_count=50)\nassert summary[\"data_quality_score\"] == 1.0, summary\nassert abs(summary[\"simple_return_1\"] - (159 / 158 - 1)) < 1e-8, summary\nassert abs(summary[\"log_return_1\"] - log(159 / 158)) < 1e-8, summary\nassert summary[\"momentum_3\"] > 0, summary\nassert summary[\"momentum_12\"] > 0, summary\nassert summary[\"regression_slope_20\"] == 1.0, summary\nassert summary[\"trend_strength\"] > 0, summary\nassert summary[\"atr_14\"] is not None and summary[\"atr_14\"] > 0, summary\nassert summary[\"zscore_20\"] is not None and summary[\"zscore_20\"] > 0, summary",
+        "detail": "apps.engine.tests_manual.test_math_features",
+        "documentation": {}
+    },
+    {
+        "label": "short",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_math_features",
+        "description": "apps.engine.tests_manual.test_math_features",
+        "peekOfCode": "short = build_math_summary(candles[:2], min_count=50)\nassert short[\"data_quality_score\"] < 1.0, short\nassert short[\"warnings\"], short\nempty = build_math_summary([], min_count=50)\nassert empty[\"data_quality_score\"] == 0.0, empty\nassert empty[\"simple_return_1\"] is None, empty\nprint(\"OK: math features valides\")",
+        "detail": "apps.engine.tests_manual.test_math_features",
+        "documentation": {}
+    },
+    {
+        "label": "empty",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_math_features",
+        "description": "apps.engine.tests_manual.test_math_features",
+        "peekOfCode": "empty = build_math_summary([], min_count=50)\nassert empty[\"data_quality_score\"] == 0.0, empty\nassert empty[\"simple_return_1\"] is None, empty\nprint(\"OK: math features valides\")",
+        "detail": "apps.engine.tests_manual.test_math_features",
+        "documentation": {}
+    },
+    {
+        "label": "dt",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_reconciliation",
+        "description": "apps.engine.tests_manual.test_reconciliation",
+        "peekOfCode": "dt = _parse_broker_time(\"2022-01-03T15:01:48.420\")\nassert dt is not None and dt.tzinfo is not None\nprint(\"OK: reconciliation helpers valides\")",
+        "detail": "apps.engine.tests_manual.test_reconciliation",
+        "documentation": {}
+    },
+    {
+        "label": "base",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime",
+        "description": "apps.engine.tests_manual.test_regime",
+        "peekOfCode": "base = {\n    \"data_quality_score\": 1.0,\n    \"momentum_12\": 0.01,\n    \"trend_strength\": 0.0001,\n    \"zscore_20\": 1.2,\n    \"volatility_ratio_5_20\": 1.0,\n    \"atr_pct_14\": 0.002,\n    \"warnings\": [],\n}\nbull = classify_regime(base)",
+        "detail": "apps.engine.tests_manual.test_regime",
+        "documentation": {}
+    },
+    {
+        "label": "bull",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime",
+        "description": "apps.engine.tests_manual.test_regime",
+        "peekOfCode": "bull = classify_regime(base)\nassert bull[\"regime\"] == \"BULLISH_TREND\", bull\nassert bull[\"trend\"] == \"BULLISH\", bull\nbear = classify_regime({**base, \"momentum_12\": -0.01, \"trend_strength\": -0.0001})\nassert bear[\"regime\"] == \"BEARISH_TREND\", bear\nassert bear[\"trend\"] == \"BEARISH\", bear\nhigh_vol = classify_regime({**base, \"volatility_ratio_5_20\": 2.0})\nassert high_vol[\"regime\"] == \"BULLISH_HIGH_VOLATILITY\", high_vol\nassert high_vol[\"volatility\"] == \"HIGH_VOLATILITY\", high_vol\nrange_regime = classify_regime(",
+        "detail": "apps.engine.tests_manual.test_regime",
+        "documentation": {}
+    },
+    {
+        "label": "bear",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime",
+        "description": "apps.engine.tests_manual.test_regime",
+        "peekOfCode": "bear = classify_regime({**base, \"momentum_12\": -0.01, \"trend_strength\": -0.0001})\nassert bear[\"regime\"] == \"BEARISH_TREND\", bear\nassert bear[\"trend\"] == \"BEARISH\", bear\nhigh_vol = classify_regime({**base, \"volatility_ratio_5_20\": 2.0})\nassert high_vol[\"regime\"] == \"BULLISH_HIGH_VOLATILITY\", high_vol\nassert high_vol[\"volatility\"] == \"HIGH_VOLATILITY\", high_vol\nrange_regime = classify_regime(\n    {**base, \"momentum_12\": 0.0005, \"trend_strength\": 0.0, \"zscore_20\": 0.1}\n)\nassert range_regime[\"regime\"] == \"RANGE\", range_regime",
+        "detail": "apps.engine.tests_manual.test_regime",
+        "documentation": {}
+    },
+    {
+        "label": "high_vol",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime",
+        "description": "apps.engine.tests_manual.test_regime",
+        "peekOfCode": "high_vol = classify_regime({**base, \"volatility_ratio_5_20\": 2.0})\nassert high_vol[\"regime\"] == \"BULLISH_HIGH_VOLATILITY\", high_vol\nassert high_vol[\"volatility\"] == \"HIGH_VOLATILITY\", high_vol\nrange_regime = classify_regime(\n    {**base, \"momentum_12\": 0.0005, \"trend_strength\": 0.0, \"zscore_20\": 0.1}\n)\nassert range_regime[\"regime\"] == \"RANGE\", range_regime\nbad = classify_regime({**base, \"data_quality_score\": 0.4})\nassert bad[\"regime\"] == \"LOW_DATA_QUALITY\", bad\naligned = assess_regime_gate(\"BUY\", bull, base)",
+        "detail": "apps.engine.tests_manual.test_regime",
+        "documentation": {}
+    },
+    {
+        "label": "range_regime",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime",
+        "description": "apps.engine.tests_manual.test_regime",
+        "peekOfCode": "range_regime = classify_regime(\n    {**base, \"momentum_12\": 0.0005, \"trend_strength\": 0.0, \"zscore_20\": 0.1}\n)\nassert range_regime[\"regime\"] == \"RANGE\", range_regime\nbad = classify_regime({**base, \"data_quality_score\": 0.4})\nassert bad[\"regime\"] == \"LOW_DATA_QUALITY\", bad\naligned = assess_regime_gate(\"BUY\", bull, base)\nassert aligned[\"allowed\"] is True, aligned\nassert aligned[\"agreement\"] == \"ALIGNED\", aligned\nconflict = assess_regime_gate(\"SELL\", bull, base)",
+        "detail": "apps.engine.tests_manual.test_regime",
+        "documentation": {}
+    },
+    {
+        "label": "bad",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime",
+        "description": "apps.engine.tests_manual.test_regime",
+        "peekOfCode": "bad = classify_regime({**base, \"data_quality_score\": 0.4})\nassert bad[\"regime\"] == \"LOW_DATA_QUALITY\", bad\naligned = assess_regime_gate(\"BUY\", bull, base)\nassert aligned[\"allowed\"] is True, aligned\nassert aligned[\"agreement\"] == \"ALIGNED\", aligned\nconflict = assess_regime_gate(\"SELL\", bull, base)\nassert conflict[\"allowed\"] is False, conflict\nassert conflict[\"agreement\"] == \"CONFLICT\", conflict\nextreme_volatility = assess_regime_gate(\n    \"BUY\",",
+        "detail": "apps.engine.tests_manual.test_regime",
+        "documentation": {}
+    },
+    {
+        "label": "aligned",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime",
+        "description": "apps.engine.tests_manual.test_regime",
+        "peekOfCode": "aligned = assess_regime_gate(\"BUY\", bull, base)\nassert aligned[\"allowed\"] is True, aligned\nassert aligned[\"agreement\"] == \"ALIGNED\", aligned\nconflict = assess_regime_gate(\"SELL\", bull, base)\nassert conflict[\"allowed\"] is False, conflict\nassert conflict[\"agreement\"] == \"CONFLICT\", conflict\nextreme_volatility = assess_regime_gate(\n    \"BUY\",\n    high_vol,\n    {**base, \"volatility_ratio_5_20\": 2.3},",
+        "detail": "apps.engine.tests_manual.test_regime",
+        "documentation": {}
+    },
+    {
+        "label": "conflict",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime",
+        "description": "apps.engine.tests_manual.test_regime",
+        "peekOfCode": "conflict = assess_regime_gate(\"SELL\", bull, base)\nassert conflict[\"allowed\"] is False, conflict\nassert conflict[\"agreement\"] == \"CONFLICT\", conflict\nextreme_volatility = assess_regime_gate(\n    \"BUY\",\n    high_vol,\n    {**base, \"volatility_ratio_5_20\": 2.3},\n)\nassert extreme_volatility[\"allowed\"] is False, extreme_volatility\nassert any(\"Volatilite extreme\" in reason for reason in extreme_volatility[\"reasons\"])",
+        "detail": "apps.engine.tests_manual.test_regime",
+        "documentation": {}
+    },
+    {
+        "label": "extreme_volatility",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime",
+        "description": "apps.engine.tests_manual.test_regime",
+        "peekOfCode": "extreme_volatility = assess_regime_gate(\n    \"BUY\",\n    high_vol,\n    {**base, \"volatility_ratio_5_20\": 2.3},\n)\nassert extreme_volatility[\"allowed\"] is False, extreme_volatility\nassert any(\"Volatilite extreme\" in reason for reason in extreme_volatility[\"reasons\"])\nlow_quality = assess_regime_gate(\n    \"BUY\",\n    bad,",
+        "detail": "apps.engine.tests_manual.test_regime",
+        "documentation": {}
+    },
+    {
+        "label": "low_quality",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime",
+        "description": "apps.engine.tests_manual.test_regime",
+        "peekOfCode": "low_quality = assess_regime_gate(\n    \"BUY\",\n    bad,\n    {**base, \"data_quality_score\": 0.4},\n)\nassert low_quality[\"allowed\"] is False, low_quality\nno_direction = assess_regime_gate(\"HOLD\", bull, base)\nassert no_direction[\"status\"] == \"NOT_APPLICABLE\", no_direction\nprint(\"OK: regime v1 valide\")",
+        "detail": "apps.engine.tests_manual.test_regime",
+        "documentation": {}
+    },
+    {
+        "label": "no_direction",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_regime",
+        "description": "apps.engine.tests_manual.test_regime",
+        "peekOfCode": "no_direction = assess_regime_gate(\"HOLD\", bull, base)\nassert no_direction[\"status\"] == \"NOT_APPLICABLE\", no_direction\nprint(\"OK: regime v1 valide\")",
+        "detail": "apps.engine.tests_manual.test_regime",
+        "documentation": {}
+    },
+    {
         "label": "main",
         "kind": 2,
         "importPath": "apps.engine.tests_manual.test_registry",
@@ -2070,30 +2983,93 @@
         "documentation": {}
     },
     {
-        "label": "CONFIG",
+        "label": "settings",
         "kind": 5,
-        "importPath": "apps.engine._backtest_long",
-        "description": "apps.engine._backtest_long",
-        "peekOfCode": "CONFIG = {\"labeling\": \"fixed\", \"horizon\": 24, \"threshold\": 0.002,\n          \"vol_mult\": 1.0, \"vol_window\": 20, \"macro\": False}\nFOLDS = 5\nCOST_GRID = [2.0, 5.0, 10.0, 15.0]\ndef _window_mask(mask, start_frac, end_frac):\n    idx = np.flatnonzero(mask)\n    lo, hi = int(len(idx) * start_frac), int(len(idx) * end_frac)\n    out = np.zeros(len(mask), dtype=bool)\n    out[idx[lo:hi]] = True\n    return out",
-        "detail": "apps.engine._backtest_long",
+        "importPath": "apps.engine.tests_manual.test_structured_signal",
+        "description": "apps.engine.tests_manual.test_structured_signal",
+        "peekOfCode": "settings = Settings(\n    epic=\"GOLD\",\n    model_granularity=\"H1\",\n    decision_candles=2,\n    stop_loss_pct=0.01,\n    risk_reward_ratio=2.0,\n    trading_enabled=False,\n)\ncandles = [\n    {\"time\": datetime.now(timezone.utc).isoformat(), \"close\": 100.0},",
+        "detail": "apps.engine.tests_manual.test_structured_signal",
         "documentation": {}
     },
     {
-        "label": "FOLDS",
+        "label": "candles",
         "kind": 5,
-        "importPath": "apps.engine._backtest_long",
-        "description": "apps.engine._backtest_long",
-        "peekOfCode": "FOLDS = 5\nCOST_GRID = [2.0, 5.0, 10.0, 15.0]\ndef _window_mask(mask, start_frac, end_frac):\n    idx = np.flatnonzero(mask)\n    lo, hi = int(len(idx) * start_frac), int(len(idx) * end_frac)\n    out = np.zeros(len(mask), dtype=bool)\n    out[idx[lo:hi]] = True\n    return out\nasync def main() -> None:\n    granularity = sys.argv[1] if len(sys.argv) > 1 else \"H1\"",
-        "detail": "apps.engine._backtest_long",
+        "importPath": "apps.engine.tests_manual.test_structured_signal",
+        "description": "apps.engine.tests_manual.test_structured_signal",
+        "peekOfCode": "candles = [\n    {\"time\": datetime.now(timezone.utc).isoformat(), \"close\": 100.0},\n    {\"time\": datetime.now(timezone.utc).isoformat(), \"close\": 101.0},\n]\nprice = {\"bid\": 101.0, \"ask\": 101.5, \"tradeable\": True}\nbuy = build_structured_signal(\n    settings,\n    \"test\",\n    Signal(Action.BUY, 0.8, \"buy reason\"),\n    candles,",
+        "detail": "apps.engine.tests_manual.test_structured_signal",
         "documentation": {}
     },
     {
-        "label": "COST_GRID",
+        "label": "price",
         "kind": 5,
-        "importPath": "apps.engine._backtest_long",
-        "description": "apps.engine._backtest_long",
-        "peekOfCode": "COST_GRID = [2.0, 5.0, 10.0, 15.0]\ndef _window_mask(mask, start_frac, end_frac):\n    idx = np.flatnonzero(mask)\n    lo, hi = int(len(idx) * start_frac), int(len(idx) * end_frac)\n    out = np.zeros(len(mask), dtype=bool)\n    out[idx[lo:hi]] = True\n    return out\nasync def main() -> None:\n    granularity = sys.argv[1] if len(sys.argv) > 1 else \"H1\"\n    n_windows = int(sys.argv[2]) if len(sys.argv) > 2 else 4",
-        "detail": "apps.engine._backtest_long",
+        "importPath": "apps.engine.tests_manual.test_structured_signal",
+        "description": "apps.engine.tests_manual.test_structured_signal",
+        "peekOfCode": "price = {\"bid\": 101.0, \"ask\": 101.5, \"tradeable\": True}\nbuy = build_structured_signal(\n    settings,\n    \"test\",\n    Signal(Action.BUY, 0.8, \"buy reason\"),\n    candles,\n    price,\n    \"champion-test\",\n)\nassert buy[\"direction\"] == \"BUY\", buy",
+        "detail": "apps.engine.tests_manual.test_structured_signal",
+        "documentation": {}
+    },
+    {
+        "label": "buy",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_structured_signal",
+        "description": "apps.engine.tests_manual.test_structured_signal",
+        "peekOfCode": "buy = build_structured_signal(\n    settings,\n    \"test\",\n    Signal(Action.BUY, 0.8, \"buy reason\"),\n    candles,\n    price,\n    \"champion-test\",\n)\nassert buy[\"direction\"] == \"BUY\", buy\nassert buy[\"recommended_entry\"] == 101.5, buy",
+        "detail": "apps.engine.tests_manual.test_structured_signal",
+        "documentation": {}
+    },
+    {
+        "label": "hold",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_structured_signal",
+        "description": "apps.engine.tests_manual.test_structured_signal",
+        "peekOfCode": "hold = build_structured_signal(\n    settings,\n    \"test\",\n    Signal(Action.HOLD, 1.0, \"hold reason\"),\n    candles,\n    price,\n    None,\n)\nassert hold[\"direction\"] == \"NO_TRADE\", hold\nassert \"La strategie a refuse de trader\" in hold[\"reasons\"], hold",
+        "detail": "apps.engine.tests_manual.test_structured_signal",
+        "documentation": {}
+    },
+    {
+        "label": "bad_data",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_structured_signal",
+        "description": "apps.engine.tests_manual.test_structured_signal",
+        "peekOfCode": "bad_data = build_structured_signal(\n    settings,\n    \"test\",\n    Signal(Action.BUY, 0.9, \"buy reason\"),\n    [],\n    price,\n    None,\n)\nassert bad_data[\"direction\"] == \"NO_TRADE\", bad_data\nassert bad_data[\"data_quality_score\"] == 0.0, bad_data",
+        "detail": "apps.engine.tests_manual.test_structured_signal",
+        "documentation": {}
+    },
+    {
+        "label": "stale_time",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_structured_signal",
+        "description": "apps.engine.tests_manual.test_structured_signal",
+        "peekOfCode": "stale_time = (datetime.now(timezone.utc) - timedelta(hours=4)).isoformat()\nstale = build_structured_signal(\n    settings,\n    \"test\",\n    Signal(Action.BUY, 0.9, \"buy reason\"),\n    [\n        {\"time\": stale_time, \"close\": 100.0},\n        {\"time\": stale_time, \"close\": 101.0},\n    ],\n    price,",
+        "detail": "apps.engine.tests_manual.test_structured_signal",
+        "documentation": {}
+    },
+    {
+        "label": "stale",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_structured_signal",
+        "description": "apps.engine.tests_manual.test_structured_signal",
+        "peekOfCode": "stale = build_structured_signal(\n    settings,\n    \"test\",\n    Signal(Action.BUY, 0.9, \"buy reason\"),\n    [\n        {\"time\": stale_time, \"close\": 100.0},\n        {\"time\": stale_time, \"close\": 101.0},\n    ],\n    price,\n    None,",
+        "detail": "apps.engine.tests_manual.test_structured_signal",
+        "documentation": {}
+    },
+    {
+        "label": "trending_candles",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_structured_signal",
+        "description": "apps.engine.tests_manual.test_structured_signal",
+        "peekOfCode": "trending_candles = [\n    {\n        \"time\": datetime.now(timezone.utc).isoformat(),\n        \"open\": 100.0 + index,\n        \"high\": 101.2 + index,\n        \"low\": 99.8 + index,\n        \"close\": 101.0 + index,\n    }\n    for index in range(30)\n]",
+        "detail": "apps.engine.tests_manual.test_structured_signal",
+        "documentation": {}
+    },
+    {
+        "label": "conflict",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_structured_signal",
+        "description": "apps.engine.tests_manual.test_structured_signal",
+        "peekOfCode": "conflict = build_structured_signal(\n    settings,\n    \"test\",\n    Signal(Action.SELL, 0.9, \"sell reason\"),\n    trending_candles,\n    {\"bid\": 130.0, \"ask\": 130.5, \"tradeable\": True},\n    None,\n)\nassert conflict[\"direction\"] == \"NO_TRADE\", conflict\nassert conflict[\"regime_gate\"][\"agreement\"] == \"CONFLICT\", conflict",
+        "detail": "apps.engine.tests_manual.test_structured_signal",
         "documentation": {}
     },
     {

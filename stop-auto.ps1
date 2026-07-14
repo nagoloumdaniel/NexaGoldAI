@@ -16,6 +16,26 @@ function Log($m) {
 
 Log '=== Arret automatique demande ==='
 
+# 0) Envoyer le rapport Telegram AVANT de couper quoi que ce soit.
+#    A 21h locale (UTC+2) le bot s'eteint 2h AVANT le cron rapport (21h UTC),
+#    donc le cron ne se declenche jamais : on le declenche ici, pendant que
+#    l'API (3001) et le moteur (8000) sont encore vivants.
+$apiUrl = 'http://localhost:3001'
+function Send-Report($path, $label) {
+  try {
+    Invoke-RestMethod -Uri "$apiUrl/$path" -Method Post -TimeoutSec 30 | Out-Null
+    Log "Rapport $label envoye ($path)"
+  } catch {
+    Log "Echec rapport $label : $($_.Exception.Message)"
+  }
+}
+$now = [DateTime]::Now
+if ($now.DayOfWeek -ne [DayOfWeek]::Saturday -and $now.DayOfWeek -ne [DayOfWeek]::Sunday) {
+  Send-Report 'reports/daily/run' 'quotidien'
+}
+if ($now.DayOfWeek -eq [DayOfWeek]::Friday) { Send-Report 'reports/weekly/run' 'hebdo' }
+if ($now.AddDays(1).Month -ne $now.Month) { Send-Report 'reports/monthly/run' 'mensuel' }
+
 # 1a) Demarrage arriere-plan (start-hidden.ps1) : tuer l'arbre via les PID memorises
 if (Test-Path $pidFile) {
   foreach ($procId in (Get-Content $pidFile | Where-Object { $_ -match '^\d+$' })) {

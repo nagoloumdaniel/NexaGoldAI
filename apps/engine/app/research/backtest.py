@@ -42,14 +42,19 @@ DEFAULT_PARAMS = dict(
 
 
 def build_dataset(
-    df: pd.DataFrame, config: dict, macro_df: pd.DataFrame | None = None
+    df: pd.DataFrame,
+    config: dict,
+    macro_df: pd.DataFrame | None = None,
+    rate_df: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
     """Features + label (labelling method chosen by `config`) + next-bar return.
 
-    `macro_df` is included as features only when `config["macro"]` is set.
+    `macro_df` is included as features only when `config["macro"]` is set;
+    `rate_df` (real-rate series) only when `config["rates"]` is set.
     """
     use_macro = macro_df if config.get("macro") else None
-    feats = build_features(df, use_macro)
+    use_rates = rate_df if config.get("rates") else None
+    feats = build_features(df, use_macro, use_rates)
     feats["label"] = make_labels(df, config)
     feats["next_ret"] = df["close"].pct_change().shift(-1)
     return feats.dropna()

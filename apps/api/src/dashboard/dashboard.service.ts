@@ -20,6 +20,24 @@ export class DashboardService {
     }
   }
 
+  private async enginePost<T>(
+    path: string,
+    body?: Record<string, unknown>,
+  ): Promise<T | null> {
+    try {
+      const res = await fetch(`${ENGINE_URL}${path}`, {
+        method: 'POST',
+        headers: body ? { 'Content-Type': 'application/json' } : undefined,
+        body: body ? JSON.stringify(body) : undefined,
+        signal: AbortSignal.timeout(20_000),
+      });
+      if (!res.ok) return null;
+      return (await res.json()) as T;
+    } catch {
+      return null;
+    }
+  }
+
   async summary() {
     const [account, decisions, trades, openTrades, lastEquity] =
       await Promise.all([
@@ -31,7 +49,9 @@ export class DashboardService {
       ]);
     return {
       account,
-      drawdownPct: lastEquity?.drawdownPct ? Number(lastEquity.drawdownPct) : null,
+      drawdownPct: lastEquity?.drawdownPct
+        ? Number(lastEquity.drawdownPct)
+        : null,
       decisions,
       trades,
       openTrades,
@@ -127,5 +147,93 @@ export class DashboardService {
         nav: Number(e.nav),
       })),
     };
+  }
+
+  async system() {
+    const [health, trade] = await Promise.all([
+      this.engine<Record<string, unknown>>('/health'),
+      this.engine<Record<string, unknown>>('/trade/status'),
+    ]);
+
+    return {
+      engineReachable: health !== null,
+      engineUrl: ENGINE_URL,
+      health,
+      trade,
+    };
+  }
+
+  async signal() {
+    return (
+      (await this.engine<Record<string, unknown>>('/signal/latest')) ?? {
+        engineReachable: false,
+        direction: 'NO_TRADE',
+        reasons: ['Moteur injoignable ou signal indisponible'],
+        warnings: [],
+      }
+    );
+  }
+
+  async reconciliation() {
+    return (
+      (await this.engine<Record<string, unknown>>(
+        '/trades/reconciliation',
+      )) ?? {
+        engineReachable: false,
+        db_open_trades: null,
+        broker_open_positions: null,
+        matched: null,
+        closed: null,
+        missing_on_broker: null,
+        untracked_broker_positions: null,
+        closed_trades: [],
+        unresolved_closures: [],
+        rows: [],
+        untracked: [],
+      }
+    );
+  }
+
+  async runReconciliation() {
+    return (
+      (await this.enginePost<Record<string, unknown>>(
+        '/trades/reconcile?close_missing=true',
+      )) ?? {
+        engineReachable: false,
+        mutated: false,
+        close_missing: true,
+        db_open_trades: null,
+        broker_open_positions: null,
+        matched: null,
+        closed: null,
+        missing_on_broker: null,
+        untracked_broker_positions: null,
+        updated: [],
+        closed_trades: [],
+        unresolved_closures: [],
+        rows: [],
+        untracked: [],
+      }
+    );
+  }
+
+  async resolveTrade(
+    id: string,
+    body: {
+      status: 'CANCELLED' | 'CLOSED';
+      exit_price?: number;
+      closed_at?: string;
+    },
+  ) {
+    return (
+      (await this.enginePost<Record<string, unknown>>(
+        `/trades/${encodeURIComponent(id)}/resolve`,
+        body,
+      )) ?? {
+        engineReachable: false,
+        updated: false,
+        reason: 'Moteur injoignable ou resolution refusee',
+      }
+    );
   }
 }

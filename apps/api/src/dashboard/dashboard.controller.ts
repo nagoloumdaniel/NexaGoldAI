@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 
 const clamp = (value: string | undefined, fallback: number, max: number) =>
@@ -44,5 +44,38 @@ export class DashboardController {
   @Get('analytics')
   analytics() {
     return this.dashboard.analytics();
+  }
+
+  @Get('system')
+  system() {
+    return this.dashboard.system();
+  }
+
+  @Get('signal')
+  signal() {
+    return this.dashboard.signal();
+  }
+
+  @Get('reconciliation')
+  reconciliation() {
+    return this.dashboard.reconciliation();
+  }
+
+  @Post('reconciliation/run')
+  runReconciliation() {
+    return this.dashboard.runReconciliation();
+  }
+
+  @Post('trades/:id/resolve')
+  resolveTrade(
+    @Param('id') id: string,
+    @Body()
+    body: {
+      status: 'CANCELLED' | 'CLOSED';
+      exit_price?: number;
+      closed_at?: string;
+    },
+  ) {
+    return this.dashboard.resolveTrade(id, body);
   }
 }
