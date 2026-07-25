@@ -4,7 +4,13 @@
 #  terminal visible. Les sorties vont dans .\logs\*.log.
 #  Les PID lances sont notes dans .\logs\pids.txt pour un
 #  arret propre (kill de l'arbre) par stop-auto.ps1.
+#
+#  -AutoScheduled : passe par les taches planifiees. Le lancement
+#  n'a alors lieu que les JOURS OUVRES entre 9h et 20h locale ;
+#  hors fenetre, on n'allume rien. Un double-clic manuel sur le
+#  .vbs (sans le flag) demarre toujours, a toute heure.
 # ============================================================
+param([switch]$AutoScheduled)
 $ErrorActionPreference = 'SilentlyContinue'
 $root     = $PSScriptRoot
 $logDir   = Join-Path $root 'logs'
@@ -29,6 +35,16 @@ function Start-Hidden($name, $workdir, $cmdline, $port) {
     -WorkingDirectory $workdir -WindowStyle Hidden -PassThru
   Log "$name lance (port $port, pid $($proc.Id), log: $log)"
   return $proc.Id
+}
+
+# Fenetre de lancement automatique : jours ouvres (lun-ven), 9h00-19h59.
+if ($AutoScheduled) {
+  $now = [DateTime]::Now
+  $weekend = ($now.DayOfWeek -eq [DayOfWeek]::Saturday) -or ($now.DayOfWeek -eq [DayOfWeek]::Sunday)
+  if ($weekend -or $now.Hour -lt 9 -or $now.Hour -ge 20) {
+    Log "Lancement auto refuse ($($now.ToString('ddd HH:mm'))): hors fenetre jours ouvres 9h-20h - rien n'est demarre"
+    exit 0
+  }
 }
 
 Log '=== Demarrage en arriere-plan demande ==='

@@ -72,17 +72,22 @@ redirigées vers `logs\*.log`. `Arreter NexaGold.vbs` arrête tout.
 - API : `localhost:3001` · Moteur : `localhost:8000`.
 
 Sous le capot, les `.vbs` appellent `start-hidden.ps1` / `stop-auto.ps1`. Trois
-tâches planifiées Windows automatisent le cycle :
+tâches planifiées Windows automatisent le cycle — **fenêtre de fonctionnement :
+jours ouvrés (lun-ven), 9h-20h locale** :
 
-- `NexaGold - Start (allumage)` — à **chaque ouverture de session** (délai
-  1 min), quelle que soit l'heure d'allumage du PC : `start-hidden.ps1` attend
-  le daemon Docker (jusqu'à 4 min), lance le terminal MT5 si besoin, puis les
-  3 services en arrière-plan. Idempotent : un service déjà actif est ignoré.
-- `NexaGold - Start 07h` — relance quotidienne si le PC est resté allumé.
-- `NexaGold - Stop 21h` — arrêt quotidien (rapports Telegram envoyés avant).
+- `NexaGold - Start (allumage)` — à chaque ouverture de session (délai 1 min).
+  Le script (appelé avec `-AutoScheduled`) ne démarre les services **que si on
+  est un jour ouvré entre 9h et 20h** ; sinon il journalise le refus et
+  n'allume rien. Il attend le daemon Docker (jusqu'à 4 min), lance le terminal
+  MT5 si besoin, puis les 3 services. Idempotent : un service actif est ignoré.
+- `NexaGold - Start 09h` — lun-ven à 9h00, si le PC est resté allumé.
+- `NexaGold - Stop 20h` — tous les jours à 20h00 : rapports Telegram envoyés
+  puis arrêt des services (filet de sécurité même le week-end).
 
-Prérequis : l'installation initiale doit avoir été faite une fois (Docker
-démarré, `npm install`, venv + `pip install`, `prisma migrate`).
+Le double-clic **manuel** sur `Demarrer NexaGold (arriere-plan).vbs` reste
+possible à toute heure (le garde-fou ne s'applique qu'aux lancements
+automatiques). Prérequis : l'installation initiale doit avoir été faite une
+fois (Docker démarré, `npm install`, venv + `pip install`, `prisma migrate`).
 
 ### Installation initiale (une fois)
 

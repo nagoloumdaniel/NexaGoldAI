@@ -1,6 +1,6 @@
 # ============================================================
 #  NexaGold - Arret AUTOMATIQUE (non interactif)
-#  Appele par la tache planifiee "NexaGold - Stop 21h".
+#  Appele par la tache planifiee "NexaGold - Stop 20h".
 #  Coupe moteur (8000) + API (3001) + dashboard (3002) + Docker.
 #  Pas de "pause" : concu pour tourner sans interaction.
 # ============================================================
@@ -17,7 +17,7 @@ function Log($m) {
 Log '=== Arret automatique demande ==='
 
 # 0) Envoyer le rapport Telegram AVANT de couper quoi que ce soit.
-#    A 21h locale (UTC+2) le bot s'eteint 2h AVANT le cron rapport (21h UTC),
+#    A 20h locale le bot s'eteint AVANT le cron rapport de l'API (21h UTC),
 #    donc le cron ne se declenche jamais : on le declenche ici, pendant que
 #    l'API (3001) et le moteur (8000) sont encore vivants.
 $apiUrl = 'http://localhost:3001'
