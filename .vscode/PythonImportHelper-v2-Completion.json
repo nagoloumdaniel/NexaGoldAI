@@ -9,7 +9,82 @@
         "documentation": {}
     },
     {
+        "label": "asyncio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "asyncio",
+        "description": "asyncio",
+        "detail": "asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "log",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "sqrt",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "isnan",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "log",
+        "importPath": "math",
+        "description": "math",
+        "isExtraImport": true,
+        "detail": "math",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
@@ -257,63 +332,6 @@
         "documentation": {}
     },
     {
-        "label": "Any",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "Any",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "Any",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "Any",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "Any",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "Literal",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "httpx",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "httpx",
-        "description": "httpx",
-        "detail": "httpx",
-        "documentation": {}
-    },
-    {
         "label": "Settings",
         "importPath": "app.config",
         "description": "app.config",
@@ -531,68 +549,59 @@
         "documentation": {}
     },
     {
-        "label": "asyncio",
-        "kind": 6,
+        "label": "MT5Client",
+        "importPath": "app.broker.mt5",
+        "description": "app.broker.mt5",
         "isExtraImport": true,
-        "importPath": "asyncio",
-        "description": "asyncio",
-        "detail": "asyncio",
+        "detail": "app.broker.mt5",
         "documentation": {}
     },
     {
-        "label": "CapitalClient",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
+        "label": "BrokerError",
+        "importPath": "app.broker.mt5",
+        "description": "app.broker.mt5",
         "isExtraImport": true,
-        "detail": "app.broker.capital",
+        "detail": "app.broker.mt5",
         "documentation": {}
     },
     {
-        "label": "CapitalClient",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
+        "label": "MT5Client",
+        "importPath": "app.broker.mt5",
+        "description": "app.broker.mt5",
         "isExtraImport": true,
-        "detail": "app.broker.capital",
+        "detail": "app.broker.mt5",
         "documentation": {}
     },
     {
-        "label": "CapitalError",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
+        "label": "BrokerError",
+        "importPath": "app.broker.mt5",
+        "description": "app.broker.mt5",
         "isExtraImport": true,
-        "detail": "app.broker.capital",
+        "detail": "app.broker.mt5",
         "documentation": {}
     },
     {
-        "label": "CapitalClient",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
+        "label": "MT5Client",
+        "importPath": "app.broker.mt5",
+        "description": "app.broker.mt5",
         "isExtraImport": true,
-        "detail": "app.broker.capital",
+        "detail": "app.broker.mt5",
         "documentation": {}
     },
     {
-        "label": "CapitalError",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
+        "label": "BrokerError",
+        "importPath": "app.broker.mt5",
+        "description": "app.broker.mt5",
         "isExtraImport": true,
-        "detail": "app.broker.capital",
+        "detail": "app.broker.mt5",
         "documentation": {}
     },
     {
-        "label": "CapitalClient",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
+        "label": "MT5Client",
+        "importPath": "app.broker.mt5",
+        "description": "app.broker.mt5",
         "isExtraImport": true,
-        "detail": "app.broker.capital",
-        "documentation": {}
-    },
-    {
-        "label": "CapitalError",
-        "importPath": "app.broker.capital",
-        "description": "app.broker.capital",
-        "isExtraImport": true,
-        "detail": "app.broker.capital",
+        "detail": "app.broker.mt5",
         "documentation": {}
     },
     {
@@ -918,15 +927,6 @@
         "documentation": {}
     },
     {
-        "label": "logging",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "logging",
-        "description": "logging",
-        "detail": "logging",
-        "documentation": {}
-    },
-    {
         "label": "lzma",
         "kind": 6,
         "isExtraImport": true,
@@ -942,6 +942,15 @@
         "importPath": "struct",
         "description": "struct",
         "detail": "struct",
+        "documentation": {}
+    },
+    {
+        "label": "httpx",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "httpx",
+        "description": "httpx",
+        "detail": "httpx",
         "documentation": {}
     },
     {
@@ -1650,6 +1659,46 @@
         "documentation": {}
     },
     {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Literal",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "build_expected_return_dataset",
         "importPath": "app.research.expected_return",
         "description": "app.research.expected_return",
@@ -2196,38 +2245,6 @@
         "documentation": {}
     },
     {
-        "label": "log",
-        "importPath": "math",
-        "description": "math",
-        "isExtraImport": true,
-        "detail": "math",
-        "documentation": {}
-    },
-    {
-        "label": "sqrt",
-        "importPath": "math",
-        "description": "math",
-        "isExtraImport": true,
-        "detail": "math",
-        "documentation": {}
-    },
-    {
-        "label": "isnan",
-        "importPath": "math",
-        "description": "math",
-        "isExtraImport": true,
-        "detail": "math",
-        "documentation": {}
-    },
-    {
-        "label": "log",
-        "importPath": "math",
-        "description": "math",
-        "isExtraImport": true,
-        "detail": "math",
-        "documentation": {}
-    },
-    {
         "label": "mean",
         "importPath": "statistics",
         "description": "statistics",
@@ -2425,30 +2442,30 @@
         "documentation": {}
     },
     {
-        "label": "CapitalError",
+        "label": "BrokerError",
         "kind": 6,
-        "importPath": "apps.engine.app.broker.capital",
-        "description": "apps.engine.app.broker.capital",
-        "peekOfCode": "class CapitalError(Exception):\n    \"\"\"Raised when the Capital.com API returns an error response.\"\"\"\ndef _mid(price: dict) -> float:\n    \"\"\"Mid value of a Capital.com {bid, ask} price object.\"\"\"\n    bid = price.get(\"bid\")\n    ask = price.get(\"ask\")\n    if bid is not None and ask is not None:\n        return (float(bid) + float(ask)) / 2\n    return float(bid if bid is not None else ask)\nclass CapitalClient:",
-        "detail": "apps.engine.app.broker.capital",
+        "importPath": "apps.engine.app.broker.mt5",
+        "description": "apps.engine.app.broker.mt5",
+        "peekOfCode": "class BrokerError(Exception):\n    \"\"\"Raised when the MetaTrader 5 terminal returns an error.\"\"\"\ndef _timeframes() -> dict:\n    return {\n        \"M1\": mt5.TIMEFRAME_M1,\n        \"M5\": mt5.TIMEFRAME_M5,\n        \"M15\": mt5.TIMEFRAME_M15,\n        \"M30\": mt5.TIMEFRAME_M30,\n        \"H1\": mt5.TIMEFRAME_H1,\n        \"H4\": mt5.TIMEFRAME_H4,",
+        "detail": "apps.engine.app.broker.mt5",
         "documentation": {}
     },
     {
-        "label": "CapitalClient",
+        "label": "MT5Client",
         "kind": 6,
-        "importPath": "apps.engine.app.broker.capital",
-        "description": "apps.engine.app.broker.capital",
-        "peekOfCode": "class CapitalClient:\n    def __init__(self, settings: Settings):\n        self._settings = settings\n        self._client = httpx.AsyncClient(base_url=settings.capital_base_url, timeout=15.0)\n        self._cst: str | None = None\n        self._security_token: str | None = None\n    async def close(self) -> None:\n        await self._client.aclose()\n    # -- Auth -----------------------------------------------------------------\n    async def _login(self) -> None:",
-        "detail": "apps.engine.app.broker.capital",
+        "importPath": "apps.engine.app.broker.mt5",
+        "description": "apps.engine.app.broker.mt5",
+        "peekOfCode": "class MT5Client:\n    def __init__(self, settings: Settings):\n        self._settings = settings\n        self._lock = asyncio.Lock()\n        self._connected = False\n        # Cache des symbol_info (contract size, digits...) par symbole.\n        self._symbol_info_cache: dict[str, dict] = {}\n    # -- Cycle de vie ---------------------------------------------------------\n    async def close(self) -> None:\n        if mt5 is None or not self._connected:",
+        "detail": "apps.engine.app.broker.mt5",
         "documentation": {}
     },
     {
-        "label": "_RESOLUTION_MAP",
+        "label": "logger",
         "kind": 5,
-        "importPath": "apps.engine.app.broker.capital",
-        "description": "apps.engine.app.broker.capital",
-        "peekOfCode": "_RESOLUTION_MAP = {\n    \"M1\": \"MINUTE\",\n    \"M5\": \"MINUTE_5\",\n    \"M15\": \"MINUTE_15\",\n    \"M30\": \"MINUTE_30\",\n    \"H1\": \"HOUR\",\n    \"H4\": \"HOUR_4\",\n    \"D\": \"DAY\",\n    \"W\": \"WEEK\",\n}",
-        "detail": "apps.engine.app.broker.capital",
+        "importPath": "apps.engine.app.broker.mt5",
+        "description": "apps.engine.app.broker.mt5",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.mt5\")\nclass BrokerError(Exception):\n    \"\"\"Raised when the MetaTrader 5 terminal returns an error.\"\"\"\ndef _timeframes() -> dict:\n    return {\n        \"M1\": mt5.TIMEFRAME_M1,\n        \"M5\": mt5.TIMEFRAME_M5,\n        \"M15\": mt5.TIMEFRAME_M15,\n        \"M30\": mt5.TIMEFRAME_M30,\n        \"H1\": mt5.TIMEFRAME_H1,",
+        "detail": "apps.engine.app.broker.mt5",
         "documentation": {}
     },
     {
@@ -2609,7 +2626,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.data.ingestion",
         "description": "apps.engine.app.data.ingestion",
-        "peekOfCode": "class IngestionService:\n    def __init__(\n        self,\n        settings: Settings,\n        broker: CapitalClient,\n        repository: CandleRepository,\n    ):\n        self._settings = settings\n        self._broker = broker\n        self._repository = repository",
+        "peekOfCode": "class IngestionService:\n    def __init__(\n        self,\n        settings: Settings,\n        broker: MT5Client,\n        repository: CandleRepository,\n    ):\n        self._settings = settings\n        self._broker = broker\n        self._repository = repository",
         "detail": "apps.engine.app.data.ingestion",
         "documentation": {}
     },
@@ -2645,7 +2662,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.execution.trader",
         "description": "apps.engine.app.execution.trader",
-        "peekOfCode": "class Trader:\n    def __init__(\n        self,\n        settings: Settings,\n        broker: CapitalClient,\n        strategy: Strategy,\n        risk: RiskManager,\n        decisions: StrategyDecisionRepository,\n        trades: TradeRepository,\n    ):",
+        "peekOfCode": "class Trader:\n    def __init__(\n        self,\n        settings: Settings,\n        broker: MT5Client,\n        strategy: Strategy,\n        risk: RiskManager,\n        decisions: StrategyDecisionRepository,\n        trades: TradeRepository,\n    ):",
         "detail": "apps.engine.app.execution.trader",
         "documentation": {}
     },
@@ -3419,7 +3436,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.signals.regime",
         "description": "apps.engine.app.signals.regime",
-        "peekOfCode": "def classify_regime(math_summary: dict | None) -> dict:\n    if not math_summary:\n        return MarketRegime(\n            regime=\"UNKNOWN\",\n            trend=\"UNKNOWN\",\n            volatility=\"UNKNOWN\",\n            confidence=0.0,\n            reasons=[],\n            warnings=[\"Resume mathematique indisponible\"],\n        ).to_dict()",
+        "peekOfCode": "def classify_regime(math_summary: dict | None) -> dict:\n    if not math_summary:\n        return MarketRegime(\n            regime=\"UNKNOWN\",\n            trend=\"UNKNOWN\",\n            volatility=\"UNKNOWN\",\n            confidence=0.0,\n            reasons=[],\n            warnings=[\"Résumé mathématique indisponible\"],\n        ).to_dict()",
         "detail": "apps.engine.app.signals.regime",
         "documentation": {}
     },
@@ -3437,7 +3454,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.signals.structured",
         "description": "apps.engine.app.signals.structured",
-        "peekOfCode": "def candle_quality(candles: list[dict], min_count: int) -> tuple[float, list[str]]:\n    warnings: list[str] = []\n    if not candles:\n        return 0.0, [\"Aucune bougie disponible\"]\n    count_score = min(len(candles) / max(min_count, 1), 1.0)\n    latest = _parse_time(candles[-1].get(\"time\"))\n    stale_score = 1.0\n    if latest is None:\n        warnings.append(\"Timestamp de derniere bougie illisible\")\n        stale_score = 0.5",
+        "peekOfCode": "def candle_quality(candles: list[dict], min_count: int) -> tuple[float, list[str]]:\n    warnings: list[str] = []\n    if not candles:\n        return 0.0, [\"Aucune bougie disponible\"]\n    count_score = min(len(candles) / max(min_count, 1), 1.0)\n    latest = _parse_time(candles[-1].get(\"time\"))\n    stale_score = 1.0\n    if latest is None:\n        warnings.append(\"Timestamp de dernière bougie illisible\")\n        stale_score = 0.5",
         "detail": "apps.engine.app.signals.structured",
         "documentation": {}
     },
@@ -3491,7 +3508,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.strategy.expected_return_strategy",
         "description": "apps.engine.app.strategy.expected_return_strategy",
-        "peekOfCode": "class ExpectedReturnPaperStrategy(Strategy):\n    name = \"expected-return-paper\"\n    paper_only = True\n    def __init__(self, model_dir: str | Path, configured_granularity: str):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        self._meta = json.loads(\n            (model_dir / \"meta.json\").read_text(encoding=\"utf-8\")\n        )\n        if self._meta.get(\"model_kind\") != \"expected_return_regressor\":",
+        "peekOfCode": "class ExpectedReturnPaperStrategy(Strategy):\n    name = \"expected-return-paper\"\n    paper_only = True\n    def __init__(\n        self,\n        model_dir: str | Path,\n        configured_granularity: str,\n        allow_short: bool = False,\n    ):\n        # Le côté SELL a été rejeté par la validation historique (drawdown et",
         "detail": "apps.engine.app.strategy.expected_return_strategy",
         "documentation": {}
     },
@@ -3500,7 +3517,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.strategy.expected_return_strategy",
         "description": "apps.engine.app.strategy.expected_return_strategy",
-        "peekOfCode": "_BARS_PER_DAY = {\"M1\": 1440, \"M5\": 288, \"M15\": 96, \"M30\": 48, \"H1\": 24, \"H4\": 6, \"D1\": 1}\nclass ExpectedReturnPaperStrategy(Strategy):\n    name = \"expected-return-paper\"\n    paper_only = True\n    def __init__(self, model_dir: str | Path, configured_granularity: str):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        self._meta = json.loads(\n            (model_dir / \"meta.json\").read_text(encoding=\"utf-8\")\n        )",
+        "peekOfCode": "_BARS_PER_DAY = {\"M1\": 1440, \"M5\": 288, \"M15\": 96, \"M30\": 48, \"H1\": 24, \"H4\": 6, \"D1\": 1}\nclass ExpectedReturnPaperStrategy(Strategy):\n    name = \"expected-return-paper\"\n    paper_only = True\n    def __init__(\n        self,\n        model_dir: str | Path,\n        configured_granularity: str,\n        allow_short: bool = False,\n    ):",
         "detail": "apps.engine.app.strategy.expected_return_strategy",
         "documentation": {}
     },
@@ -3509,7 +3526,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.strategy.factory",
         "description": "apps.engine.app.strategy.factory",
-        "peekOfCode": "def build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"expected_return_paper\":\n        if settings.capital_env != \"demo\":\n            raise RuntimeError(\n                \"expected_return_paper est strictement interdit hors CAPITAL_ENV=demo\"\n            )\n        paper_dir = (\n            _MODELS_DIR / settings.model_granularity / \"expected_return_paper\"\n        )\n        if (paper_dir / \"model.joblib\").exists() and (paper_dir / \"meta.json\").exists():",
+        "peekOfCode": "def build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"expected_return_paper\":\n        if settings.broker_env != \"demo\":\n            raise RuntimeError(\n                \"expected_return_paper est strictement interdit hors BROKER_ENV=demo\"\n            )\n        paper_dir = (\n            _MODELS_DIR / settings.model_granularity / \"expected_return_paper\"\n        )\n        if (paper_dir / \"model.joblib\").exists() and (paper_dir / \"meta.json\").exists():",
         "detail": "apps.engine.app.strategy.factory",
         "documentation": {}
     },
@@ -3518,7 +3535,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.strategy.factory",
         "description": "apps.engine.app.strategy.factory",
-        "peekOfCode": "logger = logging.getLogger(\"nexagold.strategy\")\n_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"expected_return_paper\":\n        if settings.capital_env != \"demo\":\n            raise RuntimeError(\n                \"expected_return_paper est strictement interdit hors CAPITAL_ENV=demo\"\n            )\n        paper_dir = (\n            _MODELS_DIR / settings.model_granularity / \"expected_return_paper\"",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.strategy\")\n_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"expected_return_paper\":\n        if settings.broker_env != \"demo\":\n            raise RuntimeError(\n                \"expected_return_paper est strictement interdit hors BROKER_ENV=demo\"\n            )\n        paper_dir = (\n            _MODELS_DIR / settings.model_granularity / \"expected_return_paper\"",
         "detail": "apps.engine.app.strategy.factory",
         "documentation": {}
     },
@@ -3527,7 +3544,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.strategy.factory",
         "description": "apps.engine.app.strategy.factory",
-        "peekOfCode": "_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"expected_return_paper\":\n        if settings.capital_env != \"demo\":\n            raise RuntimeError(\n                \"expected_return_paper est strictement interdit hors CAPITAL_ENV=demo\"\n            )\n        paper_dir = (\n            _MODELS_DIR / settings.model_granularity / \"expected_return_paper\"\n        )",
+        "peekOfCode": "_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"expected_return_paper\":\n        if settings.broker_env != \"demo\":\n            raise RuntimeError(\n                \"expected_return_paper est strictement interdit hors BROKER_ENV=demo\"\n            )\n        paper_dir = (\n            _MODELS_DIR / settings.model_granularity / \"expected_return_paper\"\n        )",
         "detail": "apps.engine.app.strategy.factory",
         "documentation": {}
     },
@@ -3554,7 +3571,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.config",
         "description": "apps.engine.app.config",
-        "peekOfCode": "class Settings(BaseSettings):\n    \"\"\"Engine configuration, loaded from environment variables (or .env locally).\"\"\"\n    model_config = SettingsConfigDict(env_file=\".env\", env_file_encoding=\"utf-8\", extra=\"ignore\")\n    # Capital.com\n    capital_api_key: str = \"\"\n    capital_identifier: str = \"\"\n    capital_password: str = \"\"\n    # \"demo\" (paper trading) or \"live\"\n    capital_env: str = \"demo\"\n    # Trading — \"GOLD\" est le code (epic) Capital.com pour l'or (XAU/USD)",
+        "peekOfCode": "class Settings(BaseSettings):\n    \"\"\"Engine configuration, loaded from environment variables (or .env locally).\"\"\"\n    model_config = SettingsConfigDict(env_file=\".env\", env_file_encoding=\"utf-8\", extra=\"ignore\")\n    # MetaTrader 5 — terminal installé localement (Windows). Le moteur se\n    # connecte au terminal via le paquet Python MetaTrader5 (IPC), qui lance le\n    # terminal automatiquement s'il n'est pas déjà ouvert.\n    #   mt5_login    : numéro du compte (démo pour commencer)\n    #   mt5_password : mot de passe du compte\n    #   mt5_server   : serveur du broker (ex. \"MetaQuotes-Demo\")\n    # Laisser mt5_login vide pour se rattacher au compte déjà connecté dans le",
         "detail": "apps.engine.app.config",
         "documentation": {}
     },
@@ -3581,7 +3598,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.main",
         "description": "apps.engine.app.main",
-        "peekOfCode": "class ResolveTradeRequest(BaseModel):\n    status: Literal[\"CANCELLED\", \"CLOSED\"]\n    exit_price: float | None = None\n    closed_at: datetime | None = None\nbroker: CapitalClient | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\ntrader: Trader | None = None\ndecisions_repo: StrategyDecisionRepository | None = None\nlearning: LearningService | None = None",
+        "peekOfCode": "class ResolveTradeRequest(BaseModel):\n    status: Literal[\"CANCELLED\", \"CLOSED\"]\n    exit_price: float | None = None\n    closed_at: datetime | None = None\nbroker: MT5Client | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\ntrader: Trader | None = None\ndecisions_repo: StrategyDecisionRepository | None = None\nlearning: LearningService | None = None",
         "detail": "apps.engine.app.main",
         "documentation": {}
     },
@@ -3590,7 +3607,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.main",
         "description": "apps.engine.app.main",
-        "peekOfCode": "def ensure_broker_configured() -> None:\n    if not (\n        settings.capital_api_key\n        and settings.capital_identifier\n        and settings.capital_password\n    ):\n        raise HTTPException(\n            status_code=503,\n            detail=(\n                \"Capital.com non configuré : renseignez CAPITAL_API_KEY, \"",
+        "peekOfCode": "def ensure_broker_configured() -> None:\n    if not _broker_ready():\n        raise HTTPException(\n            status_code=503,\n            detail=(\n                \"MetaTrader 5 non configuré : renseignez MT5_LOGIN, \"\n                \"MT5_PASSWORD et MT5_SERVER (compte démo)\"\n            ),\n        )\ndef ensure_ingestion_ready() -> IngestionService:",
         "detail": "apps.engine.app.main",
         "documentation": {}
     },
@@ -3608,7 +3625,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.main",
         "description": "apps.engine.app.main",
-        "peekOfCode": "settings = get_settings()\nclass ResolveTradeRequest(BaseModel):\n    status: Literal[\"CANCELLED\", \"CLOSED\"]\n    exit_price: float | None = None\n    closed_at: datetime | None = None\nbroker: CapitalClient | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\ntrader: Trader | None = None\ndecisions_repo: StrategyDecisionRepository | None = None",
+        "peekOfCode": "settings = get_settings()\nclass ResolveTradeRequest(BaseModel):\n    status: Literal[\"CANCELLED\", \"CLOSED\"]\n    exit_price: float | None = None\n    closed_at: datetime | None = None\nbroker: MT5Client | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\ntrader: Trader | None = None\ndecisions_repo: StrategyDecisionRepository | None = None",
         "detail": "apps.engine.app.main",
         "documentation": {}
     },
@@ -3617,7 +3634,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.main",
         "description": "apps.engine.app.main",
-        "peekOfCode": "app = FastAPI(title=\"NexaGold Engine\", version=\"0.1.0\", lifespan=lifespan)\ndef ensure_broker_configured() -> None:\n    if not (\n        settings.capital_api_key\n        and settings.capital_identifier\n        and settings.capital_password\n    ):\n        raise HTTPException(\n            status_code=503,\n            detail=(",
+        "peekOfCode": "app = FastAPI(title=\"NexaGold Engine\", version=\"0.1.0\", lifespan=lifespan)\ndef ensure_broker_configured() -> None:\n    if not _broker_ready():\n        raise HTTPException(\n            status_code=503,\n            detail=(\n                \"MetaTrader 5 non configuré : renseignez MT5_LOGIN, \"\n                \"MT5_PASSWORD et MT5_SERVER (compte démo)\"\n            ),\n        )",
         "detail": "apps.engine.app.main",
         "documentation": {}
     },
@@ -4220,7 +4237,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_regime",
         "description": "apps.engine.tests_manual.test_regime",
-        "peekOfCode": "conflict = assess_regime_gate(\"SELL\", bull, base)\nassert conflict[\"allowed\"] is False, conflict\nassert conflict[\"agreement\"] == \"CONFLICT\", conflict\nextreme_volatility = assess_regime_gate(\n    \"BUY\",\n    high_vol,\n    {**base, \"volatility_ratio_5_20\": 2.3},\n)\nassert extreme_volatility[\"allowed\"] is False, extreme_volatility\nassert any(\"Volatilite extreme\" in reason for reason in extreme_volatility[\"reasons\"])",
+        "peekOfCode": "conflict = assess_regime_gate(\"SELL\", bull, base)\nassert conflict[\"allowed\"] is False, conflict\nassert conflict[\"agreement\"] == \"CONFLICT\", conflict\nextreme_volatility = assess_regime_gate(\n    \"BUY\",\n    high_vol,\n    {**base, \"volatility_ratio_5_20\": 2.3},\n)\nassert extreme_volatility[\"allowed\"] is False, extreme_volatility\nassert any(\"Volatilité extrême\" in reason for reason in extreme_volatility[\"reasons\"])",
         "detail": "apps.engine.tests_manual.test_regime",
         "documentation": {}
     },
@@ -4229,7 +4246,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_regime",
         "description": "apps.engine.tests_manual.test_regime",
-        "peekOfCode": "extreme_volatility = assess_regime_gate(\n    \"BUY\",\n    high_vol,\n    {**base, \"volatility_ratio_5_20\": 2.3},\n)\nassert extreme_volatility[\"allowed\"] is False, extreme_volatility\nassert any(\"Volatilite extreme\" in reason for reason in extreme_volatility[\"reasons\"])\nlow_quality = assess_regime_gate(\n    \"BUY\",\n    bad,",
+        "peekOfCode": "extreme_volatility = assess_regime_gate(\n    \"BUY\",\n    high_vol,\n    {**base, \"volatility_ratio_5_20\": 2.3},\n)\nassert extreme_volatility[\"allowed\"] is False, extreme_volatility\nassert any(\"Volatilité extrême\" in reason for reason in extreme_volatility[\"reasons\"])\nlow_quality = assess_regime_gate(\n    \"BUY\",\n    bad,",
         "detail": "apps.engine.tests_manual.test_regime",
         "documentation": {}
     },
@@ -4508,7 +4525,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_structured_signal",
         "description": "apps.engine.tests_manual.test_structured_signal",
-        "peekOfCode": "settings = Settings(\n    epic=\"GOLD\",\n    model_granularity=\"H1\",\n    decision_candles=2,\n    stop_loss_pct=0.01,\n    risk_reward_ratio=2.0,\n    trading_enabled=False,\n)\ncandles = [\n    {\"time\": datetime.now(timezone.utc).isoformat(), \"close\": 100.0},",
+        "peekOfCode": "settings = Settings(\n    symbol=\"XAUUSD\",\n    model_granularity=\"H1\",\n    decision_candles=2,\n    stop_loss_pct=0.01,\n    risk_reward_ratio=2.0,\n    trading_enabled=False,\n)\ncandles = [\n    {\"time\": datetime.now(timezone.utc).isoformat(), \"close\": 100.0},",
         "detail": "apps.engine.tests_manual.test_structured_signal",
         "documentation": {}
     },
@@ -4553,7 +4570,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_structured_signal",
         "description": "apps.engine.tests_manual.test_structured_signal",
-        "peekOfCode": "hold = build_structured_signal(\n    settings,\n    \"test\",\n    Signal(Action.HOLD, 1.0, \"hold reason\"),\n    candles,\n    price,\n    None,\n)\nassert hold[\"direction\"] == \"NO_TRADE\", hold\nassert \"La strategie a refuse de trader\" in hold[\"reasons\"], hold",
+        "peekOfCode": "hold = build_structured_signal(\n    settings,\n    \"test\",\n    Signal(Action.HOLD, 1.0, \"hold reason\"),\n    candles,\n    price,\n    None,\n)\nassert hold[\"direction\"] == \"NO_TRADE\", hold\nassert \"La stratégie a refusé de trader\" in hold[\"reasons\"], hold",
         "detail": "apps.engine.tests_manual.test_structured_signal",
         "documentation": {}
     },

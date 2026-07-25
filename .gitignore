@@ -26,3 +26,7 @@ venv/
 # Divers
 .DS_Store
 *.log
+
+# Logs runtime (PID, sorties des services en arriere-plan)
+logs/
+nexagold-scheduler.log
