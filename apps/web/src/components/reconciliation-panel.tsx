@@ -148,7 +148,7 @@ export default function ReconciliationPanel() {
   return (
     <SectionCard
       title="Réconciliation broker"
-      subtitle="Comparaison des trades ouverts en base avec les positions Capital.com"
+      subtitle="Comparaison des trades ouverts en base avec les positions MetaTrader 5"
       bodyClassName="p-0"
       action={
         <button

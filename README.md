@@ -17,32 +17,38 @@ Plateforme de trading algorithmique sur l'or (XAU/USD) pilotée par IA.
                     └────┬───────────┬────┘
                          │           │
         ┌────────────────▼──┐   ┌────▼────────────────────┐
-        │ Neon (PostgreSQL) │   │ apps/engine (FastAPI)   │  ← Railway
+        │ Neon (PostgreSQL) │   │ apps/engine (FastAPI)   │  ← PC Windows local
         │ Upstash (Redis)   │   │ Données → Stratégie →   │
         └───────────────────┘   │ Risque → Exécution      │
                                 └────────────┬────────────┘
-                                             │ REST
-                                      ┌──────▼──────┐
-                                      │ Capital.com │
-                                      │ (démo/réel) │
-                                      └─────────────┘
+                                             │ IPC (paquet MetaTrader5)
+                                ┌────────────▼────────────┐
+                                │ Terminal MetaTrader 5   │
+                                │ C:\Program Files\...    │
+                                │ (compte démo/réel)      │
+                                └─────────────────────────┘
 ```
 
 | Application | Rôle | Déploiement |
 | --- | --- | --- |
 | `apps/web` | Dashboard Next.js 16 + Tailwind | Vercel |
 | `apps/api` | Backend NestJS + Prisma (utilisateurs, JWT, notifications, WebSockets) | Railway (Dockerfile) |
-| `apps/engine` | Moteur de trading Python/FastAPI (Capital.com, stratégies, gestion du risque) | Railway (Dockerfile) |
+| `apps/engine` | Moteur de trading Python/FastAPI (MetaTrader 5, stratégies, gestion du risque) | **Windows local uniquement** (terminal MT5 requis) |
 | PostgreSQL | Trades, bougies, décisions IA, équité | Neon |
 | Redis | Cache, temps réel | Upstash |
 
 ## Décisions techniques (et pourquoi)
 
-- **Capital.com** comme broker v1 : API REST pure (aucun terminal à faire
-  tourner, contrairement à IBKR/MT5), authentification par clé API, prix en
-  streaming, compte démo identique au compte réel. IBKR envisagé en v2.
+- **MetaTrader 5** comme broker (remplace Capital.com depuis 2026-07) : le
+  moteur pilote le terminal MT5 installé localement
+  (`C:\Program Files\MetaTrader 5`) via le paquet Python `MetaTrader5` (pont
+  IPC). Conséquences assumées : **Windows uniquement**, le terminal doit
+  tourner, et le moteur n'est plus déployable sur Railway/Docker — il reste
+  sur le PC local, ce qui colle au fonctionnement réel (démarrage 7h, arrêt
+  21h). Avantages : compte démo gratuit chez n'importe quel broker MT5,
+  SL/TP stockés côté serveur du broker, exécution standard de l'industrie.
 - **Dukascopy** pour l'historique profond (backtesting/entraînement) ;
-  le flux Capital.com pour la décision temps réel.
+  le flux MetaTrader 5 pour la décision temps réel.
 - **PostgreSQL standard** (pas TimescaleDB) : Neon ne supporte pas
   l'extension, et le volume M1 (~370 000 bougies/an) reste trivial pour
   Postgres avec la clé composite de `Candle`.
@@ -65,15 +71,23 @@ redirigées vers `logs\*.log`. `Arreter NexaGold.vbs` arrête tout.
   autre projet local ; pinné dans le lanceur).
 - API : `localhost:3001` · Moteur : `localhost:8000`.
 
-Sous le capot, les `.vbs` appellent `start-hidden.ps1` / `stop-auto.ps1`. Deux
-tâches planifiées Windows (`NexaGold - Start 07h` / `NexaGold - Stop 21h`)
-relancent et coupent automatiquement le bot chaque jour. Prérequis : l'installation
-initiale doit avoir été faite une fois (Docker démarré, `npm install`, venv +
-`pip install`, `prisma migrate`).
+Sous le capot, les `.vbs` appellent `start-hidden.ps1` / `stop-auto.ps1`. Trois
+tâches planifiées Windows automatisent le cycle :
+
+- `NexaGold - Start (allumage)` — à **chaque ouverture de session** (délai
+  1 min), quelle que soit l'heure d'allumage du PC : `start-hidden.ps1` attend
+  le daemon Docker (jusqu'à 4 min), lance le terminal MT5 si besoin, puis les
+  3 services en arrière-plan. Idempotent : un service déjà actif est ignoré.
+- `NexaGold - Start 07h` — relance quotidienne si le PC est resté allumé.
+- `NexaGold - Stop 21h` — arrêt quotidien (rapports Telegram envoyés avant).
+
+Prérequis : l'installation initiale doit avoir été faite une fois (Docker
+démarré, `npm install`, venv + `pip install`, `prisma migrate`).
 
 ### Installation initiale (une fois)
 
-Prérequis : Node 22+, Python 3.12+, Docker Desktop.
+Prérequis : Node 22+, Python 3.12+, Docker Desktop, **MetaTrader 5 installé**
+(`C:\Program Files\MetaTrader 5\terminal64.exe`) avec un **compte démo**.
 
 ```bash
 # 1. Base de données et Redis locaux
@@ -88,7 +102,7 @@ npm run start:dev                    # http://localhost:3001/health
 
 # 3. Moteur Python
 cd apps/engine
-cp .env.example .env                 # renseigner les identifiants Capital.com
+cp .env.example .env                 # renseigner les identifiants MT5 (démo)
 python -m venv .venv && .venv\Scripts\activate   # Windows
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000        # http://localhost:8000/health
@@ -99,12 +113,16 @@ npm install
 npm run dev                          # http://localhost:3000
 ```
 
-Pour obtenir les identifiants Capital.com : sur votre compte, **activez la
-2FA** (obligatoire pour l'API), basculez en mode **Démo**, puis Paramètres →
-**API integrations** → **Generate API Key**. Capital.com demande un mot de
-passe personnalisé pour la clé (distinct du mot de passe du compte). Vous
-obtenez trois éléments : `CAPITAL_API_KEY` (la clé), `CAPITAL_IDENTIFIER`
-(l'e-mail de connexion) et `CAPITAL_PASSWORD` (le mot de passe de la clé).
+Pour obtenir les identifiants MetaTrader 5 (compte démo) : ouvrez le terminal
+MT5 → **Fichier → Ouvrir un compte** → choisissez un broker (ou le serveur
+d'essai MetaQuotes-Demo) → type **Démo**. À la création, MT5 affiche trois
+éléments à reporter dans `apps/engine/.env` : `MT5_LOGIN` (numéro de compte),
+`MT5_PASSWORD` (mot de passe principal) et `MT5_SERVER` (nom du serveur, ex.
+`MetaQuotes-Demo`). Vérifiez aussi dans le Market Watch le nom exact du
+symbole or chez ce broker (`XAUUSD`, `XAUUSD.a`, `GOLD`…) → `SYMBOL`, et le
+décalage horaire du serveur → `MT5_UTC_OFFSET_HOURS` (heure des bougies MT5
+moins heure UTC ; souvent 2 l'hiver, 3 l'été). Le moteur lance le terminal
+tout seul s'il est fermé (`MT5_TERMINAL_PATH`).
 
 ### Amorcer les données et le modèle (une fois, après le 1er démarrage)
 
@@ -119,15 +137,21 @@ cd apps/engine
 .venv\Scripts\python.exe -m app.data.backfill_cli --granularity M5 --days 365 \
     --symbol EURUSD --divisor 100000 --instrument EURUSD
 # 3. Bougies H1 dérivées des M5 (le modèle live tourne en H1)
-curl -X POST "http://localhost:8000/candles/resample?source=M5&target=H1&instrument=GOLD"
+curl -X POST "http://localhost:8000/candles/resample?source=M5&target=H1&instrument=XAUUSD"
 # 4. Valider puis entraîner l'artefact strictement paper
 .venv\Scripts\python.exe -m app.research.train_expected_return_paper
 ```
 
+> **Migration Capital.com → MT5** : les bougies historiques sont désormais
+> stockées sous la clé instrument `XAUUSD` (= `SYMBOL`). Si votre base date de
+> l'époque Capital.com, re-keyez l'ancienne série `GOLD` une fois :
+> `docker exec -it nexagoldai-postgres-1 psql -U nexagold -c "UPDATE \"Candle\" SET instrument='XAUUSD' WHERE instrument='GOLD';"`
+
 Ensuite, le moteur ingère le temps réel et décide à chaque barre. La stratégie
-`expected_return_paper` est verrouillée sur `CAPITAL_ENV=demo`; son apprentissage
-périodique reste désactivé pendant la validation prospective. Le dashboard
-(`localhost:3000`) et les récaps Telegram reflètent le tout.
+`expected_return_paper` est verrouillée sur `BROKER_ENV=demo` **et** vérifie
+auprès du terminal que le compte MT5 connecté est bien un compte démo ; son
+apprentissage périodique reste désactivé pendant la validation prospective. Le
+dashboard (`localhost:3002`) et les récaps Telegram reflètent le tout.
 
 > **Granularité du modèle** : `MODEL_GRANULARITY=H1` par défaut (meilleur
 > résultat mesuré). Changez-la dans `apps/engine/.env`. Le champion est par
@@ -144,18 +168,22 @@ périodique reste désactivé pendant la validation prospective. Le dashboard
 
 1. Créer une base sur [upstash.com](https://upstash.com), copier l'URL `rediss://`.
 
-### Railway (api + engine)
+### Railway (api uniquement)
 
 1. Créer un projet Railway relié à ce repo GitHub.
 2. Service **api** : Root Directory = `apps/api` (le Dockerfile est détecté).
    Variables : `DATABASE_URL` (Neon), `REDIS_URL` (Upstash), `FRONTEND_URL`
-   (URL Vercel), `JWT_SECRET`.
-3. Service **engine** : Root Directory = `apps/engine`.
-   Variables : `CAPITAL_API_KEY`, `CAPITAL_IDENTIFIER`, `CAPITAL_PASSWORD`,
-   `CAPITAL_ENV=demo`, `EPIC=GOLD`, `DATABASE_URL`, `REDIS_URL`,
-   `TRADING_ENABLED=false`.
-4. ⚠️ Le moteur doit rester sur une offre **always-on** (jamais de plan qui
-   endort les services) : une position ouverte doit toujours être surveillée.
+   (URL Vercel), `JWT_SECRET`, `ENGINE_URL` (URL joignable du moteur local,
+   par ex. via un tunnel, sinon les panneaux « live » resteront vides).
+
+### Moteur (Windows local, non déployable)
+
+⚠️ Depuis la migration MetaTrader 5, le moteur **ne peut plus être déployé sur
+Railway/Docker** : le paquet `MetaTrader5` est Windows-only et dialogue avec le
+terminal MT5 installé sur ce PC. Le moteur tourne donc en local (`start.ps1` /
+tâches planifiées 7h-21h). Le Dockerfile de `apps/engine` ne sert plus qu'à un
+mode API/lecture seule sans broker. Pendant les heures d'arrêt du bot, les
+SL/TP restent actifs car ils sont stockés **côté serveur du broker MT5**.
 
 ### Vercel (web)
 
@@ -189,17 +217,17 @@ Configuration (5 minutes) :
    service Railway **api** (production).
 
 Les récaps nécessitent que le moteur (`ENGINE_URL`) soit démarré avec des
-identifiants Capital.com valides — c'est lui qui fournit solde et équité.
+identifiants MT5 valides — c'est lui qui fournit solde et équité.
 
 ## Pipeline de données (phase 1)
 
-Le moteur ingère les bougies de l'or de Capital.com dans la table `Candle`
+Le moteur ingère les bougies de l'or depuis MetaTrader 5 dans la table `Candle`
 (écriture directe via asyncpg, en partageant `DATABASE_URL` avec l'api). La
 clé composite `(instrument, granularity, time)` rend l'ingestion idempotente.
 
 - **Ingestion continue** : une boucle de fond rafraîchit les dernières bougies
   de chaque granularité toutes les `INGEST_INTERVAL_SECONDS`. Démarre
-  automatiquement si la base est joignable et Capital.com configuré.
+  automatiquement si la base est joignable et MT5 configuré.
 - **Backfill historique** : remonte le temps par fenêtres de 900 bougies pour
   amorcer le backtesting.
 
@@ -219,7 +247,7 @@ Endpoints (moteur, port 8000) :
 curl http://localhost:8000/health
 # refresh immédiat des dernières bougies
 curl -X POST http://localhost:8000/ingest/run
-# backfill court depuis Capital.com (granularité + nb de jours, max 60)
+# backfill court depuis MT5 (granularité + nb de jours, max 60)
 curl -X POST "http://localhost:8000/ingest/backfill?granularity=M5&days=2"
 # backfill profond depuis Dukascopy (ticks → bougies ; M1/M5/M15/M30/H1)
 curl -X POST "http://localhost:8000/ingest/dukascopy?granularity=M5&days=3"
@@ -232,15 +260,17 @@ curl http://localhost:8000/candles/stats
 - **Dukascopy** (`/ingest/dukascopy`) : source de l'**historique profond** pour
   le backtesting. Télécharge les fichiers tick `.bi5` (un par heure, LZMA) en
   pur stdlib, les agrège en bougies. Symbole `XAUUSD`, prix ÷ 1000.
-- **Capital.com** (boucle continue + `/ingest/backfill`) : le **temps réel** et
+- **MetaTrader 5** (boucle continue + `/ingest/backfill`) : le **temps réel** et
   les bougies récentes (Dukascopy publie avec un délai).
 
-Les deux écrivent dans la même série `(GOLD, granularité, time)` : là où elles
-se recouvrent, la dernière écriture gagne. Les prix concordent (OHLC mid) ;
-seule la sémantique du **volume** diffère (Capital.com = volume négocié,
-Dukascopy = nombre de ticks). Sans impact pour un backtesting basé sur le prix.
-Usage recommandé : Dukascopy pour amorcer l'historique, puis la boucle
-Capital.com pour entretenir le présent.
+Les deux écrivent dans la même série `(XAUUSD, granularité, time)` : là où
+elles se recouvrent, la dernière écriture gagne. Les prix concordent (OHLC) ;
+la sémantique du **volume** diffère (MT5 = tick volume, Dukascopy = nombre de
+ticks — proches en pratique). ⚠️ MT5 horodate en **heure serveur du broker**,
+pas en UTC : réglez `MT5_UTC_OFFSET_HOURS` (souvent 2 l'hiver, 3 l'été) pour
+que les bougies MT5 s'alignent sur l'historique Dukascopy (UTC), sinon les
+features dépendantes de l'heure seront décalées. Usage recommandé : Dukascopy
+pour amorcer l'historique, puis la boucle MT5 pour entretenir le présent.
 
 ## Backtesting & modèle (phase 2)
 
@@ -318,8 +348,9 @@ démo :
    c'est le « pourquoi » de l'IA, et le jeu de données du réentraînement ;
 3. calcule le stop `max(0,5 %, 3×ATR)`, l'objectif `3R` et applique au sizing
    de risque le multiplicateur causal de volatilité, plafonné à 100 % ;
-4. n'envoie un ordre que si le risque approuve, `TRADING_ENABLED=true` et
-   `CAPITAL_ENV=demo`.
+4. n'envoie un ordre que si le risque approuve, `TRADING_ENABLED=true`,
+   `BROKER_ENV=demo`, le compte MT5 connecté est bien un compte **démo**, et
+   le spread courant reste sous `MAX_SPREAD_PCT`.
 
 Par défaut `TRADING_ENABLED=false` : la boucle tourne, calcule et journalise
 les décisions sur le compte démo **sans jamais y toucher**. On accumule un
@@ -343,7 +374,18 @@ valeurs globales de secours: stop `max(0,5 %, 3 x ATR14)` et objectif `3R`.
 Le statut prospectif est disponible via `GET /paper/validation` et
 `GET /dashboard/paper-validation`. La revue devient éligible après 100 trades
 clôturés, sans promotion automatique. `expected_return_paper` refuse de charger
-si `CAPITAL_ENV=live`, même lorsque `TRADING_ENABLED=true`.
+si `BROKER_ENV=live`, même lorsque `TRADING_ENABLED=true`.
+
+Gardes d'exécution supplémentaires (défauts sûrs) :
+
+- `MAX_SPREAD_PCT=0.001` — aucun ordre si le spread relatif dépasse 0,1 %
+  (rollover, annonces, faible liquidité) ;
+- gate d'**espérance nette** : un signal au-dessus du seuil mais sous les
+  coûts estimés (spread + financement sur l'horizon) devient HOLD ;
+- `REGIME_FILTER_ENFORCED=false` — le filtre de régime reste journalisé en
+  shadow ; passer à `true` l'applique réellement (après validation) ;
+- `EXPECTED_RETURN_ALLOW_SHORT=false` — le côté SELL, rejeté par la validation
+  historique, reste désactivé par défaut.
 
 ## Dashboard (phase 4)
 
@@ -407,8 +449,8 @@ historique des versions avec Sharpe et accuracy), via `/dashboard/models`.
 
 ## Feuille de route
 
-1. ✅ **Pipeline de données** : ingestion continue Capital.com → table `Candle`,
-   backfill historique Dukascopy. *(fait)*
+1. ✅ **Pipeline de données** : ingestion continue MetaTrader 5 → table
+   `Candle`, backfill historique Dukascopy. *(fait)*
 2. ✅ **Backtesting + premier modèle** : features techniques, LightGBM,
    validation walk-forward (Sharpe, drawdown, profit factor). *(infrastructure
    faite ; le baseline n'a pas d'edge, à itérer)*
@@ -421,5 +463,8 @@ historique des versions avec Sharpe et accuracy), via `/dashboard/models`.
    configurations (champion/challenger), promotion automatique. *(fait ;
    exploration RL/PPO en option future)*
 
-Le passage en réel (`CAPITAL_ENV=live`, `TRADING_ENABLED=true`) n'est envisagé
-qu'après plusieurs semaines de paper trading aux métriques stables.
+Le passage en réel (`BROKER_ENV=live` + compte MT5 réel) n'est envisagé
+qu'après plusieurs semaines de paper trading aux métriques stables. Rappel
+important : le backtest 2023-2026 à coûts réalistes n'a montré **aucun edge
+net** — le mode démo sert à mesurer honnêtement, pas à préparer un passage en
+réel imminent.

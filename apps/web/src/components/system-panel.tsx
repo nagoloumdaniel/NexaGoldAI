@@ -92,9 +92,9 @@ export default function SystemPanel() {
 
       <SectionCard title="Configuration" subtitle="Paramètres en lecture seule">
         <div className="-my-1">
-          <Row label="Instrument">{health?.epic ?? "GOLD"} (XAU/USD)</Row>
-          <Row label="Courtier">Capital.com</Row>
-          <Row label="Environnement">{health?.capital_env ?? "demo"}</Row>
+          <Row label="Instrument">{health?.symbol ?? "XAUUSD"} (XAU/USD)</Row>
+          <Row label="Courtier">MetaTrader 5</Row>
+          <Row label="Environnement">{health?.broker_env ?? "demo"}</Row>
           <Row label="Kill switch">
             <BoolText
               value={tradingEnabled}

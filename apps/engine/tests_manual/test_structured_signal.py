@@ -10,7 +10,7 @@ from app.signals.structured import build_structured_signal
 from app.strategy.base import Action, Signal
 
 settings = Settings(
-    epic="GOLD",
+    symbol="XAUUSD",
     model_granularity="H1",
     decision_candles=2,
     stop_loss_pct=0.01,
@@ -77,7 +77,7 @@ hold = build_structured_signal(
     None,
 )
 assert hold["direction"] == "NO_TRADE", hold
-assert "La strategie a refuse de trader" in hold["reasons"], hold
+assert "La stratégie a refusé de trader" in hold["reasons"], hold
 
 bad_data = build_structured_signal(
     settings,

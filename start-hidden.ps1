@@ -33,13 +33,46 @@ function Start-Hidden($name, $workdir, $cmdline, $port) {
 
 Log '=== Demarrage en arriere-plan demande ==='
 
-# 1) Infra Docker (Postgres + Redis) - pas de fenetre
-Push-Location $root
-docker compose up -d 2>$null | Out-Null
-Pop-Location
-Log 'Docker compose up -d'
+# 1) Infra Docker (Postgres + Redis) - pas de fenetre.
+#    Au demarrage du PC le daemon Docker n'est pas encore pret : on lance
+#    Docker Desktop si besoin et on attend (max 4 min) qu'il reponde, pour que
+#    le lancement a l'allumage fonctionne quelle que soit l'heure de boot.
+function Test-Docker {
+  docker info 2>$null | Out-Null
+  return ($LASTEXITCODE -eq 0)
+}
+if (-not (Test-Docker)) {
+  $dd = 'C:\Program Files\Docker\Docker\Docker Desktop.exe'
+  if ((Test-Path $dd) -and -not (Get-Process -Name 'Docker Desktop' -ErrorAction SilentlyContinue)) {
+    Start-Process $dd
+    Log 'Docker Desktop lance - attente du daemon'
+  }
+  $deadline = [DateTime]::Now.AddMinutes(4)
+  while (-not (Test-Docker) -and [DateTime]::Now -lt $deadline) { Start-Sleep -Seconds 5 }
+}
+if (Test-Docker) {
+  Push-Location $root
+  docker compose up -d 2>$null | Out-Null
+  Pop-Location
+  Log 'Docker compose up -d'
+} else {
+  Log 'ATTENTION: daemon Docker indisponible apres 4 min - services lances sans Postgres/Redis (moteur en mode degrade)'
+}
 
-# 2/3/4) Services applicatifs en arriere-plan
+# 2) Terminal MetaTrader 5 : requis par le moteur (pont IPC local). Lance
+#    minimise s'il ne tourne pas deja. Son PID n'est PAS memorise : on ne le
+#    tue pas a l'arret (il gere aussi l'usage manuel et les SL/TP serveur).
+$mt5Path = 'C:\Program Files\MetaTrader 5\terminal64.exe'
+if (-not (Get-Process -Name 'terminal64' -ErrorAction SilentlyContinue)) {
+  if (Test-Path $mt5Path) {
+    Start-Process $mt5Path -WindowStyle Minimized
+    Log 'Terminal MetaTrader 5 lance (minimise)'
+  } else {
+    Log "ATTENTION: $mt5Path introuvable - le moteur tentera de le lancer via MT5_TERMINAL_PATH"
+  }
+}
+
+# 3/4/5) Services applicatifs en arriere-plan
 $pids = @()
 $pids += Start-Hidden 'engine' (Join-Path $root 'apps\engine') '.venv\Scripts\uvicorn.exe app.main:app --port 8000' 8000
 $pids += Start-Hidden 'api'    (Join-Path $root 'apps\api')    'npm run start:dev' 3001

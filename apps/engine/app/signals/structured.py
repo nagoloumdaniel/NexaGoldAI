@@ -187,7 +187,7 @@ def build_structured_signal(
             direction = "NO_TRADE"
             reasons.append("Prix bid/ask indisponible")
 
-    execution_mode = "LIVE" if settings.capital_env == "live" else "DEMO"
+    execution_mode = "LIVE" if settings.broker_env == "live" else "DEMO"
     if signal.features.get("paper_only") is True:
         execution_mode = "PAPER"
         warnings.append("Stratégie verrouillée sur le compte démo")
@@ -199,7 +199,7 @@ def build_structured_signal(
     warnings = list(dict.fromkeys(warnings))
 
     return StructuredSignal(
-        symbol=settings.epic,
+        symbol=settings.symbol,
         timestamp=datetime.now(timezone.utc).isoformat(),
         timeframe=settings.model_granularity,
         direction=direction,

@@ -90,10 +90,10 @@ class FakeBroker:
 
     async def close_position_by_deal_id(self, deal_id):
         self.closed_deals.append(deal_id)
-        return {"dealReference": "close-ref"}
-
-    async def get_deal_confirmation(self, deal_reference):
+        # Même forme que MT5Client : le prix et la date de sortie sont renvoyés
+        # directement par l'ordre de clôture.
         return {
+            "dealReference": "close-ref",
             "dealStatus": "ACCEPTED",
             "level": 105.0,
             "date": datetime.now(timezone.utc).isoformat(),
@@ -106,7 +106,7 @@ async def main() -> None:
         build_strategy(
             Settings(
                 strategy_name="expected_return_paper",
-                capital_env="live",
+                broker_env="live",
             )
         )
     except RuntimeError:
@@ -117,10 +117,10 @@ async def main() -> None:
     live_broker = FakeBroker()
     live_decisions = FakeDecisions()
     live_trader = Trader(
-        Settings(capital_env="live", trading_enabled=True),
+        Settings(broker_env="live", trading_enabled=True),
         live_broker,
         FixedPaperStrategy(),
-        RiskManager(Settings(capital_env="live", trading_enabled=True)),
+        RiskManager(Settings(broker_env="live", trading_enabled=True)),
         live_decisions,
         FakeTrades(),
     )
@@ -149,7 +149,7 @@ async def main() -> None:
     }
     demo_broker = FakeBroker()
     demo_trades = FakeTrades([trade])
-    demo_settings = Settings(capital_env="demo", trading_enabled=True)
+    demo_settings = Settings(broker_env="demo", trading_enabled=True)
     demo_trader = Trader(
         demo_settings,
         demo_broker,

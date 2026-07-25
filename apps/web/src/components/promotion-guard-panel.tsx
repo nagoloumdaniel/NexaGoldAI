@@ -79,7 +79,7 @@ export default function PromotionGuardPanel() {
         </div>
         <div>
           <p className="text-[11px] uppercase text-faint">Environnement</p>
-          <p className="mt-1 text-ink">{data?.capital_env ?? "demo"}</p>
+          <p className="mt-1 text-ink">{data?.broker_env ?? "demo"}</p>
         </div>
         <div>
           <p className="text-[11px] uppercase text-faint">Dernier contrôle</p>

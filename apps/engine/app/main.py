@@ -1,7 +1,7 @@
 """NexaGold trading engine — FastAPI service.
 
 Exposes health/market endpoints for the NestJS backend and runs both the data
-pipeline (Capital.com -> `Candle` table) and the paper-trading loop
+pipeline (MetaTrader 5 -> `Candle` table) and the paper-trading loop
 (data -> signal -> risk -> order, gated by the TRADING_ENABLED kill switch).
 """
 
@@ -14,7 +14,7 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
 
-from app.broker.capital import CapitalClient, CapitalError
+from app.broker.mt5 import BrokerError, MT5Client
 from app.config import get_settings
 from app.data.candles import CandleRepository
 from app.data.decisions import StrategyDecisionRepository
@@ -35,7 +35,7 @@ class ResolveTradeRequest(BaseModel):
     exit_price: float | None = None
     closed_at: datetime | None = None
 
-broker: CapitalClient | None = None
+broker: MT5Client | None = None
 database: Database | None = None
 ingestion: IngestionService | None = None
 trader: Trader | None = None
@@ -47,10 +47,12 @@ _learning_task: asyncio.Task | None = None
 
 
 def _broker_ready() -> bool:
+    if settings.mt5_attach:
+        return True
     return bool(
-        settings.capital_api_key
-        and settings.capital_identifier
-        and settings.capital_password
+        settings.mt5_login.strip()
+        and settings.mt5_password
+        and settings.mt5_server
     )
 
 
@@ -59,7 +61,7 @@ async def lifespan(app: FastAPI):
     global broker, database, ingestion, trader, decisions_repo, learning
     global _ingestion_task, _trade_task, _learning_task
 
-    broker = CapitalClient(settings)
+    broker = MT5Client(settings)
     database = Database(settings)
     await database.connect()
 
@@ -72,7 +74,7 @@ async def lifespan(app: FastAPI):
             build_strategy(settings),
             RiskManager(settings),
             decisions_repo,
-            TradeRepository(database.pool, settings.epic),
+            TradeRepository(database.pool, settings.symbol),
         )
         learning = LearningService(settings, trader)
         if _broker_ready():
@@ -100,16 +102,12 @@ app = FastAPI(title="NexaGold Engine", version="0.1.0", lifespan=lifespan)
 
 
 def ensure_broker_configured() -> None:
-    if not (
-        settings.capital_api_key
-        and settings.capital_identifier
-        and settings.capital_password
-    ):
+    if not _broker_ready():
         raise HTTPException(
             status_code=503,
             detail=(
-                "Capital.com non configuré : renseignez CAPITAL_API_KEY, "
-                "CAPITAL_IDENTIFIER et CAPITAL_PASSWORD"
+                "MetaTrader 5 non configuré : renseignez MT5_LOGIN, "
+                "MT5_PASSWORD et MT5_SERVER (compte démo)"
             ),
         )
 
@@ -127,14 +125,10 @@ def ensure_ingestion_ready() -> IngestionService:
 async def health() -> dict:
     return {
         "status": "ok",
-        "epic": settings.epic,
-        "capital_env": settings.capital_env,
+        "symbol": settings.symbol,
+        "broker_env": settings.broker_env,
         "trading_enabled": settings.trading_enabled,
-        "broker_configured": bool(
-            settings.capital_api_key
-            and settings.capital_identifier
-            and settings.capital_password
-        ),
+        "broker_configured": _broker_ready(),
         "database_connected": database.is_connected if database else False,
         "ingestion_running": _ingestion_task is not None and not _ingestion_task.done(),
     }
@@ -145,7 +139,7 @@ async def market_price() -> dict:
     ensure_broker_configured()
     try:
         return await broker.get_price()
-    except CapitalError as exc:
+    except BrokerError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
@@ -154,7 +148,7 @@ async def market_candles(granularity: str = "M1", count: int = 200) -> list[dict
     ensure_broker_configured()
     try:
         return await broker.get_candles(granularity=granularity, count=min(count, 1000))
-    except CapitalError as exc:
+    except BrokerError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
@@ -163,7 +157,7 @@ async def account() -> dict:
     ensure_broker_configured()
     try:
         return await broker.get_account_summary()
-    except CapitalError as exc:
+    except BrokerError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
@@ -172,7 +166,7 @@ async def positions() -> list[dict]:
     ensure_broker_configured()
     try:
         raw = await broker.get_open_positions()
-    except CapitalError as exc:
+    except BrokerError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     out = []
     for entry in raw:
@@ -190,7 +184,7 @@ async def ingest_run() -> dict:
     service = ensure_ingestion_ready()
     try:
         return {"upserted": await service.ingest_recent()}
-    except CapitalError as exc:
+    except BrokerError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
@@ -204,7 +198,7 @@ async def ingest_backfill(
     service = ensure_ingestion_ready()
     try:
         upserted = await service.backfill(granularity, days)
-    except CapitalError as exc:
+    except BrokerError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     return {"granularity": granularity, "days": days, "upserted": upserted}
 
@@ -240,8 +234,8 @@ async def candles_resample(
 async def candles_stats(instrument: str | None = Query(None)) -> dict:
     service = ensure_ingestion_ready()
     return {
-        "instrument": instrument or settings.epic,
-        "granularities": await service.stats(instrument or settings.epic),
+        "instrument": instrument or settings.symbol,
+        "granularities": await service.stats(instrument or settings.symbol),
     }
 
 
@@ -256,7 +250,7 @@ async def trade_step() -> dict:
         raise HTTPException(status_code=503, detail="Base de données indisponible")
     try:
         return await trader.step()
-    except CapitalError as exc:
+    except BrokerError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
@@ -314,7 +308,7 @@ async def signal_latest() -> dict:
     )
     try:
         return await trader.preview_signal(model_version=registry.champion())
-    except CapitalError as exc:
+    except BrokerError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
@@ -333,7 +327,7 @@ async def trades_reconciliation() -> dict:
         raise HTTPException(status_code=503, detail="Base de données indisponible")
     try:
         return await trader.reconcile_open_trades(mutate=False)
-    except CapitalError as exc:
+    except BrokerError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
@@ -351,7 +345,7 @@ async def trades_reconcile(close_missing: bool = Query(False)) -> dict:
         return await trader.reconcile_open_trades(
             mutate=True, close_missing=close_missing
         )
-    except CapitalError as exc:
+    except BrokerError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 

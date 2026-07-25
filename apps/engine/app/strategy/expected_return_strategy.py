@@ -17,7 +17,16 @@ class ExpectedReturnPaperStrategy(Strategy):
     name = "expected-return-paper"
     paper_only = True
 
-    def __init__(self, model_dir: str | Path, configured_granularity: str):
+    def __init__(
+        self,
+        model_dir: str | Path,
+        configured_granularity: str,
+        allow_short: bool = False,
+    ):
+        # Le côté SELL a été rejeté par la validation historique (drawdown et
+        # stress dégradés) : il reste désactivé par défaut et n'est ouvert que
+        # par EXPECTED_RETURN_ALLOW_SHORT=true, pour une évaluation paper.
+        self._allow_short = bool(allow_short)
         model_dir = Path(model_dir)
         self._model = joblib.load(model_dir / "model.joblib")
         self._meta = json.loads(
@@ -97,9 +106,18 @@ class ExpectedReturnPaperStrategy(Strategy):
             2.0 * self._cost_bps_per_side
             + holding_days * self._financing_bps_per_day
         ) / 1e4
-        expected_value_after_costs = expected_return - expected_cost
+        if expected_return >= self._threshold:
+            candidate_action = Action.BUY
+        elif self._allow_short and expected_return <= -self._threshold:
+            candidate_action = Action.SELL
+        else:
+            candidate_action = Action.HOLD
+        directional_return = (
+            abs(expected_return) if candidate_action != Action.HOLD else expected_return
+        )
+        expected_value_after_costs = directional_return - expected_cost
         edge_score = float(
-            np.clip(expected_return / max(2.0 * self._threshold, 1e-12), 0.0, 1.0)
+            np.clip(directional_return / max(2.0 * self._threshold, 1e-12), 0.0, 1.0)
         )
         decision_features = latest.iloc[0].to_dict()
         decision_features.update(
@@ -124,7 +142,7 @@ class ExpectedReturnPaperStrategy(Strategy):
             }
         )
 
-        if expected_return < self._threshold:
+        if candidate_action == Action.HOLD:
             return Signal(
                 Action.HOLD,
                 edge_score,
@@ -136,11 +154,27 @@ class ExpectedReturnPaperStrategy(Strategy):
                 position_size,
             )
 
+        # Gate d'espérance nette : un signal au-dessus du seuil mais qui ne
+        # couvre pas les coûts estimés (spread + financement sur l'horizon) a
+        # une espérance négative — on s'abstient.
+        if expected_value_after_costs <= 0:
+            return Signal(
+                Action.HOLD,
+                edge_score,
+                (
+                    f"Expected return {expected_return:.4%} au-dessus du seuil mais "
+                    f"sous les coûts estimés ({expected_cost:.4%})"
+                ),
+                decision_features,
+                position_size,
+            )
+
         return Signal(
-            Action.BUY,
+            candidate_action,
             edge_score,
             (
-                f"Expected return {expected_return:.4%} >= {self._threshold:.4%}; "
+                f"Expected return {expected_return:.4%} ({candidate_action.value}); "
+                f"EV nette {expected_value_after_costs:.4%}; "
                 f"exposition {position_size:.1%}; stop {stop_loss_pct:.2%}"
             ),
             decision_features,

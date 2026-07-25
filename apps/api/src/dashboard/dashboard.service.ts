@@ -161,7 +161,7 @@ export class DashboardService {
         promotion_eligible: false,
         review_eligible: false,
         automatic_live_promotion: false,
-        capital_env: 'demo',
+        broker_env: 'demo',
         trading_enabled: false,
         paper_only: true,
         checked_at: null,

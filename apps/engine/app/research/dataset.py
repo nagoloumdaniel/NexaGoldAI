@@ -21,7 +21,7 @@ def _to_frame(rows: list) -> pd.DataFrame:
 async def load_candles(
     settings: Settings, granularity: str, instrument: str | None = None
 ) -> pd.DataFrame:
-    instrument = instrument or settings.epic
+    instrument = instrument or settings.symbol
     conn = await asyncpg.connect(settings.database_url)
     try:
         rows = await conn.fetch(

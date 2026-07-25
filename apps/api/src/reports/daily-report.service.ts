@@ -35,7 +35,7 @@ export class DailyReportService {
     if (!account) {
       return {
         sent: false,
-        detail: 'Moteur ou compte Capital.com injoignable',
+        detail: 'Moteur ou compte MetaTrader 5 injoignable',
       };
     }
 
@@ -124,7 +124,7 @@ export class DailyReportService {
     if (!account) {
       return {
         sent: false,
-        detail: 'Moteur ou compte Capital.com injoignable',
+        detail: 'Moteur ou compte MetaTrader 5 injoignable',
       };
     }
 

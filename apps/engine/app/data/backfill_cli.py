@@ -7,7 +7,7 @@ Usage:
 import argparse
 import asyncio
 
-from app.broker.capital import CapitalClient
+from app.broker.mt5 import MT5Client
 from app.config import get_settings
 from app.data.candles import CandleRepository
 from app.data.ingestion import IngestionService
@@ -21,7 +21,7 @@ async def run(args: argparse.Namespace) -> None:
     if not db.is_connected:
         print("Base de données indisponible (DATABASE_URL)")
         return
-    broker = CapitalClient(settings)  # unused by the Dukascopy path, closed below
+    broker = MT5Client(settings)  # unused by the Dukascopy path, closed below
     service = IngestionService(settings, broker, CandleRepository(db.pool))
     try:
         result = await service.backfill_dukascopy(

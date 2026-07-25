@@ -61,6 +61,12 @@ foreach ($p in 8000, 3001, 3002) {
   }
 }
 
+# NB: le terminal MetaTrader 5 (terminal64.exe) n'est PAS arrete ici, et c'est
+# voulu : les SL/TP des positions sont stockes cote serveur du broker (ils
+# restent actifs meme terminal ferme), mais laisser MT5 ouvert preserve les
+# graphiques/l'usage manuel. Pour le couper aussi, decommenter :
+# taskkill /IM terminal64.exe /F 2>$null | Out-Null
+
 # 3) Arreter les conteneurs Docker NexaGold (les donnees Postgres/Redis sont conservees)
 Push-Location $root
 docker compose stop 2>$null | Out-Null

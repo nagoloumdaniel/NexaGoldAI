@@ -1,4 +1,45 @@
-# NexaGold - Etat Phase 0
+# NexaGold - Etat
+
+## Migration broker : Capital.com -> MetaTrader 5
+
+Date: 2026-07-25
+
+Le broker Capital.com a ete entierement remplace par le terminal MetaTrader 5
+installe localement (`C:\Program Files\MetaTrader 5`), pilote via le paquet
+Python `MetaTrader5` (pont IPC synchrone, encapsule en async).
+
+- nouveau client `app/broker/mt5.py` (`MT5Client`, erreurs `BrokerError`) aux
+  memes formes normalisees que l'ancien client : la strategie et le risque
+  n'ont pas change de convention ;
+- config : `MT5_LOGIN` / `MT5_PASSWORD` / `MT5_SERVER` / `MT5_TERMINAL_PATH` /
+  `MT5_UTC_OFFSET_HOURS` remplacent `CAPITAL_*` ; `EPIC=GOLD` devient
+  `SYMBOL=XAUUSD` ; `CAPITAL_ENV` devient `BROKER_ENV` ;
+- conversion unites <-> lots a la frontiere broker (contract size, arrondi au
+  pas de lot, minimum broker) ; les unites reellement executees sont
+  journalisees ;
+- plus de guaranteed stop (inexistant sur MT5) : SL/TP standards, stockes
+  cote serveur du broker (ils survivent a l'arret du bot 21h-7h) ;
+- reconciliation via `history_deals_get` par position (une requete, plus de
+  pagination par jour) ; les anciennes references Capital.com `o_...`
+  ne sont plus resolubles et passent par la resolution manuelle ;
+- gardes ajoutees : spread max (`MAX_SPREAD_PCT`), verification que le compte
+  MT5 connecte est bien un compte demo avant tout ordre d'une strategie
+  paper, gate d'esperance nette de couts dans la strategie expected-return,
+  filtre de regime applicable par `REGIME_FILTER_ENFORCED`, cote SELL
+  optionnel (`EXPECTED_RETURN_ALLOW_SHORT`, off par defaut) ;
+- le moteur n'est plus deployable sur Railway/Docker (paquet Windows-only) :
+  il tourne nativement sur ce PC ; le Dockerfile engine ne sert plus qu'en
+  mode API sans broker ;
+- scripts `start.ps1` / `start-hidden.ps1` : lancement automatique du
+  terminal MT5 ; `stop-auto.ps1` ne tue pas le terminal (SL/TP serveur) ;
+- donnees : les bougies sont desormais stockees sous `XAUUSD` ; l'ancienne
+  serie `GOLD` doit etre re-keyee une fois (SQL dans le README) ; attention a
+  `MT5_UTC_OFFSET_HOURS` pour rester aligne avec l'historique Dukascopy (UTC).
+
+Les entrees ci-dessous sont anterieures a la migration et mentionnent encore
+Capital.com : elles restent valables comme historique.
+
+## Etat Phase 0 (historique)
 
 Date: 2026-07-14
 

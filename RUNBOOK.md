@@ -6,13 +6,28 @@
 - API NestJS: `http://localhost:3001`
 - Engine FastAPI: `http://127.0.0.1:8000`
 
+## Broker: MetaTrader 5 (local)
+
+The engine drives the local MT5 terminal
+(`C:\Program Files\MetaTrader 5\terminal64.exe`) through the Windows-only
+`MetaTrader5` Python package. Requirements:
+
+- MT5 installed with a **demo** account (`MT5_LOGIN`, `MT5_PASSWORD`,
+  `MT5_SERVER` in `apps/engine/.env`);
+- the terminal may be closed — the engine starts it via `MT5_TERMINAL_PATH`;
+- `SYMBOL` must match the broker's gold symbol (`XAUUSD`, `XAUUSD.a`, ...);
+- `MT5_UTC_OFFSET_HOURS` aligns MT5 server time with UTC (usually 2 in
+  winter, 3 in summer).
+
+The engine cannot run in Docker/Linux anymore (Windows-only IPC bridge).
+
 ## Safe engine mode
 
 Use this mode for tests and dashboard work:
 
 ```powershell
 cd D:\Projets\NexaGoldAI\apps\engine
-$env:CAPITAL_ENV='demo'
+$env:BROKER_ENV='demo'
 $env:TRADING_ENABLED='false'
 $env:TRADING_LOOP_ENABLED='true'
 $env:STRATEGY_NAME='expected_return_paper'
@@ -23,7 +38,7 @@ $env:TRADE_INTERVAL_SECONDS='3600'
 
 Expected health:
 
-- `capital_env: demo`
+- `broker_env: demo`
 - `trading_enabled: false`
 - `paper_only: true`
 - `loop_running: true`

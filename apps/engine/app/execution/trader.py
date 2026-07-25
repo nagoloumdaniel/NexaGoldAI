@@ -10,7 +10,7 @@ import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 
-from app.broker.capital import CapitalClient, CapitalError
+from app.broker.mt5 import BrokerError, MT5Client
 from app.config import Settings
 from app.data.decisions import StrategyDecisionRepository
 from app.data.trades import TradeRepository
@@ -132,7 +132,7 @@ class Trader:
     def __init__(
         self,
         settings: Settings,
-        broker: CapitalClient,
+        broker: MT5Client,
         strategy: Strategy,
         risk: RiskManager,
         decisions: StrategyDecisionRepository,
@@ -195,18 +195,18 @@ class Trader:
         if getattr(self._strategy, "needs_macro", False):
             try:
                 macro_candles = await self._broker.get_candles(
-                    epic=s.capital_macro_epic,
+                    symbol=s.mt5_macro_symbol,
                     granularity=s.model_granularity,
                     count=s.decision_candles,
                 )
-            except CapitalError:
+            except BrokerError:
                 macro_candles = []
 
         signal = self._strategy.evaluate(candles, macro_candles)
         price = None
         try:
             price = await self._broker.get_price()
-        except CapitalError:
+        except BrokerError:
             price = None
         effective_version = getattr(self._strategy, "model_version", model_version)
         return build_structured_signal(
@@ -221,12 +221,12 @@ class Trader:
     async def step(self) -> dict:
         s = self._settings
         paper_reconciliation = None
-        if self._strategy.paper_only and s.capital_env == "demo":
+        if self._strategy.paper_only and s.broker_env == "demo":
             try:
                 paper_reconciliation = await self.reconcile_open_trades(
                     mutate=True, close_missing=True
                 )
-            except CapitalError as exc:
+            except BrokerError as exc:
                 logger.warning("Reconciliation paper differee: %s", exc)
         expired_closures = await self._close_expired_paper_positions()
         candles = await self._broker.get_candles(
@@ -237,12 +237,12 @@ class Trader:
         if getattr(self._strategy, "needs_macro", False):
             try:
                 macro_candles = await self._broker.get_candles(
-                    epic=s.capital_macro_epic,
+                    symbol=s.mt5_macro_symbol,
                     granularity=s.model_granularity,
                     count=s.decision_candles,
                 )
-            except CapitalError as exc:
-                logger.warning("Macro (%s) indisponible: %s", s.capital_macro_epic, exc)
+            except BrokerError as exc:
+                logger.warning("Macro (%s) indisponible: %s", s.mt5_macro_symbol, exc)
                 macro_candles = []
 
         signal = self._strategy.evaluate(candles, macro_candles)
@@ -279,9 +279,17 @@ class Trader:
         if signal.action == Action.HOLD:
             out["status"] = "hold"
             return out
-        if self._strategy.paper_only and s.capital_env != "demo":
+        if self._strategy.paper_only and s.broker_env != "demo":
             out["status"] = "paper_only_blocked"
             out["reason"] = "Stratégie paper interdite hors environnement démo"
+            return out
+        if (
+            s.regime_filter_enforced
+            and shadow_signal is not None
+            and shadow_signal.features.get("shadow_filtered")
+        ):
+            out["status"] = "regime_blocked"
+            out["reason"] = shadow_signal.reason
             return out
 
         price = await self._broker.get_price()
@@ -289,14 +297,23 @@ class Trader:
             out["status"] = "market_closed"
             return out
 
-        # Le broker impose une distance de stop minimale (plus large pour un
-        # guaranteed stop). On élargit le stop si besoin AVANT le sizing, sinon
-        # l'ordre est rejeté et/ou le risque réel ne correspond plus à la taille.
+        # Garde de spread : les spreads MT5 s'élargissent au rollover et sur
+        # les annonces — exécuter à ces moments détruit l'espérance mesurée.
+        mid = (price["bid"] + price["ask"]) / 2
+        spread_pct = (price["ask"] - price["bid"]) / mid if mid > 0 else 0.0
+        out["spread_pct"] = round(spread_pct, 6)
+        if spread_pct > s.max_spread_pct:
+            out["status"] = "spread_too_wide"
+            out["reason"] = (
+                f"Spread {spread_pct:.4%} > plafond {s.max_spread_pct:.4%}"
+            )
+            return out
+
+        # Le broker impose une distance de stop minimale. On élargit le stop si
+        # besoin AVANT le sizing, sinon l'ordre est rejeté et/ou le risque réel
+        # ne correspond plus à la taille.
         rules = await self._broker.get_market_rules()
-        use_guaranteed = s.use_guaranteed_stop and rules["guaranteed_stop_allowed"]
-        min_stop_pct = (
-            rules["min_guaranteed_stop_pct"] if use_guaranteed else rules["min_stop_pct"]
-        )
+        min_stop_pct = rules["min_stop_pct"]
         strategy_stop_pct = _positive_signal_value(
             signal, "stop_loss_pct", s.stop_loss_pct
         )
@@ -309,9 +326,14 @@ class Trader:
         )
         out["stop_pct"] = round(stop_pct, 5)
         out["risk_reward_ratio"] = round(risk_reward, 3)
-        out["guaranteed_stop"] = use_guaranteed
 
         account = await self._broker.get_account_summary()
+        # Défense en profondeur : BROKER_ENV peut mentir, pas le terminal. Une
+        # stratégie paper ne touche jamais un compte que MT5 déclare réel.
+        if self._strategy.paper_only and account.get("is_demo") is not True:
+            out["status"] = "paper_only_blocked"
+            out["reason"] = "Le compte MT5 connecté n'est pas un compte démo"
+            return out
         positions = await self._broker.get_open_positions()
         entry = price["ask"] if signal.action == Action.BUY else price["bid"]
         stop_loss, take_profit = compute_bracket(
@@ -332,25 +354,21 @@ class Trader:
             units=decision.units,
             stop_loss_price=stop_loss,
             take_profit_price=take_profit,
-            guaranteed_stop=use_guaranteed,
             decimals=rules["decimal_places"],
         )
-        deal_reference = order.get("dealReference")
-        confirmation = None
-        broker_trade_id = str(deal_reference) if deal_reference is not None else None
-        if deal_reference is not None:
-            try:
-                confirmation = await self._broker.get_deal_confirmation(
-                    str(deal_reference)
-                )
-                broker_trade_id = _extract_deal_id(confirmation) or broker_trade_id
-            except CapitalError as exc:
-                logger.warning("Confirmation broker indisponible: %s", exc)
+        broker_trade_id = _extract_deal_id(order) or (
+            str(order["dealReference"]) if order.get("dealReference") else None
+        )
+        # L'arrondi au pas de lot MT5 peut réduire la taille : on journalise les
+        # unités réellement exécutées, pas celles demandées.
+        executed_units = float(order.get("size") or abs(decision.units))
+        if decision.units < 0:
+            executed_units = -executed_units
 
         trade_id = await self._trades.insert_open(
             signal,
-            decision.units,
-            entry,
+            executed_units,
+            float(order.get("level") or entry),
             stop_loss,
             take_profit,
             self._strategy.name,
@@ -361,15 +379,13 @@ class Trader:
         out["trade_id"] = trade_id
         out["order"] = order
         out["broker_trade_id"] = broker_trade_id
-        if confirmation is not None:
-            out["confirmation_status"] = confirmation.get("dealStatus")
         return out
 
     async def _close_expired_paper_positions(self) -> list[dict]:
         horizon_hours = self._strategy.paper_horizon_hours
         if (
             not self._strategy.paper_only
-            or self._settings.capital_env != "demo"
+            or self._settings.broker_env != "demo"
             or not self._settings.trading_enabled
             or not horizon_hours
         ):
@@ -391,23 +407,16 @@ class Trader:
                 continue
             try:
                 close_order = await self._broker.close_position_by_deal_id(deal_id)
-                close_reference = close_order.get("dealReference")
-                confirmation = (
-                    await self._broker.get_deal_confirmation(str(close_reference))
-                    if close_reference
-                    else None
-                )
-            except CapitalError as exc:
+            except BrokerError as exc:
                 logger.warning("Clôture horizon échouée pour %s: %s", deal_id, exc)
                 results.append(
                     {"trade_id": trade["id"], "status": "broker_error"}
                 )
                 continue
 
-            exit_price = (confirmation or {}).get("level")
+            exit_price = close_order.get("level")
             closed_at = _parse_broker_time(
-                (confirmation or {}).get("date")
-                or (confirmation or {}).get("dateUTC")
+                close_order.get("date") or close_order.get("dateUTC")
             )
             if exit_price is not None and closed_at is not None:
                 pnl = _compute_pnl(
@@ -485,9 +494,9 @@ class Trader:
             {
                 "code": "DEMO_PAPER_LOCK",
                 "label": "Verrou démo/paper actif",
-                "passed": self._strategy.paper_only and self._settings.capital_env == "demo",
+                "passed": self._strategy.paper_only and self._settings.broker_env == "demo",
                 "detail": (
-                    f"Environnement={self._settings.capital_env}, "
+                    f"Environnement={self._settings.broker_env}, "
                     f"paper_only={self._strategy.paper_only}, "
                     f"ordres={self._settings.trading_enabled}."
                 ),
@@ -499,7 +508,7 @@ class Trader:
             "promotion_eligible": False,
             "review_eligible": bool(paper["eligible_for_review"]) and not blockers,
             "automatic_live_promotion": False,
-            "capital_env": self._settings.capital_env,
+            "broker_env": self._settings.broker_env,
             "trading_enabled": self._settings.trading_enabled,
             "paper_only": self._strategy.paper_only,
             "checked_at": datetime.now(timezone.utc).isoformat(),
@@ -646,74 +655,25 @@ class Trader:
         opened = _parse_broker_time(trade.get("opened_at")) or (
             datetime.now(timezone.utc) - timedelta(days=7)
         )
-        end = datetime.now(timezone.utc)
-        cursor = opened
-        events = []
-        # Capital.com caps activity date ranges to one day, so page by day.
-        while cursor < end:
-            chunk_end = min(cursor + timedelta(days=1), end)
-            try:
-                events.extend(
-                    await self._broker.get_activity_history(
-                        cursor, chunk_end, deal_id=str(broker_id), detailed=True
-                    )
-                )
-            except CapitalError as exc:
-                logger.warning(
-                    "Historique broker indisponible pour dealId=%s: %s",
-                    broker_id,
-                    exc,
-                )
-                return None
-            cursor = chunk_end
-
-        close_events = []
-        for event in events:
-            if event.get("dealId") != broker_id:
-                continue
-            if event.get("type") != "POSITION" or event.get("status") != "ACCEPTED":
-                continue
-            if event.get("source") not in {"CLOSE_OUT", "SL", "TP", "SYSTEM", "USER"}:
-                continue
-            details = event.get("details") or {}
-            direction = details.get("direction")
-            # Closing event direction should be opposite of the opened trade.
-            if trade["side"] == "BUY" and direction != "SELL":
-                continue
-            if trade["side"] == "SELL" and direction != "BUY":
-                continue
-            level = details.get("level")
-            closed_at = _parse_broker_time(event.get("dateUTC") or event.get("date"))
-            if level is None or closed_at is None:
-                continue
-            close_events.append(
-                {
-                    "exit_price": float(level),
-                    "closed_at": closed_at,
-                    "source": event.get("source"),
-                }
-            )
-        if not close_events:
-            return None
-        close_events.sort(key=lambda e: e["closed_at"], reverse=True)
-        return close_events[0]
+        # MT5 conserve l'historique des deals par position : une seule requête
+        # suffit (pas de pagination jour par jour comme chez Capital.com).
+        return await self._broker.find_close_event(
+            str(broker_id), opened, trade["side"]
+        )
 
     async def _resolve_deal_id(self, broker_trade_id: str | None) -> str | None:
-        """Resolve old stored dealReferences (`o_...`) to real dealIds if possible."""
+        """Only numeric MT5 position tickets are usable against the terminal."""
         if not broker_trade_id:
             return None
-        if not broker_trade_id.startswith(("o_", "p_")):
-            return str(broker_trade_id)
-        try:
-            confirmation = await self._broker.get_deal_confirmation(broker_trade_id)
-        except CapitalError as exc:
+        if str(broker_trade_id).startswith(("o_", "p_")):
+            # Anciennes références Capital.com : plus résolubles depuis MT5 —
+            # à solder manuellement via POST /trades/{id}/resolve.
             logger.warning(
-                "Impossible de convertir dealReference=%s en dealId: %s",
+                "Référence Capital.com héritée (%s) : résolution manuelle requise",
                 broker_trade_id,
-                exc,
             )
             return None
-        return _extract_deal_id(confirmation)
+        return str(broker_trade_id)
 
     @staticmethod
     def _match_position(
@@ -808,7 +768,7 @@ class Trader:
             try:
                 result = await self.step()
                 logger.info("Trade step: %s", result.get("status"))
-            except CapitalError as exc:
+            except BrokerError as exc:
                 logger.warning("Trade step ignoré (broker): %s", exc)
             except Exception:  # noqa: BLE001 — the loop must never die silently
                 logger.exception("Erreur inattendue dans la boucle de trading")

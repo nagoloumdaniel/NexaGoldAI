@@ -1,4 +1,4 @@
-"""Ingestion service: Capital.com -> `Candle` table.
+"""Ingestion service: MetaTrader 5 -> `Candle` table.
 
 Two modes:
 - ingest_recent(): refresh the latest candles for each configured granularity.
@@ -11,7 +11,7 @@ import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 
-from app.broker.capital import CapitalClient, CapitalError
+from app.broker.mt5 import BrokerError, MT5Client
 from app.config import Settings
 from app.data.candles import CandleRepository
 from app.data.dukascopy import DukascopyClient, aggregate_ticks, supported_granularity
@@ -35,7 +35,7 @@ class IngestionService:
     def __init__(
         self,
         settings: Settings,
-        broker: CapitalClient,
+        broker: MT5Client,
         repository: CandleRepository,
     ):
         self._settings = settings
@@ -50,7 +50,7 @@ class IngestionService:
         return self._granularities
 
     async def stats(self, instrument: str | None = None) -> list[dict]:
-        return await self._repository.stats(instrument or self._settings.epic)
+        return await self._repository.stats(instrument or self._settings.symbol)
 
     async def ingest_recent(self) -> dict[str, int]:
         """Upsert the latest candles for every configured granularity."""
@@ -60,14 +60,15 @@ class IngestionService:
                 granularity=granularity, count=self._settings.ingest_recent_count
             )
             result[granularity] = await self._repository.upsert_many(
-                self._settings.epic, granularity, candles
+                self._settings.symbol, granularity, candles
             )
         return result
 
     async def backfill(self, granularity: str, days: int) -> int:
         """Seed `days` of history for one granularity, paginating by window."""
         minutes = _GRAN_MINUTES.get(granularity, 1)
-        # 900 candles/window keeps a margin under Capital.com's 1000 cap.
+        # Fenêtres de 900 bougies : borne la taille des réponses MT5 et permet
+        # de reprendre là où une fenêtre a échoué.
         window = timedelta(minutes=minutes * 900)
         end = datetime.now(timezone.utc)
         cursor = end - timedelta(days=days)
@@ -78,12 +79,12 @@ class IngestionService:
                 candles = await self._broker.get_candles_range(
                     granularity, cursor, window_end
                 )
-            except CapitalError as exc:
+            except BrokerError as exc:
                 logger.warning("Backfill %s window failed: %s", granularity, exc)
                 cursor = window_end
                 continue
             total += await self._repository.upsert_many(
-                self._settings.epic, granularity, candles
+                self._settings.symbol, granularity, candles
             )
             cursor = window_end
         logger.info("Backfill %s sur %d j -> %d bougies", granularity, days, total)
@@ -112,7 +113,7 @@ class IngestionService:
             )
         symbol = symbol or self._settings.dukascopy_symbol
         divisor = divisor if divisor is not None else self._settings.dukascopy_price_divisor
-        instrument = instrument or self._settings.epic
+        instrument = instrument or self._settings.symbol
         client = DukascopyClient(symbol, divisor)
         end = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
         start = end - timedelta(days=days)
@@ -173,7 +174,7 @@ class IngestionService:
         if rule is None:
             raise ValueError(f"Cible {target} non supportée pour le resampling")
 
-        instrument = instrument or self._settings.epic
+        instrument = instrument or self._settings.symbol
         rows = await self._repository.fetch(instrument, source)
         if not rows:
             return {"error": f"Aucune bougie source {source} pour {instrument}"}
@@ -228,7 +229,7 @@ class IngestionService:
             try:
                 result = await self.ingest_recent()
                 logger.info("Ingestion: %s", result)
-            except CapitalError as exc:
+            except BrokerError as exc:
                 logger.warning("Ingestion ignorée (broker): %s", exc)
             except Exception:  # noqa: BLE001 — the loop must never die silently
                 logger.exception("Erreur inattendue dans la boucle d'ingestion")

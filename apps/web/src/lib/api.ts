@@ -95,8 +95,8 @@ export interface Analytics {
 
 export interface EngineHealth {
   status: string;
-  epic: string;
-  capital_env: string;
+  symbol: string;
+  broker_env: string;
   trading_enabled: boolean;
   broker_configured: boolean;
   database_connected: boolean;
@@ -275,7 +275,7 @@ export interface PromotionEligibility {
   promotion_eligible: boolean;
   review_eligible: boolean;
   automatic_live_promotion: false;
-  capital_env: string;
+  broker_env: string;
   trading_enabled: boolean;
   paper_only: boolean;
   checked_at: string | null;

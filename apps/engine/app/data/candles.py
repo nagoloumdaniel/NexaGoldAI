@@ -24,7 +24,7 @@ SET "open" = EXCLUDED."open",
 
 
 def _parse_time(value: str) -> datetime:
-    """Capital.com timestamps -> naive UTC datetime (column is TIMESTAMP without tz)."""
+    """Broker timestamps -> naive UTC datetime (column is TIMESTAMP without tz)."""
     dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if dt.tzinfo is not None:
         dt = dt.astimezone(timezone.utc).replace(tzinfo=None)

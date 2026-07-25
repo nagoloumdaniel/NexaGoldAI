@@ -162,7 +162,7 @@ def _write_markdown(path: Path, report: dict[str, Any], diagnostics: list[dict[s
             "",
             "- Audit base sur bougies OHLC H1, pas sur ticks Bid/Ask.",
             "- Si SL et TP sont touches dans la meme bougie, le simulateur garde l'hypothese pessimiste STOP.",
-            "- Les couts reels Capital.com doivent encore etre journalises trade par trade.",
+            "- Les couts reels du broker (MT5) doivent encore etre journalises trade par trade.",
             "- Les resultats historiques ne suffisent pas pour une promotion live.",
         ]
     )

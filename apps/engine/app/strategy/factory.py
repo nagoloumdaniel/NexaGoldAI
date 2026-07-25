@@ -20,16 +20,20 @@ _MODELS_DIR = Path(__file__).resolve().parents[2] / "models"
 
 def build_strategy(settings: Settings) -> Strategy:
     if settings.strategy_name == "expected_return_paper":
-        if settings.capital_env != "demo":
+        if settings.broker_env != "demo":
             raise RuntimeError(
-                "expected_return_paper est strictement interdit hors CAPITAL_ENV=demo"
+                "expected_return_paper est strictement interdit hors BROKER_ENV=demo"
             )
         paper_dir = (
             _MODELS_DIR / settings.model_granularity / "expected_return_paper"
         )
         if (paper_dir / "model.joblib").exists() and (paper_dir / "meta.json").exists():
             logger.info("Strategie expected-return PAPER chargee depuis %s", paper_dir)
-            return ExpectedReturnPaperStrategy(paper_dir, settings.model_granularity)
+            return ExpectedReturnPaperStrategy(
+                paper_dir,
+                settings.model_granularity,
+                allow_short=settings.expected_return_allow_short,
+            )
         logger.warning("Artefact expected-return paper absent - repli sur AlwaysHold")
         return AlwaysHold()
     if settings.strategy_name == "lightgbm":

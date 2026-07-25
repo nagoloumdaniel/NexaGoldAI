@@ -8,7 +8,7 @@ export default function MarchePage() {
     <>
       <PageHeader
         title="Marché"
-        subtitle="Or — XAU/USD (GOLD · Capital.com)"
+        subtitle="Or — XAU/USD (XAUUSD · MetaTrader 5)"
       />
 
       <div className="space-y-6">

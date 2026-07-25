@@ -49,7 +49,7 @@ extreme_volatility = assess_regime_gate(
     {**base, "volatility_ratio_5_20": 2.3},
 )
 assert extreme_volatility["allowed"] is False, extreme_volatility
-assert any("Volatilite extreme" in reason for reason in extreme_volatility["reasons"])
+assert any("Volatilité extrême" in reason for reason in extreme_volatility["reasons"])
 
 low_quality = assess_regime_gate(
     "BUY",

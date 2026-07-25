@@ -1,5 +1,7 @@
-# Développement local uniquement : PostgreSQL + Redis.
-# En production : Neon (PostgreSQL) et Upstash (Redis), rien à déployer ici.
+# Infrastructure locale : PostgreSQL + Redis uniquement.
+# Le moteur de trading ne peut PAS être conteneurisé : il dépend du terminal
+# MetaTrader 5 installé sous Windows (C:\Program Files\MetaTrader 5) et du
+# paquet Python MetaTrader5, Windows-only. Il tourne nativement (start.ps1).
 services:
   postgres:
     image: postgres:16-alpine
