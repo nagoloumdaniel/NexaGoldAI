@@ -8,10 +8,12 @@ import logging
 from pathlib import Path
 
 from app.config import Settings
+from app.learning.adaptive import AdaptiveTuner
 from app.learning.registry import ModelRegistry
 from app.strategy.base import AlwaysHold, Strategy
 from app.strategy.expected_return_strategy import ExpectedReturnPaperStrategy
 from app.strategy.lightgbm_strategy import LightGBMStrategy
+from app.strategy.scalp_mtf import ScalpM5Strategy
 
 logger = logging.getLogger("nexagold.strategy")
 
@@ -19,6 +21,24 @@ _MODELS_DIR = Path(__file__).resolve().parents[2] / "models"
 
 
 def build_strategy(settings: Settings) -> Strategy:
+    if settings.strategy_name == "scalp_m5":
+        if settings.broker_env != "demo":
+            raise RuntimeError(
+                "scalp_m5 est strictement interdit hors BROKER_ENV=demo"
+            )
+        tuner = AdaptiveTuner(
+            _MODELS_DIR / "scalp_m5" / "adaptive_state.json",
+            enabled=settings.scalp_adapt_enabled,
+        )
+        # Le seuil configuré sert de point de départ ; l'état persisté (appris)
+        # a priorité s'il existe déjà.
+        if not (_MODELS_DIR / "scalp_m5" / "adaptive_state.json").exists():
+            tuner.params["profit_close_min_net"] = settings.profit_close_min_net
+        logger.info(
+            "Stratégie scalp M5 multi-timeframe chargée (adaptation=%s)",
+            "ON" if settings.scalp_adapt_enabled else "OFF",
+        )
+        return ScalpM5Strategy(tuner)
     if settings.strategy_name == "expected_return_paper":
         if settings.broker_env != "demo":
             raise RuntimeError(

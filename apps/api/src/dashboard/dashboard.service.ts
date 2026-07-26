@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 const ENGINE_URL = process.env.ENGINE_URL ?? 'http://localhost:8000';
-const INSTRUMENT = 'GOLD';
+// Clé instrument des bougies en base — le moteur écrit sous settings.symbol
+// (XAUUSD depuis la migration MT5, ex-GOLD chez Capital.com).
+const INSTRUMENT = process.env.INSTRUMENT_KEY ?? 'XAUUSD';
 
 @Injectable()
 export class DashboardService {

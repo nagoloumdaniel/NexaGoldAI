@@ -1,5 +1,55 @@
 # NexaGold - Etat
 
+## Strategie scalp M5 multi-timeframe (clôture au premier profit)
+
+Date: 2026-07-26
+
+La strategie live `expected_return_paper` (H1, horizon 24 h) a ete remplacee
+par `scalp_m5`, une strategie a regles demandee par l'operateur :
+
+- **analyse** sur M15/M30/H1 (votes de tendance EMA20/50 + RSI14 + MACD par
+  timeframe, alignement `min_votes` sans contradiction requis) ; **entree sur
+  M5 uniquement** (EMA9/21, RSI7, bougie de confirmation, zone RSI14
+  d'epuisement interdite), BUY et SELL, une entree executee max par bougie M5 ;
+- **sortie au premier profit net** : un moniteur dedie verifie toutes les
+  `PROFIT_CHECK_INTERVAL_SECONDS` (5 s) le P&L net (profit + swap) des
+  positions du bot et ferme des que `PROFIT_CLOSE_MIN_NET` (0.5, coussin
+  latence + slippage) est atteint, meme si SL/TP n'est pas touche ; le SL ATR
+  (`max(plancher, ATR14 M5 x mult)`) reste pose cote serveur, TP de secours 2R ;
+- **3 positions simultanees max** (`MAX_OPEN_POSITIONS=3`), lot calcule par le
+  RiskManager (1 % du solde, borne par la distance de stop, module par le
+  tuner) ; boucle de signal a `TRADE_INTERVAL_SECONDS=60` ;
+  `INGEST_GRANULARITIES=M5,M15,M30,H1` ;
+- **tuner adaptatif** (`app/learning/adaptive.py`, etat persiste dans
+  `models/scalp_m5/adaptive_state.json`, gitignore) : apres chaque trade
+  clos, stats mises a jour ; tous les 8 trades, ajustement borne de
+  min_votes / stop ATR / zones RSI / cooldown apres perte / coussin de profit /
+  taille — chaque changement journalise avec sa raison ; introspection
+  `GET /learning/adaptive` ; desactivable par `SCALP_ADAPT_ENABLED=false` ;
+- verrous inchanges : `paper_only`, demo obligatoire (factory + verification
+  du compte aupres du terminal), promotion live toujours verrouillee ;
+- rapports quotidien/hebdo/mensuel inchanges (crons NestJS + declenchement par
+  `stop-auto.ps1` a 20h).
+
+Bugs corriges au passage :
+
+- `MAX_OPEN_POSITIONS` comptait toutes les positions du terminal (une position
+  manuelle ou d'un autre symbole bloquait le bot) : le quota ne compte plus que
+  les positions du bot (symbole + magic 20260725), via
+  `get_open_positions(symbol, magic)` ;
+- dashboard : `INSTRUMENT='GOLD'` fige dans `dashboard.service.ts` alors que
+  le moteur ecrit `XAUUSD` depuis la migration MT5 — le graphique bougies
+  etait vide ; corrige (`INSTRUMENT_KEY` surchargable, defaut `XAUUSD`) ;
+- `GET /paper/validation` suivait `expected-return-paper` en dur : suit
+  desormais la strategie active ;
+- la limite « une entree par bougie M5 » est marquee a l'execution de l'ordre
+  (pas dans `evaluate()`), sinon un preview dashboard consommait le signal.
+
+Validation : `tests_manual.test_scalp_mtf` (10 tests strategie + tuner),
+`test_risk_bracket`, `test_structured_signal`, compilation Python et
+`tsc --noEmit` API OK. Aucun backtest de cette strategie scalp n'a ete
+realise : validation paper prospective uniquement.
+
 ## Migration broker : Capital.com -> MetaTrader 5
 
 Date: 2026-07-25

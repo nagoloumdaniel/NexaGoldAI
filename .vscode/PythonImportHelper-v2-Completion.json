@@ -236,6 +236,22 @@
         "documentation": {}
     },
     {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
@@ -276,7 +292,47 @@
         "documentation": {}
     },
     {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
@@ -566,6 +622,14 @@
     },
     {
         "label": "MT5Client",
+        "importPath": "app.broker.mt5",
+        "description": "app.broker.mt5",
+        "isExtraImport": true,
+        "detail": "app.broker.mt5",
+        "documentation": {}
+    },
+    {
+        "label": "MAGIC",
         "importPath": "app.broker.mt5",
         "description": "app.broker.mt5",
         "isExtraImport": true,
@@ -863,6 +927,30 @@
         "documentation": {}
     },
     {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Strategy",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
         "label": "AlwaysHold",
         "importPath": "app.strategy.base",
         "description": "app.strategy.base",
@@ -896,6 +984,14 @@
     },
     {
         "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
         "importPath": "app.strategy.base",
         "description": "app.strategy.base",
         "isExtraImport": true,
@@ -1167,6 +1263,22 @@
         "description": "app.signals.structured",
         "isExtraImport": true,
         "detail": "app.signals.structured",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
         "documentation": {}
     },
     {
@@ -2285,6 +2397,46 @@
         "documentation": {}
     },
     {
+        "label": "AdaptiveTuner",
+        "importPath": "app.learning.adaptive",
+        "description": "app.learning.adaptive",
+        "isExtraImport": true,
+        "detail": "app.learning.adaptive",
+        "documentation": {}
+    },
+    {
+        "label": "AdaptiveTuner",
+        "importPath": "app.learning.adaptive",
+        "description": "app.learning.adaptive",
+        "isExtraImport": true,
+        "detail": "app.learning.adaptive",
+        "documentation": {}
+    },
+    {
+        "label": "BOUNDS",
+        "importPath": "app.learning.adaptive",
+        "description": "app.learning.adaptive",
+        "isExtraImport": true,
+        "detail": "app.learning.adaptive",
+        "documentation": {}
+    },
+    {
+        "label": "DEFAULT_PARAMS",
+        "importPath": "app.learning.adaptive",
+        "description": "app.learning.adaptive",
+        "isExtraImport": true,
+        "detail": "app.learning.adaptive",
+        "documentation": {}
+    },
+    {
+        "label": "AdaptiveTuner",
+        "importPath": "app.learning.adaptive",
+        "description": "app.learning.adaptive",
+        "isExtraImport": true,
+        "detail": "app.learning.adaptive",
+        "documentation": {}
+    },
+    {
         "label": "ExpectedReturnPaperStrategy",
         "importPath": "app.strategy.expected_return_strategy",
         "description": "app.strategy.expected_return_strategy",
@@ -2314,6 +2466,22 @@
         "description": "app.strategy.lightgbm_strategy",
         "isExtraImport": true,
         "detail": "app.strategy.lightgbm_strategy",
+        "documentation": {}
+    },
+    {
+        "label": "ScalpM5Strategy",
+        "importPath": "app.strategy.scalp_mtf",
+        "description": "app.strategy.scalp_mtf",
+        "isExtraImport": true,
+        "detail": "app.strategy.scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "ScalpM5Strategy",
+        "importPath": "app.strategy.scalp_mtf",
+        "description": "app.strategy.scalp_mtf",
+        "isExtraImport": true,
+        "detail": "app.strategy.scalp_mtf",
         "documentation": {}
     },
     {
@@ -2464,7 +2632,16 @@
         "kind": 5,
         "importPath": "apps.engine.app.broker.mt5",
         "description": "apps.engine.app.broker.mt5",
-        "peekOfCode": "logger = logging.getLogger(\"nexagold.mt5\")\nclass BrokerError(Exception):\n    \"\"\"Raised when the MetaTrader 5 terminal returns an error.\"\"\"\ndef _timeframes() -> dict:\n    return {\n        \"M1\": mt5.TIMEFRAME_M1,\n        \"M5\": mt5.TIMEFRAME_M5,\n        \"M15\": mt5.TIMEFRAME_M15,\n        \"M30\": mt5.TIMEFRAME_M30,\n        \"H1\": mt5.TIMEFRAME_H1,",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.mt5\")\n# Identifiant \"magic\" attaché à tous les ordres du bot : permet de distinguer\n# les positions NexaGold des positions manuelles sur le même compte.\nMAGIC = 20260725\nclass BrokerError(Exception):\n    \"\"\"Raised when the MetaTrader 5 terminal returns an error.\"\"\"\ndef _timeframes() -> dict:\n    return {\n        \"M1\": mt5.TIMEFRAME_M1,\n        \"M5\": mt5.TIMEFRAME_M5,",
+        "detail": "apps.engine.app.broker.mt5",
+        "documentation": {}
+    },
+    {
+        "label": "MAGIC",
+        "kind": 5,
+        "importPath": "apps.engine.app.broker.mt5",
+        "description": "apps.engine.app.broker.mt5",
+        "peekOfCode": "MAGIC = 20260725\nclass BrokerError(Exception):\n    \"\"\"Raised when the MetaTrader 5 terminal returns an error.\"\"\"\ndef _timeframes() -> dict:\n    return {\n        \"M1\": mt5.TIMEFRAME_M1,\n        \"M5\": mt5.TIMEFRAME_M5,\n        \"M15\": mt5.TIMEFRAME_M15,\n        \"M30\": mt5.TIMEFRAME_M30,\n        \"H1\": mt5.TIMEFRAME_H1,",
         "detail": "apps.engine.app.broker.mt5",
         "documentation": {}
     },
@@ -2700,6 +2877,69 @@
         "description": "apps.engine.app.execution.trader",
         "peekOfCode": "REGIME_SHADOW_FILTER = \"exclude_regime:BULLISH_TREND\"\ndef compute_bracket(\n    action: Action, entry: float, stop_loss_pct: float, risk_reward: float\n) -> tuple[float, float]:\n    \"\"\"Stop-loss and take-profit prices around the entry.\"\"\"\n    if action == Action.BUY:\n        return entry * (1 - stop_loss_pct), entry * (1 + stop_loss_pct * risk_reward)\n    return entry * (1 + stop_loss_pct), entry * (1 - stop_loss_pct * risk_reward)\ndef _extract_deal_id(confirmation: dict | None) -> str | None:\n    \"\"\"Best-effort extraction of the real dealId from a broker confirmation.\"\"\"",
         "detail": "apps.engine.app.execution.trader",
+        "documentation": {}
+    },
+    {
+        "label": "AdaptiveTuner",
+        "kind": 6,
+        "importPath": "apps.engine.app.learning.adaptive",
+        "description": "apps.engine.app.learning.adaptive",
+        "peekOfCode": "class AdaptiveTuner:\n    \"\"\"État d'apprentissage persistant + règles d'auto-ajustement bornées.\"\"\"\n    def __init__(self, state_path: Path, enabled: bool = True):\n        self._path = Path(state_path)\n        self._enabled = enabled\n        self.params: dict[str, float] = dict(DEFAULT_PARAMS)\n        self._trades: list[dict] = []\n        self._adjustments: list[dict] = []\n        self._trades_since_adapt = 0\n        self.last_loss_at: datetime | None = None",
+        "detail": "apps.engine.app.learning.adaptive",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "apps.engine.app.learning.adaptive",
+        "description": "apps.engine.app.learning.adaptive",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.adaptive\")\n# Paramètres pilotés par l'apprentissage, avec leurs bornes dures [min, max].\nDEFAULT_PARAMS: dict[str, float] = {\n    # Nombre de timeframes d'analyse (M15/M30/H1) devant être alignés.\n    \"min_votes\": 2,\n    # Stop = max(plancher, ATR14 M5 * multiplicateur).\n    \"atr_multiplier\": 2.0,\n    \"stop_floor_pct\": 0.0015,\n    # TP de secours (le vrai objectif est la prise de profit anticipée).\n    \"risk_reward_ratio\": 2.0,",
+        "detail": "apps.engine.app.learning.adaptive",
+        "documentation": {}
+    },
+    {
+        "label": "_INT_PARAMS",
+        "kind": 5,
+        "importPath": "apps.engine.app.learning.adaptive",
+        "description": "apps.engine.app.learning.adaptive",
+        "peekOfCode": "_INT_PARAMS = {\"min_votes\", \"cooldown_bars_after_loss\"}\n# Fenêtre d'analyse (derniers trades) et cadence d'adaptation.\n_WINDOW = 30\n_ADAPT_EVERY = 8\n_MAX_TRADES_KEPT = 300\n_MAX_ADJUSTMENTS_KEPT = 200\ndef _clamp(name: str, value: float) -> float:\n    lo, hi = BOUNDS[name]\n    value = min(max(value, lo), hi)\n    if name in _INT_PARAMS:",
+        "detail": "apps.engine.app.learning.adaptive",
+        "documentation": {}
+    },
+    {
+        "label": "_WINDOW",
+        "kind": 5,
+        "importPath": "apps.engine.app.learning.adaptive",
+        "description": "apps.engine.app.learning.adaptive",
+        "peekOfCode": "_WINDOW = 30\n_ADAPT_EVERY = 8\n_MAX_TRADES_KEPT = 300\n_MAX_ADJUSTMENTS_KEPT = 200\ndef _clamp(name: str, value: float) -> float:\n    lo, hi = BOUNDS[name]\n    value = min(max(value, lo), hi)\n    if name in _INT_PARAMS:\n        value = int(round(value))\n    return value",
+        "detail": "apps.engine.app.learning.adaptive",
+        "documentation": {}
+    },
+    {
+        "label": "_ADAPT_EVERY",
+        "kind": 5,
+        "importPath": "apps.engine.app.learning.adaptive",
+        "description": "apps.engine.app.learning.adaptive",
+        "peekOfCode": "_ADAPT_EVERY = 8\n_MAX_TRADES_KEPT = 300\n_MAX_ADJUSTMENTS_KEPT = 200\ndef _clamp(name: str, value: float) -> float:\n    lo, hi = BOUNDS[name]\n    value = min(max(value, lo), hi)\n    if name in _INT_PARAMS:\n        value = int(round(value))\n    return value\nclass AdaptiveTuner:",
+        "detail": "apps.engine.app.learning.adaptive",
+        "documentation": {}
+    },
+    {
+        "label": "_MAX_TRADES_KEPT",
+        "kind": 5,
+        "importPath": "apps.engine.app.learning.adaptive",
+        "description": "apps.engine.app.learning.adaptive",
+        "peekOfCode": "_MAX_TRADES_KEPT = 300\n_MAX_ADJUSTMENTS_KEPT = 200\ndef _clamp(name: str, value: float) -> float:\n    lo, hi = BOUNDS[name]\n    value = min(max(value, lo), hi)\n    if name in _INT_PARAMS:\n        value = int(round(value))\n    return value\nclass AdaptiveTuner:\n    \"\"\"État d'apprentissage persistant + règles d'auto-ajustement bornées.\"\"\"",
+        "detail": "apps.engine.app.learning.adaptive",
+        "documentation": {}
+    },
+    {
+        "label": "_MAX_ADJUSTMENTS_KEPT",
+        "kind": 5,
+        "importPath": "apps.engine.app.learning.adaptive",
+        "description": "apps.engine.app.learning.adaptive",
+        "peekOfCode": "_MAX_ADJUSTMENTS_KEPT = 200\ndef _clamp(name: str, value: float) -> float:\n    lo, hi = BOUNDS[name]\n    value = min(max(value, lo), hi)\n    if name in _INT_PARAMS:\n        value = int(round(value))\n    return value\nclass AdaptiveTuner:\n    \"\"\"État d'apprentissage persistant + règles d'auto-ajustement bornées.\"\"\"\n    def __init__(self, state_path: Path, enabled: bool = True):",
+        "detail": "apps.engine.app.learning.adaptive",
         "documentation": {}
     },
     {
@@ -3490,7 +3730,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.strategy.base",
         "description": "apps.engine.app.strategy.base",
-        "peekOfCode": "class Strategy(ABC):\n    \"\"\"A strategy turns recent candles into a trading signal. It never talks\n    to the broker directly — execution and risk are the engine's job.\"\"\"\n    name: str = \"base\"\n    # Whether evaluate() needs the macro candles (the Trader fetches them on demand).\n    needs_macro: bool = False\n    paper_only: bool = False\n    paper_horizon_hours: int | None = None\n    @abstractmethod\n    def evaluate(",
+        "peekOfCode": "class Strategy(ABC):\n    \"\"\"A strategy turns recent candles into a trading signal. It never talks\n    to the broker directly — execution and risk are the engine's job.\"\"\"\n    name: str = \"base\"\n    # Whether evaluate() needs the macro candles (the Trader fetches them on demand).\n    needs_macro: bool = False\n    paper_only: bool = False\n    paper_horizon_hours: int | None = None\n    # Granularités supplémentaires (analyse multi-timeframe). Quand non vide,\n    # le Trader les récupère et appelle evaluate(..., extra={gran: candles}).",
         "detail": "apps.engine.app.strategy.base",
         "documentation": {}
     },
@@ -3526,7 +3766,7 @@
         "kind": 2,
         "importPath": "apps.engine.app.strategy.factory",
         "description": "apps.engine.app.strategy.factory",
-        "peekOfCode": "def build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"expected_return_paper\":\n        if settings.broker_env != \"demo\":\n            raise RuntimeError(\n                \"expected_return_paper est strictement interdit hors BROKER_ENV=demo\"\n            )\n        paper_dir = (\n            _MODELS_DIR / settings.model_granularity / \"expected_return_paper\"\n        )\n        if (paper_dir / \"model.joblib\").exists() and (paper_dir / \"meta.json\").exists():",
+        "peekOfCode": "def build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"scalp_m5\":\n        if settings.broker_env != \"demo\":\n            raise RuntimeError(\n                \"scalp_m5 est strictement interdit hors BROKER_ENV=demo\"\n            )\n        tuner = AdaptiveTuner(\n            _MODELS_DIR / \"scalp_m5\" / \"adaptive_state.json\",\n            enabled=settings.scalp_adapt_enabled,\n        )",
         "detail": "apps.engine.app.strategy.factory",
         "documentation": {}
     },
@@ -3535,7 +3775,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.strategy.factory",
         "description": "apps.engine.app.strategy.factory",
-        "peekOfCode": "logger = logging.getLogger(\"nexagold.strategy\")\n_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"expected_return_paper\":\n        if settings.broker_env != \"demo\":\n            raise RuntimeError(\n                \"expected_return_paper est strictement interdit hors BROKER_ENV=demo\"\n            )\n        paper_dir = (\n            _MODELS_DIR / settings.model_granularity / \"expected_return_paper\"",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.strategy\")\n_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"scalp_m5\":\n        if settings.broker_env != \"demo\":\n            raise RuntimeError(\n                \"scalp_m5 est strictement interdit hors BROKER_ENV=demo\"\n            )\n        tuner = AdaptiveTuner(\n            _MODELS_DIR / \"scalp_m5\" / \"adaptive_state.json\",",
         "detail": "apps.engine.app.strategy.factory",
         "documentation": {}
     },
@@ -3544,7 +3784,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.strategy.factory",
         "description": "apps.engine.app.strategy.factory",
-        "peekOfCode": "_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"expected_return_paper\":\n        if settings.broker_env != \"demo\":\n            raise RuntimeError(\n                \"expected_return_paper est strictement interdit hors BROKER_ENV=demo\"\n            )\n        paper_dir = (\n            _MODELS_DIR / settings.model_granularity / \"expected_return_paper\"\n        )",
+        "peekOfCode": "_MODELS_DIR = Path(__file__).resolve().parents[2] / \"models\"\ndef build_strategy(settings: Settings) -> Strategy:\n    if settings.strategy_name == \"scalp_m5\":\n        if settings.broker_env != \"demo\":\n            raise RuntimeError(\n                \"scalp_m5 est strictement interdit hors BROKER_ENV=demo\"\n            )\n        tuner = AdaptiveTuner(\n            _MODELS_DIR / \"scalp_m5\" / \"adaptive_state.json\",\n            enabled=settings.scalp_adapt_enabled,",
         "detail": "apps.engine.app.strategy.factory",
         "documentation": {}
     },
@@ -3564,6 +3804,51 @@
         "description": "apps.engine.app.strategy.lightgbm_strategy",
         "peekOfCode": "_ACTION = {UP: Action.BUY, DOWN: Action.SELL, FLAT: Action.HOLD}\nclass LightGBMStrategy(Strategy):\n    name = \"lightgbm\"\n    def __init__(self, model_dir: str | Path):\n        model_dir = Path(model_dir)\n        self._model = joblib.load(model_dir / \"model.joblib\")\n        meta = json.loads((model_dir / \"meta.json\").read_text(encoding=\"utf-8\"))\n        self._feature_cols = meta[\"feature_cols\"]\n        # Confidence filter learned at training time: below it, stay flat.\n        self._confidence_threshold = float(meta.get(\"confidence_threshold\", 0.0))",
         "detail": "apps.engine.app.strategy.lightgbm_strategy",
+        "documentation": {}
+    },
+    {
+        "label": "ScalpM5Strategy",
+        "kind": 6,
+        "importPath": "apps.engine.app.strategy.scalp_mtf",
+        "description": "apps.engine.app.strategy.scalp_mtf",
+        "peekOfCode": "class ScalpM5Strategy(Strategy):\n    \"\"\"Entrée M5 dans le sens de l'alignement H1/M30/M15, sortie au premier profit.\"\"\"\n    name = \"scalp-m5-mtf\"\n    paper_only = True\n    # Pas de sortie temporelle : la position sort au premier profit net ou au SL.\n    paper_horizon_hours = None\n    close_on_profit = True\n    extra_granularities = _ANALYSIS_GRANULARITIES\n    def __init__(self, tuner: AdaptiveTuner):\n        self.tuner = tuner",
+        "detail": "apps.engine.app.strategy.scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "apps.engine.app.strategy.scalp_mtf",
+        "description": "apps.engine.app.strategy.scalp_mtf",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.scalp\")\n_ANALYSIS_GRANULARITIES = (\"M15\", \"M30\", \"H1\")\n# Bougies closes minimales par timeframe pour des indicateurs stables.\n_MIN_CANDLES = 60\n_M5 = timedelta(minutes=5)\n# -- Indicateurs (pur python : pas de dépendance pandas dans la boucle live) --\ndef _ema(values: list[float], period: int) -> float:\n    k = 2.0 / (period + 1)\n    ema = values[0]\n    for v in values[1:]:",
+        "detail": "apps.engine.app.strategy.scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "_ANALYSIS_GRANULARITIES",
+        "kind": 5,
+        "importPath": "apps.engine.app.strategy.scalp_mtf",
+        "description": "apps.engine.app.strategy.scalp_mtf",
+        "peekOfCode": "_ANALYSIS_GRANULARITIES = (\"M15\", \"M30\", \"H1\")\n# Bougies closes minimales par timeframe pour des indicateurs stables.\n_MIN_CANDLES = 60\n_M5 = timedelta(minutes=5)\n# -- Indicateurs (pur python : pas de dépendance pandas dans la boucle live) --\ndef _ema(values: list[float], period: int) -> float:\n    k = 2.0 / (period + 1)\n    ema = values[0]\n    for v in values[1:]:\n        ema = v * k + ema * (1 - k)",
+        "detail": "apps.engine.app.strategy.scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "_MIN_CANDLES",
+        "kind": 5,
+        "importPath": "apps.engine.app.strategy.scalp_mtf",
+        "description": "apps.engine.app.strategy.scalp_mtf",
+        "peekOfCode": "_MIN_CANDLES = 60\n_M5 = timedelta(minutes=5)\n# -- Indicateurs (pur python : pas de dépendance pandas dans la boucle live) --\ndef _ema(values: list[float], period: int) -> float:\n    k = 2.0 / (period + 1)\n    ema = values[0]\n    for v in values[1:]:\n        ema = v * k + ema * (1 - k)\n    return ema\ndef _rsi(closes: list[float], period: int) -> float:",
+        "detail": "apps.engine.app.strategy.scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "_M5",
+        "kind": 5,
+        "importPath": "apps.engine.app.strategy.scalp_mtf",
+        "description": "apps.engine.app.strategy.scalp_mtf",
+        "peekOfCode": "_M5 = timedelta(minutes=5)\n# -- Indicateurs (pur python : pas de dépendance pandas dans la boucle live) --\ndef _ema(values: list[float], period: int) -> float:\n    k = 2.0 / (period + 1)\n    ema = values[0]\n    for v in values[1:]:\n        ema = v * k + ema * (1 - k)\n    return ema\ndef _rsi(closes: list[float], period: int) -> float:\n    gains, losses = [], []",
+        "detail": "apps.engine.app.strategy.scalp_mtf",
         "documentation": {}
     },
     {
@@ -4500,6 +4785,123 @@
         "description": "apps.engine.tests_manual.test_risk_bracket",
         "peekOfCode": "d = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl)\nassert not d.approved and \"loss limit\" in d.reason, d\nprint(\"OK: risk gate + bracket valides\")",
         "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "test_buy_signal_on_aligned_uptrend",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "def test_buy_signal_on_aligned_uptrend(tmp: Path) -> None:\n    strategy = _fresh_strategy(tmp)\n    m5, extra = _bull_market()\n    signal = strategy.evaluate(m5, extra=extra)\n    assert signal.action == Action.BUY, signal.reason\n    assert 0.0 < signal.confidence <= 0.95\n    f = signal.features\n    assert f[\"signal_kind\"] == \"scalp_mtf\"\n    assert f[\"stop_loss_pct\"] > 0\n    assert f[\"risk_reward_ratio\"] == DEFAULT_PARAMS[\"risk_reward_ratio\"]",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "test_sell_signal_on_aligned_downtrend",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "def test_sell_signal_on_aligned_downtrend(tmp: Path) -> None:\n    strategy = _fresh_strategy(tmp)\n    m5 = _candles(120, 5, 0.0, pattern=_DOWN_PATTERN)\n    extra = {\n        \"M15\": _candles(90, 15, -1.8),\n        \"M30\": _candles(90, 30, -3.5),\n        \"H1\": _candles(90, 60, -7.0),\n    }\n    signal = strategy.evaluate(m5, extra=extra)\n    assert signal.action == Action.SELL, signal.reason",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "test_hold_when_timeframes_disagree",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "def test_hold_when_timeframes_disagree(tmp: Path) -> None:\n    strategy = _fresh_strategy(tmp)\n    m5 = _candles(120, 5, 0.6)\n    extra = {\n        \"M15\": _candles(90, 15, 1.8),\n        \"M30\": _candles(90, 30, -3.5),  # contradiction -> pas de trade\n        \"H1\": _candles(90, 60, 7.0),\n    }\n    signal = strategy.evaluate(m5, extra=extra)\n    assert signal.action == Action.HOLD, signal.reason",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "test_hold_when_history_missing",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "def test_hold_when_history_missing(tmp: Path) -> None:\n    strategy = _fresh_strategy(tmp)\n    m5, extra = _bull_market()\n    signal = strategy.evaluate(m5, extra={**extra, \"H1\": extra[\"H1\"][:10]})\n    assert signal.action == Action.HOLD\n    signal2 = strategy.evaluate(m5[:20], extra=extra)\n    assert signal2.action == Action.HOLD\n    signal3 = strategy.evaluate(m5, extra=None)\n    assert signal3.action == Action.HOLD\n    print(\"OK  HOLD quand l'historique d'analyse manque\")",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "test_one_executed_entry_per_m5_bar",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "def test_one_executed_entry_per_m5_bar(tmp: Path) -> None:\n    strategy = _fresh_strategy(tmp)\n    m5, extra = _bull_market()\n    first = strategy.evaluate(m5, extra=extra)\n    assert first.action == Action.BUY\n    # Un preview (evaluate sans exécution) ne consomme PAS le signal.\n    again = strategy.evaluate(m5, extra=extra)\n    assert again.action == Action.BUY, \"un preview ne doit pas consommer la bougie\"\n    # Après exécution de l'ordre, la même bougie ne redonne plus d'entrée.\n    strategy.mark_signal_consumed(first.features[\"m5_bar_time\"])",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "test_cooldown_after_loss",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "def test_cooldown_after_loss(tmp: Path) -> None:\n    strategy = _fresh_strategy(tmp)\n    m5, extra = _bull_market()\n    # Perte enregistrée \"maintenant\" vs bougies de 2026-07-20 : pour tester le\n    # cooldown il faut une perte datée juste avant la dernière bougie.\n    strategy.tuner.last_loss_at = datetime.now(timezone.utc)\n    last_bar = datetime.fromisoformat(m5[-2][\"time\"]).replace(tzinfo=timezone.utc)\n    strategy.tuner.last_loss_at = last_bar - timedelta(minutes=5)\n    signal = strategy.evaluate(m5, extra=extra)\n    assert signal.action == Action.HOLD, signal.reason",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "test_tuner_tightens_after_losses",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "def test_tuner_tightens_after_losses(tmp: Path) -> None:\n    tuner = AdaptiveTuner(tmp / \"loss_state.json\", enabled=True)\n    for i in range(10):\n        tuner.record_trade(pnl=-5.0 if i % 3 else 1.0, side=\"BUY\", source=\"SL\")\n    assert tuner.params[\"min_votes\"] == 3, tuner.params\n    assert tuner.params[\"position_size\"] < DEFAULT_PARAMS[\"position_size\"]\n    assert (\n        tuner.params[\"cooldown_bars_after_loss\"]\n        > DEFAULT_PARAMS[\"cooldown_bars_after_loss\"]\n    )",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "test_tuner_raises_profit_cushion_on_slippage",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "def test_tuner_raises_profit_cushion_on_slippage(tmp: Path) -> None:\n    tuner = AdaptiveTuner(tmp / \"slip_state.json\", enabled=True)\n    # Prises de profit qui finissent négatives = le coussin ne couvre pas la\n    # latence -> le tuner doit l'augmenter.\n    for _ in range(8):\n        tuner.record_trade(pnl=-0.05, side=\"BUY\", source=\"PROFIT_TAKE\")\n    assert (\n        tuner.params[\"profit_close_min_net\"] > DEFAULT_PARAMS[\"profit_close_min_net\"]\n    ), tuner.params\n    print(",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "test_tuner_bounds_and_persistence",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "def test_tuner_bounds_and_persistence(tmp: Path) -> None:\n    path = tmp / \"persist_state.json\"\n    tuner = AdaptiveTuner(path, enabled=True)\n    # Marteler des pertes : tous les paramètres doivent rester dans les bornes.\n    for _ in range(60):\n        tuner.record_trade(pnl=-3.0, side=\"SELL\", source=\"SL\")\n    for name, value in tuner.params.items():\n        lo, hi = BOUNDS[name]\n        assert lo <= value <= hi, f\"{name}={value} hors bornes [{lo}, {hi}]\"\n    # Rechargement : l'état appris survit au redémarrage.",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "test_strategy_reads_learned_params",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "def test_strategy_reads_learned_params(tmp: Path) -> None:\n    strategy = _fresh_strategy(tmp)\n    for _ in range(60):\n        strategy.tuner.record_trade(pnl=-3.0, side=\"BUY\", source=\"SL\")\n    assert strategy.tuner.params[\"min_votes\"] == 3\n    assert strategy.tuner.params[\"position_size\"] == BOUNDS[\"position_size\"][0]\n    _, extra = _bull_market()\n    # Après les pertes, la zone RSI apprise est stricte (achat < 60) : il faut\n    # une tendance douce avec de vrais pullbacks pour redevenir éligible.\n    m5 = _candles(120, 5, 0.0, pattern=[0.6, 0.6, -0.9])",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "def main() -> None:\n    with tempfile.TemporaryDirectory() as tmpdir:\n        tmp = Path(tmpdir)\n        test_buy_signal_on_aligned_uptrend(tmp / \"a\")\n        test_sell_signal_on_aligned_downtrend(tmp / \"b\")\n        test_hold_when_timeframes_disagree(tmp / \"c\")\n        test_hold_when_history_missing(tmp / \"d\")\n        test_one_executed_entry_per_m5_bar(tmp / \"e\")\n        test_cooldown_after_loss(tmp / \"f\")\n        test_tuner_tightens_after_losses(tmp / \"g\")",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "_UP_PATTERN",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "_UP_PATTERN = [0.6, 0.6, -0.6]\n_DOWN_PATTERN = [-0.6, -0.6, 0.6]\ndef _bull_market() -> tuple[list[dict], dict[str, list[dict]]]:\n    m5 = _candles(120, 5, 0.0, pattern=_UP_PATTERN)\n    extra = {\n        \"M15\": _candles(90, 15, 1.8),\n        \"M30\": _candles(90, 30, 3.5),\n        \"H1\": _candles(90, 60, 7.0),\n    }\n    return m5, extra",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
+        "documentation": {}
+    },
+    {
+        "label": "_DOWN_PATTERN",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_scalp_mtf",
+        "description": "apps.engine.tests_manual.test_scalp_mtf",
+        "peekOfCode": "_DOWN_PATTERN = [-0.6, -0.6, 0.6]\ndef _bull_market() -> tuple[list[dict], dict[str, list[dict]]]:\n    m5 = _candles(120, 5, 0.0, pattern=_UP_PATTERN)\n    extra = {\n        \"M15\": _candles(90, 15, 1.8),\n        \"M30\": _candles(90, 30, 3.5),\n        \"H1\": _candles(90, 60, 7.0),\n    }\n    return m5, extra\ndef test_buy_signal_on_aligned_uptrend(tmp: Path) -> None:",
+        "detail": "apps.engine.tests_manual.test_scalp_mtf",
         "documentation": {}
     },
     {

@@ -43,6 +43,7 @@ decisions_repo: StrategyDecisionRepository | None = None
 learning: LearningService | None = None
 _ingestion_task: asyncio.Task | None = None
 _trade_task: asyncio.Task | None = None
+_profit_task: asyncio.Task | None = None
 _learning_task: asyncio.Task | None = None
 
 
@@ -59,7 +60,7 @@ def _broker_ready() -> bool:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global broker, database, ingestion, trader, decisions_repo, learning
-    global _ingestion_task, _trade_task, _learning_task
+    global _ingestion_task, _trade_task, _profit_task, _learning_task
 
     broker = MT5Client(settings)
     database = Database(settings)
@@ -82,12 +83,15 @@ async def lifespan(app: FastAPI):
                 _ingestion_task = asyncio.create_task(ingestion.run_loop())
             if settings.trading_loop_enabled:
                 _trade_task = asyncio.create_task(trader.run_loop())
+                # Moniteur rapide de prise de profit (mode scalp) : ne fait
+                # rien si la stratégie active n'a pas close_on_profit=True.
+                _profit_task = asyncio.create_task(trader.run_profit_monitor_loop())
         if settings.learning_enabled:
             _learning_task = asyncio.create_task(learning.run_loop())
 
     yield
 
-    for task in (_ingestion_task, _trade_task, _learning_task):
+    for task in (_ingestion_task, _trade_task, _profit_task, _learning_task):
         if task is not None:
             task.cancel()
             try:
@@ -256,12 +260,19 @@ async def trade_step() -> dict:
 
 @app.get("/trade/status")
 async def trade_status() -> dict:
+    strategy = trader._strategy if trader else None  # noqa: SLF001 — introspection
     return {
         "strategy": trader.strategy_name if trader else None,
         "paper_only": bool(trader and trader.strategy_paper_only),
         "trading_enabled": settings.trading_enabled,
         "loop_running": _trade_task is not None and not _trade_task.done(),
         "interval_seconds": settings.trade_interval_seconds,
+        "close_on_profit": bool(getattr(strategy, "close_on_profit", False)),
+        "profit_monitor_running": _profit_task is not None and not _profit_task.done(),
+        "profit_check_interval_seconds": settings.profit_check_interval_seconds,
+        "profit_close_min_net": float(
+            getattr(strategy, "profit_close_min_net", settings.profit_close_min_net)
+        ),
         "stop_loss_pct": (
             trader.effective_stop_loss_pct if trader else settings.stop_loss_pct
         ),
@@ -386,6 +397,15 @@ async def learning_retrain(granularity: str | None = Query(None)) -> dict:
 
         return await retrain(settings, granularity)
     return await learning.retrain_once()
+
+
+@app.get("/learning/adaptive")
+async def learning_adaptive() -> dict:
+    """État de l'auto-apprentissage de la stratégie scalp : paramètres actuels,
+    statistiques de la fenêtre récente et derniers ajustements décidés seuls."""
+    if trader is None:
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
+    return trader.adaptive_status()
 
 
 @app.get("/learning/registry")

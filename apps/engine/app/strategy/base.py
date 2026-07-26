@@ -39,6 +39,12 @@ class Strategy(ABC):
     needs_macro: bool = False
     paper_only: bool = False
     paper_horizon_hours: int | None = None
+    # Granularités supplémentaires (analyse multi-timeframe). Quand non vide,
+    # le Trader les récupère et appelle evaluate(..., extra={gran: candles}).
+    extra_granularities: tuple[str, ...] = ()
+    # True = le moteur ferme la position dès que son P&L net (profit + swap,
+    # devise du compte) dépasse le seuil de prise de profit, sans attendre le TP.
+    close_on_profit: bool = False
 
     @abstractmethod
     def evaluate(

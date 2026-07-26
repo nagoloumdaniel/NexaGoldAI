@@ -30,9 +30,9 @@ cd D:\Projets\NexaGoldAI\apps\engine
 $env:BROKER_ENV='demo'
 $env:TRADING_ENABLED='false'
 $env:TRADING_LOOP_ENABLED='true'
-$env:STRATEGY_NAME='expected_return_paper'
-$env:MODEL_GRANULARITY='H1'
-$env:TRADE_INTERVAL_SECONDS='3600'
+$env:STRATEGY_NAME='scalp_m5'
+$env:MODEL_GRANULARITY='M5'
+$env:TRADE_INTERVAL_SECONDS='60'
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 

@@ -10,7 +10,7 @@ import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 
-from app.broker.mt5 import BrokerError, MT5Client
+from app.broker.mt5 import MAGIC, BrokerError, MT5Client
 from app.config import Settings
 from app.data.decisions import StrategyDecisionRepository
 from app.data.trades import TradeRepository
@@ -180,6 +180,55 @@ class Trader:
             raise RuntimeError("A paper-only strategy cannot be hot-swapped automatically")
         self._strategy = strategy
 
+    async def _bot_positions(self) -> list[dict]:
+        """Positions ouvertes appartenant au bot (symbole + magic) uniquement."""
+        return await self._broker.get_open_positions(
+            symbol=self._settings.symbol, magic=MAGIC
+        )
+
+    async def _fetch_extra_candles(self) -> dict[str, list[dict]] | None:
+        """Bougies des timeframes d'analyse déclarés par la stratégie."""
+        grans = getattr(self._strategy, "extra_granularities", ()) or ()
+        if not grans:
+            return None
+        extra: dict[str, list[dict]] = {}
+        for gran in grans:
+            extra[gran] = await self._broker.get_candles(
+                granularity=gran, count=self._settings.decision_candles
+            )
+        return extra
+
+    def _evaluate(
+        self,
+        candles: list[dict],
+        macro_candles: list[dict] | None,
+        extra: dict[str, list[dict]] | None,
+    ) -> Signal:
+        if extra is not None:
+            return self._strategy.evaluate(candles, macro_candles, extra=extra)
+        return self._strategy.evaluate(candles, macro_candles)
+
+    def _notify_tuner(self, pnl: float, side: str, source: str) -> None:
+        """Alimente l'apprentissage adaptatif avec chaque trade clôturé."""
+        tuner = getattr(self._strategy, "tuner", None)
+        if tuner is None:
+            return
+        try:
+            tuner.record_trade(pnl=pnl, side=side, source=source)
+        except Exception:  # noqa: BLE001 — l'apprentissage ne doit jamais casser l'exécution
+            logger.exception("Échec de l'enregistrement du trade dans le tuner")
+
+    def adaptive_status(self) -> dict:
+        tuner = getattr(self._strategy, "tuner", None)
+        if tuner is None:
+            return {
+                "enabled": False,
+                "reason": (
+                    f"La stratégie {self._strategy.name} n'a pas de tuner adaptatif"
+                ),
+            }
+        return tuner.status()
+
     async def preview_signal(self, model_version: str | None = None) -> dict:
         """Read-only structured signal preview.
 
@@ -202,7 +251,11 @@ class Trader:
             except BrokerError:
                 macro_candles = []
 
-        signal = self._strategy.evaluate(candles, macro_candles)
+        try:
+            extra = await self._fetch_extra_candles()
+        except BrokerError:
+            extra = None
+        signal = self._evaluate(candles, macro_candles, extra)
         price = None
         try:
             price = await self._broker.get_price()
@@ -229,6 +282,13 @@ class Trader:
             except BrokerError as exc:
                 logger.warning("Reconciliation paper differee: %s", exc)
         expired_closures = await self._close_expired_paper_positions()
+        # Filet de sécurité : même si le moniteur rapide est arrêté, aucune
+        # position gagnante ne doit attendre le prochain signal pour sortir.
+        profit_closures = []
+        try:
+            profit_closures = await self.close_profitable_positions()
+        except BrokerError as exc:
+            logger.warning("Prise de profit différée: %s", exc)
         candles = await self._broker.get_candles(
             granularity=s.model_granularity, count=s.decision_candles
         )
@@ -245,7 +305,8 @@ class Trader:
                 logger.warning("Macro (%s) indisponible: %s", s.mt5_macro_symbol, exc)
                 macro_candles = []
 
-        signal = self._strategy.evaluate(candles, macro_candles)
+        extra = await self._fetch_extra_candles()
+        signal = self._evaluate(candles, macro_candles, extra)
         decision_id = await self._decisions.insert(self._strategy.name, signal)
         shadow_signal = _regime_shadow_signal(s, candles, signal, decision_id)
         shadow_decision_id = None
@@ -269,6 +330,8 @@ class Trader:
             out["shadow_filter"] = REGIME_SHADOW_FILTER
         if expired_closures:
             out["expired_closures"] = expired_closures
+        if profit_closures:
+            out["profit_closures"] = profit_closures
         if paper_reconciliation is not None:
             out["paper_reconciliation"] = {
                 "matched": paper_reconciliation["matched"],
@@ -334,7 +397,7 @@ class Trader:
             out["status"] = "paper_only_blocked"
             out["reason"] = "Le compte MT5 connecté n'est pas un compte démo"
             return out
-        positions = await self._broker.get_open_positions()
+        positions = await self._bot_positions()
         entry = price["ask"] if signal.action == Action.BUY else price["bid"]
         stop_loss, take_profit = compute_bracket(
             signal.action, entry, stop_pct, risk_reward
@@ -375,6 +438,11 @@ class Trader:
             broker_trade_id,
         )
         await self._decisions.mark_executed(decision_id, trade_id)
+        # Mode scalp : une seule entrée exécutée par bougie M5 — la stratégie
+        # est prévenue seulement quand l'ordre est réellement passé.
+        mark_consumed = getattr(self._strategy, "mark_signal_consumed", None)
+        if callable(mark_consumed):
+            mark_consumed(signal.features.get("m5_bar_time"))
         out["status"] = "executed"
         out["trade_id"] = trade_id
         out["order"] = order
@@ -428,6 +496,7 @@ class Trader:
                 await self._trades.close_trade(
                     trade["id"], float(exit_price), pnl, closed_at
                 )
+                self._notify_tuner(pnl, trade["side"], "HORIZON")
                 results.append(
                     {
                         "trade_id": trade["id"],
@@ -445,8 +514,125 @@ class Trader:
                 )
         return results
 
+    async def close_profitable_positions(self) -> list[dict]:
+        """Ferme toute position du bot dont le P&L net dépasse le seuil appris.
+
+        C'est la sortie principale du mode scalp : peu importe l'ampleur du
+        gain, une position en profit net (profit + swap, devise du compte,
+        spread de clôture déjà compté par MT5) est fermée et le moteur repart
+        chercher un signal. Le seuil `profit_close_min_net` sert de coussin
+        contre la latence d'exécution et le slippage : sans lui, un P&L
+        marginalement positif pourrait devenir négatif le temps que l'ordre de
+        clôture atteigne le serveur.
+        """
+        s = self._settings
+        if (
+            not getattr(self._strategy, "close_on_profit", False)
+            or not s.trading_enabled
+            or (self._strategy.paper_only and s.broker_env != "demo")
+        ):
+            return []
+
+        positions = await self._bot_positions()
+        if not positions:
+            return []
+        min_net = float(
+            getattr(self._strategy, "profit_close_min_net", s.profit_close_min_net)
+        )
+
+        results: list[dict] = []
+        db_open: list[dict] | None = None
+        for position in positions:
+            net = float(position.get("profit") or 0.0) + float(
+                position.get("swap") or 0.0
+            )
+            if net < min_net:
+                continue
+            ticket = str(position.get("ticket"))
+            side = "BUY" if position.get("type") == 0 else "SELL"
+            try:
+                close_order = await self._broker.close_position_by_deal_id(ticket)
+            except BrokerError as exc:
+                logger.warning("Prise de profit échouée pour %s: %s", ticket, exc)
+                results.append({"ticket": ticket, "status": "broker_error"})
+                continue
+
+            logger.info(
+                "Prise de profit: position %s (%s) fermée avec net~%.2f %s",
+                ticket,
+                side,
+                net,
+                position.get("currency") or "",
+            )
+            # Le net observé (devise du compte) nourrit l'apprentissage : c'est
+            # lui qui dit si le coussin couvre vraiment latence + slippage.
+            self._notify_tuner(net, side, "PROFIT_TAKE")
+
+            if db_open is None:
+                db_open = await self._trades.open_trades()
+            trade = next(
+                (
+                    t
+                    for t in db_open
+                    if str(t.get("broker_trade_id")) == ticket
+                ),
+                None,
+            )
+            exit_price = close_order.get("level")
+            closed_at = _parse_broker_time(close_order.get("date")) or datetime.now(
+                timezone.utc
+            )
+            if trade is not None and exit_price is not None:
+                pnl = _compute_pnl(
+                    trade["side"],
+                    trade["units"],
+                    trade["entry_price"],
+                    float(exit_price),
+                )
+                await self._trades.close_trade(
+                    trade["id"], float(exit_price), pnl, closed_at
+                )
+                results.append(
+                    {
+                        "trade_id": trade["id"],
+                        "ticket": ticket,
+                        "status": "closed_in_profit",
+                        "exit_price": float(exit_price),
+                        "net_profit": round(net, 2),
+                        "pnl": round(pnl, 2),
+                    }
+                )
+            else:
+                results.append(
+                    {
+                        "ticket": ticket,
+                        "status": "closed_in_profit_untracked",
+                        "net_profit": round(net, 2),
+                    }
+                )
+        return results
+
+    async def run_profit_monitor_loop(self) -> None:
+        """Boucle rapide dédiée à la prise de profit.
+
+        Tourne bien plus vite que la boucle de signal : une position qui passe
+        en profit net est fermée en quelques secondes, pas au prochain step.
+        """
+        interval = max(1, self._settings.profit_check_interval_seconds)
+        logger.info("Moniteur de prise de profit démarré (intervalle=%ss)", interval)
+        while True:
+            try:
+                closed = await self.close_profitable_positions()
+                if closed:
+                    logger.info("Moniteur de profit: %s", closed)
+            except BrokerError as exc:
+                logger.warning("Moniteur de profit ignoré (broker): %s", exc)
+            except Exception:  # noqa: BLE001 — the loop must never die silently
+                logger.exception("Erreur inattendue dans le moniteur de profit")
+            await asyncio.sleep(interval)
+
     async def paper_validation_status(self) -> dict:
-        stats = await self._trades.paper_validation("expected-return-paper")
+        stats = await self._trades.paper_validation(self._strategy.name)
         target = self._settings.paper_validation_min_trades
         stats.update(
             {
@@ -558,6 +744,12 @@ class Trader:
                         pnl,
                         close_event["closed_at"],
                     )
+                    # Les clôtures broker (SL/TP surtout) alimentent aussi
+                    # l'apprentissage — c'est là que sont les pertes.
+                    if trade.get("strategy") == self._strategy.name:
+                        self._notify_tuner(
+                            pnl, trade["side"], close_event["source"]
+                        )
                     closed.append(
                         {
                             "trade_id": trade["id"],

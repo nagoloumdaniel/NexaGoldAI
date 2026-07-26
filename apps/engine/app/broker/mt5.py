@@ -35,6 +35,10 @@ except ImportError:  # pragma: no cover - chemin Linux/Mac uniquement
 
 logger = logging.getLogger("nexagold.mt5")
 
+# Identifiant "magic" attaché à tous les ordres du bot : permet de distinguer
+# les positions NexaGold des positions manuelles sur le même compte.
+MAGIC = 20260725
+
 
 class BrokerError(Exception):
     """Raised when the MetaTrader 5 terminal returns an error."""
@@ -367,7 +371,7 @@ class MT5Client:
                 "type": mt5.ORDER_TYPE_BUY if is_buy else mt5.ORDER_TYPE_SELL,
                 "price": float(tick.ask if is_buy else tick.bid),
                 "deviation": 20,
-                "magic": 20260725,
+                "magic": MAGIC,
                 "comment": "NexaGold",
                 "type_time": mt5.ORDER_TIME_GTC,
                 "type_filling": self._filling_mode(info),
@@ -411,15 +415,28 @@ class MT5Client:
             "affectedDeals": [{"dealId": str(deal_reference)}],
         }
 
-    async def get_open_positions(self) -> list[dict]:
+    async def get_open_positions(
+        self, symbol: str | None = None, magic: int | None = None
+    ) -> list[dict]:
+        """Positions ouvertes, filtrables par symbole et par magic number.
+
+        Le Trader passe (symbol, MAGIC) pour ne compter que les positions du
+        bot : une position manuelle (ou sur un autre instrument) ne doit ni
+        consommer le quota MAX_OPEN_POSITIONS ni être fermée par le moteur.
+        """
+
         def _positions() -> list[dict]:
-            positions = mt5.positions_get()
+            positions = (
+                mt5.positions_get(symbol=symbol) if symbol else mt5.positions_get()
+            )
             if positions is None:
                 raise BrokerError(f"positions_get -> {mt5.last_error()}")
             account = mt5.account_info()
             currency = account.currency if account else None
             out = []
             for p in positions:
+                if magic is not None and int(getattr(p, "magic", 0)) != magic:
+                    continue
                 entry = p._asdict()
                 info = self._symbol_info_cache.get(p.symbol) or self._symbol_info_sync(
                     p.symbol
@@ -514,7 +531,7 @@ class MT5Client:
                 "position": int(position.ticket),
                 "price": float(tick.bid if is_buy_position else tick.ask),
                 "deviation": 20,
-                "magic": 20260725,
+                "magic": MAGIC,
                 "comment": "NexaGold close",
                 "type_time": mt5.ORDER_TIME_GTC,
                 "type_filling": self._filling_mode(info),

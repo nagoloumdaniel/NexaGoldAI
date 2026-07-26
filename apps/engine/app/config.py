@@ -59,6 +59,16 @@ class Settings(BaseSettings):
     # Garde d'exécution : aucun ordre si le spread relatif dépasse ce plafond
     # (protège des spreads élargis au rollover / annonces / faible liquidité).
     max_spread_pct: float = 0.001
+    # Mode scalp (stratégie scalp_m5) : clôture anticipée au premier profit.
+    #   profit_check_interval_seconds : cadence du moniteur qui surveille le
+    #     P&L des positions ouvertes (bien plus rapide que la boucle de signal).
+    #   profit_close_min_net : gain net minimal (devise du compte) exigé avant
+    #     de clôturer — coussin contre latence de clôture + slippage. Valeur de
+    #     départ ; le tuner adaptatif l'ajuste ensuite dans ses bornes.
+    #   scalp_adapt_enabled : active l'auto-apprentissage borné des paramètres.
+    profit_check_interval_seconds: int = 5
+    profit_close_min_net: float = 0.5
+    scalp_adapt_enabled: bool = True
     # Applique réellement le filtre de régime (exclude BUY en BULLISH_TREND)
     # au lieu de le journaliser en shadow uniquement. À n'activer qu'après
     # validation historique du filtre.

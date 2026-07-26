@@ -44,9 +44,14 @@ Plateforme de trading algorithmique sur l'or (XAU/USD) pilotée par IA.
   (`C:\Program Files\MetaTrader 5`) via le paquet Python `MetaTrader5` (pont
   IPC). Conséquences assumées : **Windows uniquement**, le terminal doit
   tourner, et le moteur n'est plus déployable sur Railway/Docker — il reste
-  sur le PC local, ce qui colle au fonctionnement réel (démarrage 7h, arrêt
-  21h). Avantages : compte démo gratuit chez n'importe quel broker MT5,
+  sur le PC local, ce qui colle au fonctionnement réel (jours ouvrés,
+  9h-20h). Avantages : compte démo gratuit chez n'importe quel broker MT5,
   SL/TP stockés côté serveur du broker, exécution standard de l'industrie.
+- **Stratégie scalp multi-timeframe** (depuis 2026-07-26, remplace la
+  régression expected-return H1 en live) : analyse de tendance sur M15/M30/H1,
+  entrée sur M5 uniquement, BUY et SELL, **clôture dès que la position est en
+  profit net** (voir « Paper trading »). Les paramètres sensibles sont ajustés
+  automatiquement par un tuner adaptatif borné qui apprend des trades clôturés.
 - **Dukascopy** pour l'historique profond (backtesting/entraînement) ;
   le flux MetaTrader 5 pour la décision temps réel.
 - **PostgreSQL standard** (pas TimescaleDB) : Neon ne supporte pas
@@ -141,26 +146,31 @@ cd apps/engine
 # 2. (optionnel) proxy macro EUR/USD, même période
 .venv\Scripts\python.exe -m app.data.backfill_cli --granularity M5 --days 365 \
     --symbol EURUSD --divisor 100000 --instrument EURUSD
-# 3. Bougies H1 dérivées des M5 (le modèle live tourne en H1)
+# 3. (optionnel, recherche) bougies H1 dérivées des M5
 curl -X POST "http://localhost:8000/candles/resample?source=M5&target=H1&instrument=XAUUSD"
-# 4. Valider puis entraîner l'artefact strictement paper
+# 4. (optionnel, recherche) entraîner l'artefact expected-return paper
 .venv\Scripts\python.exe -m app.research.train_expected_return_paper
 ```
+
+La stratégie live `scalp_m5` est **basée sur des règles** (pas de modèle à
+entraîner) : elle lit les bougies M5/M15/M30/H1 directement depuis MT5. Le
+backfill ci-dessus ne sert qu'au backtesting/à la recherche. Les étapes 3-4
+ne concernent que l'ancienne stratégie expected-return conservée en recherche.
 
 > **Migration Capital.com → MT5** : les bougies historiques sont désormais
 > stockées sous la clé instrument `XAUUSD` (= `SYMBOL`). Si votre base date de
 > l'époque Capital.com, re-keyez l'ancienne série `GOLD` une fois :
 > `docker exec -it nexagoldai-postgres-1 psql -U nexagold -c "UPDATE \"Candle\" SET instrument='XAUUSD' WHERE instrument='GOLD';"`
 
-Ensuite, le moteur ingère le temps réel et décide à chaque barre. La stratégie
-`expected_return_paper` est verrouillée sur `BROKER_ENV=demo` **et** vérifie
-auprès du terminal que le compte MT5 connecté est bien un compte démo ; son
-apprentissage périodique reste désactivé pendant la validation prospective. Le
-dashboard (`localhost:3002`) et les récaps Telegram reflètent le tout.
+Ensuite, le moteur ingère le temps réel et décide à chaque minute (une seule
+entrée exécutée par bougie M5). La stratégie `scalp_m5` est verrouillée sur
+`BROKER_ENV=demo` **et** vérifie auprès du terminal que le compte MT5 connecté
+est bien un compte démo. Le dashboard (`localhost:3002`) et les récaps Telegram
+reflètent le tout.
 
-> **Granularité du modèle** : `MODEL_GRANULARITY=H1` par défaut (meilleur
-> résultat mesuré). Changez-la dans `apps/engine/.env`. Le champion est par
-> granularité (`models/<granularité>/`).
+> **Granularité d'entrée** : `MODEL_GRANULARITY=M5` (la stratégie scalp trade
+> sur M5 ; l'analyse M15/M30/H1 est récupérée automatiquement). Les artefacts
+> de recherche restent rangés par granularité (`models/<granularité>/`).
 
 ## Déploiement
 
@@ -186,7 +196,7 @@ dashboard (`localhost:3002`) et les récaps Telegram reflètent le tout.
 ⚠️ Depuis la migration MetaTrader 5, le moteur **ne peut plus être déployé sur
 Railway/Docker** : le paquet `MetaTrader5` est Windows-only et dialogue avec le
 terminal MT5 installé sur ce PC. Le moteur tourne donc en local (`start.ps1` /
-tâches planifiées 7h-21h). Le Dockerfile de `apps/engine` ne sert plus qu'à un
+tâches planifiées, jours ouvrés 9h-20h). Le Dockerfile de `apps/engine` ne sert plus qu'à un
 mode API/lecture seule sans broker. Pendant les heures d'arrêt du bot, les
 SL/TP restent actifs car ils sont stockés **côté serveur du broker MT5**.
 
@@ -307,7 +317,9 @@ drawdown, profit factor, win rate, exposition.
 [expected_return_strategy.py](apps/engine/app/strategy/expected_return_strategy.py)
 charge l'artefact séparé `models/H1/expected_return_paper`. Il prédit directement
 le rendement à 24 h, ne prend que les achats au-dessus du seuil validé et cible
-15 % de volatilité annualisée sans levier.
+15 % de volatilité annualisée sans levier. *Depuis 2026-07-26 cette stratégie
+n'est plus celle du live (remplacée par `scalp_m5`) ; elle reste disponible en
+recherche et réactivable par config.*
 
 ### Filtre de confiance, validation séparée, macro
 
@@ -343,54 +355,68 @@ le rendement à 24 h, ne prend que les achats au-dessus du seuil validé et cibl
 
 ## Paper trading (phase 3)
 
-La boucle [trader.py](apps/engine/app/execution/trader.py) exécute, à intervalle
-régulier, le cycle complet **données → signal → risque → ordre** sur le compte
-démo :
+La stratégie live est `scalp_m5`
+([scalp_mtf.py](apps/engine/app/strategy/scalp_mtf.py)) : **analyse sur
+M15/M30/H1, entrée sur M5 uniquement, sortie au premier profit net**. Deux
+boucles tournent en parallèle dans [trader.py](apps/engine/app/execution/trader.py) :
 
-1. réconcilie les sorties SL/TP, ferme à 24 h les positions paper expirées, puis
-   interroge la régression expected-return ;
-2. **journalise chaque décision** dans `StrategyDecision` (exécutée ou non) —
-   c'est le « pourquoi » de l'IA, et le jeu de données du réentraînement ;
-3. calcule le stop `max(0,5 %, 3×ATR)`, l'objectif `3R` et applique au sizing
-   de risque le multiplicateur causal de volatilité, plafonné à 100 % ;
-4. n'envoie un ordre que si le risque approuve, `TRADING_ENABLED=true`,
-   `BROKER_ENV=demo`, le compte MT5 connecté est bien un compte **démo**, et
-   le spread courant reste sous `MAX_SPREAD_PCT`.
+**Boucle de signal** (`TRADE_INTERVAL_SECONDS=60`) :
 
-Par défaut `TRADING_ENABLED=false` : la boucle tourne, calcule et journalise
-les décisions sur le compte démo **sans jamais y toucher**. On accumule un
-journal honnête de ce que le bot *ferait*, avant de lever le kill switch.
+1. réconcilie les sorties SL/TP, ferme les positions déjà en profit, puis
+   calcule les votes de tendance M15/M30/H1 (EMA20/50, RSI14, MACD) — il faut
+   au moins `min_votes` timeframes alignés **sans contradiction** ;
+2. cherche le déclencheur sur M5 (EMA9/21 dans le sens de la tendance, RSI7,
+   bougie de confirmation, RSI14 hors zone d'épuisement) — BUY comme SELL,
+   une seule entrée exécutée par bougie M5 ;
+3. **journalise chaque décision** dans `StrategyDecision` (exécutée ou non) ;
+4. calcule le stop `max(plancher, ATR14 M5 × multiplicateur)` (TP de secours
+   `2R` — la sortie normale est la prise de profit anticipée) et la taille via
+   le RiskManager : `MAX_RISK_PER_TRADE_PCT=1 %` du solde, borné par la
+   distance de stop, modulé par la taille apprise du tuner ;
+5. n'envoie un ordre que si le risque approuve (dont
+   `MAX_OPEN_POSITIONS=3` — seules les positions du bot, symbole + magic,
+   comptent), `TRADING_ENABLED=true`, `BROKER_ENV=demo`, le compte MT5
+   connecté est bien un compte **démo**, et le spread reste sous
+   `MAX_SPREAD_PCT`.
+
+**Moniteur de prise de profit** (`PROFIT_CHECK_INTERVAL_SECONDS=5`) : vérifie
+le P&L net (profit + swap, devise du compte) de chaque position du bot ; dès
+qu'il atteint `PROFIT_CLOSE_MIN_NET`, la position est fermée **même si le SL/TP
+n'est pas atteint**, et le bot repart chercher un signal. Ce seuil est le
+coussin anti-latence/slippage : sans lui, un gain marginal pourrait devenir
+négatif le temps que l'ordre de clôture arrive au serveur. Le SL ATR reste posé
+côté serveur comme protection (il survit à l'arrêt du bot).
 
 ```bash
-curl http://localhost:8000/trade/status          # stratégie, kill switch, état boucle
+curl http://localhost:8000/trade/status          # stratégie, kill switch, moniteur profit
 curl -X POST http://localhost:8000/trade/step    # une itération immédiate
 curl "http://localhost:8000/decisions/recent?limit=20"
+curl http://localhost:8000/learning/adaptive     # paramètres appris + ajustements
 ```
 
-Variables (défauts) : `TRADING_LOOP_ENABLED=true`, `TRADE_INTERVAL_SECONDS=300`,
-`STRATEGY_NAME=expected_return_paper`, `MODEL_GRANULARITY=H1`, `DECISION_CANDLES=200`,
-`STOP_LOSS_PCT=0.005`, `RISK_REWARD_RATIO=1.5`, et le kill switch
-`TRADING_ENABLED=false`.
-
-Pour `expected_return_paper`, les paramètres de l'artefact remplacent les deux
-valeurs globales de secours: stop `max(0,5 %, 3 x ATR14)` et objectif `3R`.
-`GET /trade/status` expose ces valeurs effectives.
+Variables (valeurs actives dans `apps/engine/.env`) : `STRATEGY_NAME=scalp_m5`,
+`MODEL_GRANULARITY=M5`, `TRADE_INTERVAL_SECONDS=60`,
+`INGEST_GRANULARITIES=M5,M15,M30,H1`, `MAX_OPEN_POSITIONS=3`,
+`PROFIT_CHECK_INTERVAL_SECONDS=5`, `PROFIT_CLOSE_MIN_NET=0.5`,
+`SCALP_ADAPT_ENABLED=true`, et le kill switch `TRADING_ENABLED`
+(défaut code : `false`).
 
 Le statut prospectif est disponible via `GET /paper/validation` et
-`GET /dashboard/paper-validation`. La revue devient éligible après 100 trades
-clôturés, sans promotion automatique. `expected_return_paper` refuse de charger
-si `BROKER_ENV=live`, même lorsque `TRADING_ENABLED=true`.
+`GET /dashboard/paper-validation` (suit la stratégie active). La revue devient
+éligible après 100 trades clôturés, sans promotion automatique. `scalp_m5`
+refuse de charger si `BROKER_ENV=live`, même lorsque `TRADING_ENABLED=true`.
 
 Gardes d'exécution supplémentaires (défauts sûrs) :
 
 - `MAX_SPREAD_PCT=0.001` — aucun ordre si le spread relatif dépasse 0,1 %
   (rollover, annonces, faible liquidité) ;
-- gate d'**espérance nette** : un signal au-dessus du seuil mais sous les
-  coûts estimés (spread + financement sur l'horizon) devient HOLD ;
+- zones RSI interdites (pas d'achat suracheté / de vente survendue) et
+  **cooldown après perte** (quelques bougies M5, durée apprise) ;
 - `REGIME_FILTER_ENFORCED=false` — le filtre de régime reste journalisé en
-  shadow ; passer à `true` l'applique réellement (après validation) ;
-- `EXPECTED_RETURN_ALLOW_SHORT=false` — le côté SELL, rejeté par la validation
-  historique, reste désactivé par défaut.
+  shadow (il ne s'applique qu'aux signaux expected-return) ;
+- l'ancienne stratégie `expected_return_paper` reste disponible via
+  `STRATEGY_NAME=expected_return_paper` + `MODEL_GRANULARITY=H1` (mêmes
+  verrous démo ; gate d'espérance nette, SELL désactivé par défaut).
 
 ## Dashboard (phase 4)
 
@@ -441,7 +467,28 @@ abandonner les moins efficaces ».
 ```bash
 curl -X POST http://localhost:8000/learning/retrain   # un round, renvoie le classement
 curl http://localhost:8000/learning/registry          # champion + versions
+curl http://localhost:8000/learning/adaptive          # tuner adaptatif scalp
 ```
+
+### Tuner adaptatif de la stratégie scalp
+
+En plus du réentraînement LightGBM (qui ne concerne pas `scalp_m5`), la
+stratégie scalp embarque son propre apprentissage autonome
+([adaptive.py](apps/engine/app/learning/adaptive.py)) : après chaque trade
+clôturé (prise de profit, SL, TP), le tuner met à jour ses statistiques et,
+tous les 8 trades, ré-évalue ses paramètres **dans des bornes dures** :
+
+- trop de pertes (win rate < 45 %) → alignement 3/3 exigé, taille réduite,
+  cooldown allongé, zones RSI resserrées ;
+- prises de profit qui finissent ≤ 0 (slippage) → coussin `profit_close_min_net`
+  relevé ;
+- pertes trop lourdes face aux gains → stop ATR resserré ;
+- bonne période (win rate > 65 %) → relâchement prudent.
+
+Chaque ajustement est journalisé (raison, avant/après, horodatage) et l'état
+est persisté dans `models/scalp_m5/adaptive_state.json` (gitignoré) — le bot
+reprend son apprentissage après un redémarrage. Introspection :
+`GET /learning/adaptive`. Désactivable via `SCALP_ADAPT_ENABLED=false`.
 
 Le dashboard affiche le panneau **« Modèles & apprentissage »** (champion +
 historique des versions avec Sharpe et accuracy), via `/dashboard/models`.
@@ -467,9 +514,13 @@ historique des versions avec Sharpe et accuracy), via `/dashboard/models`.
 5. ✅ **Boucle d'apprentissage** : réentraînement périodique, comparaison de
    configurations (champion/challenger), promotion automatique. *(fait ;
    exploration RL/PPO en option future)*
+6. ✅ **Mode scalp M5** (2026-07-26) : analyse M15/M30/H1, entrée M5, BUY/SELL,
+   clôture au premier profit net, 3 positions max, tuner adaptatif borné.
+   *(fait ; validation paper prospective en cours)*
 
 Le passage en réel (`BROKER_ENV=live` + compte MT5 réel) n'est envisagé
 qu'après plusieurs semaines de paper trading aux métriques stables. Rappel
 important : le backtest 2023-2026 à coûts réalistes n'a montré **aucun edge
-net** — le mode démo sert à mesurer honnêtement, pas à préparer un passage en
-réel imminent.
+net** pour la stratégie expected-return, et la stratégie scalp M5 n'a **pas
+encore été backtestée** — le mode démo sert à mesurer honnêtement, pas à
+préparer un passage en réel imminent.
