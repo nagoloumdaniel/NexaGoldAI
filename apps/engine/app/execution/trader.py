@@ -27,6 +27,10 @@ logger = logging.getLogger("nexagold.trader")
 REGIME_SHADOW_STRATEGY = "expected-return-paper-regime-shadow"
 REGIME_SHADOW_FILTER = "exclude_regime:BULLISH_TREND"
 
+# Échecs broker consécutifs avant d'alerter (à 60 s d'intervalle : ~5 min de
+# panne). En dessous, c'est du bruit de marché fermé ou de reconnexion.
+_BROKER_FAILURES_BEFORE_ALERT = 5
+
 
 def compute_bracket(
     action: Action, entry: float, stop_loss_pct: float, risk_reward: float
@@ -186,6 +190,19 @@ class Trader:
             )
         except Exception:  # noqa: BLE001 — le journal ne bloque jamais le trading
             logger.exception("Journalisation de la décision de risque échouée")
+
+    async def _record_event(
+        self, event_type: str, severity: str, message: str, payload: dict | None = None
+    ) -> None:
+        """Événement durable (relayé en alerte Telegram par l'API)."""
+        if self._journal is None:
+            return
+        try:
+            await self._journal.record_event(
+                event_type, severity, "trader", message, payload
+            )
+        except Exception:  # noqa: BLE001 — le journal ne bloque jamais le trading
+            logger.exception("Journalisation d'événement échouée")
 
     @property
     def strategy_name(self) -> str:
@@ -471,10 +488,27 @@ class Trader:
             logger.exception("Statistiques de risque indisponibles")
             risk_stats = None
 
+        # Le RiskManager peut VERROUILLER le kill switch pendant la revue
+        # (limite jour/semaine, série de pertes) : on détecte la bascule pour
+        # émettre une alerte — sinon un verrouillage nocturne resterait muet.
+        kill_switch = getattr(self._risk, "kill_switch", None)
+        was_locked = bool(kill_switch and kill_switch.locked)
+
         decision = self._risk.review(
             signal, account, positions, entry, stop_loss, risk_stats
         )
         await self._log_risk_decision(decision_id, decision, risk_stats)
+        if kill_switch is not None and kill_switch.locked and not was_locked:
+            await self._record_event(
+                "KILL_SWITCH_LOCK",
+                "CRITICAL",
+                kill_switch.reason or "Verrouillage automatique du moteur de risque",
+                {
+                    "source": "auto",
+                    "decision_id": decision_id,
+                    "risk_stats": risk_stats,
+                },
+            )
         out["risk"] = {
             "approved": decision.approved,
             "reason": decision.reason,
@@ -1037,12 +1071,41 @@ class Trader:
             interval,
             "ON" if self._settings.trading_enabled else "OFF (kill switch)",
         )
+        # Alerte une seule fois par épisode de panne broker, et une fois au
+        # rétablissement : ni silence, ni spam à chaque itération.
+        consecutive_failures = 0
+        degraded_alerted = False
         while True:
             try:
                 result = await self.step()
                 logger.info("Trade step: %s", result.get("status"))
+                if degraded_alerted:
+                    await self._record_event(
+                        "BROKER_RECOVERED",
+                        "WARNING",
+                        "Connexion broker rétablie : la boucle de trading reprend",
+                        {"failures_before_recovery": consecutive_failures},
+                    )
+                consecutive_failures = 0
+                degraded_alerted = False
             except BrokerError as exc:
-                logger.warning("Trade step ignoré (broker): %s", exc)
+                consecutive_failures += 1
+                logger.warning(
+                    "Trade step ignoré (broker, échec %d): %s",
+                    consecutive_failures,
+                    exc,
+                )
+                if consecutive_failures >= _BROKER_FAILURES_BEFORE_ALERT and not degraded_alerted:
+                    degraded_alerted = True
+                    await self._record_event(
+                        "BROKER_DEGRADED",
+                        "WARNING",
+                        (
+                            f"{consecutive_failures} échecs broker consécutifs — "
+                            f"aucune décision n'est prise : {exc}"
+                        ),
+                        {"consecutive_failures": consecutive_failures},
+                    )
             except Exception:  # noqa: BLE001 — the loop must never die silently
                 logger.exception("Erreur inattendue dans la boucle de trading")
             await asyncio.sleep(interval)

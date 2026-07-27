@@ -39,7 +39,10 @@ export class TelegramService {
       }
       return true;
     } catch (error) {
-      this.logger.error(`Envoi Telegram impossible: ${String(error)}`);
+      // Le message d'erreur d'un fetch échoué peut contenir l'URL appelée,
+      // donc le token : on masque toute occurrence avant de journaliser.
+      const safe = String(error).replaceAll(String(token), '***');
+      this.logger.error(`Envoi Telegram impossible: ${safe}`);
       return false;
     }
   }

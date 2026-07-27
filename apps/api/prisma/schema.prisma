@@ -148,7 +148,12 @@ model SystemEvent {
   component String
   message   String
   payload   Json?
+  // Relais d'alertes : l'API relit les événements WARNING/CRITICAL non
+  // notifiés et les envoie sur Telegram, puis les marque ici. Le moteur
+  // n'a donc jamais besoin du token Telegram.
+  notified  Boolean  @default(false)
 
   @@index([time])
   @@index([eventType, time])
+  @@index([notified, time])
 }
