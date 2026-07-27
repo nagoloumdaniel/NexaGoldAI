@@ -144,7 +144,9 @@ Règles non négociables pendant toute la migration :
   - RR3 : 110 trades, WR 29.1 %, espérance **+0.12R**, PF 1.16 ; **reste positif à coûts doublés** (+0.06R) et **stable sur les deux moitiés** (90 derniers jours : +0.13R) ; RR4 : +0.13R, PF 1.17 ;
   - sans retest : -0.09R (le retest est nécessaire) ; heures 16-18 UTC nettement négatives (à creuser, échantillon insuffisant pour filtrer) ;
   - décision : `SWEEP_MIN_RISK_REWARD=3.0` par défaut ; verdict **PAPER_CANDIDATE** — l'espérance +0.12R sur 110 trades est < 1 écart-type de zéro : encourageant mais PAS statistiquement démontré. Validation paper prospective obligatoire, live toujours verrouillé.
-- [ ] Étendre le backtest à un historique plus profond (Dukascopy M1 2023-2026 quand le rate-limit le permet) pour tester d'autres régimes de marché
+- [x] Test de régime 2023-2026 en mode DÉGRADÉ (`--base-granularity M5`, le M1 broker ne remonte qu'à 2026-01) : 430 trades, -0.034R, PF 0.96, par année 2023 +0.04 / 2024 -0.11 / 2025 +0.01 / 2026 -0.05 — pas d'effondrement mais pas d'edge en exécution grossière. Calibration sur fenêtre commune 180 j : M5-trigger -0.05R vs M1-trigger +0.12R → la finesse M1 vaut ~0.17R ; l'edge M1 multi-années reste PLAUSIBLE, non démontré.
+- [x] **Bascule du paper sur `liquidity_sweep` (2026-07-28)** : STRATEGY_NAME=liquidity_sweep, MODEL_GRANULARITY=M1, M1 ingéré — la validation paper prospective (100 trades) est le prochain juge ; scalp_m5 reste disponible en un changement de .env ; live toujours verrouillé
+- [ ] Backtest M1 fidèle sur 2023-2026 quand une source M1 profonde sera accessible (Dukascopy hors rate-limit)
 
 ## Phase 11 — Champion/challenger et gouvernance
 

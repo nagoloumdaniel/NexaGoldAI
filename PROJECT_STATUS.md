@@ -34,6 +34,15 @@ au fur et à mesure). Livré et testé (86+ tests pytest, CI GitHub Actions) :
   deux moitiés** => `SWEEP_MIN_RISK_REWARD=3.0` par défaut et statut
   **PAPER_CANDIDATE** (échantillon 110 trades, < 1 écart-type de zéro : non
   démontré statistiquement, validation paper prospective requise, live verrouillé).
+- **Test de régime 2023-2026** (mode dégradé `--base-granularity M5`, le M1
+  broker ne remonte qu'à 2026-01) : -0.034R global, par année +0.04/-0.11/
+  +0.01/-0.05 — pas d'effondrement, pas d'edge en exécution grossière ;
+  calibration sur fenêtre commune : la finesse M1 vaut ~0.17R d'espérance.
+- **Bascule paper le 2026-07-28** : `STRATEGY_NAME=liquidity_sweep`,
+  `MODEL_GRANULARITY=M1` — la stratégie sweep est désormais la stratégie
+  paper active (effectif au démarrage 9h) ; objectif : 100 trades prospectifs
+  avant toute décision. `scalp_m5` reste disponible en un changement de .env.
+  `TRADING_ENABLED` inchangé (décision opérateur). Live toujours verrouillé.
 
 ## Strategie scalp M5 multi-timeframe (clôture au premier profit)
 

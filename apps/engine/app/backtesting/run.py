@@ -25,7 +25,7 @@ from app.strategy_v2.sweep_strategy import LiquiditySweepStrategy, SweepConfig
 REPORTS_DIR = Path(__file__).resolve().parents[4] / "reports" / "backtests"
 
 
-async def load_m1(days: int) -> list[dict]:
+async def load_base(days: int, granularity: str = "M1") -> list[dict]:
     settings = get_settings()
     db = Database(settings)
     await db.connect()
@@ -35,10 +35,11 @@ async def load_m1(days: int) -> list[dict]:
     try:
         rows = await db.pool.fetch(
             'SELECT "time", "open", "high", "low", "close", "volume" '
-            'FROM "Candle" WHERE "instrument" = $1 AND "granularity" = \'M1\' '
+            'FROM "Candle" WHERE "instrument" = $1 AND "granularity" = $3 '
             'AND "time" >= $2 ORDER BY "time"',
             settings.symbol,
             cutoff,
+            granularity,
         )
     finally:
         await db.close()
@@ -104,35 +105,52 @@ async def main() -> None:
     parser.add_argument("--sessions", default="LONDON,NEW_YORK")
     parser.add_argument("--no-sessions", action="store_true")
     parser.add_argument("--no-retest", action="store_true")
+    # M1 par défaut. --base-granularity M5 = APPROXIMATION DÉGRADÉE (le
+    # déclencheur shift/retest opère alors en M5) pour tester des périodes où
+    # le M1 n'existe pas — à interpréter comme un test de régime, pas comme
+    # une simulation fidèle de l'exécution.
+    parser.add_argument("--base-granularity", default="M1", choices=["M1", "M5"])
+    parser.add_argument("--max-holding-bars", type=int, default=None)
     args = parser.parse_args()
 
-    m1 = await load_m1(args.days)
+    m1 = await load_base(args.days, args.base_granularity)
     if len(m1) < 2000:
         raise SystemExit(
             f"Seulement {len(m1)} bougies M1 en base — lancer d'abord "
             "python -m app.data.backfill_cli --granularity M1 --days N"
         )
-    print(f"{len(m1)} bougies M1 ({m1[0]['time']} -> {m1[-1]['time']})")
+    print(
+        f"{len(m1)} bougies {args.base_granularity} "
+        f"({m1[0]['time']} -> {m1[-1]['time']})"
+    )
 
+    # Filet temporel : 24 h quelle que soit la granularité de base.
+    default_holding = 1440 if args.base_granularity == "M1" else 288
     strategy = build_strategy(args)
     engine = EventBacktester(
         strategy,
         CostModel(args.spread_pct, args.slippage_pct, args.commission_pct),
         window_bars=args.window,
         risk_pct_per_trade=args.risk_pct,
+        max_holding_bars=args.max_holding_bars or default_holding,
     )
     started = datetime.now()
     report = engine.run(m1)
     elapsed = (datetime.now() - started).total_seconds()
     report["run"] = {
         "days": args.days,
+        "base_granularity": args.base_granularity,
+        "degraded_m5_trigger": args.base_granularity != "M1",
         "m1_bars": len(m1),
         "from": m1[0]["time"],
         "to": m1[-1]["time"],
         "elapsed_seconds": round(elapsed, 1),
     }
 
-    run_id = datetime.now().strftime("%Y%m%d%H%M%S") + f"_sweep_{args.days}d"
+    run_id = (
+        datetime.now().strftime("%Y%m%d%H%M%S")
+        + f"_sweep_{args.days}d_{args.base_granularity}"
+    )
     out_dir = write_report(report, run_id)
 
     print(f"\n=== Backtest liquidity_sweep ({args.days} j, {elapsed:.0f}s) ===")
