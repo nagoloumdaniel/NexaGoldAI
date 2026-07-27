@@ -127,6 +127,12 @@ class Settings(BaseSettings):
     rates_series: str = "DFII10"
     rates_instrument: str = "DFII10"
 
+    # Jeton des routes mutantes du moteur (en-tête x-api-key). Vide = routes
+    # non protégées, tolérable uniquement en écoute locale 127.0.0.1 ; à
+    # définir dès que le moteur est exposé (0.0.0.0, tunnel...). L'API NestJS
+    # le transmet via ENGINE_API_TOKEN.
+    engine_api_token: str = ""
+
     # Infra
     database_url: str = ""
     redis_url: str = ""

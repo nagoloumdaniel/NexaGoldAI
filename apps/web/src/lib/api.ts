@@ -1,4 +1,8 @@
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
+// Clé envoyée sur les routes mutantes quand l'API l'exige (API_KEY côté api).
+// NEXT_PUBLIC_* est visible dans le bundle navigateur : ce n'est pas un vrai
+// secret, juste un verrou d'opérateur pour un dashboard local.
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${BASE}${path}`, { cache: "no-store" });
@@ -7,10 +11,13 @@ async function get<T>(path: string): Promise<T> {
 }
 
 async function post<T>(path: string, body?: Record<string, unknown>): Promise<T> {
+  const headers: Record<string, string> = {};
+  if (body) headers["Content-Type"] = "application/json";
+  if (API_KEY) headers["x-api-key"] = API_KEY;
   const res = await fetch(`${BASE}${path}`, {
     method: "POST",
     cache: "no-store",
-    headers: body ? { "Content-Type": "application/json" } : undefined,
+    headers: Object.keys(headers).length ? headers : undefined,
     body: body ? JSON.stringify(body) : undefined,
   });
   if (!res.ok) throw new Error(`${path} -> ${res.status}`);

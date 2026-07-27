@@ -6,12 +6,13 @@ pipeline (MetaTrader 5 -> `Candle` table) and the paper-trading loop
 """
 
 import asyncio
+import logging
 from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Literal
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, Header, HTTPException, Query
 from pydantic import BaseModel
 
 from app.broker.mt5 import BrokerError, MT5Client
@@ -41,6 +42,26 @@ kill_switch = KillSwitch(
 # /fundamental/status réponde même sans DB/broker ; le cache se remplit au
 # premier check() (boucle de trading) ou au premier appel de statut.
 news_filter = NewsFilter(settings, ForexFactoryProvider())
+
+_logger = logging.getLogger("nexagold.api")
+if not settings.engine_api_token:
+    _logger.warning(
+        "ENGINE_API_TOKEN non défini : routes mutantes sans protection "
+        "(tolérable seulement en écoute locale 127.0.0.1)."
+    )
+
+
+def require_api_token(x_api_key: str | None = Header(None)) -> None:
+    """Protège les routes mutantes quand ENGINE_API_TOKEN est défini."""
+    token = settings.engine_api_token
+    if token and x_api_key != token:
+        raise HTTPException(
+            status_code=401,
+            detail="Jeton absent ou invalide (en-tête x-api-key requis)",
+        )
+
+
+MUTATING = [Depends(require_api_token)]
 
 
 class ResolveTradeRequest(BaseModel):
@@ -195,7 +216,7 @@ async def positions() -> list[dict]:
 # -- Data pipeline ----------------------------------------------------------
 
 
-@app.post("/ingest/run")
+@app.post("/ingest/run", dependencies=MUTATING)
 async def ingest_run() -> dict:
     """Trigger one immediate refresh of the latest candles (all granularities)."""
     ensure_broker_configured()
@@ -206,7 +227,7 @@ async def ingest_run() -> dict:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
-@app.post("/ingest/backfill")
+@app.post("/ingest/backfill", dependencies=MUTATING)
 async def ingest_backfill(
     granularity: str = Query("M5"),
     days: int = Query(2, ge=1, le=60),
@@ -221,7 +242,7 @@ async def ingest_backfill(
     return {"granularity": granularity, "days": days, "upserted": upserted}
 
 
-@app.post("/ingest/dukascopy")
+@app.post("/ingest/dukascopy", dependencies=MUTATING)
 async def ingest_dukascopy(
     granularity: str = Query("M5"),
     days: int = Query(1, ge=1, le=30),
@@ -234,7 +255,7 @@ async def ingest_dukascopy(
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
-@app.post("/candles/resample")
+@app.post("/candles/resample", dependencies=MUTATING)
 async def candles_resample(
     source: str = Query("M5"),
     target: str = Query("H1"),
@@ -260,7 +281,7 @@ async def candles_stats(instrument: str | None = Query(None)) -> dict:
 # -- Paper trading ----------------------------------------------------------
 
 
-@app.post("/trade/step")
+@app.post("/trade/step", dependencies=MUTATING)
 async def trade_step() -> dict:
     """Run one loop iteration: data -> signal -> risk -> (order if enabled)."""
     ensure_broker_configured()
@@ -356,7 +377,7 @@ async def trades_reconciliation() -> dict:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
-@app.post("/trades/reconcile")
+@app.post("/trades/reconcile", dependencies=MUTATING)
 async def trades_reconcile(close_missing: bool = Query(False)) -> dict:
     """Backfill broker deal ids for matched open trades.
 
@@ -374,7 +395,7 @@ async def trades_reconcile(close_missing: bool = Query(False)) -> dict:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
-@app.post("/trades/{trade_id}/resolve")
+@app.post("/trades/{trade_id}/resolve", dependencies=MUTATING)
 async def trades_resolve_manual(trade_id: str, payload: ResolveTradeRequest) -> dict:
     """Manual operator resolution for stale DB trades.
 
@@ -424,13 +445,13 @@ async def risk_status() -> dict:
     }
 
 
-@app.post("/risk/lock")
+@app.post("/risk/lock", dependencies=MUTATING)
 async def risk_lock(reason: str = Query("Verrouillage manuel opérateur")) -> dict:
     """Active le kill switch dynamique (aucun nouvel ordre d'ouverture)."""
     return kill_switch.lock(reason, source="operator")
 
 
-@app.post("/risk/unlock")
+@app.post("/risk/unlock", dependencies=MUTATING)
 async def risk_unlock(reason: str = Query(...)) -> dict:
     """Réactivation EXPLICITE du trading — une raison est obligatoire."""
     try:
@@ -456,7 +477,7 @@ async def fundamental_status() -> dict:
 # -- Learning loop ----------------------------------------------------------
 
 
-@app.post("/learning/retrain")
+@app.post("/learning/retrain", dependencies=MUTATING)
 async def learning_retrain(granularity: str | None = Query(None)) -> dict:
     """Run one retraining round: candidate configs compete, best is REGISTERED.
 
@@ -473,7 +494,7 @@ async def learning_retrain(granularity: str | None = Query(None)) -> dict:
     return await learning.retrain_once()
 
 
-@app.post("/learning/promote")
+@app.post("/learning/promote", dependencies=MUTATING)
 async def learning_promote(version: str = Query(...)) -> dict:
     """Promotion MANUELLE d'une version en champion (action opérateur).
 

@@ -1,12 +1,15 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post, UseGuards } from '@nestjs/common';
+import { ApiKeyGuard } from '../auth/api-key.guard';
 import { DailyReportService } from './daily-report.service';
 
+// Déclenchement manuel des rapports (stop-auto.ps1 et tests). Protégé par
+// clé d'API quand API_KEY est défini — sinon n'importe qui joignant l'API
+// pourrait spammer Telegram et écrire des EquitySnapshot.
 @Controller('reports')
+@UseGuards(ApiKeyGuard)
 export class ReportsController {
   constructor(private readonly dailyReport: DailyReportService) {}
 
-  // Déclenchement manuel pour tester sans attendre le cron.
-  // TODO: protéger par JWT quand le module d'authentification arrivera.
   @Post('daily/run')
   runDaily() {
     return this.dailyReport.sendDailyReport();

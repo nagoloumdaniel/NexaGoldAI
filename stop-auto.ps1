@@ -21,9 +21,20 @@ Log '=== Arret automatique demande ==='
 #    donc le cron ne se declenche jamais : on le declenche ici, pendant que
 #    l'API (3001) et le moteur (8000) sont encore vivants.
 $apiUrl = 'http://localhost:3001'
+# Cle des routes mutantes de l'API (API_KEY dans apps/api/.env). Lue ici pour
+# que le declenchement des rapports continue de fonctionner quand la cle est
+# activee. Jamais journalisee.
+$apiKey = $null
+$apiEnv = Join-Path $root 'apps\api\.env'
+if (Test-Path $apiEnv) {
+  $line = Get-Content $apiEnv | Where-Object { $_ -match '^\s*API_KEY\s*=' } | Select-Object -First 1
+  if ($line) { $apiKey = ($line -split '=', 2)[1].Trim() }
+}
 function Send-Report($path, $label) {
   try {
-    Invoke-RestMethod -Uri "$apiUrl/$path" -Method Post -TimeoutSec 30 | Out-Null
+    $headers = @{}
+    if ($apiKey) { $headers['x-api-key'] = $apiKey }
+    Invoke-RestMethod -Uri "$apiUrl/$path" -Method Post -TimeoutSec 30 -Headers $headers | Out-Null
     Log "Rapport $label envoye ($path)"
   } catch {
     Log "Echec rapport $label : $($_.Exception.Message)"

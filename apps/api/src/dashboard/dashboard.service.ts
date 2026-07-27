@@ -33,9 +33,15 @@ export class DashboardService {
     body?: Record<string, unknown>,
   ): Promise<T | null> {
     try {
+      const headers: Record<string, string> = {};
+      if (body) headers['Content-Type'] = 'application/json';
+      // Jeton du moteur (ENGINE_API_TOKEN) : requis quand le moteur protège
+      // ses routes mutantes.
+      if (process.env.ENGINE_API_TOKEN)
+        headers['x-api-key'] = process.env.ENGINE_API_TOKEN;
       const res = await fetch(`${ENGINE_URL}${path}`, {
         method: 'POST',
-        headers: body ? { 'Content-Type': 'application/json' } : undefined,
+        headers: Object.keys(headers).length ? headers : undefined,
         body: body ? JSON.stringify(body) : undefined,
         signal: AbortSignal.timeout(20_000),
       });

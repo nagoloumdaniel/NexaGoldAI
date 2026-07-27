@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiKeyGuard } from '../auth/api-key.guard';
 import { DashboardService } from './dashboard.service';
 
 const clamp = (value: string | undefined, fallback: number, max: number) =>
@@ -77,11 +86,13 @@ export class DashboardController {
   }
 
   @Post('reconciliation/run')
+  @UseGuards(ApiKeyGuard)
   runReconciliation() {
     return this.dashboard.runReconciliation();
   }
 
   @Post('trades/:id/resolve')
+  @UseGuards(ApiKeyGuard)
   resolveTrade(
     @Param('id') id: string,
     @Body()
