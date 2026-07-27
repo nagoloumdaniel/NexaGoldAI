@@ -30,3 +30,6 @@ venv/
 # Logs runtime (PID, sorties des services en arriere-plan)
 logs/
 nexagold-scheduler.log
+
+# Cache IDE Python (genere par l extension VSCode)
+.vscode/PythonImportHelper*.json
