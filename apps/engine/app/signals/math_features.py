@@ -39,7 +39,7 @@ def _slope(values: list[float]) -> float | None:
     denom = sum((x - x_mean) ** 2 for x in xs)
     if denom == 0:
         return None
-    return sum((x - x_mean) * (y - y_mean) for x, y in zip(xs, values)) / denom
+    return sum((x - x_mean) * (y - y_mean) for x, y in zip(xs, values, strict=False)) / denom
 
 
 def _atr(candles: list[dict], period: int) -> float | None:

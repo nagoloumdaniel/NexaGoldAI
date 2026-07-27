@@ -1,0 +1,12 @@
+# Lint Python du moteur. Règles volontairement sûres (pyflakes + pycodestyle
+# erreurs) pour un premier palier — pas de reformatage massif de l'existant.
+line-length = 100
+target-version = "py312"
+
+[lint]
+select = ["E4", "E7", "E9", "F", "B"]
+ignore = [
+  # `except Exception` est utilisé sciemment (boucles qui ne doivent pas mourir),
+  # toujours accompagné d'un commentaire noqa BLE001 explicite.
+  "B008",  # Depends(...) en défaut d'argument est l'idiome FastAPI
+]

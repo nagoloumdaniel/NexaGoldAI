@@ -42,7 +42,7 @@ def _ema(values: list[float], period: int) -> float:
 
 def _rsi(closes: list[float], period: int) -> float:
     gains, losses = [], []
-    for prev, cur in zip(closes[:-1], closes[1:]):
+    for prev, cur in zip(closes[:-1], closes[1:], strict=False):
         delta = cur - prev
         gains.append(max(delta, 0.0))
         losses.append(max(-delta, 0.0))
@@ -50,9 +50,9 @@ def _rsi(closes: list[float], period: int) -> float:
         return 50.0
     avg_gain = sum(gains[:period]) / period
     avg_loss = sum(losses[:period]) / period
-    for g, l in zip(gains[period:], losses[period:]):
+    for g, loss in zip(gains[period:], losses[period:], strict=False):
         avg_gain = (avg_gain * (period - 1) + g) / period
-        avg_loss = (avg_loss * (period - 1) + l) / period
+        avg_loss = (avg_loss * (period - 1) + loss) / period
     if avg_loss == 0:
         return 100.0
     return 100.0 - 100.0 / (1.0 + avg_gain / avg_loss)
@@ -60,7 +60,7 @@ def _rsi(closes: list[float], period: int) -> float:
 
 def _atr(candles: list[dict], period: int = 14) -> float:
     trs = []
-    for prev, cur in zip(candles[:-1], candles[1:]):
+    for prev, cur in zip(candles[:-1], candles[1:], strict=False):
         trs.append(
             max(
                 cur["high"] - cur["low"],

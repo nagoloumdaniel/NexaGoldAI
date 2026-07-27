@@ -132,7 +132,7 @@ class IngestionService:
                 fetched = await asyncio.gather(
                     *(self._fetch_hour(client, h) for h in batch)
                 )
-                for hour_dt, ticks in fetched:
+                for _hour_dt, ticks in fetched:
                     scanned += 1
                     if not ticks:
                         continue

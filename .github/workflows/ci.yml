@@ -21,10 +21,12 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: apps/engine/requirements.txt
-      # MetaTrader5 est marqué win32-only : il est ignoré sous Linux et le
-      # module broker bascule sur son chemin "sans broker".
-      - run: pip install -r requirements.txt
+          cache-dependency-path: apps/engine/requirements.lock
+      # Installation reproductible depuis le lockfile. MetaTrader5 est marqué
+      # win32-only : ignoré sous Linux, le module broker bascule sur son
+      # chemin "sans broker".
+      - run: pip install -r requirements.lock
+      - run: python -m ruff check app tests tests_manual
       - run: python -m compileall -q app
       - run: python -m pytest -q
 

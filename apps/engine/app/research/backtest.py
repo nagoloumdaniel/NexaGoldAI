@@ -14,7 +14,7 @@ from lightgbm import LGBMClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
 from sklearn.model_selection import TimeSeriesSplit
 
-from app.research.features import build_features, feature_columns
+from app.research.features import build_features
 from app.research.labeling import CLASS_NAMES, DOWN, FLAT, UP, make_labels
 from app.research.regime_validation import (
     build_historical_regime_features,
