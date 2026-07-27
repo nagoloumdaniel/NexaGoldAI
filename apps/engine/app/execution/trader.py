@@ -14,6 +14,7 @@ from app.broker.mt5 import MAGIC, BrokerError, MT5Client
 from app.config import Settings
 from app.data.decisions import StrategyDecisionRepository
 from app.data.trades import TradeRepository
+from app.fundamental.calendar import NewsFilter
 from app.risk.manager import RiskManager
 from app.signals.math_features import build_math_summary
 from app.signals.regime import classify_regime
@@ -137,6 +138,7 @@ class Trader:
         risk: RiskManager,
         decisions: StrategyDecisionRepository,
         trades: TradeRepository,
+        news: NewsFilter | None = None,
     ):
         self._settings = settings
         self._broker = broker
@@ -144,6 +146,7 @@ class Trader:
         self._risk = risk
         self._decisions = decisions
         self._trades = trades
+        self._news = news
 
     @property
     def strategy_name(self) -> str:
@@ -354,6 +357,24 @@ class Trader:
             out["status"] = "regime_blocked"
             out["reason"] = shadow_signal.reason
             return out
+
+        # Filtre d'annonces économiques (fail-closed) : aucun nouvel ordre dans
+        # les fenêtres d'annonces, ni quand le calendrier est indisponible.
+        # Les clôtures ne passent jamais par ici — réduire le risque reste permis.
+        if s.news_filter_enabled:
+            if self._news is None:
+                out["status"] = "news_blocked"
+                out["reason"] = (
+                    "Filtre d'annonces activé mais non initialisé — fail-closed"
+                )
+                return out
+            verdict = await self._news.check()
+            if verdict["blocked"]:
+                out["status"] = "news_blocked"
+                out["reason"] = verdict["reason"]
+                if verdict.get("event"):
+                    out["news_event"] = verdict["event"]
+                return out
 
         price = await self._broker.get_price()
         if not price["tradeable"]:

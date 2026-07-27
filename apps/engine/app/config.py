@@ -68,6 +68,21 @@ class Settings(BaseSettings):
     # Garde d'exécution : aucun ordre si le spread relatif dépasse ce plafond
     # (protège des spreads élargis au rollover / annonces / faible liquidité).
     max_spread_pct: float = 0.001
+
+    # Filtre d'annonces économiques (fail-closed) : aucun NOUVEL ordre dans les
+    # fenêtres autour des annonces à impact sur les devises suivies, et aucun
+    # ordre si le calendrier est indisponible ou trop ancien. Les clôtures
+    # (prise de profit, SL/TP serveur) ne sont jamais bloquées.
+    news_filter_enabled: bool = True
+    news_currencies: str = "USD"
+    news_block_high_pre_minutes: int = 30
+    news_block_high_post_minutes: int = 20
+    news_block_medium_pre_minutes: int = 10
+    news_block_medium_post_minutes: int = 10
+    # Cadence de rafraîchissement du calendrier et âge maximal toléré avant de
+    # considérer les données trop vieilles (=> blocage fail-closed).
+    news_refresh_minutes: int = 60
+    news_max_age_minutes: int = 360
     # Mode scalp (stratégie scalp_m5) : clôture anticipée au premier profit.
     #   profit_check_interval_seconds : cadence du moniteur qui surveille le
     #     P&L des positions ouvertes (bien plus rapide que la boucle de signal).

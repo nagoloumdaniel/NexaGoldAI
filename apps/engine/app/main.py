@@ -22,6 +22,7 @@ from app.data.ingestion import IngestionService
 from app.data.trades import TradeRepository
 from app.db import Database
 from app.execution.trader import REGIME_SHADOW_STRATEGY, Trader
+from app.fundamental.calendar import ForexFactoryProvider, NewsFilter
 from app.learning.registry import ModelRegistry
 from app.learning.service import LearningService
 from app.risk.kill_switch import KillSwitch
@@ -35,6 +36,11 @@ settings = get_settings()
 kill_switch = KillSwitch(
     Path(__file__).resolve().parents[1] / "models" / "kill_switch.json"
 )
+
+# Filtre d'annonces économiques (fail-closed). Créé au niveau module pour que
+# /fundamental/status réponde même sans DB/broker ; le cache se remplit au
+# premier check() (boucle de trading) ou au premier appel de statut.
+news_filter = NewsFilter(settings, ForexFactoryProvider())
 
 
 class ResolveTradeRequest(BaseModel):
@@ -83,6 +89,7 @@ async def lifespan(app: FastAPI):
             RiskManager(settings, kill_switch),
             decisions_repo,
             TradeRepository(database.pool, settings.symbol),
+            news=news_filter,
         )
         learning = LearningService(settings, trader)
         if _broker_ready():
@@ -430,6 +437,20 @@ async def risk_unlock(reason: str = Query(...)) -> dict:
         return kill_switch.unlock(reason, source="operator")
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+# -- Fondamental ------------------------------------------------------------
+
+
+@app.get("/fundamental/status")
+async def fundamental_status() -> dict:
+    """État du filtre d'annonces : cache, verdict courant, annonces à venir."""
+    verdict = await news_filter.check()
+    return {
+        **news_filter.status(),
+        "verdict": verdict,
+        "upcoming_24h": news_filter.upcoming(),
+    }
 
 
 # -- Learning loop ----------------------------------------------------------
