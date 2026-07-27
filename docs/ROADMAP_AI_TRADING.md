@@ -72,15 +72,17 @@ Règles non négociables pendant toute la migration :
 
 ## Phase 4 — Stratégie déterministe LIQUIDITY_SWEEP_TREND_CONTINUATION
 
-- [ ] `strategy_v2/market_structure.py` : sommets/creux, HH/HL/LH/LL, BOS, CHoCH (H1 contexte, M15 structure)
-- [ ] `strategy_v2/levels.py` : PDH/PDL, open journalier, high/low de session, égalités de sommets/creux
-- [ ] `strategy_v2/liquidity_sweep.py` : détection sweep (profondeur, vitesse de réintégration, volume)
-- [ ] `strategy_v2/retest_detector.py` : bougie de rejet, micro-CHoCH M1, retest dans la fenêtre
-- [ ] `strategy_v2/state_machine.py` : états IDLE→…→SYSTEM_LOCKED, transitions horodatées/persistées/testées, transition interdite = erreur contrôlée
-- [ ] Sessions de trading (Londres/NY configurables, éviter open/close) — logique moteur, pas seulement planificateur Windows
-- [ ] Règles d'invalidation complètes (mouvement étendu, réintégration non confirmée, retest tardif…)
-- [ ] Signal candidat = contrat structuré (entrée/stop/objectif théoriques, expiration, setup_type) → table `signals`
-- [ ] Tests unitaires sur données synthétiques ET extraits réels rejoués
+- [x] `strategy_v2/market_structure.py` : swings fractals (plateaux gérés), HH/HL/LH/LL, tendance structurelle, BOS, CHoCH — 8 tests
+- [x] `strategy_v2/liquidity.py` : niveaux avec fusion des égalités de sommets/creux, détection sweep par runs contigus (profondeur ATR bornée, réintégration rapide) — 10 tests
+- [x] `strategy_v2/state_machine.py` : IDLE→…→READY_TO_EXECUTE + REJECTED/COOLDOWN/SYSTEM_LOCKED, transitions horodatées/motivées/persistées, transition interdite = `ForbiddenTransition` — 6 tests
+- [x] `strategy_v2/sessions.py` : fenêtres UTC ASIA/LONDON/NEW_YORK configurables, bords exclus
+- [x] `strategy_v2/sweep_strategy.py` : pipeline H1→M15→M5→M1 (shift + retest), invalidations (volatilité extrême H1, extension au-delà du retest, une entrée par setup/bougie), stop structurel + RR configurable — 7 tests bout-en-bout
+- [x] Factory `strategy_name=liquidity_sweep` (verrous démo + MODEL_GRANULARITY=M1) ; paper-only, jamais promue automatiquement
+- [ ] PDH/PDL, open journalier, high/low de session comme niveaux additionnels
+- [ ] Volume du sweep comme critère (tick volume disponible mais non exploité)
+- [ ] Signal candidat persisté en table `signals` dédiée (Phase 8)
+- [ ] Rejeu d'extraits réels M1/M5 (après backfill M1) en complément du synthétique
+- [ ] **Backtest évènementiel de cette stratégie avant tout paper trading élargi (Phase 10 — bloquant)**
 
 ## Phase 5 — Filtre fondamental
 
