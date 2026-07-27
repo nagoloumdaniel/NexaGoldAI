@@ -124,6 +124,7 @@ Règles non négociables pendant toute la migration :
 
 ## Phase 9 — Modèles IA (hors ligne uniquement)
 
+- [x] Générateur de dataset (`python -m app.learning.dataset_builder`) : tous les signaux candidats (sans contrainte de position), dédupliqués par setup, étiquetés par barrière, features numériques + temporelles — 180 j M1 : 173 candidats, P(TARGET_FIRST)=0.322, +0.29R brut
 - [ ] Pipeline de features versionné (techniques, structure, liquidité, temporelles) avec garanties anti-fuite testées
 - [ ] Modèle de régime v2 (LightGBM/HMM comparés hors échantillon) — sorties probabilisées
 - [ ] Modèle de qualité de signal : P(TP avant SL), EV nette en R, incertitude, calibration (Brier/reliability)
