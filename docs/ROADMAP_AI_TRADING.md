@@ -116,8 +116,9 @@ Règles non négociables pendant toute la migration :
 - [x] Migration `20260727223104_phase8_memory_tables` : `TradeResult` (R, MFE/MAE, durée, source de sortie), `RiskDecision` (chaque review avec raison + stats), `SystemEvent` (kill switch…) — additive, aucune donnée perdue
 - [x] Pipeline post-trade : `PostTradeAnalyzer.record()` aux 4 sites de clôture (PROFIT_TAKE, HORIZON, SL/TP broker, MANUAL), MFE/MAE calculés sur le M1, upsert idempotent, jamais bloquant ; endpoints `/analysis/results`, `/analysis/stats`, `/risk/decisions`, `/system/events` ; backfill validé sur les trades réels
 - [ ] Tables restantes : `signals` structurés dédiés, `ai_decisions`, `trade_errors` (classification), `model_versions` en base (le registre fichier existe)
-- [ ] Classification des décisions (GOOD/BAD_DECISION × GOOD/BAD_RESULT) et causes racines
-- [ ] Labels par barrière (TARGET_FIRST / STOP_FIRST / TIMEOUT / AMBIGUOUS pessimiste) pour l'entraînement
+- [x] Classification des décisions (GOOD/BAD_DECISION × GOOD/BAD_RESULT + NORMAL_STATISTICAL_LOSS / TARGET_TOO_AMBITIOUS / STOP_TOO_TIGHT / LATE_ENTRY / NEAR_STOP_RECOVERY / INCONCLUSIVE) intégrée au pipeline post-trade — validée sur les trades réels
+- [x] Labels par barrière (`app/learning/labels.py`) : TARGET_FIRST / STOP_FIRST / TIMEOUT / AMBIGUOUS pessimiste / INVALID_DATA, anti-fuite testé
+- [ ] Enrichir la classification avec les features du setup (INVALID_SWEEP, BAD_RETEST…) une fois assez de trades sweep clôturés
 - [ ] Recherche de trades similaires (régime, session, volatilité, profondeur sweep…) avec seuil minimal d'échantillons
 - [ ] Analyse contrefactuelle hors ligne (hypothèses seulement, jamais d'auto-application)
 
