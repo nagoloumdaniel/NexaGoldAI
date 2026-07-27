@@ -47,13 +47,15 @@ Règles non négociables pendant toute la migration :
 - [x] Kill switch dynamique (`risk/kill_switch.py`) : persisté, causes historisées, verrouillage auto sur limites jour/semaine/série, endpoints `GET /risk/status`, `POST /risk/lock`, `POST /risk/unlock?reason=` (raison obligatoire), état corrompu = verrouillage préventif
 - [ ] Notification Telegram sur verrouillage du kill switch (nécessite le canal moteur→API, phase 12)
 - [ ] Idempotence des ordres : `signal_id`/`decision_id`/`client_order_id`, garde anti-double-envoi sur retry
-- [ ] Sécurité API NestJS : clé d'API (header) sur toutes les routes mutantes, CORS strict (3002 par défaut), `ValidationPipe` + DTO
+- [x] Sécurité API NestJS (1er palier) : CORS strict par défaut (3002), écoute 127.0.0.1 par défaut (`API_HOST` pour surcharger), `.env.example` corrigé
+- [ ] Sécurité API NestJS (2e palier) : clé d'API (header) sur les routes mutantes + câblage dashboard, `ValidationPipe` + DTO
 - [ ] Sécurité moteur FastAPI : token partagé local sur les routes mutantes ; uvicorn bindé 127.0.0.1 documenté
-- [ ] `/health` API : code HTTP fidèle ; logs des erreurs proxy moteur (fin des `catch {}` muets)
+- [x] `/health` API : 503 quand la DB est injoignable ; erreurs proxy moteur journalisées (fin des `catch {}` muets)
 - [ ] Health checks moteur enrichis : fraîcheur données, horloge vs broker, latence, état terminal
-- [ ] Corriger `analytics()` (courbe figée à 500 snapshots, agrégats SQL)
+- [x] Corriger `analytics()` : courbe d'équité = 500 snapshots les plus récents (agrégats SQL restants à faire)
 - [x] Retirer la promotion automatique de champion et le hot-swap silencieux : `retrain()` enregistre un CANDIDAT, promotion manuelle via `POST /learning/promote?version=` (avec indice de rollback)
-- [ ] Nettoyage : `.vscode/PythonImportHelper*.json` retiré du suivi, `.env.example` web versionné, ports 3000→3002 corrigés (README, start.ps1, .env.example)
+- [x] Nettoyage : `.vscode/PythonImportHelper*.json` retiré du suivi git + ignoré ; `FRONTEND_URL` corrigé 3000→3002
+- [ ] Nettoyage restant : `.env.example` web versionné, ports 3000→3002 dans README/start.ps1, README réaligné (JWT/WebSockets/PyTorch fantômes)
 - [ ] CI GitHub Actions : lint + typecheck + tests (sans broker, sans secrets, jamais d'ordre)
 
 ## Phase 3 — Données
