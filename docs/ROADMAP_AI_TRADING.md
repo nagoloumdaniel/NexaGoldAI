@@ -48,15 +48,17 @@ Règles non négociables pendant toute la migration :
 - [ ] Notification Telegram sur verrouillage du kill switch (nécessite le canal moteur→API, phase 12)
 - [ ] Idempotence des ordres : `signal_id`/`decision_id`/`client_order_id`, garde anti-double-envoi sur retry
 - [x] Sécurité API NestJS (1er palier) : CORS strict par défaut (3002), écoute 127.0.0.1 par défaut (`API_HOST` pour surcharger), `.env.example` corrigé
-- [ ] Sécurité API NestJS (2e palier) : clé d'API (header) sur les routes mutantes + câblage dashboard, `ValidationPipe` + DTO
-- [ ] Sécurité moteur FastAPI : token partagé local sur les routes mutantes ; uvicorn bindé 127.0.0.1 documenté
+- [x] Sécurité API NestJS (2e palier) : `ApiKeyGuard` (x-api-key / `API_KEY`) sur les 5 routes mutantes, câblage dashboard (`NEXT_PUBLIC_API_KEY`) et `stop-auto.ps1`
+- [x] Sécurité moteur FastAPI : jeton `ENGINE_API_TOKEN` sur les 11 routes POST (test garantissant qu'aucune route POST n'est oubliée), transmis par le proxy NestJS
+- [ ] `ValidationPipe` + DTO sur l'API NestJS
 - [x] `/health` API : 503 quand la DB est injoignable ; erreurs proxy moteur journalisées (fin des `catch {}` muets)
 - [ ] Health checks moteur enrichis : fraîcheur données, horloge vs broker, latence, état terminal
 - [x] Corriger `analytics()` : courbe d'équité = 500 snapshots les plus récents (agrégats SQL restants à faire)
 - [x] Retirer la promotion automatique de champion et le hot-swap silencieux : `retrain()` enregistre un CANDIDAT, promotion manuelle via `POST /learning/promote?version=` (avec indice de rollback)
 - [x] Nettoyage : `.vscode/PythonImportHelper*.json` retiré du suivi git + ignoré ; `FRONTEND_URL` corrigé 3000→3002
-- [ ] Nettoyage restant : `.env.example` web versionné, ports 3000→3002 dans README/start.ps1, README réaligné (JWT/WebSockets/PyTorch fantômes)
-- [ ] CI GitHub Actions : lint + typecheck + tests (sans broker, sans secrets, jamais d'ordre)
+- [x] `.env.example` web versionné (exception `.gitignore` ajoutée)
+- [ ] Nettoyage restant : ports 3000→3002 dans README/start.ps1, README réaligné (JWT/WebSockets/PyTorch fantômes)
+- [x] CI GitHub Actions : lint + typecheck + tests des 3 apps (sans broker, sans secrets, jamais d'ordre)
 
 ## Phase 3 — Données
 
@@ -80,11 +82,12 @@ Règles non négociables pendant toute la migration :
 
 ## Phase 5 — Filtre fondamental
 
-- [ ] Interface abstraite `EconomicCalendarProvider` + premier provider concret
-- [ ] Config fenêtres avant/après par importance (high 30/20 min, medium 10/10)
-- [ ] **Fail-closed** : données calendrier indisponibles → aucun nouveau signal
-- [ ] Événements USD/taux pour XAUUSD (NFP, CPI, FOMC, PCE…)
-- [ ] Tests (fenêtres, fuseaux, absence de données)
+- [x] Interface abstraite `EconomicCalendarProvider` + provider ForexFactory (flux public, parsing défensif, tolère un flux partiel)
+- [x] Config fenêtres avant/après par importance (HIGH 30/20 min, MEDIUM 10/10) sur devises configurables (USD par défaut)
+- [x] **Fail-closed** : calendrier jamais chargé ou plus vieux que `NEWS_MAX_AGE_MINUTES` → statut `news_blocked`, aucun nouvel ordre (les clôtures restent permises)
+- [x] Câblage Trader + `GET /fundamental/status` (cache, verdict, annonces 24 h) ; vérifié en réel (FOMC 2026-07-29 détecté)
+- [x] Tests (fenêtres, fuseaux via offsets ISO, absence de données, refresh, cache conservé sur panne)
+- [ ] Deuxième provider de secours (redondance de source)
 
 ## Phase 6 — Moteur de risque durci (suite de la phase 2)
 
