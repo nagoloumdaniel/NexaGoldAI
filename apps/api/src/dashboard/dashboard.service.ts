@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 const ENGINE_URL = process.env.ENGINE_URL ?? 'http://localhost:8000';
@@ -8,6 +8,8 @@ const INSTRUMENT = process.env.INSTRUMENT_KEY ?? 'XAUUSD';
 
 @Injectable()
 export class DashboardService {
+  private readonly logger = new Logger(DashboardService.name);
+
   constructor(private readonly prisma: PrismaService) {}
 
   private async engine<T>(path: string): Promise<T | null> {
@@ -15,9 +17,13 @@ export class DashboardService {
       const res = await fetch(`${ENGINE_URL}${path}`, {
         signal: AbortSignal.timeout(8000),
       });
-      if (!res.ok) return null;
+      if (!res.ok) {
+        this.logger.warn(`Moteur GET ${path} -> HTTP ${res.status}`);
+        return null;
+      }
       return (await res.json()) as T;
-    } catch {
+    } catch (error) {
+      this.logger.warn(`Moteur GET ${path} injoignable: ${String(error)}`);
       return null;
     }
   }
@@ -33,9 +39,13 @@ export class DashboardService {
         body: body ? JSON.stringify(body) : undefined,
         signal: AbortSignal.timeout(20_000),
       });
-      if (!res.ok) return null;
+      if (!res.ok) {
+        this.logger.warn(`Moteur POST ${path} -> HTTP ${res.status}`);
+        return null;
+      }
       return (await res.json()) as T;
-    } catch {
+    } catch (error) {
+      this.logger.warn(`Moteur POST ${path} injoignable: ${String(error)}`);
       return null;
     }
   }
@@ -197,10 +207,14 @@ export class DashboardService {
     const grossLoss = Math.abs(
       pnls.filter((p) => p < 0).reduce((a, b) => a + b, 0),
     );
-    const equity = await this.prisma.equitySnapshot.findMany({
-      orderBy: { time: 'asc' },
-      take: 500,
-    });
+    // Les 500 snapshots les plus RÉCENTS, remis en ordre chronologique
+    // (asc + take figeait la courbe sur les 500 premiers jours).
+    const equity = (
+      await this.prisma.equitySnapshot.findMany({
+        orderBy: { time: 'desc' },
+        take: 500,
+      })
+    ).reverse();
     return {
       tradeCount: closed.length,
       winRate: pnls.length ? wins.length / pnls.length : 0,
