@@ -19,6 +19,8 @@ from decimal import Decimal
 
 import asyncpg
 
+from app.analysis.classification import classify_trade
+
 logger = logging.getLogger("nexagold.posttrade")
 
 
@@ -54,7 +56,8 @@ class PostTradeAnalyzer:
         async with self._pool.acquire() as conn:
             trade = await conn.fetchrow(
                 'SELECT "id", "side", "units", "entryPrice", "exitPrice", '
-                '"stopLoss", "pnl", "strategy", "openedAt", "closedAt" '
+                '"stopLoss", "pnl", "strategy", "openedAt", "closedAt", '
+                '"features" '
                 'FROM "Trade" WHERE "id" = $1 '
                 'AND "status" = \'CLOSED\'::"TradeStatus"',
                 trade_id,
@@ -85,17 +88,35 @@ class PostTradeAnalyzer:
             result_r = round(signed / risk, 4) if risk > 0 else None
             holding = int((trade["closedAt"] - trade["openedAt"]).total_seconds())
 
+            features = trade["features"]
+            if isinstance(features, str):
+                try:
+                    features = json.loads(features)
+                except ValueError:
+                    features = None
+            rr = None
+            if isinstance(features, dict):
+                try:
+                    rr = float(features.get("risk_reward_ratio") or 0) or None
+                except (TypeError, ValueError):
+                    rr = None
+            verdict = classify_trade(result_r, mfe_r, mae_r, rr, exit_source)
+
             await conn.execute(
                 'INSERT INTO "TradeResult" '
                 '("id", "tradeId", "strategy", "side", "entryTime", "exitTime", '
                 '"entryPrice", "exitPrice", "pnl", "resultR", "mfeR", "maeR", '
-                '"holdingSeconds", "exitSource", "details") '
+                '"holdingSeconds", "exitSource", "classification", '
+                '"errorCategory", "details") '
                 "VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, "
-                "$13, $14, $15::jsonb) "
+                "$13, $14, $15, $16, $17::jsonb) "
                 'ON CONFLICT ("tradeId") DO UPDATE SET '
                 '"exitSource" = COALESCE(EXCLUDED."exitSource", "TradeResult"."exitSource"), '
                 '"mfeR" = COALESCE(EXCLUDED."mfeR", "TradeResult"."mfeR"), '
-                '"maeR" = COALESCE(EXCLUDED."maeR", "TradeResult"."maeR")',
+                '"maeR" = COALESCE(EXCLUDED."maeR", "TradeResult"."maeR"), '
+                '"classification" = EXCLUDED."classification", '
+                '"errorCategory" = EXCLUDED."errorCategory", '
+                '"details" = EXCLUDED."details"',
                 "tr_" + uuid.uuid4().hex,
                 trade["id"],
                 trade["strategy"],
@@ -110,7 +131,16 @@ class PostTradeAnalyzer:
                 Decimal(str(mae_r)) if mae_r is not None else None,
                 holding,
                 exit_source,
-                json.dumps({"m1_bars": len(candles), "risk_per_unit": risk}),
+                verdict.classification,
+                verdict.error_category,
+                json.dumps(
+                    {
+                        "m1_bars": len(candles),
+                        "risk_per_unit": risk,
+                        "risk_reward": rr,
+                        "explanation": verdict.explanation,
+                    }
+                ),
             )
         return {
             "recorded": True,
@@ -120,6 +150,9 @@ class PostTradeAnalyzer:
             "mae_r": mae_r,
             "holding_seconds": holding,
             "exit_source": exit_source,
+            "classification": verdict.classification,
+            "error_category": verdict.error_category,
+            "explanation": verdict.explanation,
         }
 
     async def recent(self, limit: int = 50) -> list[dict]:
@@ -127,7 +160,8 @@ class PostTradeAnalyzer:
             rows = await conn.fetch(
                 'SELECT "tradeId", "strategy", "side", "entryTime", "exitTime", '
                 '"entryPrice", "exitPrice", "pnl", "resultR", "mfeR", "maeR", '
-                '"holdingSeconds", "exitSource" '
+                '"holdingSeconds", "exitSource", "classification", '
+                '"errorCategory", "details" '
                 'FROM "TradeResult" ORDER BY "exitTime" DESC LIMIT $1',
                 limit,
             )
@@ -146,6 +180,8 @@ class PostTradeAnalyzer:
                 "mae_r": float(r["maeR"]) if r["maeR"] is not None else None,
                 "holding_seconds": r["holdingSeconds"],
                 "exit_source": r["exitSource"],
+                "classification": r["classification"],
+                "error_category": r["errorCategory"],
             }
             for r in rows
         ]

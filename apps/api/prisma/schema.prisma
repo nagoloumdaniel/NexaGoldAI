@@ -127,6 +127,11 @@ model TradeResult {
   maeR           Decimal? @db.Decimal(8, 4)
   holdingSeconds Int
   exitSource     String? // SL / TP / PROFIT_TAKE / HORIZON / USER / MANUAL
+  // Classification post-trade : GOOD/BAD_DECISION x GOOD/BAD_RESULT ou
+  // INCONCLUSIVE ; errorCategory précise la cause (NORMAL_STATISTICAL_LOSS,
+  // TARGET_TOO_AMBITIOUS, STOP_TOO_TIGHT, LATE_ENTRY...).
+  classification String?
+  errorCategory  String?
   details        Json?
   createdAt      DateTime @default(now())
 
