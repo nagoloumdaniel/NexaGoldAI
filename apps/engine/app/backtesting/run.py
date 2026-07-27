@@ -22,7 +22,7 @@ from app.db import Database
 from app.strategy_v2.state_machine import SetupStateMachine
 from app.strategy_v2.sweep_strategy import LiquiditySweepStrategy, SweepConfig
 
-REPORTS_DIR = Path(__file__).resolve().parents[3] / "reports" / "backtests"
+REPORTS_DIR = Path(__file__).resolve().parents[4] / "reports" / "backtests"
 
 
 async def load_m1(days: int) -> list[dict]:
