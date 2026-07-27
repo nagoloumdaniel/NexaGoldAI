@@ -98,6 +98,49 @@ def resample_m1(m1: list[dict], minutes: int) -> list[dict]:
     return out
 
 
+class MultiTFWindows:
+    """Fenêtres M5/M15/H1 closes reconstruites depuis le M1 pour un index donné.
+
+    Partagé entre le backtest et le générateur de dataset : la même logique de
+    troncature (aucune bougie future, aucune bougie en cours) partout.
+    """
+
+    def __init__(self, m1: list[dict], granularities, window_bars: int):
+        self._window = window_bars
+        self._tf_series = {
+            gran: resample_m1(m1, _TF_MINUTES[gran])
+            for gran in granularities
+            if gran in _TF_MINUTES
+        }
+        # Une bougie TF d'ouverture T est close quand T + step <= cutoff.
+        self._tf_open_times = {
+            gran: [datetime.fromisoformat(c["time"]) for c in series]
+            for gran, series in self._tf_series.items()
+        }
+
+    def extra_at(self, bar_time: datetime) -> dict[str, list[dict]]:
+        """Fenêtres TF closes à la clôture de la bougie M1 `bar_time`."""
+        extra: dict[str, list[dict]] = {}
+        cutoff = bar_time + timedelta(minutes=1)
+        for gran, series in self._tf_series.items():
+            step = timedelta(minutes=_TF_MINUTES[gran])
+            opens = self._tf_open_times[gran]
+            lo, hi = 0, len(opens)
+            while lo < hi:
+                mid = (lo + hi) // 2
+                if opens[mid] + step <= cutoff:
+                    lo = mid + 1
+                else:
+                    hi = mid
+            closed = series[max(0, lo - self._window) : lo]
+            if closed:
+                # evaluate() écarte la dernière bougie (supposée en cours) :
+                # sentinelle pour ne pas perdre une vraie close.
+                closed = closed + [dict(closed[-1])]
+            extra[gran] = closed
+        return extra
+
+
 class EventBacktester:
     """Rejoue une stratégie (contrat Strategy + extra_granularities) sur M1."""
 
@@ -180,17 +223,7 @@ class EventBacktester:
     def run(self, m1: list[dict]) -> dict:
         strategy = self._strategy
         window = self._window
-        tf_series = {
-            gran: resample_m1(m1, _TF_MINUTES[gran])
-            for gran in strategy.extra_granularities
-            if gran in _TF_MINUTES
-        }
-        # Index de la prochaine bougie TF *ouverte* pour chaque temps M1 :
-        # une bougie TF d'ouverture T est close quand T + step <= t.
-        tf_open_times = {
-            gran: [datetime.fromisoformat(c["time"]) for c in series]
-            for gran, series in tf_series.items()
-        }
+        windows = MultiTFWindows(m1, strategy.extra_granularities, window)
 
         trades: list[BacktestTrade] = []
         hold_reasons: dict[str, int] = {}
@@ -260,27 +293,7 @@ class EventBacktester:
 
             # 3) Évaluation de la stratégie à la CLÔTURE de la bougie i.
             m1_window = m1[max(0, i + 1 - window) : i + 1]
-            extra: dict[str, list[dict]] = {}
-            for gran, series in tf_series.items():
-                step = timedelta(minutes=_TF_MINUTES[gran])
-                # Nombre de bougies TF closes à la clôture de la bougie M1 i.
-                closed_count = 0
-                opens = tf_open_times[gran]
-                lo, hi = 0, len(opens)
-                cutoff = bar_time + timedelta(minutes=1)
-                while lo < hi:
-                    mid = (lo + hi) // 2
-                    if opens[mid] + step <= cutoff:
-                        lo = mid + 1
-                    else:
-                        hi = mid
-                closed_count = lo
-                closed = series[max(0, closed_count - window) : closed_count]
-                if closed:
-                    # evaluate() écarte la dernière bougie (supposée en cours) :
-                    # on ajoute une sentinelle pour ne pas perdre une vraie close.
-                    closed = closed + [dict(closed[-1])]
-                extra[gran] = closed
+            extra = windows.extra_at(bar_time)
 
             evaluations += 1
             signal = strategy.evaluate(m1_window + [dict(m1_window[-1])], extra=extra)
