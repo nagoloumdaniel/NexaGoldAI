@@ -37,19 +37,22 @@ Règles non négociables pendant toute la migration :
 
 ## Phase 2 — Fondations et corrections P0
 
-- [ ] Épingler les dépendances Python (lockfile `requirements.lock` ou uv) + pytest + ruff + mypy
+- [x] Suite pytest introduite (`apps/engine/tests/`, 21 tests risque/kill switch, sans broker ni DB) — pytest ajouté aux dépendances
+- [ ] Épingler les dépendances Python (lockfile `requirements.lock` ou uv) + ruff + mypy
 - [ ] Convertir `tests_manual/*` en suite pytest exécutable en une commande
 - [ ] Config centralisée versionnée (YAML `configs/xauusd_scalping.yaml` + surcharge env) sans casser `Settings` pydantic
-- [ ] Correctif P0 risque : perte quotidienne réelle = pertes réalisées du jour (DB) + flottant, testée
-- [ ] Limites hebdo, pertes consécutives, cooldown centralisé, plafond d'exposition dans le RiskEngine
-- [ ] Kill switch dynamique (`risk/kill_switch.py`) : causes enregistrées, endpoints `risk lock/unlock --reason`, réactivation explicite, notification Telegram
+- [x] Correctif P0 risque : perte quotidienne réelle = pertes réalisées du jour (DB, `TradeRepository.risk_stats`) + flottant, fail-closed sans stats, testée
+- [x] Limites hebdo + pertes consécutives + cooldown centralisé (15/60 min) dans le RiskManager
+- [ ] Plafond d'exposition notionnelle dans le RiskEngine
+- [x] Kill switch dynamique (`risk/kill_switch.py`) : persisté, causes historisées, verrouillage auto sur limites jour/semaine/série, endpoints `GET /risk/status`, `POST /risk/lock`, `POST /risk/unlock?reason=` (raison obligatoire), état corrompu = verrouillage préventif
+- [ ] Notification Telegram sur verrouillage du kill switch (nécessite le canal moteur→API, phase 12)
 - [ ] Idempotence des ordres : `signal_id`/`decision_id`/`client_order_id`, garde anti-double-envoi sur retry
 - [ ] Sécurité API NestJS : clé d'API (header) sur toutes les routes mutantes, CORS strict (3002 par défaut), `ValidationPipe` + DTO
 - [ ] Sécurité moteur FastAPI : token partagé local sur les routes mutantes ; uvicorn bindé 127.0.0.1 documenté
 - [ ] `/health` API : code HTTP fidèle ; logs des erreurs proxy moteur (fin des `catch {}` muets)
 - [ ] Health checks moteur enrichis : fraîcheur données, horloge vs broker, latence, état terminal
 - [ ] Corriger `analytics()` (courbe figée à 500 snapshots, agrégats SQL)
-- [ ] Retirer la promotion automatique de champion (`make_champion=True`) et le hot-swap silencieux
+- [x] Retirer la promotion automatique de champion et le hot-swap silencieux : `retrain()` enregistre un CANDIDAT, promotion manuelle via `POST /learning/promote?version=` (avec indice de rollback)
 - [ ] Nettoyage : `.vscode/PythonImportHelper*.json` retiré du suivi, `.env.example` web versionné, ports 3000→3002 corrigés (README, start.ps1, .env.example)
 - [ ] CI GitHub Actions : lint + typecheck + tests (sans broker, sans secrets, jamais d'ordre)
 

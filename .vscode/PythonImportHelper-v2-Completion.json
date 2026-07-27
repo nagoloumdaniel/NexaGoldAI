@@ -196,6 +196,94 @@
         "documentation": {}
     },
     {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "timezone",
         "importPath": "datetime",
         "description": "datetime",
@@ -252,15 +340,7 @@
         "documentation": {}
     },
     {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timezone",
+        "label": "timedelta",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
@@ -269,14 +349,6 @@
     },
     {
         "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "timezone",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
@@ -300,7 +372,7 @@
         "documentation": {}
     },
     {
-        "label": "datetime",
+        "label": "timezone",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
@@ -549,6 +621,14 @@
     },
     {
         "label": "get_settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
         "importPath": "app.config",
         "description": "app.config",
         "isExtraImport": true,
@@ -951,6 +1031,22 @@
         "documentation": {}
     },
     {
+        "label": "Signal",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
+        "label": "Action",
+        "importPath": "app.strategy.base",
+        "description": "app.strategy.base",
+        "isExtraImport": true,
+        "detail": "app.strategy.base",
+        "documentation": {}
+    },
+    {
         "label": "AlwaysHold",
         "importPath": "app.strategy.base",
         "description": "app.strategy.base",
@@ -1162,6 +1258,14 @@
         "documentation": {}
     },
     {
+        "label": "RiskManager",
+        "importPath": "app.risk.manager",
+        "description": "app.risk.manager",
+        "isExtraImport": true,
+        "detail": "app.risk.manager",
+        "documentation": {}
+    },
+    {
         "label": "build_math_summary",
         "importPath": "app.signals.math_features",
         "description": "app.signals.math_features",
@@ -1263,6 +1367,30 @@
         "description": "app.signals.structured",
         "isExtraImport": true,
         "detail": "app.signals.structured",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
         "documentation": {}
     },
     {
@@ -1474,6 +1602,54 @@
         "documentation": {}
     },
     {
+        "label": "ModelRegistry",
+        "importPath": "app.learning.registry",
+        "description": "app.learning.registry",
+        "isExtraImport": true,
+        "detail": "app.learning.registry",
+        "documentation": {}
+    },
+    {
+        "label": "ModelRegistry",
+        "importPath": "app.learning.registry",
+        "description": "app.learning.registry",
+        "isExtraImport": true,
+        "detail": "app.learning.registry",
+        "documentation": {}
+    },
+    {
+        "label": "ModelRegistry",
+        "importPath": "app.learning.registry",
+        "description": "app.learning.registry",
+        "isExtraImport": true,
+        "detail": "app.learning.registry",
+        "documentation": {}
+    },
+    {
+        "label": "ModelRegistry",
+        "importPath": "app.learning.registry",
+        "description": "app.learning.registry",
+        "isExtraImport": true,
+        "detail": "app.learning.registry",
+        "documentation": {}
+    },
+    {
+        "label": "ModelRegistry",
+        "importPath": "app.learning.registry",
+        "description": "app.learning.registry",
+        "isExtraImport": true,
+        "detail": "app.learning.registry",
+        "documentation": {}
+    },
+    {
+        "label": "MODELS_DIR",
+        "importPath": "app.learning.trainer",
+        "description": "app.learning.trainer",
+        "isExtraImport": true,
+        "detail": "app.learning.trainer",
+        "documentation": {}
+    },
+    {
         "label": "retrain",
         "importPath": "app.learning.trainer",
         "description": "app.learning.trainer",
@@ -1512,38 +1688,6 @@
         "importPath": "joblib",
         "description": "joblib",
         "detail": "joblib",
-        "documentation": {}
-    },
-    {
-        "label": "ModelRegistry",
-        "importPath": "app.learning.registry",
-        "description": "app.learning.registry",
-        "isExtraImport": true,
-        "detail": "app.learning.registry",
-        "documentation": {}
-    },
-    {
-        "label": "ModelRegistry",
-        "importPath": "app.learning.registry",
-        "description": "app.learning.registry",
-        "isExtraImport": true,
-        "detail": "app.learning.registry",
-        "documentation": {}
-    },
-    {
-        "label": "ModelRegistry",
-        "importPath": "app.learning.registry",
-        "description": "app.learning.registry",
-        "isExtraImport": true,
-        "detail": "app.learning.registry",
-        "documentation": {}
-    },
-    {
-        "label": "ModelRegistry",
-        "importPath": "app.learning.registry",
-        "description": "app.learning.registry",
-        "isExtraImport": true,
-        "detail": "app.learning.registry",
         "documentation": {}
     },
     {
@@ -2349,6 +2493,38 @@
         "documentation": {}
     },
     {
+        "label": "KillSwitch",
+        "importPath": "app.risk.kill_switch",
+        "description": "app.risk.kill_switch",
+        "isExtraImport": true,
+        "detail": "app.risk.kill_switch",
+        "documentation": {}
+    },
+    {
+        "label": "KillSwitch",
+        "importPath": "app.risk.kill_switch",
+        "description": "app.risk.kill_switch",
+        "isExtraImport": true,
+        "detail": "app.risk.kill_switch",
+        "documentation": {}
+    },
+    {
+        "label": "KillSwitch",
+        "importPath": "app.risk.kill_switch",
+        "description": "app.risk.kill_switch",
+        "isExtraImport": true,
+        "detail": "app.risk.kill_switch",
+        "documentation": {}
+    },
+    {
+        "label": "KillSwitch",
+        "importPath": "app.risk.kill_switch",
+        "description": "app.risk.kill_switch",
+        "isExtraImport": true,
+        "detail": "app.risk.kill_switch",
+        "documentation": {}
+    },
+    {
         "label": "annotations",
         "importPath": "__future__",
         "description": "__future__",
@@ -2554,6 +2730,15 @@
         "description": "app.learning.service",
         "isExtraImport": true,
         "detail": "app.learning.service",
+        "documentation": {}
+    },
+    {
+        "label": "pytest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytest",
+        "description": "pytest",
+        "detail": "pytest",
         "documentation": {}
     },
     {
@@ -2956,7 +3141,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.learning.service",
         "description": "apps.engine.app.learning.service",
-        "peekOfCode": "class LearningService:\n    def __init__(self, settings: Settings, trader: Trader):\n        self._settings = settings\n        self._trader = trader\n    async def retrain_once(self) -> dict:\n        result = await retrain(self._settings, self._settings.model_granularity)\n        if \"error\" not in result:\n            self._trader.set_strategy(build_strategy(self._settings))\n            logger.info(\"Stratégie rechargée sur le champion %s\", result[\"champion\"])\n        return result",
+        "peekOfCode": "class LearningService:\n    def __init__(self, settings: Settings, trader: Trader):\n        self._settings = settings\n        self._trader = trader\n    async def retrain_once(self) -> dict:\n        result = await retrain(self._settings, self._settings.model_granularity)\n        if \"error\" not in result:\n            logger.info(\n                \"Candidat %s enregistré — promotion manuelle requise \"\n                \"(champion actuel: %s)\",",
         "detail": "apps.engine.app.learning.service",
         "documentation": {}
     },
@@ -2965,7 +3150,7 @@
         "kind": 5,
         "importPath": "apps.engine.app.learning.service",
         "description": "apps.engine.app.learning.service",
-        "peekOfCode": "logger = logging.getLogger(\"nexagold.learning\")\nclass LearningService:\n    def __init__(self, settings: Settings, trader: Trader):\n        self._settings = settings\n        self._trader = trader\n    async def retrain_once(self) -> dict:\n        result = await retrain(self._settings, self._settings.model_granularity)\n        if \"error\" not in result:\n            self._trader.set_strategy(build_strategy(self._settings))\n            logger.info(\"Stratégie rechargée sur le champion %s\", result[\"champion\"])",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.learning\")\nclass LearningService:\n    def __init__(self, settings: Settings, trader: Trader):\n        self._settings = settings\n        self._trader = trader\n    async def retrain_once(self) -> dict:\n        result = await retrain(self._settings, self._settings.model_granularity)\n        if \"error\" not in result:\n            logger.info(\n                \"Candidat %s enregistré — promotion manuelle requise \"",
         "detail": "apps.engine.app.learning.service",
         "documentation": {}
     },
@@ -3609,11 +3794,38 @@
         "documentation": {}
     },
     {
+        "label": "KillSwitch",
+        "kind": 6,
+        "importPath": "apps.engine.app.risk.kill_switch",
+        "description": "apps.engine.app.risk.kill_switch",
+        "peekOfCode": "class KillSwitch:\n    def __init__(self, state_path: Path):\n        self._path = Path(state_path)\n        self._locked = False\n        self._reason: str | None = None\n        self._locked_at: str | None = None\n        self._source: str | None = None\n        self._history: list[dict] = []\n        self._load()\n    def _load(self) -> None:",
+        "detail": "apps.engine.app.risk.kill_switch",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "apps.engine.app.risk.kill_switch",
+        "description": "apps.engine.app.risk.kill_switch",
+        "peekOfCode": "logger = logging.getLogger(\"nexagold.killswitch\")\n_MAX_HISTORY = 100\nclass KillSwitch:\n    def __init__(self, state_path: Path):\n        self._path = Path(state_path)\n        self._locked = False\n        self._reason: str | None = None\n        self._locked_at: str | None = None\n        self._source: str | None = None\n        self._history: list[dict] = []",
+        "detail": "apps.engine.app.risk.kill_switch",
+        "documentation": {}
+    },
+    {
+        "label": "_MAX_HISTORY",
+        "kind": 5,
+        "importPath": "apps.engine.app.risk.kill_switch",
+        "description": "apps.engine.app.risk.kill_switch",
+        "peekOfCode": "_MAX_HISTORY = 100\nclass KillSwitch:\n    def __init__(self, state_path: Path):\n        self._path = Path(state_path)\n        self._locked = False\n        self._reason: str | None = None\n        self._locked_at: str | None = None\n        self._source: str | None = None\n        self._history: list[dict] = []\n        self._load()",
+        "detail": "apps.engine.app.risk.kill_switch",
+        "documentation": {}
+    },
+    {
         "label": "RiskDecision",
         "kind": 6,
         "importPath": "apps.engine.app.risk.manager",
         "description": "apps.engine.app.risk.manager",
-        "peekOfCode": "class RiskDecision:\n    approved: bool\n    reason: str\n    # Signed position size: positive = buy, negative = sell. The broker client\n    # converts this to its own size/direction convention. 0 if rejected.\n    units: float = 0.0\nclass RiskManager:\n    def __init__(self, settings: Settings):\n        self._settings = settings\n    def review(",
+        "peekOfCode": "class RiskDecision:\n    approved: bool\n    reason: str\n    # Signed position size: positive = buy, negative = sell. The broker client\n    # converts this to its own size/direction convention. 0 if rejected.\n    units: float = 0.0\ndef _parse_utc(value: str | None) -> datetime | None:\n    if not value:\n        return None\n    try:",
         "detail": "apps.engine.app.risk.manager",
         "documentation": {}
     },
@@ -3622,7 +3834,7 @@
         "kind": 6,
         "importPath": "apps.engine.app.risk.manager",
         "description": "apps.engine.app.risk.manager",
-        "peekOfCode": "class RiskManager:\n    def __init__(self, settings: Settings):\n        self._settings = settings\n    def review(\n        self,\n        signal: Signal,\n        account: dict,\n        open_positions: list[dict],\n        price: float,\n        stop_loss_price: float,",
+        "peekOfCode": "class RiskManager:\n    def __init__(self, settings: Settings, kill_switch: KillSwitch | None = None):\n        self._settings = settings\n        self.kill_switch = kill_switch\n    def review(\n        self,\n        signal: Signal,\n        account: dict,\n        open_positions: list[dict],\n        price: float,",
         "detail": "apps.engine.app.risk.manager",
         "documentation": {}
     },
@@ -3910,7 +4122,16 @@
         "kind": 5,
         "importPath": "apps.engine.app.main",
         "description": "apps.engine.app.main",
-        "peekOfCode": "settings = get_settings()\nclass ResolveTradeRequest(BaseModel):\n    status: Literal[\"CANCELLED\", \"CLOSED\"]\n    exit_price: float | None = None\n    closed_at: datetime | None = None\nbroker: MT5Client | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None\ntrader: Trader | None = None\ndecisions_repo: StrategyDecisionRepository | None = None",
+        "peekOfCode": "settings = get_settings()\n# Kill switch dynamique, persisté hors git (models/ est ignoré). Créé avant le\n# lifespan pour que les endpoints /risk/* fonctionnent même sans DB/broker.\nkill_switch = KillSwitch(\n    Path(__file__).resolve().parents[1] / \"models\" / \"kill_switch.json\"\n)\nclass ResolveTradeRequest(BaseModel):\n    status: Literal[\"CANCELLED\", \"CLOSED\"]\n    exit_price: float | None = None\n    closed_at: datetime | None = None",
+        "detail": "apps.engine.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "kill_switch",
+        "kind": 5,
+        "importPath": "apps.engine.app.main",
+        "description": "apps.engine.app.main",
+        "peekOfCode": "kill_switch = KillSwitch(\n    Path(__file__).resolve().parents[1] / \"models\" / \"kill_switch.json\"\n)\nclass ResolveTradeRequest(BaseModel):\n    status: Literal[\"CANCELLED\", \"CLOSED\"]\n    exit_price: float | None = None\n    closed_at: datetime | None = None\nbroker: MT5Client | None = None\ndatabase: Database | None = None\ningestion: IngestionService | None = None",
         "detail": "apps.engine.app.main",
         "documentation": {}
     },
@@ -3921,6 +4142,240 @@
         "description": "apps.engine.app.main",
         "peekOfCode": "app = FastAPI(title=\"NexaGold Engine\", version=\"0.1.0\", lifespan=lifespan)\ndef ensure_broker_configured() -> None:\n    if not _broker_ready():\n        raise HTTPException(\n            status_code=503,\n            detail=(\n                \"MetaTrader 5 non configuré : renseignez MT5_LOGIN, \"\n                \"MT5_PASSWORD et MT5_SERVER (compte démo)\"\n            ),\n        )",
         "detail": "apps.engine.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "test_initial_state_unlocked",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_kill_switch",
+        "description": "apps.engine.tests.test_kill_switch",
+        "peekOfCode": "def test_initial_state_unlocked(tmp_path: Path):\n    ks = KillSwitch(tmp_path / \"ks.json\")\n    assert ks.locked is False\n    assert ks.reason is None\ndef test_lock_sets_reason_and_persists(tmp_path: Path):\n    path = tmp_path / \"ks.json\"\n    ks = KillSwitch(path)\n    status = ks.lock(\"Perte quotidienne atteinte\", source=\"auto\")\n    assert status[\"locked\"] is True\n    assert status[\"reason\"] == \"Perte quotidienne atteinte\"",
+        "detail": "apps.engine.tests.test_kill_switch",
+        "documentation": {}
+    },
+    {
+        "label": "test_lock_sets_reason_and_persists",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_kill_switch",
+        "description": "apps.engine.tests.test_kill_switch",
+        "peekOfCode": "def test_lock_sets_reason_and_persists(tmp_path: Path):\n    path = tmp_path / \"ks.json\"\n    ks = KillSwitch(path)\n    status = ks.lock(\"Perte quotidienne atteinte\", source=\"auto\")\n    assert status[\"locked\"] is True\n    assert status[\"reason\"] == \"Perte quotidienne atteinte\"\n    assert status[\"source\"] == \"auto\"\n    # Un redémarrage (nouvelle instance) doit retrouver le verrou.\n    ks2 = KillSwitch(path)\n    assert ks2.locked is True",
+        "detail": "apps.engine.tests.test_kill_switch",
+        "documentation": {}
+    },
+    {
+        "label": "test_lock_is_idempotent_and_keeps_first_reason",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_kill_switch",
+        "description": "apps.engine.tests.test_kill_switch",
+        "peekOfCode": "def test_lock_is_idempotent_and_keeps_first_reason(tmp_path: Path):\n    ks = KillSwitch(tmp_path / \"ks.json\")\n    ks.lock(\"Première cause\")\n    ks.lock(\"Deuxième cause\")\n    assert ks.locked is True\n    assert ks.reason == \"Première cause\"\n    # Les deux événements restent tracés.\n    events = ks.status()[\"recent_events\"]\n    assert len(events) == 2\n    assert events[1][\"already_locked\"] is True",
+        "detail": "apps.engine.tests.test_kill_switch",
+        "documentation": {}
+    },
+    {
+        "label": "test_unlock_requires_reason",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_kill_switch",
+        "description": "apps.engine.tests.test_kill_switch",
+        "peekOfCode": "def test_unlock_requires_reason(tmp_path: Path):\n    ks = KillSwitch(tmp_path / \"ks.json\")\n    ks.lock(\"Cause\")\n    with pytest.raises(ValueError):\n        ks.unlock(\"\")\n    with pytest.raises(ValueError):\n        ks.unlock(\"   \")\n    assert ks.locked is True\ndef test_unlock_with_reason(tmp_path: Path):\n    path = tmp_path / \"ks.json\"",
+        "detail": "apps.engine.tests.test_kill_switch",
+        "documentation": {}
+    },
+    {
+        "label": "test_unlock_with_reason",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_kill_switch",
+        "description": "apps.engine.tests.test_kill_switch",
+        "peekOfCode": "def test_unlock_with_reason(tmp_path: Path):\n    path = tmp_path / \"ks.json\"\n    ks = KillSwitch(path)\n    ks.lock(\"Cause\")\n    status = ks.unlock(\"Analyse faite, conditions revenues à la normale\")\n    assert status[\"locked\"] is False\n    ks2 = KillSwitch(path)\n    assert ks2.locked is False\ndef test_corrupt_state_file_locks_preventively(tmp_path: Path):\n    path = tmp_path / \"ks.json\"",
+        "detail": "apps.engine.tests.test_kill_switch",
+        "documentation": {}
+    },
+    {
+        "label": "test_corrupt_state_file_locks_preventively",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_kill_switch",
+        "description": "apps.engine.tests.test_kill_switch",
+        "peekOfCode": "def test_corrupt_state_file_locks_preventively(tmp_path: Path):\n    path = tmp_path / \"ks.json\"\n    path.write_text(\"{invalid json\", encoding=\"utf-8\")\n    ks = KillSwitch(path)\n    # Un état illisible ne doit JAMAIS se traduire par « tout est permis ».\n    assert ks.locked is True\n    assert \"illisible\" in (ks.reason or \"\")",
+        "detail": "apps.engine.tests.test_kill_switch",
+        "documentation": {}
+    },
+    {
+        "label": "make_settings",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def make_settings(**overrides) -> Settings:\n    base = dict(\n        trading_enabled=True,\n        max_risk_per_trade_pct=1.0,\n        max_daily_loss_pct=3.0,\n        max_weekly_loss_pct=6.0,\n        max_open_positions=3,\n        max_consecutive_losses=4,\n        cooldown_after_loss_minutes=15,\n        cooldown_after_consecutive_losses_minutes=60,",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "buy_signal",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def buy_signal(size: float = 1.0) -> Signal:\n    return Signal(Action.BUY, 0.8, \"test\", {}, size)\nACCOUNT = {\"balance\": 10_000.0, \"nav\": 10_000.0}\nCLEAN_STATS = {\n    \"realized_pnl_today\": 0.0,\n    \"realized_pnl_week\": 0.0,\n    \"consecutive_losses\": 0,\n    \"last_loss_at\": None,\n}\ndef review(settings=None, ks=None, signal=None, account=None, positions=None,",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "review",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def review(settings=None, ks=None, signal=None, account=None, positions=None,\n           stats=CLEAN_STATS, price=3300.0, stop=3290.0):\n    manager = RiskManager(settings or make_settings(), ks)\n    return manager.review(\n        signal or buy_signal(),\n        account or ACCOUNT,\n        positions or [],\n        price,\n        stop,\n        stats,",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_approves_clean_signal_with_sized_units",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_approves_clean_signal_with_sized_units():\n    decision = review()\n    assert decision.approved is True\n    # 1% de 10 000 = 100 de budget risque ; stop à 10 points -> 10 unités.\n    assert decision.units == 10.0\ndef test_rejects_when_trading_disabled():\n    decision = review(settings=make_settings(trading_enabled=False))\n    assert decision.approved is False\n    assert \"TRADING_ENABLED\" in decision.reason\ndef test_rejects_when_kill_switch_locked(tmp_path):",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_rejects_when_trading_disabled",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_rejects_when_trading_disabled():\n    decision = review(settings=make_settings(trading_enabled=False))\n    assert decision.approved is False\n    assert \"TRADING_ENABLED\" in decision.reason\ndef test_rejects_when_kill_switch_locked(tmp_path):\n    ks = KillSwitch(tmp_path / \"ks.json\")\n    ks.lock(\"Cause de test\")\n    decision = review(ks=ks)\n    assert decision.approved is False\n    assert \"verrouillé\" in decision.reason",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_rejects_when_kill_switch_locked",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_rejects_when_kill_switch_locked(tmp_path):\n    ks = KillSwitch(tmp_path / \"ks.json\")\n    ks.lock(\"Cause de test\")\n    decision = review(ks=ks)\n    assert decision.approved is False\n    assert \"verrouillé\" in decision.reason\ndef test_fail_closed_without_risk_stats():\n    decision = review(stats=None)\n    assert decision.approved is False\n    assert \"fail-closed\" in decision.reason",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_fail_closed_without_risk_stats",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_fail_closed_without_risk_stats():\n    decision = review(stats=None)\n    assert decision.approved is False\n    assert \"fail-closed\" in decision.reason\ndef test_daily_loss_counts_realized_losses_even_with_flat_equity(tmp_path):\n    \"\"\"Cas P0 de l'audit : pertes réalisées, equity revenue au niveau du solde.\n    L'ancienne implémentation (balance - nav) ne voyait rien. La nouvelle doit\n    refuser ET verrouiller le kill switch.\n    \"\"\"\n    ks = KillSwitch(tmp_path / \"ks.json\")",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_daily_loss_counts_realized_losses_even_with_flat_equity",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_daily_loss_counts_realized_losses_even_with_flat_equity(tmp_path):\n    \"\"\"Cas P0 de l'audit : pertes réalisées, equity revenue au niveau du solde.\n    L'ancienne implémentation (balance - nav) ne voyait rien. La nouvelle doit\n    refuser ET verrouiller le kill switch.\n    \"\"\"\n    ks = KillSwitch(tmp_path / \"ks.json\")\n    stats = {**CLEAN_STATS, \"realized_pnl_today\": -301.0}  # > 3% de 10 000\n    decision = review(ks=ks, stats=stats)\n    assert decision.approved is False\n    assert \"Daily loss\" in decision.reason",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_daily_loss_combines_realized_and_floating",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_daily_loss_combines_realized_and_floating(tmp_path):\n    ks = KillSwitch(tmp_path / \"ks.json\")\n    # -200 réalisé + -150 flottant = -350 > limite 300.\n    account = {\"balance\": 10_000.0, \"nav\": 9_850.0}\n    stats = {**CLEAN_STATS, \"realized_pnl_today\": -200.0}\n    decision = review(ks=ks, stats=stats, account=account)\n    assert decision.approved is False\n    assert ks.locked is True\ndef test_daily_gain_offsets_floating_loss():\n    # +200 réalisé, -250 flottant : perte nette du jour -50, sous la limite.",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_daily_gain_offsets_floating_loss",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_daily_gain_offsets_floating_loss():\n    # +200 réalisé, -250 flottant : perte nette du jour -50, sous la limite.\n    account = {\"balance\": 10_000.0, \"nav\": 9_750.0}\n    stats = {**CLEAN_STATS, \"realized_pnl_today\": 200.0}\n    decision = review(stats=stats, account=account)\n    assert decision.approved is True\ndef test_weekly_loss_limit(tmp_path):\n    ks = KillSwitch(tmp_path / \"ks.json\")\n    stats = {**CLEAN_STATS, \"realized_pnl_week\": -601.0}  # > 6% de 10 000\n    decision = review(ks=ks, stats=stats)",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_weekly_loss_limit",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_weekly_loss_limit(tmp_path):\n    ks = KillSwitch(tmp_path / \"ks.json\")\n    stats = {**CLEAN_STATS, \"realized_pnl_week\": -601.0}  # > 6% de 10 000\n    decision = review(ks=ks, stats=stats)\n    assert decision.approved is False\n    assert \"Weekly loss\" in decision.reason\n    assert ks.locked is True\ndef test_consecutive_losses_lock(tmp_path):\n    ks = KillSwitch(tmp_path / \"ks.json\")\n    stats = {**CLEAN_STATS, \"consecutive_losses\": 4}",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_consecutive_losses_lock",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_consecutive_losses_lock(tmp_path):\n    ks = KillSwitch(tmp_path / \"ks.json\")\n    stats = {**CLEAN_STATS, \"consecutive_losses\": 4}\n    decision = review(ks=ks, stats=stats)\n    assert decision.approved is False\n    assert \"Consecutive losses\" in decision.reason\n    assert ks.locked is True\ndef test_cooldown_after_single_recent_loss():\n    five_min_ago = (datetime.now(timezone.utc) - timedelta(minutes=5)).isoformat()\n    stats = {**CLEAN_STATS, \"consecutive_losses\": 1, \"last_loss_at\": five_min_ago}",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_cooldown_after_single_recent_loss",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_cooldown_after_single_recent_loss():\n    five_min_ago = (datetime.now(timezone.utc) - timedelta(minutes=5)).isoformat()\n    stats = {**CLEAN_STATS, \"consecutive_losses\": 1, \"last_loss_at\": five_min_ago}\n    decision = review(stats=stats)\n    assert decision.approved is False\n    assert \"Cooldown\" in decision.reason\ndef test_cooldown_expired_allows_trading():\n    old_loss = (datetime.now(timezone.utc) - timedelta(minutes=20)).isoformat()\n    stats = {**CLEAN_STATS, \"consecutive_losses\": 1, \"last_loss_at\": old_loss}\n    decision = review(stats=stats)",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_cooldown_expired_allows_trading",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_cooldown_expired_allows_trading():\n    old_loss = (datetime.now(timezone.utc) - timedelta(minutes=20)).isoformat()\n    stats = {**CLEAN_STATS, \"consecutive_losses\": 1, \"last_loss_at\": old_loss}\n    decision = review(stats=stats)\n    assert decision.approved is True\ndef test_longer_cooldown_after_two_consecutive_losses():\n    # 20 min après la perte : OK pour 1 perte (15 min), PAS pour 2 (60 min).\n    twenty_min_ago = (datetime.now(timezone.utc) - timedelta(minutes=20)).isoformat()\n    stats = {**CLEAN_STATS, \"consecutive_losses\": 2, \"last_loss_at\": twenty_min_ago}\n    decision = review(stats=stats)",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_longer_cooldown_after_two_consecutive_losses",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_longer_cooldown_after_two_consecutive_losses():\n    # 20 min après la perte : OK pour 1 perte (15 min), PAS pour 2 (60 min).\n    twenty_min_ago = (datetime.now(timezone.utc) - timedelta(minutes=20)).isoformat()\n    stats = {**CLEAN_STATS, \"consecutive_losses\": 2, \"last_loss_at\": twenty_min_ago}\n    decision = review(stats=stats)\n    assert decision.approved is False\n    assert \"Cooldown\" in decision.reason\ndef test_max_open_positions():\n    positions = [{\"ticket\": i} for i in range(3)]\n    decision = review(positions=positions)",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_max_open_positions",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_max_open_positions():\n    positions = [{\"ticket\": i} for i in range(3)]\n    decision = review(positions=positions)\n    assert decision.approved is False\n    assert \"Max open positions\" in decision.reason\ndef test_rejects_invalid_position_multiplier():\n    decision = review(signal=buy_signal(size=1.5))\n    assert decision.approved is False\n    decision = review(signal=buy_signal(size=0.0))\n    assert decision.approved is False",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_rejects_invalid_position_multiplier",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_rejects_invalid_position_multiplier():\n    decision = review(signal=buy_signal(size=1.5))\n    assert decision.approved is False\n    decision = review(signal=buy_signal(size=0.0))\n    assert decision.approved is False\ndef test_sell_signal_gets_negative_units():\n    decision = review(signal=Signal(Action.SELL, 0.8, \"test\", {}, 1.0),\n                      price=3300.0, stop=3310.0)\n    assert decision.approved is True\n    assert decision.units == -10.0",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "test_sell_signal_gets_negative_units",
+        "kind": 2,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "def test_sell_signal_gets_negative_units():\n    decision = review(signal=Signal(Action.SELL, 0.8, \"test\", {}, 1.0),\n                      price=3300.0, stop=3310.0)\n    assert decision.approved is True\n    assert decision.units == -10.0",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "ACCOUNT",
+        "kind": 5,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "ACCOUNT = {\"balance\": 10_000.0, \"nav\": 10_000.0}\nCLEAN_STATS = {\n    \"realized_pnl_today\": 0.0,\n    \"realized_pnl_week\": 0.0,\n    \"consecutive_losses\": 0,\n    \"last_loss_at\": None,\n}\ndef review(settings=None, ks=None, signal=None, account=None, positions=None,\n           stats=CLEAN_STATS, price=3300.0, stop=3290.0):\n    manager = RiskManager(settings or make_settings(), ks)",
+        "detail": "apps.engine.tests.test_risk_manager",
+        "documentation": {}
+    },
+    {
+        "label": "CLEAN_STATS",
+        "kind": 5,
+        "importPath": "apps.engine.tests.test_risk_manager",
+        "description": "apps.engine.tests.test_risk_manager",
+        "peekOfCode": "CLEAN_STATS = {\n    \"realized_pnl_today\": 0.0,\n    \"realized_pnl_week\": 0.0,\n    \"consecutive_losses\": 0,\n    \"last_loss_at\": None,\n}\ndef review(settings=None, ks=None, signal=None, account=None, positions=None,\n           stats=CLEAN_STATS, price=3300.0, stop=3290.0):\n    manager = RiskManager(settings or make_settings(), ks)\n    return manager.review(",
+        "detail": "apps.engine.tests.test_risk_manager",
         "documentation": {}
     },
     {
@@ -4702,7 +5157,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_risk_bracket",
         "description": "apps.engine.tests_manual.test_risk_bracket",
-        "peekOfCode": "ACCOUNT = {\"balance\": 1000.0, \"nav\": 1000.0}\nBUY = Signal(Action.BUY, 0.8, \"test buy\")\n# Bracket maths\nsl, tp = compute_bracket(Action.BUY, 4200.0, 0.005, 1.5)\nassert abs(sl - 4179.0) < 1e-6, sl\nassert abs(tp - 4231.5) < 1e-6, tp\nsl_s, tp_s = compute_bracket(Action.SELL, 4200.0, 0.005, 1.5)\nassert abs(sl_s - 4221.0) < 1e-6, sl_s\nassert abs(tp_s - 4168.5) < 1e-6, tp_s\n# Kill switch: trading disabled -> always rejected",
+        "peekOfCode": "ACCOUNT = {\"balance\": 1000.0, \"nav\": 1000.0}\nBUY = Signal(Action.BUY, 0.8, \"test buy\")\n# Statistiques de risque saines (le RiskManager est fail-closed sans elles).\nSTATS = {\n    \"realized_pnl_today\": 0.0,\n    \"realized_pnl_week\": 0.0,\n    \"consecutive_losses\": 0,\n    \"last_loss_at\": None,\n}\n# Bracket maths",
         "detail": "apps.engine.tests_manual.test_risk_bracket",
         "documentation": {}
     },
@@ -4711,7 +5166,16 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_risk_bracket",
         "description": "apps.engine.tests_manual.test_risk_bracket",
-        "peekOfCode": "BUY = Signal(Action.BUY, 0.8, \"test buy\")\n# Bracket maths\nsl, tp = compute_bracket(Action.BUY, 4200.0, 0.005, 1.5)\nassert abs(sl - 4179.0) < 1e-6, sl\nassert abs(tp - 4231.5) < 1e-6, tp\nsl_s, tp_s = compute_bracket(Action.SELL, 4200.0, 0.005, 1.5)\nassert abs(sl_s - 4221.0) < 1e-6, sl_s\nassert abs(tp_s - 4168.5) < 1e-6, tp_s\n# Kill switch: trading disabled -> always rejected\nrisk_off = RiskManager(Settings(trading_enabled=False))",
+        "peekOfCode": "BUY = Signal(Action.BUY, 0.8, \"test buy\")\n# Statistiques de risque saines (le RiskManager est fail-closed sans elles).\nSTATS = {\n    \"realized_pnl_today\": 0.0,\n    \"realized_pnl_week\": 0.0,\n    \"consecutive_losses\": 0,\n    \"last_loss_at\": None,\n}\n# Bracket maths\nsl, tp = compute_bracket(Action.BUY, 4200.0, 0.005, 1.5)",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "STATS",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "STATS = {\n    \"realized_pnl_today\": 0.0,\n    \"realized_pnl_week\": 0.0,\n    \"consecutive_losses\": 0,\n    \"last_loss_at\": None,\n}\n# Bracket maths\nsl, tp = compute_bracket(Action.BUY, 4200.0, 0.005, 1.5)\nassert abs(sl - 4179.0) < 1e-6, sl\nassert abs(tp - 4231.5) < 1e-6, tp",
         "detail": "apps.engine.tests_manual.test_risk_bracket",
         "documentation": {}
     },
@@ -4720,7 +5184,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_risk_bracket",
         "description": "apps.engine.tests_manual.test_risk_bracket",
-        "peekOfCode": "risk_off = RiskManager(Settings(trading_enabled=False))\nd = risk_off.review(BUY, ACCOUNT, [], 4200.0, sl)\nassert not d.approved and \"Kill switch\" in d.reason, d\n# Enabled: position sized from risk budget and stop distance\nrisk_on = RiskManager(\n    Settings(\n        trading_enabled=True,\n        max_risk_per_trade_pct=1.0,\n        max_daily_loss_pct=3.0,\n        max_open_positions=1,",
+        "peekOfCode": "risk_off = RiskManager(Settings(trading_enabled=False))\nd = risk_off.review(BUY, ACCOUNT, [], 4200.0, sl, STATS)\nassert not d.approved and \"Kill switch\" in d.reason, d\n# Enabled: position sized from risk budget and stop distance\nrisk_on = RiskManager(\n    Settings(\n        trading_enabled=True,\n        max_risk_per_trade_pct=1.0,\n        max_daily_loss_pct=3.0,\n        max_open_positions=1,",
         "detail": "apps.engine.tests_manual.test_risk_bracket",
         "documentation": {}
     },
@@ -4729,7 +5193,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_risk_bracket",
         "description": "apps.engine.tests_manual.test_risk_bracket",
-        "peekOfCode": "d = risk_off.review(BUY, ACCOUNT, [], 4200.0, sl)\nassert not d.approved and \"Kill switch\" in d.reason, d\n# Enabled: position sized from risk budget and stop distance\nrisk_on = RiskManager(\n    Settings(\n        trading_enabled=True,\n        max_risk_per_trade_pct=1.0,\n        max_daily_loss_pct=3.0,\n        max_open_positions=1,\n    )",
+        "peekOfCode": "d = risk_off.review(BUY, ACCOUNT, [], 4200.0, sl, STATS)\nassert not d.approved and \"Kill switch\" in d.reason, d\n# Enabled: position sized from risk budget and stop distance\nrisk_on = RiskManager(\n    Settings(\n        trading_enabled=True,\n        max_risk_per_trade_pct=1.0,\n        max_daily_loss_pct=3.0,\n        max_open_positions=1,\n    )",
         "detail": "apps.engine.tests_manual.test_risk_bracket",
         "documentation": {}
     },
@@ -4738,7 +5202,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_risk_bracket",
         "description": "apps.engine.tests_manual.test_risk_bracket",
-        "peekOfCode": "risk_on = RiskManager(\n    Settings(\n        trading_enabled=True,\n        max_risk_per_trade_pct=1.0,\n        max_daily_loss_pct=3.0,\n        max_open_positions=1,\n    )\n)\nd = risk_on.review(BUY, ACCOUNT, [], 4200.0, sl)\n# risk budget = 1% of 1000 = 10 ; stop distance = 21 ; units = 10/21 ≈ 0.5",
+        "peekOfCode": "risk_on = RiskManager(\n    Settings(\n        trading_enabled=True,\n        max_risk_per_trade_pct=1.0,\n        max_daily_loss_pct=3.0,\n        max_open_positions=1,\n    )\n)\nd = risk_on.review(BUY, ACCOUNT, [], 4200.0, sl, STATS)\n# risk budget = 1% of 1000 = 10 ; stop distance = 21 ; units = 10/21 ≈ 0.5",
         "detail": "apps.engine.tests_manual.test_risk_bracket",
         "documentation": {}
     },
@@ -4747,7 +5211,16 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_risk_bracket",
         "description": "apps.engine.tests_manual.test_risk_bracket",
-        "peekOfCode": "d = risk_on.review(BUY, ACCOUNT, [], 4200.0, sl)\n# risk budget = 1% of 1000 = 10 ; stop distance = 21 ; units = 10/21 ≈ 0.5\nassert d.approved, d\nassert abs(d.units - 0.5) < 1e-9, d.units\n# Strategy volatility targeting scales the normal risk budget without leverage.\nhalf_size_buy = Signal(Action.BUY, 0.8, \"test half size\", position_size=0.5)\nd = risk_on.review(half_size_buy, ACCOUNT, [], 4200.0, sl)\nassert d.approved, d\nassert d.units == 0.2, d.units\nassert \"50.0%\" in d.reason, d.reason",
+        "peekOfCode": "d = risk_on.review(BUY, ACCOUNT, [], 4200.0, sl, STATS)\n# risk budget = 1% of 1000 = 10 ; stop distance = 21 ; units = 10/21 ≈ 0.5\nassert d.approved, d\nassert abs(d.units - 0.5) < 1e-9, d.units\n# Fail-closed: pas de statistiques de risque -> refus\nd = risk_on.review(BUY, ACCOUNT, [], 4200.0, sl, None)\nassert not d.approved and \"fail-closed\" in d.reason, d\n# Strategy volatility targeting scales the normal risk budget without leverage.\nhalf_size_buy = Signal(Action.BUY, 0.8, \"test half size\", position_size=0.5)\nd = risk_on.review(half_size_buy, ACCOUNT, [], 4200.0, sl, STATS)",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "d",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "d = risk_on.review(BUY, ACCOUNT, [], 4200.0, sl, None)\nassert not d.approved and \"fail-closed\" in d.reason, d\n# Strategy volatility targeting scales the normal risk budget without leverage.\nhalf_size_buy = Signal(Action.BUY, 0.8, \"test half size\", position_size=0.5)\nd = risk_on.review(half_size_buy, ACCOUNT, [], 4200.0, sl, STATS)\nassert d.approved, d\nassert d.units == 0.2, d.units\nassert \"50.0%\" in d.reason, d.reason\n# Max open positions enforced\nd = risk_on.review(BUY, ACCOUNT, [{\"x\": 1}], 4200.0, sl, STATS)",
         "detail": "apps.engine.tests_manual.test_risk_bracket",
         "documentation": {}
     },
@@ -4756,7 +5229,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_risk_bracket",
         "description": "apps.engine.tests_manual.test_risk_bracket",
-        "peekOfCode": "half_size_buy = Signal(Action.BUY, 0.8, \"test half size\", position_size=0.5)\nd = risk_on.review(half_size_buy, ACCOUNT, [], 4200.0, sl)\nassert d.approved, d\nassert d.units == 0.2, d.units\nassert \"50.0%\" in d.reason, d.reason\n# Max open positions enforced\nd = risk_on.review(BUY, ACCOUNT, [{\"x\": 1}], 4200.0, sl)\nassert not d.approved and \"Max open positions\" in d.reason, d\n# Daily loss limit: NAV far below balance -> rejected\nd = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl)",
+        "peekOfCode": "half_size_buy = Signal(Action.BUY, 0.8, \"test half size\", position_size=0.5)\nd = risk_on.review(half_size_buy, ACCOUNT, [], 4200.0, sl, STATS)\nassert d.approved, d\nassert d.units == 0.2, d.units\nassert \"50.0%\" in d.reason, d.reason\n# Max open positions enforced\nd = risk_on.review(BUY, ACCOUNT, [{\"x\": 1}], 4200.0, sl, STATS)\nassert not d.approved and \"Max open positions\" in d.reason, d\n# Daily loss limit: NAV far below balance (floating loss) -> rejected\nd = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl, STATS)",
         "detail": "apps.engine.tests_manual.test_risk_bracket",
         "documentation": {}
     },
@@ -4765,7 +5238,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_risk_bracket",
         "description": "apps.engine.tests_manual.test_risk_bracket",
-        "peekOfCode": "d = risk_on.review(half_size_buy, ACCOUNT, [], 4200.0, sl)\nassert d.approved, d\nassert d.units == 0.2, d.units\nassert \"50.0%\" in d.reason, d.reason\n# Max open positions enforced\nd = risk_on.review(BUY, ACCOUNT, [{\"x\": 1}], 4200.0, sl)\nassert not d.approved and \"Max open positions\" in d.reason, d\n# Daily loss limit: NAV far below balance -> rejected\nd = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl)\nassert not d.approved and \"loss limit\" in d.reason, d",
+        "peekOfCode": "d = risk_on.review(half_size_buy, ACCOUNT, [], 4200.0, sl, STATS)\nassert d.approved, d\nassert d.units == 0.2, d.units\nassert \"50.0%\" in d.reason, d.reason\n# Max open positions enforced\nd = risk_on.review(BUY, ACCOUNT, [{\"x\": 1}], 4200.0, sl, STATS)\nassert not d.approved and \"Max open positions\" in d.reason, d\n# Daily loss limit: NAV far below balance (floating loss) -> rejected\nd = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl, STATS)\nassert not d.approved and \"loss limit\" in d.reason, d",
         "detail": "apps.engine.tests_manual.test_risk_bracket",
         "documentation": {}
     },
@@ -4774,7 +5247,7 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_risk_bracket",
         "description": "apps.engine.tests_manual.test_risk_bracket",
-        "peekOfCode": "d = risk_on.review(BUY, ACCOUNT, [{\"x\": 1}], 4200.0, sl)\nassert not d.approved and \"Max open positions\" in d.reason, d\n# Daily loss limit: NAV far below balance -> rejected\nd = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl)\nassert not d.approved and \"loss limit\" in d.reason, d\nprint(\"OK: risk gate + bracket valides\")",
+        "peekOfCode": "d = risk_on.review(BUY, ACCOUNT, [{\"x\": 1}], 4200.0, sl, STATS)\nassert not d.approved and \"Max open positions\" in d.reason, d\n# Daily loss limit: NAV far below balance (floating loss) -> rejected\nd = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl, STATS)\nassert not d.approved and \"loss limit\" in d.reason, d\n# Daily loss limit: pertes RÉALISÉES avec equity revenue au niveau du solde\n# (le cas que l'ancienne implémentation balance-nav ne voyait pas).\nd = risk_on.review(\n    BUY, ACCOUNT, [], 4200.0, sl, {**STATS, \"realized_pnl_today\": -31.0}\n)",
         "detail": "apps.engine.tests_manual.test_risk_bracket",
         "documentation": {}
     },
@@ -4783,7 +5256,16 @@
         "kind": 5,
         "importPath": "apps.engine.tests_manual.test_risk_bracket",
         "description": "apps.engine.tests_manual.test_risk_bracket",
-        "peekOfCode": "d = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl)\nassert not d.approved and \"loss limit\" in d.reason, d\nprint(\"OK: risk gate + bracket valides\")",
+        "peekOfCode": "d = risk_on.review(BUY, {\"balance\": 1000.0, \"nav\": 900.0}, [], 4200.0, sl, STATS)\nassert not d.approved and \"loss limit\" in d.reason, d\n# Daily loss limit: pertes RÉALISÉES avec equity revenue au niveau du solde\n# (le cas que l'ancienne implémentation balance-nav ne voyait pas).\nd = risk_on.review(\n    BUY, ACCOUNT, [], 4200.0, sl, {**STATS, \"realized_pnl_today\": -31.0}\n)\nassert not d.approved and \"loss limit\" in d.reason, d\nprint(\"OK: risk gate + bracket valides\")",
+        "detail": "apps.engine.tests_manual.test_risk_bracket",
+        "documentation": {}
+    },
+    {
+        "label": "d",
+        "kind": 5,
+        "importPath": "apps.engine.tests_manual.test_risk_bracket",
+        "description": "apps.engine.tests_manual.test_risk_bracket",
+        "peekOfCode": "d = risk_on.review(\n    BUY, ACCOUNT, [], 4200.0, sl, {**STATS, \"realized_pnl_today\": -31.0}\n)\nassert not d.approved and \"loss limit\" in d.reason, d\nprint(\"OK: risk gate + bracket valides\")",
         "detail": "apps.engine.tests_manual.test_risk_bracket",
         "documentation": {}
     },

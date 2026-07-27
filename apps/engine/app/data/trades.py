@@ -7,7 +7,7 @@ captures entry, bracket and the deciding strategy/reason.
 
 import json
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 
 import asyncpg
@@ -112,6 +112,59 @@ class TradeRepository:
                 str(broker_ref) if broker_ref is not None else None,
             )
         return trade_id
+
+    async def risk_stats(self) -> dict:
+        """Statistiques consommées par le RiskManager (limites jour/semaine,
+        série de pertes, cooldown). Basées sur les trades CLÔTURÉS du bot pour
+        cet instrument — toutes stratégies confondues : changer de stratégie ne
+        remet pas les limites à zéro.
+
+        Convention temps : la DB stocke des timestamps naïfs UTC ; jour = depuis
+        minuit UTC, semaine = depuis lundi 00:00 UTC.
+        """
+        now = datetime.now(timezone.utc).replace(tzinfo=None)
+        day_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        week_start = day_start - timedelta(days=day_start.weekday())
+        async with self._pool.acquire() as conn:
+            row = await conn.fetchrow(
+                'SELECT '
+                'COALESCE(SUM("pnl") FILTER (WHERE "closedAt" >= $2), 0) AS today, '
+                'COALESCE(SUM("pnl") FILTER (WHERE "closedAt" >= $3), 0) AS week '
+                'FROM "Trade" WHERE "status" = \'CLOSED\'::"TradeStatus" '
+                'AND "instrument" = $1 AND "pnl" IS NOT NULL',
+                self._instrument,
+                day_start,
+                week_start,
+            )
+            recent = await conn.fetch(
+                'SELECT "pnl", "closedAt" FROM "Trade" '
+                'WHERE "status" = \'CLOSED\'::"TradeStatus" '
+                'AND "instrument" = $1 AND "pnl" IS NOT NULL '
+                'AND "closedAt" IS NOT NULL '
+                'ORDER BY "closedAt" DESC LIMIT 30',
+                self._instrument,
+            )
+        consecutive = 0
+        for r in recent:
+            if float(r["pnl"]) < 0:
+                consecutive += 1
+            else:
+                break
+        last_loss = next(
+            (r["closedAt"] for r in recent if float(r["pnl"]) < 0), None
+        )
+        return {
+            "realized_pnl_today": float(row["today"]),
+            "realized_pnl_week": float(row["week"]),
+            "consecutive_losses": consecutive,
+            "last_loss_at": (
+                last_loss.replace(tzinfo=timezone.utc).isoformat()
+                if last_loss is not None
+                else None
+            ),
+            "day_start": day_start.isoformat() + "Z",
+            "week_start": week_start.isoformat() + "Z",
+        }
 
     async def paper_validation(self, strategy: str) -> dict:
         async with self._pool.acquire() as conn:

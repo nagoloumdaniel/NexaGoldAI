@@ -47,7 +47,16 @@ def _selection_metric(report: dict) -> float:
     return report["pnl"]["sharpe_annualised"]
 
 
-async def retrain(settings: Settings, granularity: str, folds: int = 5) -> dict:
+async def retrain(
+    settings: Settings, granularity: str, folds: int = 5, promote: bool = False
+) -> dict:
+    """Entraîne les candidats et enregistre le meilleur comme CANDIDAT.
+
+    `promote=False` par défaut (gouvernance 2026-07-27) : un réentraînement ne
+    change plus jamais le champion tout seul — la promotion est une action
+    manuelle explicite (POST /learning/promote), jamais déclenchée par la
+    boucle d'apprentissage.
+    """
     df = await load_candles(settings, granularity)
     if df.empty or len(df) < 500:
         return {"error": f"Données insuffisantes ({len(df)} bougies)"}
@@ -118,11 +127,13 @@ async def retrain(settings: Settings, granularity: str, folds: int = 5) -> dict:
             "confidence_threshold": best["report"]["best_confidence_threshold"],
             "samples": best["report"]["samples"],
         },
-        make_champion=True,
+        make_champion=promote,
     )
 
     summary = {
-        "champion": version_id,
+        "candidate": version_id,
+        "champion": registry.champion(),
+        "promotion_required": not promote,
         "selected_config": best["config"],
         "confidence_threshold": best["report"]["best_confidence_threshold"],
         "candles": int(len(df)),

@@ -403,7 +403,17 @@ class Trader:
             signal.action, entry, stop_pct, risk_reward
         )
 
-        decision = self._risk.review(signal, account, positions, entry, stop_loss)
+        # Statistiques de risque depuis la DB (pertes réalisées jour/semaine,
+        # série de pertes) : indisponibles => le RiskManager refuse (fail-closed).
+        try:
+            risk_stats = await self._trades.risk_stats()
+        except Exception:  # noqa: BLE001 — un souci DB ne doit pas ouvrir de position
+            logger.exception("Statistiques de risque indisponibles")
+            risk_stats = None
+
+        decision = self._risk.review(
+            signal, account, positions, entry, stop_loss, risk_stats
+        )
         out["risk"] = {
             "approved": decision.approved,
             "reason": decision.reason,

@@ -43,6 +43,15 @@ class Settings(BaseSettings):
     max_risk_per_trade_pct: float = 1.0
     max_daily_loss_pct: float = 3.0
     max_open_positions: int = 1
+    # Limites additionnelles (P0 audit 2026-07-27). La perte jour/semaine est
+    # calculée sur le P&L RÉALISÉ (trades clôturés en DB) + le flottant — pas
+    # sur balance-equity seul, qui s'annule dès qu'une perte est réalisée.
+    max_weekly_loss_pct: float = 6.0
+    # Série de pertes clôturées consécutives qui verrouille le kill switch.
+    max_consecutive_losses: int = 4
+    # Pauses imposées par le moteur de risque (indépendantes de la stratégie).
+    cooldown_after_loss_minutes: int = 15
+    cooldown_after_consecutive_losses_minutes: int = 60
 
     # Paper trading loop (data -> signal -> risk -> order)
     trading_loop_enabled: bool = True

@@ -24,10 +24,17 @@ from app.db import Database
 from app.execution.trader import REGIME_SHADOW_STRATEGY, Trader
 from app.learning.registry import ModelRegistry
 from app.learning.service import LearningService
+from app.risk.kill_switch import KillSwitch
 from app.risk.manager import RiskManager
 from app.strategy.factory import build_strategy
 
 settings = get_settings()
+
+# Kill switch dynamique, persisté hors git (models/ est ignoré). Créé avant le
+# lifespan pour que les endpoints /risk/* fonctionnent même sans DB/broker.
+kill_switch = KillSwitch(
+    Path(__file__).resolve().parents[1] / "models" / "kill_switch.json"
+)
 
 
 class ResolveTradeRequest(BaseModel):
@@ -73,7 +80,7 @@ async def lifespan(app: FastAPI):
             settings,
             broker,
             build_strategy(settings),
-            RiskManager(settings),
+            RiskManager(settings, kill_switch),
             decisions_repo,
             TradeRepository(database.pool, settings.symbol),
         )
@@ -380,15 +387,61 @@ async def trades_resolve_manual(trade_id: str, payload: ResolveTradeRequest) -> 
     return result
 
 
+# -- Risk / kill switch -----------------------------------------------------
+
+
+@app.get("/risk/status")
+async def risk_status() -> dict:
+    """État du moteur de risque : kill switch, limites configurées, stats jour."""
+    stats = None
+    if trader is not None:
+        try:
+            stats = await trader._trades.risk_stats()  # noqa: SLF001 — introspection read-only
+        except Exception:  # noqa: BLE001 — le statut doit répondre même sans DB
+            stats = None
+    return {
+        "kill_switch": kill_switch.status(),
+        "trading_enabled": settings.trading_enabled,
+        "limits": {
+            "max_risk_per_trade_pct": settings.max_risk_per_trade_pct,
+            "max_daily_loss_pct": settings.max_daily_loss_pct,
+            "max_weekly_loss_pct": settings.max_weekly_loss_pct,
+            "max_open_positions": settings.max_open_positions,
+            "max_consecutive_losses": settings.max_consecutive_losses,
+            "cooldown_after_loss_minutes": settings.cooldown_after_loss_minutes,
+            "cooldown_after_consecutive_losses_minutes": (
+                settings.cooldown_after_consecutive_losses_minutes
+            ),
+        },
+        "risk_stats": stats,
+    }
+
+
+@app.post("/risk/lock")
+async def risk_lock(reason: str = Query("Verrouillage manuel opérateur")) -> dict:
+    """Active le kill switch dynamique (aucun nouvel ordre d'ouverture)."""
+    return kill_switch.lock(reason, source="operator")
+
+
+@app.post("/risk/unlock")
+async def risk_unlock(reason: str = Query(...)) -> dict:
+    """Réactivation EXPLICITE du trading — une raison est obligatoire."""
+    try:
+        return kill_switch.unlock(reason, source="operator")
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
 # -- Learning loop ----------------------------------------------------------
 
 
 @app.post("/learning/retrain")
 async def learning_retrain(granularity: str | None = Query(None)) -> dict:
-    """Run one retraining round: candidate configs compete, best is promoted.
+    """Run one retraining round: candidate configs compete, best is REGISTERED.
 
-    With ?granularity=H1, retrain on another granularity for measurement only
-    (no live strategy swap).
+    Le vainqueur devient un CANDIDAT — jamais champion automatiquement.
+    Promotion manuelle via POST /learning/promote. With ?granularity=H1,
+    retrain on another granularity for measurement only.
     """
     if learning is None:
         raise HTTPException(status_code=503, detail="Base de données indisponible")
@@ -397,6 +450,21 @@ async def learning_retrain(granularity: str | None = Query(None)) -> dict:
 
         return await retrain(settings, granularity)
     return await learning.retrain_once()
+
+
+@app.post("/learning/promote")
+async def learning_promote(version: str = Query(...)) -> dict:
+    """Promotion MANUELLE d'une version en champion (action opérateur).
+
+    C'est le seul chemin de promotion : la boucle d'apprentissage n'y touche
+    jamais. Le rechargement de stratégie reste soumis au verrou paper-only.
+    """
+    if learning is None:
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
+    result = learning.promote(version)
+    if not result.get("promoted"):
+        raise HTTPException(status_code=400, detail=result)
+    return result
 
 
 @app.get("/learning/adaptive")

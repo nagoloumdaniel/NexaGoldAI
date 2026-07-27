@@ -12,3 +12,5 @@ pandas>=2.2
 scikit-learn>=1.5
 lightgbm>=4.5
 joblib>=1.4
+# Dev/tests (la suite `tests/` tourne sans broker ni base de données)
+pytest>=8.0
