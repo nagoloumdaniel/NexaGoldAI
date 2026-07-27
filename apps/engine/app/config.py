@@ -93,6 +93,15 @@ class Settings(BaseSettings):
     profit_check_interval_seconds: int = 5
     profit_close_min_net: float = 0.5
     scalp_adapt_enabled: bool = True
+    # Sessions de trading (stratégie liquidity_sweep) : fenêtres UTC pendant
+    # lesquelles un NOUVEAU setup peut se déclencher. Hors session => HOLD.
+    sessions_enabled: bool = True
+    allowed_sessions: str = "LONDON,NEW_YORK"
+    avoid_session_edges_minutes: int = 5
+    # Retest obligatoire avant l'entrée (recommandé) et RR minimal du bracket.
+    sweep_require_retest: bool = True
+    sweep_min_risk_reward: float = 2.0
+
     # Applique réellement le filtre de régime (exclude BUY en BULLISH_TREND)
     # au lieu de le journaliser en shadow uniquement. À n'activer qu'après
     # validation historique du filtre.

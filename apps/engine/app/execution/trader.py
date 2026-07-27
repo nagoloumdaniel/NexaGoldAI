@@ -469,11 +469,15 @@ class Trader:
             broker_trade_id,
         )
         await self._decisions.mark_executed(decision_id, trade_id)
-        # Mode scalp : une seule entrée exécutée par bougie M5 — la stratégie
+        # Une seule entrée exécutée par bougie de déclenchement — la stratégie
         # est prévenue seulement quand l'ordre est réellement passé.
+        # (trigger_bar_time: stratégie sweep ; m5_bar_time: stratégie scalp.)
         mark_consumed = getattr(self._strategy, "mark_signal_consumed", None)
         if callable(mark_consumed):
-            mark_consumed(signal.features.get("m5_bar_time"))
+            mark_consumed(
+                signal.features.get("trigger_bar_time")
+                or signal.features.get("m5_bar_time")
+            )
         out["status"] = "executed"
         out["trade_id"] = trade_id
         out["order"] = order

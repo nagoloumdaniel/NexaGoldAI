@@ -14,6 +14,8 @@ from app.strategy.base import AlwaysHold, Strategy
 from app.strategy.expected_return_strategy import ExpectedReturnPaperStrategy
 from app.strategy.lightgbm_strategy import LightGBMStrategy
 from app.strategy.scalp_mtf import ScalpM5Strategy
+from app.strategy_v2.state_machine import SetupStateMachine
+from app.strategy_v2.sweep_strategy import LiquiditySweepStrategy, SweepConfig
 
 logger = logging.getLogger("nexagold.strategy")
 
@@ -21,6 +23,30 @@ _MODELS_DIR = Path(__file__).resolve().parents[2] / "models"
 
 
 def build_strategy(settings: Settings) -> Strategy:
+    if settings.strategy_name == "liquidity_sweep":
+        if settings.broker_env != "demo":
+            raise RuntimeError(
+                "liquidity_sweep est strictement interdit hors BROKER_ENV=demo"
+            )
+        if settings.model_granularity != "M1":
+            raise RuntimeError(
+                "liquidity_sweep exige MODEL_GRANULARITY=M1 (déclencheur M1 ; "
+                "M5/M15/H1 sont récupérés via extra_granularities)"
+            )
+        config = SweepConfig(
+            require_retest=settings.sweep_require_retest,
+            risk_reward=settings.sweep_min_risk_reward,
+        )
+        fsm = SetupStateMachine(
+            _MODELS_DIR / "liquidity_sweep" / "fsm_history.json"
+        )
+        logger.info(
+            "Stratégie liquidity-sweep chargée (retest=%s, RR=%.1f, sessions=%s)",
+            "ON" if config.require_retest else "OFF",
+            config.risk_reward,
+            settings.allowed_sessions if settings.sessions_enabled else "OFF",
+        )
+        return LiquiditySweepStrategy(settings, config, fsm)
     if settings.strategy_name == "scalp_m5":
         if settings.broker_env != "demo":
             raise RuntimeError(
