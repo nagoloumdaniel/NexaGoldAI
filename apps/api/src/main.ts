@@ -1,9 +1,18 @@
 import 'dotenv/config';
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // Validation stricte des entrées : champs inconnus rejetés, types convertis.
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
   app.enableCors({
     // Jamais `origin: true` par défaut (audit 2026-07-27) : sans FRONTEND_URL,
     // seul le dashboard local (port 3002) est autorisé.

@@ -9,9 +9,11 @@ import {
 } from '@nestjs/common';
 import { ApiKeyGuard } from '../auth/api-key.guard';
 import { DashboardService } from './dashboard.service';
+import { ResolveTradeDto } from './resolve-trade.dto';
 
+// Borné des deux côtés : `?limit=-500` inversait la pagination Prisma.
 const clamp = (value: string | undefined, fallback: number, max: number) =>
-  Math.min(Number(value) || fallback, max);
+  Math.min(Math.max(Number(value) || fallback, 1), max);
 
 @Controller('dashboard')
 export class DashboardController {
@@ -93,15 +95,7 @@ export class DashboardController {
 
   @Post('trades/:id/resolve')
   @UseGuards(ApiKeyGuard)
-  resolveTrade(
-    @Param('id') id: string,
-    @Body()
-    body: {
-      status: 'CANCELLED' | 'CLOSED';
-      exit_price?: number;
-      closed_at?: string;
-    },
-  ) {
-    return this.dashboard.resolveTrade(id, body);
+  resolveTrade(@Param('id') id: string, @Body() body: ResolveTradeDto) {
+    return this.dashboard.resolveTrade(id, { ...body });
   }
 }
