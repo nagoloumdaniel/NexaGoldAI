@@ -38,7 +38,8 @@ Règles non négociables pendant toute la migration :
 ## Phase 2 — Fondations et corrections P0
 
 - [x] Suite pytest introduite (`apps/engine/tests/`, 21 tests risque/kill switch, sans broker ni DB) — pytest ajouté aux dépendances
-- [ ] Épingler les dépendances Python (lockfile `requirements.lock` ou uv) + ruff + mypy
+- [x] Dépendances Python épinglées (`requirements.lock`, marqueur win32 conservé) + ruff (E4/E7/E9/F/B) en CI ; mypy restant
+- [ ] mypy (typage statique Python)
 - [ ] Convertir `tests_manual/*` en suite pytest exécutable en une commande
 - [ ] Config centralisée versionnée (YAML `configs/xauusd_scalping.yaml` + surcharge env) sans casser `Settings` pydantic
 - [x] Correctif P0 risque : perte quotidienne réelle = pertes réalisées du jour (DB, `TradeRepository.risk_stats`) + flottant, fail-closed sans stats, testée
@@ -50,7 +51,7 @@ Règles non négociables pendant toute la migration :
 - [x] Sécurité API NestJS (1er palier) : CORS strict par défaut (3002), écoute 127.0.0.1 par défaut (`API_HOST` pour surcharger), `.env.example` corrigé
 - [x] Sécurité API NestJS (2e palier) : `ApiKeyGuard` (x-api-key / `API_KEY`) sur les 5 routes mutantes, câblage dashboard (`NEXT_PUBLIC_API_KEY`) et `stop-auto.ps1`
 - [x] Sécurité moteur FastAPI : jeton `ENGINE_API_TOKEN` sur les 11 routes POST (test garantissant qu'aucune route POST n'est oubliée), transmis par le proxy NestJS
-- [ ] `ValidationPipe` + DTO sur l'API NestJS
+- [x] `ValidationPipe` global (whitelist/forbidNonWhitelisted/transform) + DTO `ResolveTradeDto` + clamp de pagination borné
 - [x] `/health` API : 503 quand la DB est injoignable ; erreurs proxy moteur journalisées (fin des `catch {}` muets)
 - [ ] Health checks moteur enrichis : fraîcheur données, horloge vs broker, latence, état terminal
 - [x] Corriger `analytics()` : courbe d'équité = 500 snapshots les plus récents (agrégats SQL restants à faire)
@@ -62,8 +63,9 @@ Règles non négociables pendant toute la migration :
 
 ## Phase 3 — Données
 
-- [ ] Ingestion M1 (+ granularités requises H1/M15/M5/M1 ; M3 dérivé de M1 si besoin)
-- [ ] `data_validator` : trous, bougies incohérentes, données figées, divergence timeframes, score qualité persisté
+- [x] Ingestion M1 (INGEST_GRANULARITIES=M1,M5,M15,M30,H1 ; M3 dérivable de M1)
+- [x] `data/validator.py` : trous (week-end exclu), bougies malformées, doublons/désordre, données figées/périmées, score 0..1 + `GET /data/quality?source=broker|db` — 10 tests
+- [ ] Divergence entre timeframes (cohérence M5 vs M15/H1) et persistance du score qualité
 - [ ] Table `market_snapshots` (migration Prisma additive) : bid/ask/spread + features au moment du signal
 - [ ] Collecte du spread en continu (distribution par heure → seuils calibrés, médiane pour la garde)
 - [ ] Backfill Dukascopy M1 profond pour le backtest évènementiel
