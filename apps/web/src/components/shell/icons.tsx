@@ -20,6 +20,8 @@ export type IconName =
   | "ai"
   | "models"
   | "analytics"
+  | "risk"
+  | "errors"
   | "settings";
 
 export function Icon({ name }: { name: IconName }) {
@@ -71,6 +73,20 @@ export function Icon({ name }: { name: IconName }) {
           <path d="M4 4v16h16" />
           <rect x="7" y="11" width="3" height="6" rx="0.5" />
           <rect x="13" y="7" width="3" height="10" rx="0.5" />
+        </svg>
+      );
+    case "risk":
+      return (
+        <svg {...base}>
+          <path d="M12 3l7.5 3.5v5c0 4.5-3 8.3-7.5 9.5-4.5-1.2-7.5-5-7.5-9.5v-5L12 3z" />
+          <path d="M12 8.5v4M12 15.5h.01" />
+        </svg>
+      );
+    case "errors":
+      return (
+        <svg {...base}>
+          <path d="M10.3 4.3L2.8 17a1.6 1.6 0 001.4 2.4h15.6A1.6 1.6 0 0021.2 17L13.7 4.3a1.6 1.6 0 00-2.8 0z" />
+          <path d="M12 9.5v4M12 16.5h.01" />
         </svg>
       );
     case "settings":

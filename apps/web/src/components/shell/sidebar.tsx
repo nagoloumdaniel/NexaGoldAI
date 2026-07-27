@@ -30,7 +30,14 @@ const NAV: NavGroup[] = [
   },
   {
     title: "Analyse",
-    items: [{ href: "/analytics", label: "Analytics", icon: "analytics" }],
+    items: [
+      { href: "/analytics", label: "Analytics", icon: "analytics" },
+      { href: "/erreurs", label: "Erreurs", icon: "errors" },
+    ],
+  },
+  {
+    title: "Protection",
+    items: [{ href: "/risque", label: "Risque", icon: "risk" }],
   },
   {
     title: "Système",

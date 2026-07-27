@@ -87,6 +87,36 @@ export class DashboardController {
     return this.dashboard.reconciliation();
   }
 
+  @Get('risk-status')
+  riskStatus() {
+    return this.dashboard.riskStatus();
+  }
+
+  @Get('risk-decisions')
+  riskDecisions(@Query('limit') limit?: string) {
+    return this.dashboard.riskDecisions(clamp(limit, 50, 200));
+  }
+
+  @Get('trade-results')
+  tradeResults(@Query('limit') limit?: string) {
+    return this.dashboard.tradeResults(clamp(limit, 50, 200));
+  }
+
+  @Get('analysis-stats')
+  analysisStats() {
+    return this.dashboard.analysisStats();
+  }
+
+  @Get('system-events')
+  systemEvents(@Query('limit') limit?: string) {
+    return this.dashboard.systemEvents(clamp(limit, 50, 200));
+  }
+
+  @Get('news-status')
+  newsStatus() {
+    return this.dashboard.newsStatus();
+  }
+
   @Post('reconciliation/run')
   @UseGuards(ApiKeyGuard)
   runReconciliation() {

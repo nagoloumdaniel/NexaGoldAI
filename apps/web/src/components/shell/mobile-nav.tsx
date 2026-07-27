@@ -12,6 +12,8 @@ const ITEMS: { href: string; label: string; icon: IconName }[] = [
   { href: "/ia", label: "Centre IA", icon: "ai" },
   { href: "/modeles", label: "Modèles", icon: "models" },
   { href: "/analytics", label: "Analytics", icon: "analytics" },
+  { href: "/erreurs", label: "Erreurs", icon: "errors" },
+  { href: "/risque", label: "Risque", icon: "risk" },
   { href: "/parametres", label: "Système", icon: "settings" },
 ];
 

@@ -303,6 +303,107 @@ export interface ResolveTradeResult {
   closed_at?: string;
 }
 
+export interface KillSwitchStatus {
+  locked: boolean;
+  reason: string | null;
+  locked_at: string | null;
+  source: string | null;
+  recent_events?: {
+    event: string;
+    reason: string;
+    source: string;
+    at: string;
+  }[];
+}
+
+export interface RiskLimits {
+  max_risk_per_trade_pct: number;
+  max_daily_loss_pct: number;
+  max_weekly_loss_pct: number;
+  max_open_positions: number;
+  max_consecutive_losses: number;
+  cooldown_after_loss_minutes: number;
+  cooldown_after_consecutive_losses_minutes: number;
+}
+
+export interface RiskStats {
+  realized_pnl_today: number;
+  realized_pnl_week: number;
+  consecutive_losses: number;
+  last_loss_at: string | null;
+}
+
+export interface RiskStatus {
+  engineReachable?: false;
+  kill_switch: KillSwitchStatus | null;
+  trading_enabled?: boolean;
+  limits: RiskLimits | null;
+  risk_stats: RiskStats | null;
+}
+
+export interface RiskDecisionRow {
+  time: string;
+  decision_id: string | null;
+  approved: boolean;
+  reason: string;
+  units: number | null;
+}
+
+export interface TradeResultRow {
+  trade_id: string;
+  strategy: string;
+  side: string;
+  entry_time: string;
+  exit_time: string;
+  entry_price: number;
+  exit_price: number;
+  pnl: number;
+  result_r: number | null;
+  mfe_r: number | null;
+  mae_r: number | null;
+  holding_seconds: number;
+  exit_source: string | null;
+  classification: string | null;
+  error_category: string | null;
+}
+
+export interface AnalysisStats {
+  engineReachable?: false;
+  results: number;
+  wins: number;
+  win_rate: number | null;
+  avg_result_r: number | null;
+  avg_mfe_r: number | null;
+  avg_mae_r: number | null;
+}
+
+export interface SystemEventRow {
+  time: string;
+  event_type: string;
+  severity: string;
+  component: string;
+  message: string;
+}
+
+export interface NewsEvent {
+  time: string;
+  currency: string;
+  impact: string;
+  title: string;
+}
+
+export interface NewsStatus {
+  engineReachable?: false;
+  enabled: boolean | null;
+  provider?: string;
+  currencies?: string[];
+  events_cached?: number;
+  fetched_at?: string | null;
+  last_error?: string | null;
+  verdict: { blocked: boolean; reason: string; event: NewsEvent | null } | null;
+  upcoming_24h: NewsEvent[];
+}
+
 export const getSummary = () => get<Summary>("/dashboard/summary");
 export const getModels = () => get<ModelRegistry>("/dashboard/models");
 export const getPaperValidation = () =>
@@ -329,3 +430,13 @@ export const getDecisions = (limit = 50) =>
   get<Decision[]>(`/dashboard/decisions?limit=${limit}`);
 export const getTrades = (limit = 50) =>
   get<Trade[]>(`/dashboard/trades?limit=${limit}`);
+export const getRiskStatus = () => get<RiskStatus>("/dashboard/risk-status");
+export const getRiskDecisions = (limit = 50) =>
+  get<RiskDecisionRow[]>(`/dashboard/risk-decisions?limit=${limit}`);
+export const getTradeResults = (limit = 50) =>
+  get<TradeResultRow[]>(`/dashboard/trade-results?limit=${limit}`);
+export const getAnalysisStats = () =>
+  get<AnalysisStats>("/dashboard/analysis-stats");
+export const getSystemEvents = (limit = 50) =>
+  get<SystemEventRow[]>(`/dashboard/system-events?limit=${limit}`);
+export const getNewsStatus = () => get<NewsStatus>("/dashboard/news-status");

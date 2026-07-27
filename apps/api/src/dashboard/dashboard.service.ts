@@ -247,6 +247,64 @@ export class DashboardService {
     };
   }
 
+  // -- Risque, erreurs et journaux (moteur) --------------------------------
+  // Chaque fallback porte `engineReachable: false` pour que le dashboard
+  // distingue « rien à afficher » de « moteur injoignable ».
+
+  async riskStatus() {
+    return (
+      (await this.engine<Record<string, unknown>>('/risk/status')) ?? {
+        engineReachable: false,
+        kill_switch: null,
+        limits: null,
+        risk_stats: null,
+      }
+    );
+  }
+
+  async riskDecisions(limit: number) {
+    return (
+      (await this.engine<unknown[]>(`/risk/decisions?limit=${limit}`)) ?? []
+    );
+  }
+
+  async tradeResults(limit: number) {
+    return (
+      (await this.engine<unknown[]>(`/analysis/results?limit=${limit}`)) ?? []
+    );
+  }
+
+  async analysisStats() {
+    return (
+      (await this.engine<Record<string, unknown>>('/analysis/stats')) ?? {
+        engineReachable: false,
+        results: 0,
+        wins: 0,
+        win_rate: null,
+        avg_result_r: null,
+        avg_mfe_r: null,
+        avg_mae_r: null,
+      }
+    );
+  }
+
+  async systemEvents(limit: number) {
+    return (
+      (await this.engine<unknown[]>(`/system/events?limit=${limit}`)) ?? []
+    );
+  }
+
+  async newsStatus() {
+    return (
+      (await this.engine<Record<string, unknown>>('/fundamental/status')) ?? {
+        engineReachable: false,
+        enabled: null,
+        verdict: null,
+        upcoming_24h: [],
+      }
+    );
+  }
+
   async signal() {
     return (
       (await this.engine<Record<string, unknown>>('/signal/latest')) ?? {

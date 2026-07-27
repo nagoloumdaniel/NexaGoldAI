@@ -116,6 +116,77 @@ export function strategyLabel(value?: string | null) {
   return labelFrom(STRATEGY_LABELS, value);
 }
 
+const CLASSIFICATION_LABELS: Record<string, string> = {
+  GOOD_DECISION_GOOD_RESULT: "Bonne décision, bon résultat",
+  GOOD_DECISION_BAD_RESULT: "Bonne décision, mauvais résultat",
+  BAD_DECISION_GOOD_RESULT: "Mauvaise décision, bon résultat",
+  BAD_DECISION_BAD_RESULT: "Mauvaise décision, mauvais résultat",
+  INCONCLUSIVE: "Non concluant",
+};
+
+const ERROR_CATEGORY_LABELS: Record<string, string> = {
+  NONE: "Aucune",
+  NORMAL_STATISTICAL_LOSS: "Perte statistique normale",
+  TARGET_TOO_AMBITIOUS: "Objectif trop ambitieux",
+  STOP_TOO_TIGHT: "Stop trop serré",
+  LATE_ENTRY: "Entrée tardive",
+  NEAR_STOP_RECOVERY: "Gain après stop frôlé",
+  UNKNOWN: "Inconnue",
+};
+
+const EXIT_SOURCE_LABELS: Record<string, string> = {
+  SL: "Stop-loss",
+  TP: "Objectif",
+  PROFIT_TAKE: "Prise de profit",
+  HORIZON: "Sortie horizon",
+  MANUAL: "Résolution manuelle",
+  USER: "Manuel broker",
+  SYSTEM: "Système",
+  CLOSE_OUT: "Liquidation",
+};
+
+const SEVERITY_LABELS: Record<string, string> = {
+  INFO: "Info",
+  WARNING: "Avertissement",
+  CRITICAL: "Critique",
+};
+
+const EVENT_TYPE_LABELS: Record<string, string> = {
+  KILL_SWITCH_LOCK: "Kill switch verrouillé",
+  KILL_SWITCH_UNLOCK: "Kill switch déverrouillé",
+  ANOMALY: "Anomalie",
+};
+
+const NEWS_IMPACT_LABELS: Record<string, string> = {
+  HIGH: "Fort impact",
+  MEDIUM: "Impact moyen",
+  LOW: "Faible impact",
+};
+
+export function classificationLabel(value?: string | null) {
+  return labelFrom(CLASSIFICATION_LABELS, value);
+}
+
+export function errorCategoryLabel(value?: string | null) {
+  return labelFrom(ERROR_CATEGORY_LABELS, value);
+}
+
+export function exitSourceLabel(value?: string | null) {
+  return labelFrom(EXIT_SOURCE_LABELS, value);
+}
+
+export function severityLabel(value?: string | null) {
+  return labelFrom(SEVERITY_LABELS, value);
+}
+
+export function eventTypeLabel(value?: string | null) {
+  return labelFrom(EVENT_TYPE_LABELS, value);
+}
+
+export function newsImpactLabel(value?: string | null) {
+  return labelFrom(NEWS_IMPACT_LABELS, value);
+}
+
 export function humanizeText(value?: string | null) {
   if (!value) return EMPTY_VALUE;
   return value
