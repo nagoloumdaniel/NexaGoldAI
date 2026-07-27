@@ -269,6 +269,29 @@ async def candles_resample(
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
+@app.get("/data/quality")
+async def data_quality(
+    granularity: str = Query("M5"),
+    count: int = Query(300, ge=10, le=5000),
+    source: str = Query("broker", pattern="^(broker|db)$"),
+) -> dict:
+    """Rapport de qualité des données (trous, bougies malformées, données
+    figées/périmées, score 0..1). `source=broker` interroge MT5 en direct,
+    `source=db` audite ce qui est stocké en base."""
+    from app.data.validator import validate_candles
+
+    if source == "broker":
+        ensure_broker_configured()
+        try:
+            candles = await broker.get_candles(granularity=granularity, count=count)
+        except BrokerError as exc:
+            raise HTTPException(status_code=502, detail=str(exc)) from exc
+    else:
+        service = ensure_ingestion_ready()
+        candles = await service.stored_candles(granularity, count)
+    return {"source": source, **validate_candles(candles, granularity)}
+
+
 @app.get("/candles/stats")
 async def candles_stats(instrument: str | None = Query(None)) -> dict:
     service = ensure_ingestion_ready()

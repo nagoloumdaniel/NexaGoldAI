@@ -52,6 +52,25 @@ class IngestionService:
     async def stats(self, instrument: str | None = None) -> list[dict]:
         return await self._repository.stats(instrument or self._settings.symbol)
 
+    async def stored_candles(
+        self, granularity: str, limit: int, instrument: str | None = None
+    ) -> list[dict]:
+        """Dernières bougies stockées en base, au format dict du moteur."""
+        rows = await self._repository.fetch(
+            instrument or self._settings.symbol, granularity
+        )
+        return [
+            {
+                "time": r["time"],
+                "open": float(r["open"]),
+                "high": float(r["high"]),
+                "low": float(r["low"]),
+                "close": float(r["close"]),
+                "volume": int(r["volume"]),
+            }
+            for r in rows[-limit:]
+        ]
+
     async def ingest_recent(self) -> dict[str, int]:
         """Upsert the latest candles for every configured granularity."""
         result: dict[str, int] = {}
