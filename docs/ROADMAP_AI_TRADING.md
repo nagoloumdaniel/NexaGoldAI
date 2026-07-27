@@ -113,9 +113,11 @@ Règles non négociables pendant toute la migration :
 
 ## Phase 8 — Mémoire et journal
 
-- [ ] Migrations : `signals`, `ai_decisions`, `trade_results` (MFE/MAE/coûts), `trade_errors`, `model_versions`, `system_events`
-- [ ] Labels par barrière (TARGET_FIRST / STOP_FIRST / TIMEOUT / AMBIGUOUS pessimiste) calculés sur M1
-- [ ] Pipeline post-trade asynchrone : prédiction vs résultat, MFE/MAE, coûts, respect des règles, classification (GOOD/BAD_DECISION × GOOD/BAD_RESULT), cause racine
+- [x] Migration `20260727223104_phase8_memory_tables` : `TradeResult` (R, MFE/MAE, durée, source de sortie), `RiskDecision` (chaque review avec raison + stats), `SystemEvent` (kill switch…) — additive, aucune donnée perdue
+- [x] Pipeline post-trade : `PostTradeAnalyzer.record()` aux 4 sites de clôture (PROFIT_TAKE, HORIZON, SL/TP broker, MANUAL), MFE/MAE calculés sur le M1, upsert idempotent, jamais bloquant ; endpoints `/analysis/results`, `/analysis/stats`, `/risk/decisions`, `/system/events` ; backfill validé sur les trades réels
+- [ ] Tables restantes : `signals` structurés dédiés, `ai_decisions`, `trade_errors` (classification), `model_versions` en base (le registre fichier existe)
+- [ ] Classification des décisions (GOOD/BAD_DECISION × GOOD/BAD_RESULT) et causes racines
+- [ ] Labels par barrière (TARGET_FIRST / STOP_FIRST / TIMEOUT / AMBIGUOUS pessimiste) pour l'entraînement
 - [ ] Recherche de trades similaires (régime, session, volatilité, profondeur sweep…) avec seuil minimal d'échantillons
 - [ ] Analyse contrefactuelle hors ligne (hypothèses seulement, jamais d'auto-application)
 
