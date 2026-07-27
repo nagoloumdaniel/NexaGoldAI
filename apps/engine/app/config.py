@@ -98,9 +98,12 @@ class Settings(BaseSettings):
     sessions_enabled: bool = True
     allowed_sessions: str = "LONDON,NEW_YORK"
     avoid_session_edges_minutes: int = 5
-    # Retest obligatoire avant l'entrée (recommandé) et RR minimal du bracket.
+    # Retest obligatoire avant l'entrée (recommandé) et RR du bracket.
+    # RR=3 issu du backtest 180 j du 2026-07-27 (RR2: -0.04R ; RR3: +0.12R,
+    # PF 1.16, positif à coûts doublés et stable sur les deux moitiés) —
+    # valeur de départ pour la validation paper, pas une vérité définitive.
     sweep_require_retest: bool = True
-    sweep_min_risk_reward: float = 2.0
+    sweep_min_risk_reward: float = 3.0
 
     # Applique réellement le filtre de régime (exclude BUY en BULLISH_TREND)
     # au lieu de le journaliser en shadow uniquement. À n'activer qu'après

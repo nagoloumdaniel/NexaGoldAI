@@ -1,5 +1,40 @@
 # NexaGold - Etat
 
+## Refonte "scalping hybride IA" — audit, risque P0, stratégie sweep, backtest
+
+Date: 2026-07-27 (branche `feature/ai-adaptive-scalping-engine`)
+
+Session de refonte majeure, tout est documenté dans `docs/AUDIT_BOT_TRADING.md`
+(audit complet des 3 apps) et `docs/ROADMAP_AI_TRADING.md` (13 phases cochées
+au fur et à mesure). Livré et testé (86+ tests pytest, CI GitHub Actions) :
+
+- **Risque P0** : perte quotidienne/hebdo calculée sur le P&L réalisé en DB +
+  flottant (l'ancien `balance - equity` était aveugle aux pertes réalisées),
+  pertes consécutives, cooldowns centralisés, kill switch dynamique persisté
+  (`/risk/status|lock|unlock`, verrouillage auto, réactivation à raison
+  obligatoire) ; fin de la promotion automatique de champion (`/learning/promote`).
+- **Filtre d'annonces fail-closed** (ForexFactory, fenêtres HIGH 30/20 min,
+  MEDIUM 10/10, USD) : statut `news_blocked`, `GET /fundamental/status` ;
+  calendrier indisponible => aucun nouvel ordre.
+- **Sécurité** : clé d'API sur toutes les routes mutantes (API NestJS +
+  moteur FastAPI + dashboard + stop-auto.ps1), CORS strict, écoute 127.0.0.1,
+  ValidationPipe + DTO, /health fidèle, erreurs proxy journalisées.
+- **Données** : validateur de qualité (`GET /data/quality`), ingestion M1,
+  backfill M1 180 j (Dukascopy rate-limited => complété via l'historique du
+  terminal MT5 local : 165k bougies, score qualité 0.939).
+- **Stratégie `liquidity_sweep`** (`app/strategy_v2/`, paper-only, non active
+  par défaut) : structure H1/M15 (swings, HH/HL, BOS, CHoCH), zones de
+  liquidité M5 avec égalités, sweep + réintégration rapide, shift M1, retest
+  obligatoire, sessions Londres/NY, machine à états persistée à transitions
+  contrôlées. Activation : `STRATEGY_NAME=liquidity_sweep` + `MODEL_GRANULARITY=M1`.
+- **Backtest évènementiel M1** (`python -m app.backtesting.run --days N`) :
+  fenêtres multi-TF reconstruites sans lookahead, fill à l'open suivant,
+  demi-spread + slippage contre nous, stop-d'abord pessimiste. Verdict 180 j :
+  RR2 -0.04R ; **RR3 +0.12R (PF 1.16), positif à coûts doublés, stable sur les
+  deux moitiés** => `SWEEP_MIN_RISK_REWARD=3.0` par défaut et statut
+  **PAPER_CANDIDATE** (échantillon 110 trades, < 1 écart-type de zéro : non
+  démontré statistiquement, validation paper prospective requise, live verrouillé).
+
 ## Strategie scalp M5 multi-timeframe (clôture au premier profit)
 
 Date: 2026-07-26

@@ -139,7 +139,12 @@ Règles non négociables pendant toute la migration :
 - [ ] Tests de robustesse systématiques (coûts ×2, périodes par régime, sensibilité aux paramètres)
 - [ ] Walk-forward + purge + embargo pour l'évaluation des futurs modèles sur signaux candidats
 - [ ] Rapport HTML
-- [ ] **Verdict backtest complet de liquidity_sweep (en cours — données M1 en réparation)** ; premier run partiel (fév-mars, données à trous) : 29 trades, WR 27.6 %, espérance -0.22R, PF 0.71 → défavorable, à confirmer sur données complètes
+- [x] **Verdict backtest liquidity_sweep (2026-07-27, 180 j de M1 MT5, 165k bougies, qualité 0.939)** :
+  - RR2 (défaut initial) : 125 trades, WR 33.6 %, espérance **-0.04R**, PF 0.94 → négatif ;
+  - RR3 : 110 trades, WR 29.1 %, espérance **+0.12R**, PF 1.16 ; **reste positif à coûts doublés** (+0.06R) et **stable sur les deux moitiés** (90 derniers jours : +0.13R) ; RR4 : +0.13R, PF 1.17 ;
+  - sans retest : -0.09R (le retest est nécessaire) ; heures 16-18 UTC nettement négatives (à creuser, échantillon insuffisant pour filtrer) ;
+  - décision : `SWEEP_MIN_RISK_REWARD=3.0` par défaut ; verdict **PAPER_CANDIDATE** — l'espérance +0.12R sur 110 trades est < 1 écart-type de zéro : encourageant mais PAS statistiquement démontré. Validation paper prospective obligatoire, live toujours verrouillé.
+- [ ] Étendre le backtest à un historique plus profond (Dukascopy M1 2023-2026 quand le rate-limit le permet) pour tester d'autres régimes de marché
 
 ## Phase 11 — Champion/challenger et gouvernance
 
