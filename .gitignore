@@ -33,3 +33,6 @@ nexagold-scheduler.log
 
 # Cache IDE Python (genere par l extension VSCode)
 .vscode/PythonImportHelper*.json
+
+# Rapports de backtest (artefacts runtime)
+reports/
