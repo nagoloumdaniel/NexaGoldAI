@@ -131,12 +131,15 @@ Règles non négociables pendant toute la migration :
 
 ## Phase 10 — Backtesting réaliste
 
-- [ ] Moteur évènementiel pour stratégies à règles (rejouable sur M1) : bid/ask, spread variable par heure, slippage, latence, rejets, stop/freeze levels, annonces
-- [ ] Walk-forward + purge + embargo pour l'évaluation des modèles sur signaux candidats
-- [ ] Tests de robustesse (coûts ×2, features dégradées, périodes par régime)
-- [ ] Rapports `reports/backtests/<RUN_ID>/` (JSON + trades.csv + equity + HTML)
-- [ ] Backtest de la stratégie sweep AVANT tout paper trading élargi
-- [ ] Tests anti-fuite du moteur de backtest (aucune bougie future, reproductibilité seed)
+- [x] Moteur évènementiel M1 (`app/backtesting/engine.py`) : fenêtres M5/M15/H1 reconstruites depuis M1 (zéro lookahead), entrée à l'open suivant (latence 1 bougie), demi-spread entrée+sortie, slippage contre nous sur stops, bracket intrabar pessimiste (stop d'abord), MFE/MAE, une position max — 10 tests
+- [x] CLI `python -m app.backtesting.run --days N` + rapports `reports/backtests/<RUN_ID>/` (summary.json, trades.csv, equity_curve.csv, histogramme des HOLD)
+- [x] Test anti-lookahead du fill (signal à la clôture i → fill à l'open i+1) ; moteur déterministe (pas d'aléa)
+- [x] Backfill M1 Dukascopy 180 j lancé (1re passe : 63k bougies, 2726 heures en erreur 429 — passes de réparation idempotentes en cours)
+- [ ] Spread VARIABLE par heure (actuellement constant configurable) + fenêtres d'annonces dans le backtest
+- [ ] Tests de robustesse systématiques (coûts ×2, périodes par régime, sensibilité aux paramètres)
+- [ ] Walk-forward + purge + embargo pour l'évaluation des futurs modèles sur signaux candidats
+- [ ] Rapport HTML
+- [ ] **Verdict backtest complet de liquidity_sweep (en cours — données M1 en réparation)** ; premier run partiel (fév-mars, données à trous) : 29 trades, WR 27.6 %, espérance -0.22R, PF 0.71 → défavorable, à confirmer sur données complètes
 
 ## Phase 11 — Champion/challenger et gouvernance
 
