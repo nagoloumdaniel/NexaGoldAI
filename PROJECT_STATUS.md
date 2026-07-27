@@ -38,6 +38,14 @@ au fur et à mesure). Livré et testé (86+ tests pytest, CI GitHub Actions) :
   broker ne remonte qu'à 2026-01) : -0.034R global, par année +0.04/-0.11/
   +0.01/-0.05 — pas d'effondrement, pas d'edge en exécution grossière ;
   calibration sur fenêtre commune : la finesse M1 vaut ~0.17R d'espérance.
+- **Modèle de qualité de signal v1 : REJETÉ** (2026-07-28). Datasets générés
+  par rejeu (173 candidats M1 + 562 M5 dégradé, étiquetés par barrière), puis
+  régression logistique en walk-forward chronologique : **AUC 0.444 hors
+  échantillon** (< 0.5), Brier pire que la baseline, calibration inversée ;
+  reproduit sur M5 seul (AUC 0.433). Les features de SETUP (profondeur, vitesse,
+  force du sweep) ne prédisent pas l'issue. Artefacts `REJECTED`, aucun
+  branchement dans le moteur. Le pipeline (dataset_builder, spec de features,
+  entraînement) reste en place pour une v2 avec features de CONTEXTE.
 - **Bascule paper le 2026-07-28** : `STRATEGY_NAME=liquidity_sweep`,
   `MODEL_GRANULARITY=M1` — la stratégie sweep est désormais la stratégie
   paper active (effectif au démarrage 9h) ; objectif : 100 trades prospectifs

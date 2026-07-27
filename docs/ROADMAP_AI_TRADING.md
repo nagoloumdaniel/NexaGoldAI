@@ -127,7 +127,12 @@ Règles non négociables pendant toute la migration :
 - [x] Générateur de dataset (`python -m app.learning.dataset_builder`) : tous les signaux candidats (sans contrainte de position), dédupliqués par setup, étiquetés par barrière, features numériques + temporelles — 180 j M1 : 173 candidats, P(TARGET_FIRST)=0.322, +0.29R brut
 - [ ] Pipeline de features versionné (techniques, structure, liquidité, temporelles) avec garanties anti-fuite testées
 - [ ] Modèle de régime v2 (LightGBM/HMM comparés hors échantillon) — sorties probabilisées
-- [ ] Modèle de qualité de signal : P(TP avant SL), EV nette en R, incertitude, calibration (Brier/reliability)
+- [x] Modèle de qualité de signal v1 (régression logistique calibrée, walk-forward chronologique, incertitude par désaccord de folds) — **VERDICT : REJETÉ**
+  - hors échantillon (576 prédictions) : **AUC 0.444** (< 0.5 = anti-prédictif), Brier 0.228 **pire que la baseline** du taux de base (0.213), calibration inversée (le décile le plus bas observe 43 % de réussite, le plus haut 28 %)
+  - reproduit sur le dataset M5 seul (548 échantillons, AUC 0.433) → ce n'est pas un artefact de mélange de datasets, mais une **absence réelle de pouvoir prédictif** des features actuelles
+  - artefacts marqués `REJECTED` / `eligible_for_shadow: false` ; **aucun branchement** dans le moteur (pas même en shadow) ; le contrat de features et le pipeline restent en place et testés pour la prochaine tentative
+  - piste : les features décrivent le SETUP (profondeur/vitesse/force du sweep) mais pas le CONTEXTE d'échec (spread au moment du signal, distance aux niveaux journaliers, position dans le range de session, proximité d'annonce) — c'est là qu'il faut chercher avant de réessayer
+- [ ] Modèle de qualité v2 : enrichir les features de contexte, attendre plus d'échantillons (paper + M1 profond) avant de reconclure
 - [ ] Modèle de coût d'exécution (spread attendu, slippage, latence → coût en R)
 - [ ] Détecteur d'anomalies (spread extrême, données figées, hors-distribution) → SYSTEM_LOCKED
 - [ ] Seuils configurables `ai_filter` (min_probability, min_ev_r, max_uncertainty) ; fallback modèle en erreur = REJECT
