@@ -92,3 +92,58 @@ model StrategyDecision {
 
   @@index([strategy, time])
 }
+
+// Journal du moteur de risque : chaque passage par RiskManager.review est
+// tracé (approbation OU refus, avec la raison et les stats jour/semaine).
+// Écrit par le moteur Python (asyncpg), lu par le dashboard.
+model RiskDecision {
+  id         String   @id
+  time       DateTime @default(now())
+  decisionId String? // StrategyDecision.id (lien logique)
+  approved   Boolean
+  reason     String
+  units      Decimal? @db.Decimal(12, 2)
+  riskStats  Json?
+
+  @@index([time])
+  @@index([approved, time])
+}
+
+// Analyse post-trade : une ligne par trade CLÔTURÉ — résultat en R, MFE/MAE
+// calculés sur le M1 pendant la vie du trade, durée, source de sortie.
+// C'est la matière première des futurs modèles de qualité de signal.
+model TradeResult {
+  id             String   @id
+  tradeId        String   @unique // Trade.id (lien logique)
+  strategy       String
+  side           String
+  entryTime      DateTime
+  exitTime       DateTime
+  entryPrice     Decimal  @db.Decimal(12, 3)
+  exitPrice      Decimal  @db.Decimal(12, 3)
+  pnl            Decimal  @db.Decimal(12, 2)
+  resultR        Decimal? @db.Decimal(8, 4)
+  mfeR           Decimal? @db.Decimal(8, 4)
+  maeR           Decimal? @db.Decimal(8, 4)
+  holdingSeconds Int
+  exitSource     String? // SL / TP / PROFIT_TAKE / HORIZON / USER / MANUAL
+  details        Json?
+  createdAt      DateTime @default(now())
+
+  @@index([exitTime])
+  @@index([strategy, exitTime])
+}
+
+// Événements système durables : kill switch, anomalies, blocages notables.
+model SystemEvent {
+  id        String   @id
+  time      DateTime @default(now())
+  eventType String // KILL_SWITCH_LOCK / KILL_SWITCH_UNLOCK / ANOMALY / ...
+  severity  String // INFO / WARNING / CRITICAL
+  component String
+  message   String
+  payload   Json?
+
+  @@index([time])
+  @@index([eventType, time])
+}

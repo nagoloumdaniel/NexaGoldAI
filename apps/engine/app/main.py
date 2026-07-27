@@ -15,6 +15,7 @@ from pathlib import Path
 from fastapi import Depends, FastAPI, Header, HTTPException, Query
 from pydantic import BaseModel
 
+from app.analysis.post_trade import JournalRepository, PostTradeAnalyzer
 from app.broker.mt5 import BrokerError, MT5Client
 from app.config import get_settings
 from app.data.candles import CandleRepository
@@ -75,6 +76,8 @@ ingestion: IngestionService | None = None
 trader: Trader | None = None
 decisions_repo: StrategyDecisionRepository | None = None
 learning: LearningService | None = None
+post_trade: PostTradeAnalyzer | None = None
+journal: JournalRepository | None = None
 _ingestion_task: asyncio.Task | None = None
 _trade_task: asyncio.Task | None = None
 _profit_task: asyncio.Task | None = None
@@ -94,6 +97,7 @@ def _broker_ready() -> bool:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global broker, database, ingestion, trader, decisions_repo, learning
+    global post_trade, journal
     global _ingestion_task, _trade_task, _profit_task, _learning_task
 
     broker = MT5Client(settings)
@@ -103,6 +107,8 @@ async def lifespan(app: FastAPI):
     if database.is_connected:
         ingestion = IngestionService(settings, broker, CandleRepository(database.pool))
         decisions_repo = StrategyDecisionRepository(database.pool)
+        post_trade = PostTradeAnalyzer(database.pool, settings.symbol)
+        journal = JournalRepository(database.pool)
         trader = Trader(
             settings,
             broker,
@@ -111,6 +117,8 @@ async def lifespan(app: FastAPI):
             decisions_repo,
             TradeRepository(database.pool, settings.symbol),
             news=news_filter,
+            post_trade=post_trade,
+            journal=journal,
         )
         learning = LearningService(settings, trader)
         if _broker_ready():
@@ -468,19 +476,67 @@ async def risk_status() -> dict:
     }
 
 
+async def _record_event(
+    event_type: str, severity: str, message: str, payload: dict | None = None
+) -> None:
+    if journal is None:
+        return
+    try:
+        await journal.record_event(event_type, severity, "risk", message, payload)
+    except Exception:  # noqa: BLE001 — le journal ne bloque jamais l'API
+        _logger.exception("Journalisation d'événement échouée")
+
+
 @app.post("/risk/lock", dependencies=MUTATING)
 async def risk_lock(reason: str = Query("Verrouillage manuel opérateur")) -> dict:
     """Active le kill switch dynamique (aucun nouvel ordre d'ouverture)."""
-    return kill_switch.lock(reason, source="operator")
+    status = kill_switch.lock(reason, source="operator")
+    await _record_event("KILL_SWITCH_LOCK", "CRITICAL", reason, status)
+    return status
 
 
 @app.post("/risk/unlock", dependencies=MUTATING)
 async def risk_unlock(reason: str = Query(...)) -> dict:
     """Réactivation EXPLICITE du trading — une raison est obligatoire."""
     try:
-        return kill_switch.unlock(reason, source="operator")
+        status = kill_switch.unlock(reason, source="operator")
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+    await _record_event("KILL_SWITCH_UNLOCK", "WARNING", reason, status)
+    return status
+
+
+@app.get("/risk/decisions")
+async def risk_decisions(limit: int = Query(50, ge=1, le=200)) -> list[dict]:
+    """Journal des passages par le moteur de risque (approbations et refus)."""
+    if journal is None:
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
+    return await journal.recent_risk_decisions(limit)
+
+
+@app.get("/system/events")
+async def system_events(limit: int = Query(50, ge=1, le=200)) -> list[dict]:
+    if journal is None:
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
+    return await journal.recent_events(limit)
+
+
+# -- Analyse post-trade ------------------------------------------------------
+
+
+@app.get("/analysis/results")
+async def analysis_results(limit: int = Query(50, ge=1, le=200)) -> list[dict]:
+    """Résultats post-trade (R, MFE/MAE, durée, source de sortie)."""
+    if post_trade is None:
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
+    return await post_trade.recent(limit)
+
+
+@app.get("/analysis/stats")
+async def analysis_stats(strategy: str | None = Query(None)) -> dict:
+    if post_trade is None:
+        raise HTTPException(status_code=503, detail="Base de données indisponible")
+    return await post_trade.stats(strategy)
 
 
 # -- Fondamental ------------------------------------------------------------

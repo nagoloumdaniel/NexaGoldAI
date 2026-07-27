@@ -10,6 +10,7 @@ import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 
+from app.analysis.post_trade import JournalRepository, PostTradeAnalyzer
 from app.broker.mt5 import MAGIC, BrokerError, MT5Client
 from app.config import Settings
 from app.data.decisions import StrategyDecisionRepository
@@ -139,6 +140,8 @@ class Trader:
         decisions: StrategyDecisionRepository,
         trades: TradeRepository,
         news: NewsFilter | None = None,
+        post_trade: PostTradeAnalyzer | None = None,
+        journal: JournalRepository | None = None,
     ):
         self._settings = settings
         self._broker = broker
@@ -147,6 +150,42 @@ class Trader:
         self._decisions = decisions
         self._trades = trades
         self._news = news
+        self._post_trade = post_trade
+        self._journal = journal
+
+    async def _analyze_closed_trade(self, trade_id: str, source: str) -> None:
+        """Analyse post-trade (MFE/MAE, R) — ne casse jamais l'exécution."""
+        if self._post_trade is None:
+            return
+        try:
+            result = await self._post_trade.record(trade_id, exit_source=source)
+            if result.get("recorded"):
+                logger.info(
+                    "Post-trade %s: R=%s MFE=%s MAE=%s (%s)",
+                    trade_id,
+                    result.get("result_r"),
+                    result.get("mfe_r"),
+                    result.get("mae_r"),
+                    source,
+                )
+        except Exception:  # noqa: BLE001 — l'analyse ne bloque jamais le trading
+            logger.exception("Analyse post-trade échouée pour %s", trade_id)
+
+    async def _log_risk_decision(
+        self, decision_id: str, decision, risk_stats: dict | None
+    ) -> None:
+        if self._journal is None:
+            return
+        try:
+            await self._journal.record_risk_decision(
+                decision_id,
+                decision.approved,
+                decision.reason,
+                decision.units,
+                risk_stats,
+            )
+        except Exception:  # noqa: BLE001 — le journal ne bloque jamais le trading
+            logger.exception("Journalisation de la décision de risque échouée")
 
     @property
     def strategy_name(self) -> str:
@@ -435,6 +474,7 @@ class Trader:
         decision = self._risk.review(
             signal, account, positions, entry, stop_loss, risk_stats
         )
+        await self._log_risk_decision(decision_id, decision, risk_stats)
         out["risk"] = {
             "approved": decision.approved,
             "reason": decision.reason,
@@ -532,6 +572,7 @@ class Trader:
                     trade["id"], float(exit_price), pnl, closed_at
                 )
                 self._notify_tuner(pnl, trade["side"], "HORIZON")
+                await self._analyze_closed_trade(trade["id"], "HORIZON")
                 results.append(
                     {
                         "trade_id": trade["id"],
@@ -627,6 +668,7 @@ class Trader:
                 await self._trades.close_trade(
                     trade["id"], float(exit_price), pnl, closed_at
                 )
+                await self._analyze_closed_trade(trade["id"], "PROFIT_TAKE")
                 results.append(
                     {
                         "trade_id": trade["id"],
@@ -785,6 +827,9 @@ class Trader:
                         self._notify_tuner(
                             pnl, trade["side"], close_event["source"]
                         )
+                    await self._analyze_closed_trade(
+                        trade["id"], close_event["source"]
+                    )
                     closed.append(
                         {
                             "trade_id": trade["id"],
@@ -974,6 +1019,7 @@ class Trader:
             exit_price,
         )
         await self._trades.close_trade(trade_id, exit_price, pnl, when)
+        await self._analyze_closed_trade(trade_id, "MANUAL")
         return {
             "updated": True,
             "trade_id": trade_id,
