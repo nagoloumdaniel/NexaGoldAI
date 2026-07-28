@@ -6,36 +6,57 @@ Plateforme de trading algorithmique sur l'or (XAU/USD) pilotée par IA.
 
 ```text
                     ┌─────────────────────┐
-                    │  apps/web (Next.js) │  ← Vercel
+                    │  apps/web (Next.js) │  ← port 3002
                     │  Tableau de bord    │
                     └─────────┬───────────┘
-                              │ HTTPS / WebSocket
+                              │ HTTP (polling 10-30 s)
                     ┌─────────▼───────────┐
-                    │  apps/api (NestJS)  │  ← Railway
-                    │  Utilisateurs, JWT, │
-                    │  notifications      │
+                    │  apps/api (NestJS)  │  ← port 3001
+                    │  Proxy dashboard,   │
+                    │  rapports, alertes  │
                     └────┬───────────┬────┘
                          │           │
         ┌────────────────▼──┐   ┌────▼────────────────────┐
-        │ Neon (PostgreSQL) │   │ apps/engine (FastAPI)   │  ← PC Windows local
-        │ Upstash (Redis)   │   │ Données → Stratégie →   │
+        │ PostgreSQL        │   │ apps/engine (FastAPI)   │  ← PC Windows local
+        │ (Docker local)    │   │ Données → Stratégie →   │     port 8000
         └───────────────────┘   │ Risque → Exécution      │
-                                └────────────┬────────────┘
-                                             │ IPC (paquet MetaTrader5)
+                     ▲          └────────────┬────────────┘
+                     └───── SystemEvent ─────┤ IPC (paquet MetaTrader5)
+                            (relais alertes) │
                                 ┌────────────▼────────────┐
                                 │ Terminal MetaTrader 5   │
                                 │ C:\Program Files\...    │
-                                │ (compte démo/réel)      │
+                                │ (compte démo)           │
                                 └─────────────────────────┘
 ```
 
 | Application | Rôle | Déploiement |
 | --- | --- | --- |
-| `apps/web` | Dashboard Next.js 16 + Tailwind | Vercel |
-| `apps/api` | Backend NestJS + Prisma (utilisateurs, JWT, notifications, WebSockets) | Railway (Dockerfile) |
-| `apps/engine` | Moteur de trading Python/FastAPI (MetaTrader 5, stratégies, gestion du risque) | **Windows local uniquement** (terminal MT5 requis) |
-| PostgreSQL | Trades, bougies, décisions IA, équité | Neon |
-| Redis | Cache, temps réel | Upstash |
+| `apps/web` | Dashboard Next.js 16 + Tailwind (port 3002) | Local (Vercel possible) |
+| `apps/api` | Backend NestJS + Prisma : proxy dashboard, rapports Telegram, relais d'alertes (port 3001) | Local (Railway possible) |
+| `apps/engine` | Moteur de trading Python/FastAPI (MetaTrader 5, stratégies, risque, backtest, IA) | **Windows local uniquement** (terminal MT5 requis) |
+| PostgreSQL | Trades, bougies, décisions, résultats post-trade, journaux | Docker local (port 5433) |
+| Redis | Provisionné par docker-compose, **non utilisé** à ce jour | Docker local (port 6380) |
+
+> **Authentification** : il n'y a pas de comptes utilisateurs ni de JWT. Les
+> routes mutantes sont protégées par une clé d'API partagée (`API_KEY` côté
+> NestJS, `ENGINE_API_TOKEN` côté moteur) et les services écoutent sur
+> `127.0.0.1` par défaut. Voir [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## Documentation
+
+| Document | Contenu |
+| --- | --- |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Composants, flux d'une décision, persistance, sécurité, verrous |
+| [docs/STRATEGY.md](docs/STRATEGY.md) | Stratégies disponibles, pipeline sweep, paramètres, validation |
+| [docs/RISK_MANAGEMENT.md](docs/RISK_MANAGEMENT.md) | Limites, dimensionnement, kill switch, procédures |
+| [docs/BACKTESTING.md](docs/BACKTESTING.md) | Moteur évènementiel, coûts simulés, limites connues |
+| [docs/AI_MODELS.md](docs/AI_MODELS.md) | Pipeline IA, labels, verdicts (v1 rejetée) |
+| [docs/INCIDENT_RESPONSE.md](docs/INCIDENT_RESPONSE.md) | Que faire quand ça casse |
+| [docs/AUDIT_BOT_TRADING.md](docs/AUDIT_BOT_TRADING.md) | Audit complet du dépôt (2026-07-27) |
+| [docs/ROADMAP_AI_TRADING.md](docs/ROADMAP_AI_TRADING.md) | Plan de refonte, phase par phase |
+| [docs/CHANGELOG.md](docs/CHANGELOG.md) | Changements notables |
+| [RUNBOOK.md](RUNBOOK.md) | Exploitation quotidienne |
 
 ## Décisions techniques (et pourquoi)
 
@@ -57,9 +78,11 @@ Plateforme de trading algorithmique sur l'or (XAU/USD) pilotée par IA.
 - **PostgreSQL standard** (pas TimescaleDB) : Neon ne supporte pas
   l'extension, et le volume M1 (~370 000 bougies/an) reste trivial pour
   Postgres avec la clé composite de `Candle`.
-- **PyTorch + LightGBM** côté IA (pas TensorFlow) : on démarre par du
-  gradient boosting mesurable, le deep learning/RL viendra après validation
-  du pipeline de backtesting.
+- **LightGBM et scikit-learn** côté IA (ni PyTorch ni TensorFlow à ce
+  jour) : on démarre par des modèles mesurables et interprétables ; le deep
+  learning ne se justifiera qu'après avoir démontré un edge sur des modèles
+  simples. Voir [docs/AI_MODELS.md](docs/AI_MODELS.md) — le premier modèle de
+  qualité de signal a été **rejeté** (aucun pouvoir prédictif).
 - **`TRADING_ENABLED=false` par défaut** : le moteur ne peut pas envoyer
   d'ordre tant que le kill switch n'est pas explicitement levé.
 
@@ -120,7 +143,7 @@ uvicorn app.main:app --reload --port 8000        # http://localhost:8000/health
 # 4. Frontend
 cd apps/web
 npm install
-npm run dev                          # http://localhost:3000
+npm run dev -- --port 3002           # http://localhost:3002
 ```
 
 Pour obtenir les identifiants MetaTrader 5 (compte démo) : ouvrez le terminal
@@ -187,9 +210,15 @@ reflètent le tout.
 
 1. Créer un projet Railway relié à ce repo GitHub.
 2. Service **api** : Root Directory = `apps/api` (le Dockerfile est détecté).
-   Variables : `DATABASE_URL` (Neon), `REDIS_URL` (Upstash), `FRONTEND_URL`
-   (URL Vercel), `JWT_SECRET`, `ENGINE_URL` (URL joignable du moteur local,
-   par ex. via un tunnel, sinon les panneaux « live » resteront vides).
+   Variables : `DATABASE_URL`, `FRONTEND_URL` (URL Vercel), `API_KEY`
+   (obligatoire dès que l'API sort du réseau local), `ENGINE_API_TOKEN`,
+   `ENGINE_URL` (URL joignable du moteur local, par ex. via un tunnel, sinon
+   les panneaux « live » resteront vides), `TELEGRAM_BOT_TOKEN`,
+   `TELEGRAM_CHAT_ID`.
+
+   ⚠️ Exposer l'API hors du poste local **impose** de définir `API_KEY` : sans
+   elle, les routes mutantes (réconciliation, résolution de trade, rapports)
+   sont ouvertes. Le moteur doit rester injoignable publiquement.
 
 ### Moteur (Windows local, non déployable)
 
@@ -434,14 +463,26 @@ curl http://localhost:3001/dashboard/analytics  # win rate, profit factor, équi
 ```
 
 Le dashboard Next.js ([apps/web](apps/web/src/)) consomme ces endpoints
-(rafraîchissement par polling) : cartes de stats (solde, NAV, P&L, drawdown,
-nb de décisions, positions), **graphique chandelier de l'or** (TradingView
-Lightweight Charts), flux des **décisions IA avec leurs raisons**, et historique
-des trades. Variable : `NEXT_PUBLIC_API_URL` (URL de l'API).
+par polling (10 à 30 s selon les panneaux). Sept pages :
+
+| Page | Contenu |
+| --- | --- |
+| `/` | Cartes de stats (solde, NAV, P&L, drawdown), courbe d'équité, décisions et trades récents |
+| `/marche` | Graphique chandelier (Lightweight Charts) et statistiques de marché |
+| `/positions` | Positions ouvertes, historique, réconciliation broker et résolution manuelle |
+| `/ia` | Signal structuré (probabilités, régime, verdict) et décisions détaillées |
+| `/modeles` | Registre des versions, champion actif, validation paper, verrous de promotion |
+| `/analytics` | Win rate, profit factor, courbe d'équité, historique complet |
+| `/erreurs` | Répartition des décisions (bonne/mauvaise × résultat), causes, MFE/MAE, analyses post-trade |
+| `/risque` | Kill switch, consommation des limites, filtre d'annonces, journal des blocages, événements système |
+| `/parametres` | État du système (moteur, base, boucles) |
+
+Variables : `NEXT_PUBLIC_API_URL` (URL de l'API), `NEXT_PUBLIC_API_KEY`
+(clé des routes mutantes, si `API_KEY` est défini côté NestJS).
 
 ```bash
 cd apps/web
-npm run dev   # http://localhost:3000 (API sur 3001 + moteur sur 8000 requis)
+npm run dev -- --port 3002   # (API sur 3001 + moteur sur 8000 requis)
 ```
 
 ## Boucle d'apprentissage (phase 5)
