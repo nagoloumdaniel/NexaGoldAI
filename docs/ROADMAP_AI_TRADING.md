@@ -167,7 +167,8 @@ Règles non négociables pendant toute la migration :
 
 ## Phase 12 — Interface et notifications
 
-- [ ] Telegram évènementiel : démarrage/arrêt, connexion MT5, kill switch, anomalie, dérive, signal accepté/refusé important, position fermée, challenger prêt (jamais de secret)
+- [x] Telegram évènementiel (relais base de données) : le moteur écrit des `SystemEvent`, l'API relaie chaque minute les WARNING/CRITICAL — kill switch verrouillé automatiquement, broker dégradé/rétabli ; token à un seul endroit, jamais dans le moteur, masqué dans les logs d'erreur ; vérifié bout-en-bout
+- [ ] Étendre les événements relayés : anomalies (détecteur à construire), dérive, position fermée notable, challenger prêt
 - [x] Dashboard : page `/risque` (kill switch + cause, jauges des limites jour/semaine, pertes consécutives, cooldowns, filtre d'annonces avec prochaines publications, journal des décisions de risque, événements système)
 - [x] Dashboard : page `/erreurs` (répartition bonne/mauvaise décision × résultat, causes identifiées, MFE/MAE moyens, table d'analyse post-trade)
 - [x] API : 6 proxys avec fallback `engineReachable` explicite ; libellés français des classifications/causes/sorties
