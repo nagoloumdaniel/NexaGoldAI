@@ -180,7 +180,8 @@ Règles non négociables pendant toute la migration :
 
 - [ ] Suite de tests complète (unitaires, intégration sans ordre réel, sécurité, backtest) verte en CI
 - [ ] Tests de sécurité : impossibilité pour l'IA de modifier le risque, impossibilité de passer en réel sans double action explicite, kill switch, idempotence
-- [ ] Documentation : README à jour + `docs/ARCHITECTURE / STRATEGY / AI_MODELS / RISK_MANAGEMENT / BACKTESTING / PAPER_TRADING / MODEL_GOVERNANCE / MT5_EXECUTION / INCIDENT_RESPONSE / CHANGELOG` + `.env.example` complets
+- [x] Documentation : README réaligné (JWT/WebSockets/PyTorch fantômes retirés, ports corrigés, 9 pages listées, index docs) + `ARCHITECTURE`, `STRATEGY`, `RISK_MANAGEMENT`, `BACKTESTING`, `AI_MODELS`, `INCIDENT_RESPONSE`, `CHANGELOG` + RUNBOOK réécrit ; liens et encodage vérifiés
+- [ ] Documents optionnels restants : `PAPER_TRADING`, `MODEL_GOVERNANCE`, `MT5_EXECUTION`, `DEPLOYMENT` (contenu aujourd'hui réparti dans README/ARCHITECTURE/STRATEGY)
 - [ ] Scripts d'enregistrement des tâches planifiées versionnés (`Register-ScheduledTask`)
 - [ ] Rapport final (existant/conservé/modifié/ajouté/restant, commandes exactes d'exploitation)
 
